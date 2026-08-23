@@ -1,0 +1,41 @@
+# E0 apparatus. Local only, no AWS. See README.md for method.
+#
+# SYS_PTRACE + seccomp:unconfined are required for strace to follow php-fpm forks.
+# They are scoped to this local experiment and must never appear in deployed apparatus.
+
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: e0-local-only
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: e0-local-only
+    tmpfs:
+      - /var/lib/mysql   # keep DB off the FS under trace; E0 measures PHP's syscalls, not MariaDB's
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: e0-local-only
+      # PROFILE selects which php-profiles/*.ini is mounted active. Set by run.sh.
+      PROFILE: ${PROFILE:-naive}
+    volumes:
+      - ./php-profiles:/php-profiles:ro
+      - ./out:/out

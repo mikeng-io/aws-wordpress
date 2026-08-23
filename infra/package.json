@@ -1,0 +1,23 @@
+{
+  "name": "@aws-wordpress/apparatus",
+  "version": "0.0.0",
+  "private": true,
+  "description": "CDK apparatus for the WordPress-on-AWS study. Not a product - stacks exist to serve experiments.",
+  "bin": { "apparatus": "bin/apparatus.js" },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "synth": "cdk synth",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "aws-cdk": "^2",
+    "tsx": "^4",
+    "typescript": "~5.6.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2",
+    "constructs": "^10"
+  }
+}
