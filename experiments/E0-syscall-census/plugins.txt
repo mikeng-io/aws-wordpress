@@ -1,0 +1,44 @@
+# The heavy install. wordpress.org slugs, one per line.
+#
+# Selection rule: plugins a real WooCommerce estate plausibly runs, weighted toward
+# the popular and the bulky, because the point is to measure a realistic legacy site
+# rather than a clean one.
+#
+# Deliberately EXCLUDED — these would confound the study by solving at the
+# application layer what it exists to measure at the infrastructure layer:
+#   page caches      (wp-super-cache, w3-total-cache, wp-optimize)
+#   object caches    (redis-cache, memcached)
+#   S3 offload       (amazon-s3-and-cloudfront)
+#   db abstraction   (hyperdb, ludicrousdb)
+#   dev tooling      (query-monitor) — real sites don't run it in production
+#
+# Versions are resolved at build time and written to plugins.lock. Builds prefer
+# the lock when present, so a run is reproducible even though this file is not
+# pinned by hand.
+
+woocommerce
+elementor
+contact-form-7
+wordpress-seo
+wpforms-lite
+akismet
+jetpack
+wp-mail-smtp
+wordfence
+updraftplus
+classic-editor
+redirection
+duplicate-post
+google-site-kit
+really-simple-ssl
+loco-translate
+advanced-custom-fields
+tablepress
+broken-link-checker
+regenerate-thumbnails
+health-check
+mailchimp-for-woocommerce
+woocommerce-pdf-invoices-packing-slips
+yith-woocommerce-wishlist
+wp-crontrol
+safe-svg

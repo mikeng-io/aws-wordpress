@@ -37,11 +37,17 @@ that would falsify it, recorded before any experiment runs.
 
 ## Status
 
-Bootstrapping. No results yet. No claims yet.
+One result recorded, provisional. See
+[docs/findings/E0-first-run.md](docs/findings/E0-first-run.md) — the first E0 run
+contradicts its own pre-registered prediction, which is what pre-registration is
+for.
+
+E0 counts syscalls; it does not time them. Latency belongs to E1-E3, on real
+infrastructure. No timing from a laptop should ever be quoted about EFS.
 
 | Experiment | Question | Cost | Status |
 |---|---|---|---|
-| [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | skeleton |
+| [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **first run recorded** |
 | E1 | Does ECS on EC2 mount EFS per host or per task? | trivial | not specced |
 | E2 | Placement differential: N tasks on 1 host vs N hosts, identical EFS | small | not specced |
 | E3 | Fargate ephemeral storage metadata latency | small | not specced |

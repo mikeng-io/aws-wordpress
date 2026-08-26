@@ -1,0 +1,15 @@
+{
+  "experiment": "E0-syscall-census",
+  "run_id": "20260826T105956Z-c16d429",
+  "utc": "2026-08-26T11:00:21Z",
+  "measures": "syscall counts, not latency",
+  "host_os": "Darwin 25.6.0 arm64",
+  "docker": "Docker version 29.2.1, build a5c7197",
+  "php": "8.3.33",
+  "wordpress": "7.1",
+  "kernel": "6.12.72-linuxkit",
+  "git_sha": "c16d429831957a1bc1379c02accbaf8afe634ad6",
+  "git_dirty": true,
+  "profiles": ["naive","tuned","max"],
+  "warmups_for_warm_cohort": 5
+}

@@ -57,3 +57,12 @@ This must be established before E2 is interpreted. See E1.
 - `E1-mount-topology` — establishes whether the mechanism is even available
 - `E2-placement-differential` — the direct test
 - `E0-syscall-census` — supplies the op-count multiplier the effect scales by
+
+## Multiplier from E0 (run `20260826T105956Z-c16d429`)
+
+A warm request under maximum PHP tuning still issues ~4,300 filesystem syscalls,
+~3,900 of them `stat`-family. A cold request issues ~15,400.
+
+These are the numbers per-op latency gets multiplied by, and E0 shows they cannot be
+reduced from inside `php.ini`. That does not confirm H1 — only E2 can — but it
+establishes that the effect H1 proposes has something substantial to act on.

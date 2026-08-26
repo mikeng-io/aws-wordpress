@@ -1,4 +1,4 @@
-# E0 apparatus. Local only, no AWS. See README.md for method.
+# E0 apparatus. Local only, no AWS, no cost. See README.md for method.
 #
 # SYS_PTRACE + seccomp:unconfined are required for strace to follow php-fpm forks.
 # They are scoped to this local experiment and must never appear in deployed apparatus.
@@ -11,12 +11,13 @@ services:
       MARIADB_DATABASE: wordpress
       MARIADB_USER: wordpress
       MARIADB_PASSWORD: e0-local-only
-    tmpfs:
-      - /var/lib/mysql   # keep DB off the FS under trace; E0 measures PHP's syscalls, not MariaDB's
+    volumes:
+      - dbdata:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
-      retries: 20
+      timeout: 5s
+      retries: 30
 
   wordpress:
     build:
@@ -34,8 +35,20 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: e0-local-only
-      # PROFILE selects which php-profiles/*.ini is mounted active. Set by run.sh.
+      # Selects which php-profiles/*.ini becomes active. Set per-profile by run.sh.
       PROFILE: ${PROFILE:-naive}
     volumes:
+      - wpdata:/var/www/html      # survives profile switches, so install/seed runs once
       - ./php-profiles:/php-profiles:ro
+      - ./scripts:/scripts:ro
+      - ./plugins.txt:/e0/plugins.txt:ro
       - ./out:/out
+    healthcheck:
+      test: ["CMD-SHELL", "cgi-fcgi -bind -connect 127.0.0.1:9000 </dev/null >/dev/null 2>&1 || exit 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  dbdata:
+  wpdata:

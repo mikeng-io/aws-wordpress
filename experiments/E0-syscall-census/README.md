@@ -14,46 +14,76 @@ Every later result is a function of this number. If a request issues 300 metadat
 ops, a 1 ms round trip costs 300 ms. If it issues 30, storage barely matters. Nobody
 appears to have published the figure for a realistic plugin-heavy install.
 
+## What this measures, and what it does not
+
+E0 measures **op counts, not op latency.** Docker volumes on a laptop say nothing
+about EFS, and no timing from this experiment should ever be quoted.
+
+Latency is E1–E3's job, on real infrastructure. E0 produces the multiplier that
+those measured latencies get multiplied by. Keeping the two separate is deliberate:
+counts are cheap, portable, and reproducible anywhere; latencies are none of those
+things.
+
 ## Prediction
 
 Pre-registered before running:
 
-- The `naive` profile issues an order of magnitude more `stat`/`lstat`/`newfstatat`
-  calls than `max`, because `opcache.validate_timestamps=1` re-stats every cached
-  file on every request.
+- The `naive` profile issues an order of magnitude more `stat`-family calls than
+  `max`, because `opcache.validate_timestamps=1` re-stats every cached file on every
+  request.
 - A large share of `naive` calls are **path-component** stats caused by realpath
-  cache misses, not distinct file lookups — meaning the effective multiplier is
-  higher than file count alone suggests.
+  cache misses, not distinct file lookups — so the effective multiplier is higher
+  than file count alone suggests.
 - `max` still issues a large burst on the *first* request of a worker's life
   (compilation), which is why cold starts stay expensive regardless of tuning.
 
 ## Method
 
-Determinism matters more than realism in the trace itself, so:
+Determinism in the trace matters more than realism of the traffic, so:
 
 - `pm = static`, `pm.max_children = 1` — exactly one worker handles the request, so
   the trace is attributable.
-- Requests issued via `cgi-fcgi` directly to the FastCGI socket, bypassing the web
-  server, so nginx does not contribute syscalls.
-- `strace -f -e trace=file` against the php-fpm master, following forks.
+- Requests issued via `cgi-fcgi` straight to the FastCGI socket, so no web server
+  contributes syscalls.
+- `strace -f -qq -s 512 -e trace=file` attached to the php-fpm master, following
+  forks. `-s 512` is required: strace's 32-char default truncates the deep plugin
+  paths this experiment exists to count.
 - Container needs `cap_add: SYS_PTRACE` and `seccomp:unconfined`.
 
-Each profile is traced for two request classes:
+**Cohorts.** *Cold* is the first request after the php-fpm master restarts. The
+master, not a worker — opcache lives in shared memory across the pool, so restarting
+a worker leaves it warm. *Warm* is the request after five warmups.
 
-1. **Cold** — first request after an opcache reset
-2. **Warm** — Nth request, opcache populated
+**Endpoints** are resolved at seed time into `endpoints.resolved.tsv`, because
+product and cart URLs depend on generated IDs. `wp-admin` is traced with a real
+logged-in cookie generated via `wp_generate_auth_cookie`; unauthenticated it would
+only ever trace the login redirect, which is not the path of interest.
 
-Endpoints traced: home, a product page, cart, `wp-admin` dashboard.
+## The install
+
+`plugins.txt` lists 26 wordpress.org slugs, weighted toward the popular and the
+bulky. Page caches, object caches, S3-offload and DB-abstraction plugins are
+deliberately excluded — they solve at the application layer what this study exists
+to measure at the infrastructure layer, and are out of scope per `CLAUDE.md`.
+
+Versions resolve at seed time and are written to `plugins.lock`, which is copied
+into the run's results directory. A rerun installs from the lock when present, so a
+run is reproducible even though the manifest is not hand-pinned.
 
 ## Output
 
-`results/E0/<run-id>/` containing per-profile, per-endpoint:
+`results/E0/<run-id>/` containing:
 
-- `raw.strace` — unmodified trace
-- `census.json` — counts by syscall, unique paths, path-component vs distinct-file
-  breakdown, and result (hit/miss) distribution
-- `meta.json` — provenance
+- `<profile>/<endpoint>.<cohort>.strace` — unmodified trace
+- `<profile>/<endpoint>.<cohort>.census.json` — counts by syscall and family, unique
+  paths, path-component vs distinct-file split, and errno distribution
+- `summary.json`, `summary.md` — the cross-profile table
+- `plugins.lock`, `endpoints.tsv`, `meta.json` — provenance
 
-## Status
+Runs are immutable. `run.sh` refuses to write into an existing run ID.
 
-`SKELETON` — apparatus scaffolded, not yet implemented. See `run.sh`.
+## Running
+
+```bash
+make e0
+```

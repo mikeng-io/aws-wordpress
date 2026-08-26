@@ -1,0 +1,200 @@
+{
+  "max": {
+    "cart.cold": {
+      "total": 16356,
+      "stat": 11127,
+      "open": 4984,
+      "unique_paths": 9034,
+      "component_ops": 2244,
+      "failed_ratio": 0.1071
+    },
+    "cart.warm": {
+      "total": 5023,
+      "stat": 4299,
+      "open": 517,
+      "unique_paths": 3021,
+      "component_ops": 427,
+      "failed_ratio": 0.3335
+    },
+    "home.cold": {
+      "total": 15426,
+      "stat": 10590,
+      "open": 4591,
+      "unique_paths": 8827,
+      "component_ops": 2125,
+      "failed_ratio": 0.1089
+    },
+    "home.warm": {
+      "total": 4305,
+      "stat": 3902,
+      "open": 196,
+      "unique_paths": 2836,
+      "component_ops": 321,
+      "failed_ratio": 0.3724
+    },
+    "product.cold": {
+      "total": 15603,
+      "stat": 10706,
+      "open": 4649,
+      "unique_paths": 8947,
+      "component_ops": 2138,
+      "failed_ratio": 0.1107
+    },
+    "product.warm": {
+      "total": 4354,
+      "stat": 3950,
+      "open": 194,
+      "unique_paths": 2883,
+      "component_ops": 324,
+      "failed_ratio": 0.379
+    },
+    "wp-admin.cold": {
+      "total": 15185,
+      "stat": 10344,
+      "open": 4601,
+      "unique_paths": 8705,
+      "component_ops": 2140,
+      "failed_ratio": 0.1086
+    },
+    "wp-admin.warm": {
+      "total": 4233,
+      "stat": 3746,
+      "open": 285,
+      "unique_paths": 2651,
+      "component_ops": 357,
+      "failed_ratio": 0.3711
+    }
+  },
+  "naive": {
+    "cart.cold": {
+      "total": 16356,
+      "stat": 11127,
+      "open": 4984,
+      "unique_paths": 9034,
+      "component_ops": 2244,
+      "failed_ratio": 0.1071
+    },
+    "cart.warm": {
+      "total": 5905,
+      "stat": 4371,
+      "open": 1291,
+      "unique_paths": 3583,
+      "component_ops": 463,
+      "failed_ratio": 0.2959
+    },
+    "home.cold": {
+      "total": 15426,
+      "stat": 10590,
+      "open": 4591,
+      "unique_paths": 8827,
+      "component_ops": 2125,
+      "failed_ratio": 0.1089
+    },
+    "home.warm": {
+      "total": 5115,
+      "stat": 3974,
+      "open": 898,
+      "unique_paths": 3330,
+      "component_ops": 357,
+      "failed_ratio": 0.3275
+    },
+    "product.cold": {
+      "total": 15603,
+      "stat": 10706,
+      "open": 4649,
+      "unique_paths": 8947,
+      "component_ops": 2138,
+      "failed_ratio": 0.1107
+    },
+    "product.warm": {
+      "total": 5224,
+      "stat": 4022,
+      "open": 956,
+      "unique_paths": 3432,
+      "component_ops": 360,
+      "failed_ratio": 0.3296
+    },
+    "wp-admin.cold": {
+      "total": 15185,
+      "stat": 10344,
+      "open": 4601,
+      "unique_paths": 8705,
+      "component_ops": 2140,
+      "failed_ratio": 0.1086
+    },
+    "wp-admin.warm": {
+      "total": 5127,
+      "stat": 3760,
+      "open": 1158,
+      "unique_paths": 3440,
+      "component_ops": 364,
+      "failed_ratio": 0.3091
+    }
+  },
+  "tuned": {
+    "cart.cold": {
+      "total": 16356,
+      "stat": 11127,
+      "open": 4984,
+      "unique_paths": 9034,
+      "component_ops": 2244,
+      "failed_ratio": 0.1071
+    },
+    "cart.warm": {
+      "total": 5023,
+      "stat": 4299,
+      "open": 517,
+      "unique_paths": 3021,
+      "component_ops": 427,
+      "failed_ratio": 0.3335
+    },
+    "home.cold": {
+      "total": 15426,
+      "stat": 10590,
+      "open": 4591,
+      "unique_paths": 8827,
+      "component_ops": 2125,
+      "failed_ratio": 0.1089
+    },
+    "home.warm": {
+      "total": 4305,
+      "stat": 3902,
+      "open": 196,
+      "unique_paths": 2836,
+      "component_ops": 321,
+      "failed_ratio": 0.3724
+    },
+    "product.cold": {
+      "total": 15603,
+      "stat": 10706,
+      "open": 4649,
+      "unique_paths": 8947,
+      "component_ops": 2138,
+      "failed_ratio": 0.1107
+    },
+    "product.warm": {
+      "total": 4354,
+      "stat": 3950,
+      "open": 194,
+      "unique_paths": 2883,
+      "component_ops": 324,
+      "failed_ratio": 0.379
+    },
+    "wp-admin.cold": {
+      "total": 15152,
+      "stat": 10321,
+      "open": 4591,
+      "unique_paths": 8692,
+      "component_ops": 2137,
+      "failed_ratio": 0.1088
+    },
+    "wp-admin.warm": {
+      "total": 4233,
+      "stat": 3746,
+      "open": 285,
+      "unique_paths": 2651,
+      "component_ops": 357,
+      "failed_ratio": 0.3711
+    }
+  }
+}

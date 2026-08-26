@@ -1,6 +1,6 @@
 # H3 — opcache tuning makes filesystem choice largely irrelevant at steady state
 
-**Status:** `UNTESTED`
+**Status:** `INCONCLUSIVE` — first evidence contradicts the prediction
 
 ## Claim
 
@@ -45,3 +45,22 @@ matrix matters mainly for cold starts and writes — which promotes H4.
 
 - `E0-syscall-census` — measures op counts per profile directly, locally, for free
 - `E2-placement-differential`
+
+## First evidence (E0, run `20260826T105956Z-c16d429`)
+
+Turning timestamp validation off removed ~700 `open` calls but only **1.8%** of
+`stat` calls (3974 -> 3902 on a warm home request). The predicted order-of-magnitude
+collapse did not occur.
+
+Grouping surviving ops by area shows why: the storm is plugin code doing its own
+`file_exists` / `is_readable` / template-hierarchy checks — wpforms-lite alone
+accounts for ~1155 ops, against ~103 for all of `wp-includes`. opcache is not
+involved in those and cannot remove them.
+
+Recorded as `INCONCLUSIVE` rather than `REFUTED` only because n=1 with no
+repetitions, and because the `tuned` profile was never actually exercised (its
+`revalidate_freq=60` window never elapsed inside the trace). The `naive` vs `max`
+comparison is clean, and the effect size is not one repetitions are likely to
+reverse.
+
+See [docs/findings/E0-first-run.md](../docs/findings/E0-first-run.md).
