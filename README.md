@@ -48,7 +48,7 @@ infrastructure. No timing from a laptop should ever be quoted about EFS.
 | Experiment | Question | Cost | Status |
 |---|---|---|---|
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **first run recorded** |
-| E1 | Does ECS on EC2 mount EFS per host or per task? | trivial | not specced |
+| [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.30/hr | specced, blocked on AWS access |
 | E2 | Placement differential: N tasks on 1 host vs N hosts, identical EFS | small | not specced |
 | E3 | Fargate ephemeral storage metadata latency | small | not specced |
 

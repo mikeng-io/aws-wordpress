@@ -96,7 +96,7 @@ def parse(path: Path) -> dict:
 
 
 def main(run_dir: Path) -> int:
-    traces = sorted(run_dir.glob("*/*.strace"))
+    traces = sorted(run_dir.glob("**/*.strace"))
     if not traces:
         print(f"e0_census: no traces under {run_dir}", file=sys.stderr)
         return 66
@@ -107,8 +107,9 @@ def main(run_dir: Path) -> int:
         (trace.with_suffix(".census.json")).write_text(json.dumps(census, indent=2) + "\n")
 
         profile = trace.parent.name
+        rep = trace.parent.parent.name if trace.parent.parent.name.startswith("rep-") else "rep-1"
         endpoint, cohort, _ = trace.name.split(".", 2)
-        summary.setdefault(profile, {})[f"{endpoint}.{cohort}"] = {
+        summary.setdefault(f"{rep}/{profile}", {})[f"{endpoint}.{cohort}"] = {
             "total": census["total_file_syscalls"],
             "stat": census["by_family"].get("stat", 0),
             "open": census["by_family"].get("open", 0),
