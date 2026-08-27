@@ -1,0 +1,930 @@
+{
+  "max/cart/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 16356.0,
+      "min": 16356,
+      "max": 16356,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 9034.0,
+      "min": 9034,
+      "max": 9034,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2244.0,
+      "min": 2244,
+      "max": 2244,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1752.0,
+      "min": 1752,
+      "max": 1752,
+      "iqr": 0.0
+    },
+    "stat_median": 11127.0,
+    "open_median": 4984.0
+  },
+  "max/cart/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 5023.0,
+      "min": 5023,
+      "max": 5023,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 3021.0,
+      "min": 3021,
+      "max": 3021,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 427.0,
+      "min": 427,
+      "max": 427,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1675.0,
+      "min": 1675,
+      "max": 1675,
+      "iqr": 0.0
+    },
+    "stat_median": 4299.0,
+    "open_median": 517.0
+  },
+  "max/home/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15426.0,
+      "min": 15426,
+      "max": 15426,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 8827.0,
+      "min": 8827,
+      "max": 8827,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2125.0,
+      "min": 2125,
+      "max": 2125,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1680.0,
+      "min": 1680,
+      "max": 1680,
+      "iqr": 0.0
+    },
+    "stat_median": 10590.0,
+    "open_median": 4591.0
+  },
+  "max/home/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 4305.0,
+      "min": 4305,
+      "max": 4305,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 2836.0,
+      "min": 2836,
+      "max": 2836,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 321.0,
+      "min": 321,
+      "max": 321,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1603.0,
+      "min": 1603,
+      "max": 1603,
+      "iqr": 0.0
+    },
+    "stat_median": 3902.0,
+    "open_median": 196.0
+  },
+  "max/product/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15603.0,
+      "min": 15603,
+      "max": 15603,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 8947.0,
+      "min": 8947,
+      "max": 8947,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2138.0,
+      "min": 2138,
+      "max": 2138,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1727.0,
+      "min": 1727,
+      "max": 1727,
+      "iqr": 0.0
+    },
+    "stat_median": 10706.0,
+    "open_median": 4649.0
+  },
+  "max/product/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 4354.0,
+      "min": 4354,
+      "max": 4354,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 2883.0,
+      "min": 2883,
+      "max": 2883,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 324.0,
+      "min": 324,
+      "max": 324,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1650.0,
+      "min": 1650,
+      "max": 1650,
+      "iqr": 0.0
+    },
+    "stat_median": 3950.0,
+    "open_median": 194.0
+  },
+  "max/wp-admin/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15185.0,
+      "min": 15152,
+      "max": 15185,
+      "iqr": 33.0
+    },
+    "unique_paths": {
+      "median": 8705.0,
+      "min": 8692,
+      "max": 8705,
+      "iqr": 13.0
+    },
+    "path_component_ops": {
+      "median": 2140.0,
+      "min": 2137,
+      "max": 2140,
+      "iqr": 3.0
+    },
+    "failed_ops": {
+      "median": 1649.0,
+      "min": 1649,
+      "max": 1649,
+      "iqr": 0.0
+    },
+    "stat_median": 10344.0,
+    "open_median": 4601.0
+  },
+  "max/wp-admin/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 4233.0,
+      "min": 4233,
+      "max": 4233,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 2651.0,
+      "min": 2651,
+      "max": 2651,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 357.0,
+      "min": 357,
+      "max": 357,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1571.0,
+      "min": 1571,
+      "max": 1571,
+      "iqr": 0.0
+    },
+    "stat_median": 3746.0,
+    "open_median": 285.0
+  },
+  "naive/cart/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 16356.0,
+      "min": 16356,
+      "max": 16356,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 9034.0,
+      "min": 9034,
+      "max": 9034,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2244.0,
+      "min": 2244,
+      "max": 2244,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1752.0,
+      "min": 1752,
+      "max": 1752,
+      "iqr": 0.0
+    },
+    "stat_median": 11127.0,
+    "open_median": 4984.0
+  },
+  "naive/cart/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 5905.0,
+      "min": 5905,
+      "max": 5905,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 3583.0,
+      "min": 3583,
+      "max": 3583,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 463.0,
+      "min": 463,
+      "max": 463,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1747.0,
+      "min": 1747,
+      "max": 1747,
+      "iqr": 0.0
+    },
+    "stat_median": 4371.0,
+    "open_median": 1291.0
+  },
+  "naive/cart/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 9598,
+      "min": 9598,
+      "max": 9598,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6517,
+      "min": 6517,
+      "max": 6517,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 465,
+      "min": 465,
+      "max": 465,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1749,
+      "min": 1749,
+      "max": 1749,
+      "iqr": null
+    },
+    "stat_median": 8063,
+    "open_median": 1291
+  },
+  "naive/home/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15426.0,
+      "min": 15426,
+      "max": 15811,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 8827.0,
+      "min": 8827,
+      "max": 8870,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2125.0,
+      "min": 2125,
+      "max": 2137,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1680.0,
+      "min": 1680,
+      "max": 1687,
+      "iqr": 0.0
+    },
+    "stat_median": 10590.0,
+    "open_median": 4591.0
+  },
+  "naive/home/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 5115.0,
+      "min": 5115,
+      "max": 5135,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 3330.0,
+      "min": 3330,
+      "max": 3358,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 357.0,
+      "min": 349,
+      "max": 357,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1675.0,
+      "min": 1659,
+      "max": 1675,
+      "iqr": 0.0
+    },
+    "stat_median": 3974.0,
+    "open_median": 898.0
+  },
+  "naive/home/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 8808,
+      "min": 8784,
+      "max": 8841,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6313,
+      "min": 6297,
+      "max": 6326,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 359,
+      "min": 351,
+      "max": 362,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1677,
+      "min": 1661,
+      "max": 1677,
+      "iqr": null
+    },
+    "stat_median": 7666,
+    "open_median": 908
+  },
+  "naive/product/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15603.0,
+      "min": 15603,
+      "max": 15636,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 8947.0,
+      "min": 8947,
+      "max": 8960,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2138.0,
+      "min": 2138,
+      "max": 2141,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1727.0,
+      "min": 1727,
+      "max": 1727,
+      "iqr": 0.0
+    },
+    "stat_median": 10706.0,
+    "open_median": 4649.0
+  },
+  "naive/product/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 5224.0,
+      "min": 5224,
+      "max": 5224,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 3432.0,
+      "min": 3432,
+      "max": 3432,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 360.0,
+      "min": 360,
+      "max": 360,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1722.0,
+      "min": 1722,
+      "max": 1722,
+      "iqr": 0.0
+    },
+    "stat_median": 4022.0,
+    "open_median": 956.0
+  },
+  "naive/product/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 8917,
+      "min": 8917,
+      "max": 8917,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6415,
+      "min": 6415,
+      "max": 6415,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 362,
+      "min": 362,
+      "max": 362,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1724,
+      "min": 1724,
+      "max": 1724,
+      "iqr": null
+    },
+    "stat_median": 7714,
+    "open_median": 956
+  },
+  "naive/wp-admin/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15182.0,
+      "min": 15152,
+      "max": 15186,
+      "iqr": 3.0
+    },
+    "unique_paths": {
+      "median": 8704.0,
+      "min": 8692,
+      "max": 8705,
+      "iqr": 1.0
+    },
+    "path_component_ops": {
+      "median": 2140.0,
+      "min": 2137,
+      "max": 2140,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1649.0,
+      "min": 1649,
+      "max": 1649,
+      "iqr": 0.0
+    },
+    "stat_median": 10342.0,
+    "open_median": 4600.0
+  },
+  "naive/wp-admin/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 5127.0,
+      "min": 5127,
+      "max": 5127,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 3440.0,
+      "min": 3440,
+      "max": 3440,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 364.0,
+      "min": 364,
+      "max": 364,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1585.0,
+      "min": 1585,
+      "max": 1585,
+      "iqr": 0.0
+    },
+    "stat_median": 3760.0,
+    "open_median": 1158.0
+  },
+  "naive/wp-admin/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 8560,
+      "min": 8560,
+      "max": 8560,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6067,
+      "min": 6067,
+      "max": 6067,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 366,
+      "min": 366,
+      "max": 366,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1587,
+      "min": 1587,
+      "max": 1587,
+      "iqr": null
+    },
+    "stat_median": 7192,
+    "open_median": 1158
+  },
+  "tuned/cart/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 16389.0,
+      "min": 16356,
+      "max": 16389,
+      "iqr": 33.0
+    },
+    "unique_paths": {
+      "median": 9047.0,
+      "min": 9034,
+      "max": 9047,
+      "iqr": 13.0
+    },
+    "path_component_ops": {
+      "median": 2247.0,
+      "min": 2244,
+      "max": 2247,
+      "iqr": 3.0
+    },
+    "failed_ops": {
+      "median": 1752.0,
+      "min": 1752,
+      "max": 1752,
+      "iqr": 0.0
+    },
+    "stat_median": 11150.0,
+    "open_median": 4994.0
+  },
+  "tuned/cart/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 5023.0,
+      "min": 5023,
+      "max": 5023,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 3021.0,
+      "min": 3021,
+      "max": 3021,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 427.0,
+      "min": 427,
+      "max": 427,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1675.0,
+      "min": 1675,
+      "max": 1675,
+      "iqr": 0.0
+    },
+    "stat_median": 4299.0,
+    "open_median": 517.0
+  },
+  "tuned/cart/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 9541,
+      "min": 9541,
+      "max": 9541,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6470,
+      "min": 6470,
+      "max": 6470,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 438,
+      "min": 438,
+      "max": 438,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1689,
+      "min": 1689,
+      "max": 1689,
+      "iqr": null
+    },
+    "stat_median": 8800,
+    "open_median": 527
+  },
+  "tuned/home/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15426.0,
+      "min": 15426,
+      "max": 15459,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 8827.0,
+      "min": 8827,
+      "max": 8840,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2125.0,
+      "min": 2125,
+      "max": 2128,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1680.0,
+      "min": 1680,
+      "max": 1680,
+      "iqr": 0.0
+    },
+    "stat_median": 10590.0,
+    "open_median": 4591.0
+  },
+  "tuned/home/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 4305.0,
+      "min": 4305,
+      "max": 4305,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 2836.0,
+      "min": 2836,
+      "max": 2836,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 321.0,
+      "min": 321,
+      "max": 321,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1603.0,
+      "min": 1603,
+      "max": 1603,
+      "iqr": 0.0
+    },
+    "stat_median": 3902.0,
+    "open_median": 196.0
+  },
+  "tuned/home/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 8751,
+      "min": 8738,
+      "max": 8751,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6266,
+      "min": 6263,
+      "max": 6266,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 332,
+      "min": 329,
+      "max": 332,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1617,
+      "min": 1617,
+      "max": 1617,
+      "iqr": null
+    },
+    "stat_median": 8331,
+    "open_median": 206
+  },
+  "tuned/product/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15603.0,
+      "min": 15603,
+      "max": 15603,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 8947.0,
+      "min": 8947,
+      "max": 8947,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 2138.0,
+      "min": 2138,
+      "max": 2138,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1727.0,
+      "min": 1727,
+      "max": 1727,
+      "iqr": 0.0
+    },
+    "stat_median": 10706.0,
+    "open_median": 4649.0
+  },
+  "tuned/product/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 4354.0,
+      "min": 4354,
+      "max": 4354,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 2883.0,
+      "min": 2883,
+      "max": 2883,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 324.0,
+      "min": 324,
+      "max": 324,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1650.0,
+      "min": 1650,
+      "max": 1650,
+      "iqr": 0.0
+    },
+    "stat_median": 3950.0,
+    "open_median": 194.0
+  },
+  "tuned/product/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 8860,
+      "min": 8860,
+      "max": 8860,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6368,
+      "min": 6368,
+      "max": 6368,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 335,
+      "min": 335,
+      "max": 335,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1664,
+      "min": 1664,
+      "max": 1664,
+      "iqr": null
+    },
+    "stat_median": 8439,
+    "open_median": 204
+  },
+  "tuned/wp-admin/cold": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 15185.0,
+      "min": 15152,
+      "max": 15185,
+      "iqr": 33.0
+    },
+    "unique_paths": {
+      "median": 8705.0,
+      "min": 8692,
+      "max": 8705,
+      "iqr": 13.0
+    },
+    "path_component_ops": {
+      "median": 2140.0,
+      "min": 2137,
+      "max": 2140,
+      "iqr": 3.0
+    },
+    "failed_ops": {
+      "median": 1649.0,
+      "min": 1649,
+      "max": 1649,
+      "iqr": 0.0
+    },
+    "stat_median": 10344.0,
+    "open_median": 4601.0
+  },
+  "tuned/wp-admin/warm": {
+    "n": 10,
+    "total_file_syscalls": {
+      "median": 4233.0,
+      "min": 4233,
+      "max": 4233,
+      "iqr": 0.0
+    },
+    "unique_paths": {
+      "median": 2651.0,
+      "min": 2651,
+      "max": 2651,
+      "iqr": 0.0
+    },
+    "path_component_ops": {
+      "median": 357.0,
+      "min": 357,
+      "max": 357,
+      "iqr": 0.0
+    },
+    "failed_ops": {
+      "median": 1571.0,
+      "min": 1571,
+      "max": 1571,
+      "iqr": 0.0
+    },
+    "stat_median": 3746.0,
+    "open_median": 285.0
+  },
+  "tuned/wp-admin/warm-aged": {
+    "n": 3,
+    "total_file_syscalls": {
+      "median": 8577,
+      "min": 8577,
+      "max": 8577,
+      "iqr": null
+    },
+    "unique_paths": {
+      "median": 6075,
+      "min": 6075,
+      "max": 6075,
+      "iqr": null
+    },
+    "path_component_ops": {
+      "median": 365,
+      "min": 365,
+      "max": 365,
+      "iqr": null
+    },
+    "failed_ops": {
+      "median": 1585,
+      "min": 1585,
+      "max": 1585,
+      "iqr": null
+    },
+    "stat_median": 8083,
+    "open_median": 285
+  }
+}

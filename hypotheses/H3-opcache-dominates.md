@@ -64,3 +64,18 @@ comparison is clean, and the effect size is not one repetitions are likely to
 reverse.
 
 See [docs/findings/E0-first-run.md](../docs/findings/E0-first-run.md).
+
+## Second evidence (E0 at n=10)
+
+The first run's reading was an apparatus artefact — both profiles were sampled
+inside their revalidation window. With a `warm-aged` cohort, validation costs
+~+4,400 stat calls on the request that crosses the window (~3,900 -> ~8,300).
+
+But turning validation off does not approach zero: a warm request still issues
+~3,900 stat calls, which is plugin code and outside opcache's reach. So tuning
+removes a periodic tax and leaves a hard floor.
+
+Still `INCONCLUSIVE`: H3's kill condition concerns the spread across storage
+backends at max tuning, and E0 measures no storage backends. Only E2 can settle it.
+
+See [docs/findings/E0-n10.md](../docs/findings/E0-n10.md).

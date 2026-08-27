@@ -37,7 +37,10 @@ cleanup() {
   # An aborted run is not a result. Leaving a half-populated directory under
   # results/ would let it be mistaken for data, so drop it when no trace was
   # captured. Complete runs are never touched.
-  if [[ -d "$OUT" ]] && ! compgen -G "${OUT}/*/*.strace" >/dev/null; then
+  # Depth-independent on purpose: a glob pinned to a fixed depth silently stopped
+  # matching when the layout gained a rep-N level, and this guard then deleted a
+  # completed run.
+  if [[ -d "$OUT" ]] && [[ -z "$(find "$OUT" -name '*.strace' -print -quit 2>/dev/null)" ]]; then
     rm -rf "$OUT"
     echo "E0: aborted before any trace - removed empty ${OUT}"
   fi
