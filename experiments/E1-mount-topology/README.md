@@ -60,4 +60,9 @@ region and AZ.
 
 ## Status
 
-`SPECCED` — apparatus not yet written. Blocked on AWS account access.
+`READY` — apparatus written (`infra/lib/stacks/e1-mount-topology.ts`), synths clean,
+CDK bootstrapped in `ap-southeast-1`. Not yet deployed.
+
+```bash
+cd infra && ./node_modules/.bin/cdk deploy E1MountTopology --require-approval never
+```

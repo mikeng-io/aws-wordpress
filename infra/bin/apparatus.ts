@@ -2,21 +2,34 @@
 /**
  * CDK app for the study's apparatus.
  *
- * There is deliberately no "platform" stack here.  Stacks are added per experiment,
+ * There is deliberately no "platform" stack here. Stacks are added per experiment,
  * built to answer one question, and are allowed to be thrown away afterwards.
  * Resist generalising across experiments until at least three of them exist and
  * the shared shape is observed rather than guessed.
  */
-import { App } from 'aws-cdk-lib';
+import { App, Tags } from 'aws-cdk-lib';
+import { E1MountTopologyStack } from '../lib/stacks/e1-mount-topology.js';
 
 const app = new App();
 
-// Experiment stacks are registered here as they are specced.
-//
-//   E1 - mount topology        (does ECS on EC2 mount EFS per host or per task?)
-//   E2 - placement differential (N tasks on 1 host vs N hosts, identical EFS)
-//   E3 - Fargate ephemeral storage latency
-//
-// E0 needs no AWS resources; it runs locally under experiments/E0-syscall-census.
+// Region is fixed for the study - see docs/region-decision.md. Every latency and
+// cost figure is region-specific, so this is provenance rather than preference.
+const env = {
+  account: process.env.CDK_DEFAULT_ACCOUNT,
+  region: process.env.CDK_DEFAULT_REGION ?? 'ap-southeast-1',
+};
+
+new E1MountTopologyStack(app, 'E1MountTopology', {
+  env,
+  experimentId: 'E1',
+  estimatedHourlyUsd: 0.025, // 1x t4g.small + 1 public IPv4 + EFS at near-zero usage
+  description: 'E1 - does ECS on EC2 mount EFS per host or per task?',
+});
+
+// E2 - placement differential (N tasks on 1 host vs N hosts, identical EFS)
+// E3 - Fargate ephemeral storage latency
+// Neither is specced as apparatus yet; E1 gates whether E2 is worth building.
+
+Tags.of(app).add('Study', 'aws-wordpress');
 
 app.synth();
