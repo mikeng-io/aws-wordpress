@@ -55,6 +55,12 @@ infrastructure. No timing from a laptop should ever be quoted about EFS.
 E0–E3 are ordered by kill-power per dollar. Between them they either support the
 central thesis or destroy it, cheaply and early.
 
+## Region
+
+`ap-southeast-1`, fixed for the study. See
+[docs/region-decision.md](docs/region-decision.md) — region is provenance, and all
+cost figures are Singapore pricing.
+
 ## Running it
 
 ```bash
