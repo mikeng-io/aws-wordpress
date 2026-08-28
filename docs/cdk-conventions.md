@@ -58,6 +58,20 @@ origin can be reached around it.
    policy itself.
 3. **`props.cloudFrontHashHeader = ...` mutates the props object** it was handed.
 
+## Stack naming
+
+`<ExperimentId>-<PascalSlug>-<topology>` — e.g. `E1-MountTopology-dev`.
+
+A CDK stack ID is load-bearing: renaming one orphans the CloudFormation stack rather
+than renaming it. So every component is present from the first deploy rather than
+retrofitted.
+
+- **Experiment ID** matches the `experiments/` directory and the `results/` path, so
+  a stack, its method, and its data are greppable by one token.
+- **Topology suffix** exists because `dev` and `prod` are different measurements, not
+  different environments. Without it, deploying a prod variant would overwrite the
+  dev stack instead of sitting beside it.
+
 ## This repo's additions
 
 - `ExperimentStack` base class enforcing `Experiment` tagging and a declared

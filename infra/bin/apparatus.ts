@@ -19,9 +19,14 @@ const env = {
   region: process.env.CDK_DEFAULT_REGION ?? 'ap-southeast-1',
 };
 
-new E1MountTopologyStack(app, 'E1MountTopology', {
+// Stack naming: <ExperimentId>-<PascalSlug>-<topology>. A CDK stack ID is
+// load-bearing - renaming one orphans the CloudFormation stack rather than renaming
+// it - so the topology suffix is present from the first deploy, not retrofitted
+// when a prod variant is eventually needed.
+new E1MountTopologyStack(app, 'E1-MountTopology-dev', {
   env,
   experimentId: 'E1',
+  topology: 'dev',
   estimatedHourlyUsd: 0.025, // 1x t4g.small + 1 public IPv4 + EFS at near-zero usage
   description: 'E1 - does ECS on EC2 mount EFS per host or per task?',
 });

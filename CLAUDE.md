@@ -69,6 +69,9 @@ that can say so; do not design experiments that can only confirm it.
 - Experiments are `E<n>-<slug>`; hypotheses are `H<n>-<slug>`. Both are stable once
   assigned — never renumber, since results reference them.
 - Result paths: `results/E<n>/<run-id>/` with a `meta.json` carrying provenance.
+- CDK stack IDs: `<ExperimentId>-<PascalSlug>-<topology>`, e.g. `E1-MountTopology-dev`.
+  Stack IDs are load-bearing — renaming one orphans the CloudFormation stack — so
+  they are decided before the first deploy, never after.
 - Every experiment README states its question, prediction, method, and the
   hypothesis it bears on, before any code.
 
