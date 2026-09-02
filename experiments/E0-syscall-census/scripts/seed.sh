@@ -82,6 +82,7 @@ echo "seed: ${OUT}/plugins.lock records $(wc -l < "${OUT}/plugins.lock") active 
 # --- resolve endpoint IDs ---------------------------------------------------
 PRODUCT_ID=$($WPQ post list --post_type=product --field=ID --posts_per_page=1 | head -1)
 CART_ID=$($WPQ option get woocommerce_cart_page_id 2>/dev/null || echo "")
+CHECKOUT_ID=$($WPQ option get woocommerce_checkout_page_id 2>/dev/null || echo "")
 
 if [[ -z "$PRODUCT_ID" ]]; then
   echo "seed: FATAL no products - a WooCommerce-less census misses the point of E0" >&2
@@ -93,6 +94,13 @@ fi
   echo -e "wp-admin\t/wp-admin/"
   echo -e "product\t/?post_type=product&p=${PRODUCT_ID}"
   [[ -n "$CART_ID" && "$CART_ID" != "0" ]] && echo -e "cart\t/?page_id=${CART_ID}"
+  # Traced with an EMPTY cart. WooCommerce short-circuits checkout on an empty
+  # cart before loading shipping-method and payment-gateway classes - the exact
+  # code path this endpoint exists to capture. Populating a real cart session
+  # first needs an add-to-cart HTTP round-trip to obtain a wp_woocommerce_session_*
+  # cookie, which trace.sh does not yet perform. Known limitation until that
+  # exists; do not read this endpoint's numbers as the full checkout cost.
+  [[ -n "$CHECKOUT_ID" && "$CHECKOUT_ID" != "0" ]] && echo -e "checkout\t/?page_id=${CHECKOUT_ID}"
 } > "${OUT}/endpoints.resolved.tsv"
 
 echo "seed: resolved endpoints:"

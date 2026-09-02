@@ -1,0 +1,15 @@
+# Viewer overlay: adds nginx in front of the E0 php-fpm apparatus so a human can
+# browse it. Not part of the measurement methodology - never load this file when
+# running run.sh / make e0.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.browse.yml up -d
+services:
+  nginx:
+    image: nginx:1.27-alpine
+    depends_on:
+      - wordpress
+    ports:
+      - "8088:80"
+    volumes:
+      - wpdata:/var/www/html:ro
+      - ./.browse/nginx.conf:/etc/nginx/conf.d/default.conf:ro

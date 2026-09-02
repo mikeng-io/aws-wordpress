@@ -55,9 +55,20 @@ master, not a worker — opcache lives in shared memory across the pool, so rest
 a worker leaves it warm. *Warm* is the request after five warmups.
 
 **Endpoints** are resolved at seed time into `endpoints.resolved.tsv`, because
-product and cart URLs depend on generated IDs. `wp-admin` is traced with a real
-logged-in cookie generated via `wp_generate_auth_cookie`; unauthenticated it would
-only ever trace the login redirect, which is not the path of interest.
+product, cart, and checkout URLs depend on generated/WooCommerce-assigned IDs.
+`wp-admin` is traced with a real logged-in cookie generated via
+`wp_generate_auth_cookie`; unauthenticated it would only ever trace the login
+redirect, which is not the path of interest.
+
+**`checkout` is traced with an empty cart.** WooCommerce short-circuits checkout
+before loading shipping-method and payment-gateway classes when the cart has
+nothing in it — which is the exact mechanism this endpoint exists to observe
+(exploratory browsing found the cart endpoint disproportionately heavy, traced to
+WooCommerce conditionally `include`-ing a class file per enabled gateway and
+shipping method). Populating a real cart session needs an add-to-cart HTTP
+round-trip first, to obtain a `wp_woocommerce_session_*` cookie, which `trace.sh`
+does not yet perform. Until it does, `checkout`'s numbers are a floor, not the full
+cost — do not quote them as the complete checkout path.
 
 ## The install
 

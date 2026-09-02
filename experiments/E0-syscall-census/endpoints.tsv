@@ -3,3 +3,4 @@ home	/	base
 wp-admin	/wp-admin/	base
 product	/?post_type=product&p=PRODUCT_ID	catalog
 cart	/?page_id=CART_ID	catalog
+checkout	/?page_id=CHECKOUT_ID	catalog
