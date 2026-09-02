@@ -3,8 +3,14 @@
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md) — decides whether its
 mechanism physically exists.
 
-**Cost:** ~$0.30/hr while up (2 × t4g.small + EFS). Torn down in the same command
-that runs it. Nothing persists.
+**Cost:** ~$0.14/hr while up — one `t4g.small`, nine interface VPC endpoints, EFS at
+near-zero usage. Torn down in the same command that runs it. Nothing persists.
+
+Most of that is the endpoints. Running the instance in a public subnet with a public
+IP would cost ~$0.024/hr instead, and was the original design here. It was the wrong
+trade: a workload that needs no inbound access and no internet route belongs in a
+private isolated subnet, and paying $0.11/hr to keep it there is not a real cost
+question.
 
 ## Question
 

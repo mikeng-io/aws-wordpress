@@ -7,6 +7,7 @@ import * as logs from 'aws-cdk-lib/aws-logs';
 import * as autoscaling from 'aws-cdk-lib/aws-autoscaling';
 import { Construct } from 'constructs';
 import { ExperimentStack, ExperimentStackProps } from '../experiment-stack.js';
+import { NatStrategy, resolveNat } from '../nat-strategy.js';
 
 /**
  * E1 - does the ECS agent mount EFS once per host, or once per task?
@@ -16,16 +17,20 @@ import { ExperimentStack, ExperimentStackProps } from '../experiment-stack.js';
  * This stack puts two tasks on one instance against one filesystem so the question
  * can be answered by inspection.
  *
- * Deliberately minimal, and deliberately `dev` topology: a single AZ, a public
- * subnet, and no NAT Gateway. The instance reaches SSM and ECR through the internet
- * gateway with an egress-only security group, which costs the price of one public
- * IPv4 address rather than $0.045/hr for NAT or $0.06/hr for six interface
- * endpoints. Nothing here is a performance measurement, so single-AZ costs us
- * nothing in validity.
+ * `dev` topology - a single AZ, because nothing here is a performance measurement
+ * and single-AZ costs no validity.
+ *
+ * The container instance sits in a PRIVATE_ISOLATED subnet with no public IP and no
+ * route to an internet gateway. Egress reaches exactly the AWS services the ECS
+ * agent, SSM and ECR require, through interface endpoints, plus the free S3 gateway
+ * endpoint for image layers. There is no NAT because nothing here needs the public
+ * internet - not because NAT is expensive.
  */
 export interface E1StackProps extends ExperimentStackProps {
   /** Both tasks must land here, so the instance has to fit them both. */
   readonly instanceType?: ec2.InstanceType;
+  /** Egress strategy. E1 needs none; the prop exists so it is never hardcoded. */
+  readonly nat: NatStrategy;
 }
 
 export class E1MountTopologyStack extends ExperimentStack {
@@ -36,24 +41,76 @@ export class E1MountTopologyStack extends ExperimentStack {
       props.instanceType ?? ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.SMALL);
 
     // --- network ------------------------------------------------------------
+    const nat = resolveNat(props.nat);
+
+    // A NAT strategy of 'none' needs no public subnet at all. Any other strategy
+    // does, since that is where the gateway or instance has to live.
+    const subnetConfiguration: ec2.SubnetConfiguration[] =
+      props.nat.kind === 'none'
+        ? [{ name: 'Isolated', subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 24 }]
+        : [
+            { name: 'Public', subnetType: ec2.SubnetType.PUBLIC, cidrMask: 24 },
+            { name: 'Private', subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS, cidrMask: 24 },
+          ];
+
     const vpc = new ec2.Vpc(this, 'Vpc', {
       ipAddresses: ec2.IpAddresses.cidr('10.42.0.0/16'),
       maxAzs: 1,
-      natGateways: 0,
-      subnetConfiguration: [
-        { name: 'Public', subnetType: ec2.SubnetType.PUBLIC, cidrMask: 24 },
-      ],
+      natGateways: nat.natGateways,
+      natGatewayProvider: nat.natGatewayProvider,
+      subnetConfiguration,
     });
 
-    // Free, and it keeps ECR layer pulls off any metered path. Cheap insurance
-    // against the NAT-data-processing trap recorded in H7.
-    vpc.addGatewayEndpoint('S3Endpoint', { service: ec2.GatewayVpcEndpointAwsService.S3 });
+    /** Where the workload runs. Never public. */
+    const workloadSubnets: ec2.SubnetSelection =
+      props.nat.kind === 'none'
+        ? { subnetType: ec2.SubnetType.PRIVATE_ISOLATED }
+        : { subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS };
 
     const instanceSecurityGroup = new ec2.SecurityGroup(this, 'InstanceSecurityGroup', {
       vpc,
-      description: 'E1 container instance. Egress only - access is via SSM, not SSH.',
+      description: 'E1 container instance. No inbound; access is via SSM, not SSH.',
       allowAllOutbound: true,
     });
+
+    // --- egress via endpoints, not the internet -----------------------------
+    // Free, no per-AZ charge, and it carries ECR image layers - which is also the
+    // NAT data-processing trap recorded in H7.
+    vpc.addGatewayEndpoint('S3Endpoint', { service: ec2.GatewayVpcEndpointAwsService.S3 });
+
+    const endpointSecurityGroup = new ec2.SecurityGroup(this, 'EndpointSecurityGroup', {
+      vpc,
+      description: 'E1 interface endpoints',
+      allowAllOutbound: false,
+    });
+    endpointSecurityGroup.addIngressRule(
+      instanceSecurityGroup,
+      ec2.Port.tcp(443),
+      'HTTPS from the container instance only',
+    );
+
+    // An ECS container instance with no internet route needs every one of these.
+    // Omitting ECS_AGENT or ECS_TELEMETRY leaves the instance unable to register
+    // with the cluster, which presents as a silent failure to place tasks.
+    const interfaceEndpoints: Record<string, ec2.InterfaceVpcEndpointAwsService> = {
+      Ecr: ec2.InterfaceVpcEndpointAwsService.ECR,
+      EcrDocker: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER,
+      Logs: ec2.InterfaceVpcEndpointAwsService.CLOUDWATCH_LOGS,
+      Ssm: ec2.InterfaceVpcEndpointAwsService.SSM,
+      SsmMessages: ec2.InterfaceVpcEndpointAwsService.SSM_MESSAGES,
+      Ec2Messages: ec2.InterfaceVpcEndpointAwsService.EC2_MESSAGES,
+      Ecs: ec2.InterfaceVpcEndpointAwsService.ECS,
+      EcsAgent: ec2.InterfaceVpcEndpointAwsService.ECS_AGENT,
+      EcsTelemetry: ec2.InterfaceVpcEndpointAwsService.ECS_TELEMETRY,
+    };
+    for (const [id, service] of Object.entries(interfaceEndpoints)) {
+      vpc.addInterfaceEndpoint(`${id}Endpoint`, {
+        service,
+        securityGroups: [endpointSecurityGroup],
+        subnets: workloadSubnets,
+        privateDnsEnabled: true,
+      });
+    }
 
     const fileSystemSecurityGroup = new ec2.SecurityGroup(this, 'FileSystemSecurityGroup', {
       vpc,
@@ -89,8 +146,8 @@ export class E1MountTopologyStack extends ExperimentStack {
       maxCapacity: 1,
       desiredCapacity: 1,
       securityGroup: instanceSecurityGroup,
-      vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
-      associatePublicIpAddress: true,
+      vpcSubnets: workloadSubnets,
+      associatePublicIpAddress: false,
       requireImdsv2: true,
     });
     autoScalingGroup.role.addManagedPolicy(
@@ -146,6 +203,7 @@ export class E1MountTopologyStack extends ExperimentStack {
       taskDefinition,
       desiredCount: 2, // both land on the single instance - that is the whole point
       securityGroups: [instanceSecurityGroup],
+      vpcSubnets: workloadSubnets,
       enableExecuteCommand: true,
       minHealthyPercent: 0,
       circuitBreaker: { rollback: false },
@@ -155,5 +213,7 @@ export class E1MountTopologyStack extends ExperimentStack {
     new CfnOutput(this, 'ServiceName', { value: service.serviceName });
     new CfnOutput(this, 'FileSystemId', { value: fileSystem.fileSystemId });
     new CfnOutput(this, 'AsgName', { value: autoScalingGroup.autoScalingGroupName });
+    // Recorded so a result can state the egress topology it was measured under.
+    new CfnOutput(this, 'NatStrategy', { value: nat.description });
   }
 }

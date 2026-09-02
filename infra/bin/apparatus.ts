@@ -9,6 +9,7 @@
  */
 import { App, Tags } from 'aws-cdk-lib';
 import { E1MountTopologyStack } from '../lib/stacks/e1-mount-topology.js';
+import { NatStrategy, natPlanningHourlyUsd } from '../lib/nat-strategy.js';
 
 const app = new App();
 
@@ -23,11 +24,22 @@ const env = {
 // load-bearing - renaming one orphans the CloudFormation stack rather than renaming
 // it - so the topology suffix is present from the first deploy, not retrofitted
 // when a prod variant is eventually needed.
+// E1 asks a question about mount topology, not about egress. The instance sits in a
+// private isolated subnet with no public IP and no internet route, reaching AWS
+// services through interface endpoints. No NAT because nothing needs the public
+// internet - the choice is declared rather than assumed.
+const e1Nat: NatStrategy = { kind: 'none' };
+
 new E1MountTopologyStack(app, 'E1-MountTopology-dev', {
   env,
   experimentId: 'E1',
   topology: 'dev',
-  estimatedHourlyUsd: 0.025, // 1x t4g.small + 1 public IPv4 + EFS at near-zero usage
+  nat: e1Nat,
+  // 1x t4g.small (~0.019) + 9 interface endpoints (~0.117) + EFS at near-zero usage,
+  // plus whatever the egress strategy costs. Planning estimate, not a measurement -
+  // see H7. Endpoints cost more than the public-subnet shortcut they replace; that
+  // shortcut was the wrong trade.
+  estimatedHourlyUsd: 0.14 + natPlanningHourlyUsd(e1Nat),
   description: 'E1 - does ECS on EC2 mount EFS per host or per task?',
 });
 
