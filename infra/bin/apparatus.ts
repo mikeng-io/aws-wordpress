@@ -35,11 +35,11 @@ new E1MountTopologyStack(app, 'E1-MountTopology-dev', {
   experimentId: 'E1',
   topology: 'dev',
   nat: e1Nat,
-  // 1x t4g.small (~0.019) + 9 interface endpoints (~0.117) + EFS at near-zero usage,
+  // 1x t4g.small (~0.019) + 10 interface endpoints (~0.13) + EFS at near-zero usage,
   // plus whatever the egress strategy costs. Planning estimate, not a measurement -
   // see H7. Endpoints cost more than the public-subnet shortcut they replace; that
   // shortcut was the wrong trade.
-  estimatedHourlyUsd: 0.14 + natPlanningHourlyUsd(e1Nat),
+  estimatedHourlyUsd: 0.15 + natPlanningHourlyUsd(e1Nat),
   description: 'E1 - does ECS on EC2 mount EFS per host or per task?',
 });
 

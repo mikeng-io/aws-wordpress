@@ -1,4 +1,4 @@
-import { CfnOutput, RemovalPolicy } from 'aws-cdk-lib';
+import { CfnOutput, Duration, RemovalPolicy, Stack } from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as efs from 'aws-cdk-lib/aws-efs';
@@ -95,6 +95,14 @@ export class E1MountTopologyStack extends ExperimentStack {
     // Omitting ECS_AGENT or ECS_TELEMETRY leaves the instance unable to register
     // with the cluster, which presents as a silent failure to place tasks.
     const interfaceEndpoints: Record<string, ec2.InterfaceVpcEndpointAwsService> = {
+      // Required for cfn-signal (see the ASG's `signals` config below) to reach the
+      // CloudFormation control plane. Confirmed missing by direct evidence: the
+      // ASG's CreationPolicy waited its full 5-minute timeout and received zero
+      // signals, with no other explanation - ECS_CLUSTER config and cfn-signal's
+      // presence on the AMI were both otherwise verified. Historically this call
+      // required the public internet; CloudFormation added PrivateLink support
+      // specifically so it works from an isolated subnet like this one.
+      CloudFormation: ec2.InterfaceVpcEndpointAwsService.CLOUDFORMATION,
       Ecr: ec2.InterfaceVpcEndpointAwsService.ECR,
       EcrDocker: ec2.InterfaceVpcEndpointAwsService.ECR_DOCKER,
       Logs: ec2.InterfaceVpcEndpointAwsService.CLOUDWATCH_LOGS,
@@ -152,6 +160,16 @@ export class E1MountTopologyStack extends ExperimentStack {
       vpcSubnets: workloadSubnets,
       associatePublicIpAddress: false,
       requireImdsv2: true,
+      // Without this, CloudFormation marks the ASG resource CREATE_COMPLETE as
+      // soon as the CreateAutoScalingGroup API call succeeds - it does NOT wait for
+      // an instance to actually launch. Confirmed directly on the first deploy: the
+      // ECS Service failed at 04:50:17 and the instance's EC2 LaunchTime was
+      // 04:50:20, three seconds later - the Service was already trying (and
+      // failing) to place tasks before the instance existed. waitForMinCapacity
+      // makes CloudFormation hold the ASG resource open until an instance actually
+      // signals success via cfn-signal, so the Service resource that depends on it
+      // does not start until an instance is really there.
+      signals: autoscaling.Signals.waitForMinCapacity({ timeout: Duration.minutes(5) }),
     });
     autoScalingGroup.role.addManagedPolicy(
       iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'),
@@ -162,6 +180,34 @@ export class E1MountTopologyStack extends ExperimentStack {
         autoScalingGroup,
         enableManagedTerminationProtection: false,
       }),
+    );
+
+    // cfn-signal is what `signals` above is waiting for, and it is not part of the
+    // ECS-optimized AMI's default boot behaviour - it has to be invoked explicitly.
+    // aws-cfn-bootstrap (providing /opt/aws/bin/cfn-signal) is NOT preinstalled on
+    // this AMI. Confirmed by direct evidence, not assumption, after two failed
+    // deploys: SSM into the instance showed cloud-init finishing successfully with
+    // ECS_CLUSTER written correctly, and the sole failure was
+    // "/opt/aws/bin/cfn-signal: No such file or directory" on line 3 of user data.
+    // AL2023's dnf repos are themselves hosted in S3 (al2023-repos-<region>-...),
+    // specifically so package installs work through the S3 gateway endpoint this
+    // stack already has for ECR layers - no NAT, no extra endpoint required.
+    //
+    // This MUST be the last line added to user data. addAsgCapacityProvider (above)
+    // appends the ECS_CLUSTER config that tells the agent which cluster to join; an
+    // earlier attempt called addUserData for cfn-signal before this point, and the
+    // instance would have reported boot success before it was even configured to
+    // join the right cluster - signalling "success" while telling CloudFormation
+    // nothing true about ECS readiness. Signalling on boot completion rather than
+    // after confirmed agent registration is still deliberate: it answers "did the
+    // instance launch," the actual gap that broke the first deploy, and leaves the
+    // ECS circuit breaker's own retries to absorb the much shorter remaining
+    // agent-registration lag.
+    const cfnAsg = autoScalingGroup.node.defaultChild as autoscaling.CfnAutoScalingGroup;
+    autoScalingGroup.addUserData(
+      'dnf install -y aws-cfn-bootstrap',
+      `/opt/aws/bin/cfn-signal --exit-code $? --stack ${Stack.of(this).stackName} ` +
+        `--resource ${cfnAsg.logicalId} --region ${Stack.of(this).region}`,
     );
 
     // --- task ---------------------------------------------------------------
@@ -204,7 +250,22 @@ export class E1MountTopologyStack extends ExperimentStack {
       readOnly: false,
     });
 
-    fileSystem.grantRootAccess(taskDefinition.taskRole);
+    // Deliberately no grantRootAccess() and no authorizationConfig on the volume:
+    // this task mounts over plain NFS/TLS, not IAM-authorized EFS access, so no
+    // task-role permission is needed for the mount to succeed - it is governed
+    // purely by network path and the file system's resource policy.
+    //
+    // grantRootAccess() was tried here and is exactly what broke the mount.
+    // Confirmed directly: `aws efs describe-file-system-policy` showed CDK had
+    // written a policy granting ClientWrite and ClientRootAccess but NOT
+    // ClientMount, and AWS's own EFS IAM docs list ClientMount as the action that
+    // "provides read-only access to a file system" - i.e. the one every mount
+    // needs first. With no policy at all, EFS defaults to open (equivalent to
+    // Principal "*" on all three actions); the moment any custom policy exists,
+    // that implicit default is replaced by exactly what the policy states, and the
+    // narrower policy never granted the one action that lets a client mount at all.
+    // grantRootAccess() is for IAM-authorized mounts (authorizationConfig with
+    // iam: 'ENABLED' and an access point), which this task does not use.
 
     const service = new ecs.Ec2Service(this, 'Service', {
       cluster,
@@ -214,8 +275,22 @@ export class E1MountTopologyStack extends ExperimentStack {
       vpcSubnets: workloadSubnets,
       enableExecuteCommand: true,
       minHealthyPercent: 0,
+      // This service uses the EC2 launch type directly, not a capacity-provider
+      // strategy, so nothing in its properties references the ASG by Ref/GetAtt -
+      // CloudFormation has no path to infer a dependency from. Without the explicit
+      // one added below, Service creation starts as soon as Cluster and
+      // TaskDefinition exist, in parallel with (and in the first deploy, well
+      // before) the ASG's instance ever launching.
+      // Kept enabled deliberately. The first deploy's failure timeline (Service
+      // failed at 04:50:17, EC2 LaunchTime 04:50:20 - three seconds later) is
+      // consistent with a boot-time placement race, but that timeline alone does
+      // not rule out the probe container itself being broken - removing the
+      // breaker would have papered over either cause with silent infinite retries.
+      // The container is verified locally (see e1-probe/README) before this flag
+      // is revisited.
       circuitBreaker: { rollback: false },
     });
+    service.node.addDependency(autoScalingGroup);
 
     new CfnOutput(this, 'ClusterName', { value: cluster.clusterName });
     new CfnOutput(this, 'ServiceName', { value: service.serviceName });
