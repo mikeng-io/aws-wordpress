@@ -5,6 +5,8 @@ import * as efs from 'aws-cdk-lib/aws-efs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as autoscaling from 'aws-cdk-lib/aws-autoscaling';
+import { Platform } from 'aws-cdk-lib/aws-ecr-assets';
+import * as path from 'node:path';
 import { Construct } from 'constructs';
 import { ExperimentStack, ExperimentStackProps } from '../experiment-stack.js';
 import { NatStrategy, resolveNat } from '../nat-strategy.js';
@@ -142,9 +144,10 @@ export class E1MountTopologyStack extends ExperimentStack {
       instanceType,
       // arm64 AMI, to match t4g. A mismatch here fails at container start, not deploy.
       machineImage: ecs.EcsOptimizedImage.amazonLinux2023(ecs.AmiHardwareType.ARM),
+      // min == max pins the fleet at one instance without setting desiredCapacity,
+      // which CDK warns resets the group's size on every deployment.
       minCapacity: 1,
       maxCapacity: 1,
-      desiredCapacity: 1,
       securityGroup: instanceSecurityGroup,
       vpcSubnets: workloadSubnets,
       associatePublicIpAddress: false,
@@ -175,11 +178,16 @@ export class E1MountTopologyStack extends ExperimentStack {
     });
 
     const container = taskDefinition.addContainer('probe', {
-      // Multi-arch, and ships the coreutils the probe needs.
-      image: ecs.ContainerImage.fromRegistry('public.ecr.aws/amazonlinux/amazonlinux:2023'),
+      // Built locally and pushed to the private CDK assets repository. A
+      // public.ecr.aws reference would be unpullable here: the ECR interface
+      // endpoints serve private repositories only, and this subnet has no internet
+      // route. Platform is pinned rather than inherited from the build host, so an
+      // x86 laptop does not silently produce an image the arm64 instance cannot run.
+      image: ecs.ContainerImage.fromAsset(path.join(__dirname, 'e1-probe'), {
+        platform: Platform.LINUX_ARM64,
+      }),
       // Idle. The experiment drives it with ECS Exec rather than an entrypoint, so
       // the same task can be probed repeatedly without redeploying.
-      command: ['sleep', 'infinity'],
       memoryReservationMiB: 256,
       cpu: 256,
       logging: ecs.LogDrivers.awsLogs({
