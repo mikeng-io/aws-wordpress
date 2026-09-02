@@ -1,0 +1,91 @@
+{
+  "trace_file": "wp-admin.cold.strace",
+  "total_file_syscalls": 15226,
+  "unparsed_lines": 0,
+  "by_family": {
+    "stat": 10380,
+    "open": 4602,
+    "other": 244
+  },
+  "by_syscall": {
+    "newfstatat": 7258,
+    "openat": 4602,
+    "faccessat": 3122,
+    "getcwd": 229,
+    "fchmodat": 9,
+    "mkdirat": 4,
+    "chdir": 2
+  },
+  "unique_paths": 8709,
+  "path_component_ops": 2152,
+  "distinct_file_ops": 13074,
+  "failed_ops": 1702,
+  "failed_ratio": 0.1118,
+  "errno": {
+    "ENOENT": 1670,
+    "EACCES": 24,
+    "EPERM": 8
+  },
+  "top_paths": [
+    {
+      "path": "/var/www/html/wp-admin",
+      "ops": 230
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
+      "ops": 92
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/contact-form-7/modules",
+      "ops": 33
+    },
+    {
+      "path": "/var/www/html/wp-admin/class-controller.php",
+      "ops": 33
+    },
+    {
+      "path": "/var/www/html/wp-content/uploads/wc-logs/mailchimp_woocommerce-2026-09-02-2bcdb077ba7d32ac3d790b9428b3e337.log",
+      "ops": 24
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 17
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/tablepress/tablepress.php",
+      "ops": 14
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/woocommerce/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 14
+    },
+    {
+      "path": "/var/www/html/wp-content/wflogs/ips.php",
+      "ops": 13
+    },
+    {
+      "path": "/var/www/html/wp-content/wflogs/config-synced.php",
+      "ops": 13
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/updraftplus/updraftplus.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/uploads/wc-logs",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/advanced-custom-fields/acf.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/akismet/akismet.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/broken-link-checker.php",
+      "ops": 11
+    }
+  ]
+}

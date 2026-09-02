@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 # Runs INSIDE the wordpress container.
-#   trace.sh <request-uri> <output-file> [warmup-count]
+#   trace.sh <request-uri> <output-file> [warmup-count] [cart-product-id]
 #
 # Attaches strace to the php-fpm master (following forks, so the single static
 # worker is covered), issues exactly one request through the FastCGI socket, and
 # detaches. nginx is not involved, so nothing but PHP contributes syscalls.
+#
+# When <cart-product-id> is given, an untraced add-to-cart request is issued first
+# to establish a real WooCommerce session with an item in it, and that session's
+# cookie rides along on every subsequent request (warmups and the traced one).
+# Without this, `cart` and `checkout` were being traced against an EMPTY cart:
+# WooCommerce short-circuits checkout before loading any shipping-method or
+# payment-gateway class when the cart has nothing in it, which is exactly the code
+# path those endpoints exist to observe.
 set -euo pipefail
 
-URI="${1:?usage: trace.sh <uri> <out> [warmups]}"
-OUTFILE="${2:?usage: trace.sh <uri> <out> [warmups]}"
+URI="${1:?usage: trace.sh <uri> <out> [warmups] [cart-product-id]}"
+OUTFILE="${2:?usage: trace.sh <uri> <out> [warmups] [cart-product-id]}"
 WARMUPS="${3:-0}"
+CART_PRODUCT_ID="${4:-}"
 
 DOCROOT=/var/www/html
 COOKIE_FILE=/out/auth.cookie
@@ -25,12 +34,13 @@ QUERY_STRING="${URI#*\?}"
 [[ "$QUERY_STRING" == "$URI" ]] && QUERY_STRING=""
 
 request() {
-  SCRIPT_FILENAME="${DOCROOT}/${SCRIPT_REL}" \
-  SCRIPT_NAME="/${SCRIPT_REL}" \
+  local uri="$1" script_rel="$2" query_string="$3"
+  SCRIPT_FILENAME="${DOCROOT}/${script_rel}" \
+  SCRIPT_NAME="/${script_rel}" \
   DOCUMENT_ROOT="$DOCROOT" \
   REQUEST_METHOD=GET \
-  REQUEST_URI="$URI" \
-  QUERY_STRING="$QUERY_STRING" \
+  REQUEST_URI="$uri" \
+  QUERY_STRING="$query_string" \
   SERVER_PROTOCOL=HTTP/1.1 \
   GATEWAY_INTERFACE=CGI/1.1 \
   SERVER_SOFTWARE=e0 \
@@ -40,8 +50,24 @@ request() {
     cgi-fcgi -bind -connect 127.0.0.1:9000
 }
 
+if [[ -n "$CART_PRODUCT_ID" ]]; then
+  # WooCommerce's GET-based add-to-cart (?add-to-cart=ID) is nonce-free by design,
+  # for shareable "buy now" links - only works on a real purchasable product
+  # (see scripts/seed.sh for why generated products need price/stock meta set).
+  response="$(request "/?add-to-cart=${CART_PRODUCT_ID}" "index.php" "add-to-cart=${CART_PRODUCT_ID}")"
+  session_cookie="$(printf '%s\n' "$response" \
+    | grep -o '^Set-Cookie: wp_woocommerce_session_[^;]*' \
+    | head -1 \
+    | sed 's/^Set-Cookie: //')"
+  if [[ -z "$session_cookie" ]]; then
+    echo "trace: add-to-cart for product ${CART_PRODUCT_ID} did not return a session cookie - is it purchasable?" >&2
+    exit 68
+  fi
+  HTTP_COOKIE="${HTTP_COOKIE}${HTTP_COOKIE:+; }${session_cookie}"
+fi
+
 for ((i = 0; i < WARMUPS; i++)); do
-  request > /dev/null 2>&1 || true
+  request "$URI" "$SCRIPT_REL" "$QUERY_STRING" > /dev/null 2>&1 || true
 done
 
 # Attach to the WORKER, not the master.  php-fpm workers are forked child
@@ -79,7 +105,7 @@ if [[ "$attached" != "1" ]]; then
   exit 69
 fi
 
-request > /dev/null 2>&1 || true
+request "$URI" "$SCRIPT_REL" "$QUERY_STRING" > /dev/null 2>&1 || true
 
 # INT lets strace flush and detach cleanly; escalate if it will not go, so a stuck
 # tracer cannot hang the whole run.

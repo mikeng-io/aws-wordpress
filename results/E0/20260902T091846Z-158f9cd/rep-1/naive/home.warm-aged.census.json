@@ -1,0 +1,91 @@
+{
+  "trace_file": "home.warm-aged.strace",
+  "total_file_syscalls": 8753,
+  "unparsed_lines": 0,
+  "by_family": {
+    "stat": 7526,
+    "open": 1008,
+    "other": 219
+  },
+  "by_syscall": {
+    "newfstatat": 4267,
+    "faccessat": 3259,
+    "openat": 1008,
+    "getcwd": 203,
+    "fchmodat": 13,
+    "chdir": 2,
+    "mkdirat": 1
+  },
+  "unique_paths": 6276,
+  "path_component_ops": 334,
+  "distinct_file_ops": 8419,
+  "failed_ops": 1640,
+  "failed_ratio": 0.1874,
+  "errno": {
+    "ENOENT": 1603,
+    "EACCES": 25,
+    "EPERM": 12
+  },
+  "top_paths": [
+    {
+      "path": "/var/www/html",
+      "ops": 205
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
+      "ops": 92
+    },
+    {
+      "path": "/var/www/html/class-controller.php",
+      "ops": 33
+    },
+    {
+      "path": "/var/www/html/wp-content/wflogs/ips.php",
+      "ops": 24
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 16
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/woocommerce/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 13
+    },
+    {
+      "path": "/var/www/html/wp-content/wflogs/template.php",
+      "ops": 13
+    },
+    {
+      "path": "/var/www/html/wp-content/wflogs/config-synced.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/tablepress/tablepress.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/updraftplus/updraftplus.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/wpforms-surveys-polls/wpforms-surveys-polls.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/advanced-custom-fields/acf.php",
+      "ops": 8
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/akismet/akismet.php",
+      "ops": 8
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/broken-link-checker.php",
+      "ops": 8
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/classic-editor/classic-editor.php",
+      "ops": 8
+    }
+  ]
+}

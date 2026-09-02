@@ -59,6 +59,25 @@ if [[ "$($WPQ post list --post_type=product --format=count 2>/dev/null || echo 0
   echo "seed: generating catalog"
   $WP post generate --post_type=product --count=200
   $WP post generate --post_type=post --count=100
+
+  # wp post generate produces a bare post shell - no price, no stock status, no
+  # product-type term. WooCommerce treats a priceless product as not purchasable
+  # (wc_get_product()->is_purchasable() === false), which silently no-ops any
+  # add-to-cart attempt. Every generated product needs real product meta before
+  # this catalog is anything more than decoration.
+  echo "seed: making the generated catalog purchasable"
+  $WP eval '
+    $ids = get_posts(["post_type" => "product", "numberposts" => -1, "fields" => "ids"]);
+    foreach ($ids as $id) {
+      wp_set_object_terms($id, "simple", "product_type");
+      update_post_meta($id, "_price", "19.99");
+      update_post_meta($id, "_regular_price", "19.99");
+      update_post_meta($id, "_stock_status", "instock");
+      update_post_meta($id, "_manage_stock", "no");
+      update_post_meta($id, "_visibility", "visible");
+    }
+    echo count($ids) . " products made purchasable\n";
+  '
 else
   echo "seed: catalog already present, skipping"
 fi
@@ -82,6 +101,7 @@ echo "seed: ${OUT}/plugins.lock records $(wc -l < "${OUT}/plugins.lock") active 
 # --- resolve endpoint IDs ---------------------------------------------------
 PRODUCT_ID=$($WPQ post list --post_type=product --field=ID --posts_per_page=1 | head -1)
 CART_ID=$($WPQ option get woocommerce_cart_page_id 2>/dev/null || echo "")
+echo -n "$PRODUCT_ID" > "${OUT}/product_id.txt"
 CHECKOUT_ID=$($WPQ option get woocommerce_checkout_page_id 2>/dev/null || echo "")
 
 if [[ -z "$PRODUCT_ID" ]]; then

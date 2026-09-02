@@ -55,6 +55,11 @@ docker compose exec -T wordpress /scripts/seed.sh 2>&1 | sed 's/^/  /'
 cp ./out/plugins.lock "${OUT}/plugins.lock"
 cp ./out/endpoints.resolved.tsv "${OUT}/endpoints.tsv"
 
+# Used to populate a real cart session before cart/checkout traces (see below) -
+# without it those pages were being traced empty, and WooCommerce short-circuits
+# checkout's shipping-method/payment-gateway class loading on an empty cart.
+CART_PRODUCT_ID="$(cat ./out/product_id.txt)"
+
 # --- provenance -------------------------------------------------------------
 cat > "${OUT}/meta.json" <<META
 {
@@ -99,13 +104,19 @@ for profile in "${PROFILES[@]}"; do
     # silently inherited a warm opcache.
     PROFILE="$profile" docker compose up -d --force-recreate --wait wordpress >/dev/null 2>&1
 
+    # cart and checkout are traced with an item already in the cart - a shopper
+    # who reaches either page normally has one. Every other endpoint is traced
+    # cart-free.
+    cart_arg=""
+    [[ "$name" == "cart" || "$name" == "checkout" ]] && cart_arg="$CART_PRODUCT_ID"
+
     # cold: first request this master has ever served, opcache empty
     docker compose exec -T wordpress /scripts/trace.sh "$uri" \
-      "/out/${profile}.${name}.cold.strace" 0 </dev/null | sed 's/^/  /'
+      "/out/${profile}.${name}.cold.strace" 0 "$cart_arg" </dev/null | sed 's/^/  /'
 
     # warm: opcache populated by WARMUPS prior requests, issued immediately
     docker compose exec -T wordpress /scripts/trace.sh "$uri" \
-      "/out/${profile}.${name}.warm.strace" "$WARMUPS" </dev/null | sed 's/^/  /'
+      "/out/${profile}.${name}.warm.strace" "$WARMUPS" "$cart_arg" </dev/null | sed 's/^/  /'
 
     mv "./out/${profile}.${name}.cold.strace" "${OUT}/rep-${rep}/${profile}/${name}.cold.strace"
     mv "./out/${profile}.${name}.warm.strace" "${OUT}/rep-${rep}/${profile}/${name}.warm.strace"
@@ -116,7 +127,7 @@ for profile in "${PROFILES[@]}"; do
       echo "  aging ${freq}s past revalidate window (${profile})"
       sleep "$((freq + 3))"
       docker compose exec -T wordpress /scripts/trace.sh "$uri" \
-        "/out/${profile}.${name}.warm-aged.strace" 0 </dev/null | sed 's/^/  /'
+        "/out/${profile}.${name}.warm-aged.strace" 0 "$cart_arg" </dev/null | sed 's/^/  /'
       mv "./out/${profile}.${name}.warm-aged.strace" \
          "${OUT}/rep-${rep}/${profile}/${name}.warm-aged.strace"
     fi

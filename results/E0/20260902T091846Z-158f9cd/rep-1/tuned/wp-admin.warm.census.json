@@ -1,0 +1,90 @@
+{
+  "trace_file": "wp-admin.warm.strace",
+  "total_file_syscalls": 4250,
+  "unparsed_lines": 0,
+  "by_family": {
+    "stat": 3763,
+    "open": 285,
+    "other": 202
+  },
+  "by_syscall": {
+    "faccessat": 3103,
+    "newfstatat": 660,
+    "openat": 285,
+    "getcwd": 191,
+    "fchmodat": 9,
+    "chdir": 2
+  },
+  "unique_paths": 2663,
+  "path_component_ops": 357,
+  "distinct_file_ops": 3893,
+  "failed_ops": 1584,
+  "failed_ratio": 0.3727,
+  "errno": {
+    "ENOENT": 1560,
+    "EACCES": 16,
+    "EPERM": 8
+  },
+  "top_paths": [
+    {
+      "path": "/var/www/html/wp-admin",
+      "ops": 191
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
+      "ops": 92
+    },
+    {
+      "path": "/var/www/html/wp-admin/class-controller.php",
+      "ops": 33
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 15
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/tablepress/tablepress.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/woocommerce/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/wflogs/ips.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/wflogs/config-synced.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/updraftplus/updraftplus.php",
+      "ops": 10
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/advanced-custom-fields/acf.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/akismet/akismet.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/broken-link-checker.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/classic-editor/classic-editor.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/contact-form-7/wp-contact-form-7.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/duplicate-post/duplicate-post.php",
+      "ops": 9
+    }
+  ]
+}

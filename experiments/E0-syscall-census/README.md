@@ -60,15 +60,26 @@ product, cart, and checkout URLs depend on generated/WooCommerce-assigned IDs.
 `wp_generate_auth_cookie`; unauthenticated it would only ever trace the login
 redirect, which is not the path of interest.
 
-**`checkout` is traced with an empty cart.** WooCommerce short-circuits checkout
-before loading shipping-method and payment-gateway classes when the cart has
-nothing in it — which is the exact mechanism this endpoint exists to observe
-(exploratory browsing found the cart endpoint disproportionately heavy, traced to
-WooCommerce conditionally `include`-ing a class file per enabled gateway and
-shipping method). Populating a real cart session needs an add-to-cart HTTP
-round-trip first, to obtain a `wp_woocommerce_session_*` cookie, which `trace.sh`
-does not yet perform. Until it does, `checkout`'s numbers are a floor, not the full
-cost — do not quote them as the complete checkout path.
+**`cart` and `checkout` are traced with a real item in the cart.** Exploratory
+browsing found `cart`/`checkout` running far heavier than a naive empty-cart trace
+suggested, traced to two compounding gaps: the generated catalog had no price set
+(`wp post generate` produces a bare post shell — `seed.sh` now sets `_price`,
+`_regular_price`, `_stock_status`, and the `simple` product-type term on every
+generated product, since WooCommerce treats a priceless product as not
+purchasable and silently no-ops any add-to-cart against it), and both pages were
+being traced empty regardless, which matters because WooCommerce short-circuits
+checkout before loading any shipping-method or payment-gateway class when the
+cart has nothing in it — exactly the code path these endpoints exist to observe.
+
+`trace.sh` now takes an optional cart-product-id argument: an untraced
+`?add-to-cart=` request establishes a real `wp_woocommerce_session_*` cookie
+first, which then rides along on the traced request. `run.sh` passes this for
+`cart` and `checkout` only — every other endpoint is still traced cart-free, since
+that's the realistic state for a shopper who hasn't added anything yet. Verified
+directly: checkout jumped from 4,095 to 6,493 syscalls (+59%) once the cart held a
+real item, versus cart's own empty→populated jump of +32% — consistent with
+checkout loading strictly more (the gateway/shipping classes on top of what cart
+already renders).
 
 ## The install
 
