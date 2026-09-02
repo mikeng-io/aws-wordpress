@@ -81,11 +81,10 @@ The mechanism that motivated this fix — checkout jumping ~59% once the cart he
 real item, versus cart's own ~32% — came from an exploratory browsing session on a
 mutated, non-reproducible content state and is **not a committed result**; see
 [docs/findings/E0-cart-checkout.md](../../docs/findings/E0-cart-checkout.md) for why
-it doesn't count as one. The committed, reproducible number, from a clean apparatus
-run on the standard seeded catalog (`results/E0/20260902T091846Z-158f9cd/`, n=1):
-cart and checkout both land 14–15% above home/product/wp-admin. Directionally the
-same finding, smaller magnitude, and this is the number to cite until the n=10 run
-needed for confidence intervals lands.
+it doesn't count as one. The committed, reproducible number, at n=10
+(`results/E0/20260902T105746Z-f62a686/`): cart and checkout both land 14–15% above
+home/product/wp-admin, deterministic across every rep. Directionally the same
+finding as the exploratory session, smaller magnitude — cite this one.
 
 ## The install
 

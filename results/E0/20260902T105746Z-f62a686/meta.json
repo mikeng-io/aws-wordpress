@@ -1,0 +1,22 @@
+{
+  "experiment": "E0-syscall-census",
+  "run_id": "20260902T105746Z-f62a686",
+  "utc": "2026-09-02T10:58:14Z",
+  "measures": "syscall counts, not latency",
+  "host_os": "Darwin 25.6.0 arm64",
+  "docker": "Docker version 29.2.1, build a5c7197",
+  "php": "8.3.33",
+  "wordpress": "7.1",
+  "kernel": "6.12.72-linuxkit",
+  "git_sha": "f62a686f3fde713788bc567ef964fc5934e7c3a2",
+  "git_dirty": true,
+  "profiles": ["naive","tuned","max"],
+  "warmups_for_warm_cohort": 5,
+  "reps": 10,
+  "aged_reps": 3,
+  "cohorts": {
+    "cold": "first request after php-fpm master restart, opcache empty",
+    "warm": "request after 5 warmups, issued immediately",
+    "warm-aged": "request after 5 warmups plus a wait past the profile revalidate_freq window"
+  }
+}

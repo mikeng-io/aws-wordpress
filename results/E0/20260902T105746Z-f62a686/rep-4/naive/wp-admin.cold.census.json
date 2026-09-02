@@ -1,0 +1,90 @@
+{
+  "trace_file": "wp-admin.cold.strace",
+  "total_file_syscalls": 15143,
+  "unparsed_lines": 0,
+  "by_family": {
+    "stat": 10323,
+    "open": 4580,
+    "other": 240
+  },
+  "by_syscall": {
+    "newfstatat": 7220,
+    "openat": 4580,
+    "faccessat": 3103,
+    "getcwd": 229,
+    "fchmodat": 9,
+    "chdir": 2
+  },
+  "unique_paths": 8690,
+  "path_component_ops": 1901,
+  "distinct_file_ops": 13242,
+  "failed_ops": 1662,
+  "failed_ratio": 0.1098,
+  "errno": {
+    "ENOENT": 1638,
+    "EACCES": 16,
+    "EPERM": 8
+  },
+  "top_paths": [
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
+      "ops": 92
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/contact-form-7/modules",
+      "ops": 33
+    },
+    {
+      "path": "/var/www/html/wp-admin/class-controller.php",
+      "ops": 33
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 17
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/tablepress/tablepress.php",
+      "ops": 14
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/woocommerce/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 14
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/updraftplus/updraftplus.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/advanced-custom-fields/acf.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/akismet/akismet.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/broken-link-checker.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/classic-editor/classic-editor.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/contact-form-7/wp-contact-form-7.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/duplicate-post/duplicate-post.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/elementor/elementor.php",
+      "ops": 11
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/google-site-kit/google-site-kit.php",
+      "ops": 11
+    }
+  ]
+}

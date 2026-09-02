@@ -51,6 +51,14 @@ directly on the host, not inferred. This refutes the specific shared-cache
 mechanism the working thesis below was written around; see H1 for what that leaves
 open and what it changes about E2.
 
+[E0's cart/checkout endpoints](docs/findings/E0-cart-checkout.md): fixed a
+catalog bug that had made every WooCommerce cart/checkout trace measure an empty
+cart since E0 was first built. Populated, both endpoints run 14–15% above
+home/product/wp-admin, deterministic at n=10. An independent review (a subagent
+with no context on this conversation, briefed to verify rather than take the
+existing writeups on faith) then caught a real parsing bug and two overclaims in
+the earlier findings — fixed and pushed; see that doc for the correction record.
+
 | Experiment | Question | Cost | Status |
 |---|---|---|---|
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |

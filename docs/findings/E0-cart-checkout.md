@@ -1,8 +1,8 @@
 # E0 — cart and checkout added, and a catalog bug that made them meaningless
 
-**Result:** `results/E0/20260902T091846Z-158f9cd/`
-**n:** 1 (this run verifies the fix works end-to-end; not yet at statistical
-confidence — needs the same n=10 treatment E0's other endpoints already got)
+**Result:** `results/E0/20260902T105746Z-f62a686/` (n=10, `warm-aged` n=3)
+**Superseded:** `results/E0/20260902T091846Z-158f9cd/` (n=1, verified the fix works
+end-to-end before committing to a full run)
 
 ## The bug this run fixes
 
@@ -37,22 +37,37 @@ to 6,493 syscalls (+59%) once the cart held a real item; cart itself moved from
 loading strictly more than cart — every enabled shipping-method and
 payment-gateway class on top of what cart already renders.
 
-**Clean apparatus run** (this result, reproducible, committed): on the standard
-seeded catalog, `naive`/warm:
+**Clean apparatus run, n=10, `naive`/warm** (median; every cell in this table has
+zero-width range across all 10 reps — deterministic, not noisy):
 
 | Endpoint | Total syscalls | vs. home |
 |---|--:|---|
-| home | 5,168 | — |
+| home | 5,157 | — |
 | product | 5,265 | +2% |
-| wp-admin | 5,141 | flat |
+| wp-admin | 5,140 | flat |
 | cart (populated) | 5,941 | +15% |
 | checkout (populated) | 5,884 | +14% |
 
-Both real WooCommerce pages now sit meaningfully above the content pages, which
-they never did while traced empty.
+Both real WooCommerce pages sit meaningfully above the content pages, which they
+never did while traced empty. These numbers match the n=1 spot-check almost
+exactly (cart 5,941 both times, checkout 5,884 both times, home within 11 of
+5,168) — the effect is real and reproducible, not an artifact of one run.
 
-## Status and next step
+## A near-miss worth recording
 
-n=1. Needs the same n=10 + `warm-aged` treatment as the other four endpoints
-before these numbers can be quoted with confidence intervals. The mechanism is
-established; the statistics are not yet.
+The first attempt at this n=10 run was silently corrupted: `siteurl` had been
+repointed to `localhost:8088` for browsing (see the browse-overlay commit) and was
+never reverted before the formal run started. `trace.sh` sends
+`HTTP_HOST=localhost` with no port, so every request 301/302-redirected before
+rendering anything — the trace still "succeeds" and produces a plausible number,
+just the wrong one. Caught only because home/product/cart/checkout came back
+byte-identical across all 10 reps, which no real page render does. Root-caused
+and fixed in `seed.sh` (forces `siteurl`/`home` back unconditionally, every run)
+and `run.sh` (preflight check aborts loudly on a redirect). See that commit for
+the full account, including that some of the corrupted run's partial data briefly
+made it into a commit by accident before being removed.
+
+## Status
+
+Done. Both endpoints are now at the same n=10 + `warm-aged` statistical bar as
+the other three.

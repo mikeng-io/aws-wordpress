@@ -1,0 +1,90 @@
+{
+  "trace_file": "wp-admin.warm.strace",
+  "total_file_syscalls": 5140,
+  "unparsed_lines": 0,
+  "by_family": {
+    "stat": 3777,
+    "open": 1154,
+    "other": 209
+  },
+  "by_syscall": {
+    "faccessat": 3103,
+    "openat": 1154,
+    "newfstatat": 674,
+    "getcwd": 198,
+    "fchmodat": 9,
+    "chdir": 2
+  },
+  "unique_paths": 3445,
+  "path_component_ops": 164,
+  "distinct_file_ops": 4976,
+  "failed_ops": 1598,
+  "failed_ratio": 0.3109,
+  "errno": {
+    "ENOENT": 1574,
+    "EACCES": 16,
+    "EPERM": 8
+  },
+  "top_paths": [
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
+      "ops": 92
+    },
+    {
+      "path": "/var/www/html/wp-admin/class-controller.php",
+      "ops": 33
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 15
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/tablepress/tablepress.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/woocommerce/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/updraftplus/updraftplus.php",
+      "ops": 10
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/advanced-custom-fields/acf.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/akismet/akismet.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/broken-link-checker/broken-link-checker.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/classic-editor/classic-editor.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/contact-form-7/wp-contact-form-7.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/duplicate-post/duplicate-post.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/elementor/elementor.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/google-site-kit/google-site-kit.php",
+      "ops": 9
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/health-check/health-check.php",
+      "ops": 9
+    }
+  ]
+}
