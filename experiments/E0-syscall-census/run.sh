@@ -52,6 +52,27 @@ echo "E0: run ${RUN_ID}"
 PROFILE=naive docker compose up -d --build --wait
 docker compose exec -T wordpress /scripts/seed.sh 2>&1 | sed 's/^/  /'
 
+# seed.sh forces siteurl back to http://localhost every run precisely so this
+# check should never fire - but a bug that silently makes trace.sh measure a
+# redirect instead of a real page still "succeeds" and produces a plausible-looking
+# number. This happened for real (see seed.sh's siteurl comment): an entire n=10
+# run was corrupted this way and caught only because every non-wp-admin endpoint
+# came back byte-identical, which is not how real pages behave. Fail loudly here
+# instead of relying on someone noticing that after the fact.
+preflight_status="$(docker compose exec -T wordpress bash -c '
+  SCRIPT_FILENAME=/var/www/html/index.php SCRIPT_NAME=/index.php DOCUMENT_ROOT=/var/www/html \
+  REQUEST_METHOD=GET REQUEST_URI="/" QUERY_STRING="" SERVER_PROTOCOL=HTTP/1.1 \
+  GATEWAY_INTERFACE=CGI/1.1 SERVER_SOFTWARE=e0 REMOTE_ADDR=127.0.0.1 HTTP_HOST=localhost \
+    cgi-fcgi -bind -connect 127.0.0.1:9000 2>&1 | grep -m1 "^Status:" || echo "Status: 200 (implicit)"
+')"
+if [[ "$preflight_status" == *"30"* ]]; then
+  echo "E0: ABORT - home page returned '${preflight_status}' instead of rendering." >&2
+  echo "E0: trace.sh sends HTTP_HOST=localhost; a siteurl/home mismatch makes every" >&2
+  echo "E0: trace measure a redirect, not a real page. seed.sh should have fixed" >&2
+  echo "E0: this - if it didn't, something upstream of this run is wrong." >&2
+  exit 66
+fi
+
 cp ./out/plugins.lock "${OUT}/plugins.lock"
 cp ./out/endpoints.resolved.tsv "${OUT}/endpoints.tsv"
 

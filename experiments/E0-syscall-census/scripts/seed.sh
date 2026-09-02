@@ -25,6 +25,22 @@ else
     --skip-email
 fi
 
+# Forced unconditionally, not just on fresh install. trace.sh sends
+# HTTP_HOST=localhost (no port); a mismatch here makes WordPress's own
+# redirect_canonical() 301/302 every request before it renders anything, and the
+# resulting trace silently measures a redirect instead of a real page - it still
+# "succeeds" and produces a number, just the wrong one. This has happened for real:
+# the docker-compose.browse.yml overlay repoints siteurl to include :8088 so a
+# human can look at the install in a browser, and that change persists on the
+# shared wpdata volume across container recreates. A run kicked off after a
+# browsing session without remembering to revert it silently corrupted an entire
+# n=10 result (never committed - caught by every non-wp-admin endpoint reporting
+# byte-identical syscall counts, which a real page render cannot do). Do not make
+# this conditional on whether the option already looks right; the whole point is
+# not to depend on what a human left on the volume.
+$WPQ option update siteurl "http://localhost"
+$WPQ option update home "http://localhost"
+
 # --- install plugins --------------------------------------------------------
 if [[ -f /e0/plugins.lock ]]; then
   echo "seed: installing from plugins.lock"
