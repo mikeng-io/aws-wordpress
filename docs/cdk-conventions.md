@@ -44,10 +44,10 @@ Base64 is encoding, not encryption, and the input is the stack name plus the dom
 the origin ALB was internet-facing. **The protection was decorative.**
 
 This is not a criticism of the original; it was the best pattern available in 2020.
-It is, though, a concrete reason the 2026 answer differs: VPC origins remove the
-public path entirely rather than asking the origin to check a guessable header. And
-it matters directly for the AI-bot dimension — edge metering is worthless if the
-origin can be reached around it.
+It is, though, a concrete reason this study's answer differs: VPC origins remove
+the public path entirely rather than asking the origin to check a guessable header.
+And it matters directly for the AI-bot dimension — edge metering is worthless if
+the origin can be reached around it.
 
 ## Bugs in the original worth not repeating
 

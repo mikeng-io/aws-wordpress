@@ -1,4 +1,4 @@
-# WordPress on AWS, 2026 — a study
+# WordPress on AWS — a study
 
 A successor to [aws-serverless-wordpress](https://github.com/mikeng-io/aws-serverless-wordpress)
 (2020: CDK v1, Fargate + EFS + Aurora Serverless v1 + Memcached).
