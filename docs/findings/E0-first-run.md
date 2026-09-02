@@ -44,7 +44,15 @@ Two further observations from the same traces:
 - **~1,566 of ~4,300 ops on a fully tuned warm request are ENOENT** — roughly a
   third of all filesystem syscalls are lookups for files that do not exist. Pure
   waste, and on a network filesystem, pure latency.
-- `/var/www/html` itself is stat'd ~193 times in a single request.
+- `/var/www/html` itself is touched ~193 times in a single request — but this was
+  originally misread as 193 `stat`-family calls. It's actually 191 `getcwd()` +
+  2 `chdir()`: process-state bookkeeping, not filesystem lookups on that path at
+  all. Caught by an independent review of the analysis code (`analysis/e0_census.py`
+  was mixing every syscall with a quoted-path argument into the path-component
+  count, `getcwd`/`chdir` included, not just genuine stat/open/readdir/readlink
+  lookups — fixed; see git history). The real per-request stat/open storm is
+  correctly counted elsewhere in this document; only this one path-frequency claim
+  was wrong.
 
 Cold requests are ~15,400–16,400 ops and **identical across all three profiles**,
 which is expected: with an empty opcache every profile must compile from disk. This

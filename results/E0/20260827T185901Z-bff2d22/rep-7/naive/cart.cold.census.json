@@ -17,8 +17,8 @@
     "mkdirat": 1
   },
   "unique_paths": 9034,
-  "path_component_ops": 2244,
-  "distinct_file_ops": 14112,
+  "path_component_ops": 2012,
+  "distinct_file_ops": 14344,
   "failed_ops": 1752,
   "failed_ratio": 0.1071,
   "errno": {
@@ -27,10 +27,6 @@
     "EPERM": 12
   },
   "top_paths": [
-    {
-      "path": "/var/www/html",
-      "ops": 232
-    },
     {
       "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
       "ops": 92
@@ -44,11 +40,11 @@
       "ops": 33
     },
     {
-      "path": "/var/www/html/wp-content/wflogs/ips.php",
-      "ops": 25
+      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 17
     },
     {
-      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "path": "/var/www/html/wp-content/wflogs/ips.php",
       "ops": 17
     },
     {
@@ -85,6 +81,10 @@
     },
     {
       "path": "/var/www/html/wp-content/plugins/duplicate-post/duplicate-post.php",
+      "ops": 13
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/elementor/elementor.php",
       "ops": 13
     }
   ]

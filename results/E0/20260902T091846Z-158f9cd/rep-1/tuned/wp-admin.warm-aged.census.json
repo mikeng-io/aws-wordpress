@@ -15,9 +15,9 @@
     "fchmodat": 9,
     "chdir": 2
   },
-  "unique_paths": 6076,
-  "path_component_ops": 365,
-  "distinct_file_ops": 8218,
+  "unique_paths": 6074,
+  "path_component_ops": 165,
+  "distinct_file_ops": 8418,
   "failed_ops": 1598,
   "failed_ratio": 0.1862,
   "errno": {
@@ -26,10 +26,6 @@
     "EPERM": 8
   },
   "top_paths": [
-    {
-      "path": "/var/www/html/wp-admin",
-      "ops": 198
-    },
     {
       "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
       "ops": 92
@@ -49,14 +45,6 @@
     {
       "path": "/var/www/html/wp-content/plugins/woocommerce/vendor/composer/jetpack_autoload_classmap.php",
       "ops": 13
-    },
-    {
-      "path": "/var/www/html/wp-content/wflogs/ips.php",
-      "ops": 12
-    },
-    {
-      "path": "/var/www/html/wp-content/wflogs/config-synced.php",
-      "ops": 12
     },
     {
       "path": "/var/www/html/wp-content/plugins/updraftplus/updraftplus.php",
@@ -84,6 +72,18 @@
     },
     {
       "path": "/var/www/html/wp-content/plugins/duplicate-post/duplicate-post.php",
+      "ops": 10
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/elementor/elementor.php",
+      "ops": 10
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/google-site-kit/google-site-kit.php",
+      "ops": 10
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/health-check/health-check.php",
       "ops": 10
     }
   ]

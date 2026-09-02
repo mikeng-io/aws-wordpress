@@ -8,6 +8,14 @@ With `opcache.validate_timestamps=0`, a large realpath cache, and preloading, a 
 PHP request barely touches the filesystem. Filesystem differences that dominate at
 default settings should mostly disappear.
 
+**Preloading is not yet tested.** `php-profiles/max.ini` sets `opcache.preload_user`
+but never `opcache.preload=<script>` — the directive that actually activates it —
+so no run to date has exercised the third lever this claim names. Every "under max
+tuning" result below is validation-off + enlarged realpath cache only. A real
+preload script (compiling `wp-includes` and active-plugin PHP into opcache at
+FPM startup) is real follow-up work, not a quick fix, and is tracked separately
+rather than rushed into an in-flight run.
+
 ## Why it matters
 
 If true, most published "EFS is slow for WordPress" results are really statements
@@ -23,7 +31,7 @@ configuration were treated as a constant.
 |---|---|
 | `naive` | Stock defaults: `validate_timestamps=1`, `realpath_cache_size=4096k` default, no preload |
 | `tuned` | `revalidate_freq` raised, realpath cache enlarged, `read_ahead_kb` raised where reachable |
-| `max` | `validate_timestamps=0`, preload enabled, large realpath cache — accepting that in-place updates now need a container restart |
+| `max` | `validate_timestamps=0`, large realpath cache — accepting that in-place updates now need a container restart. **Preload is not actually active** (see note above); the name describes the intent, not yet the apparatus. |
 
 ## Prediction
 

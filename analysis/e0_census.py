@@ -59,11 +59,19 @@ def parse(path: Path) -> dict:
         call, args, ret = m["call"], m["args"], m["ret"]
         total += 1
         by_call[call] += 1
-        by_family[classify(call)] += 1
+        family = classify(call)
+        by_family[family] += 1
 
         q = QUOTED.search(args)
         if q:
-            paths[q.group(1)] += 1
+            # Only genuine lookup syscalls (stat/open/readdir/readlink) go into
+            # `paths` - process-state calls like getcwd() and chdir() also carry a
+            # quoted path argument but are not filesystem lookups. Mixing them in
+            # previously inflated path_component_ops with getcwd/chdir noise: in one
+            # audited trace, 193 of 321 "component ops" were getcwd/chdir on
+            # /var/www/html, not stat-family lookups on it at all.
+            if family != "other":
+                paths[q.group(1)] += 1
 
         if ret.startswith("-1"):
             failed += 1
@@ -71,10 +79,10 @@ def parse(path: Path) -> dict:
             if len(parts) > 1:
                 errno_counts[parts[1]] += 1
 
-    # A path is a "component" when some other observed path sits beneath it: the
-    # realpath cache missed and the kernel was asked about a directory on the way to
-    # a file. These are pure overhead - the multiplier that makes a stat storm worse
-    # than its file count suggests.
+    # A path is a "component" when some other observed LOOKUP path sits beneath it:
+    # the realpath cache missed and the kernel was asked about a directory on the
+    # way to a file. These are pure overhead - the multiplier that makes a stat
+    # storm worse than its file count suggests.
     unique = set(paths)
     prefixes = {p for p in unique if any(o.startswith(p + "/") for o in unique)}
     component_ops = sum(paths[p] for p in prefixes)

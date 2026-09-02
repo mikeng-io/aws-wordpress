@@ -5,15 +5,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -21,15 +21,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -37,15 +37,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -53,15 +53,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -71,23 +71,23 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm-aged": {
       "total": 9598,
       "stat": 8063,
       "open": 1291,
-      "unique_paths": 6517,
-      "component_ops": 465,
+      "unique_paths": 6516,
+      "component_ops": 234,
       "failed_ratio": 0.1822
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -95,23 +95,23 @@
       "stat": 10846,
       "open": 4720,
       "unique_paths": 8870,
-      "component_ops": 2137,
+      "component_ops": 1905,
       "failed_ratio": 0.1067
     },
     "home.warm-aged": {
       "total": 8784,
       "stat": 7606,
       "open": 942,
-      "unique_paths": 6297,
-      "component_ops": 351,
+      "unique_paths": 6296,
+      "component_ops": 128,
       "failed_ratio": 0.1891
     },
     "home.warm": {
       "total": 5135,
       "stat": 3958,
       "open": 942,
-      "unique_paths": 3358,
-      "component_ops": 349,
+      "unique_paths": 3357,
+      "component_ops": 127,
       "failed_ratio": 0.3231
     },
     "product.cold": {
@@ -119,23 +119,23 @@
       "stat": 10729,
       "open": 4659,
       "unique_paths": 8960,
-      "component_ops": 2141,
+      "component_ops": 1906,
       "failed_ratio": 0.1105
     },
     "product.warm-aged": {
       "total": 8917,
       "stat": 7714,
       "open": 956,
-      "unique_paths": 6415,
-      "component_ops": 362,
+      "unique_paths": 6414,
+      "component_ops": 128,
       "failed_ratio": 0.1933
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -143,23 +143,23 @@
       "stat": 10345,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm-aged": {
       "total": 8560,
       "stat": 7192,
       "open": 1158,
-      "unique_paths": 6067,
-      "component_ops": 366,
+      "unique_paths": 6065,
+      "component_ops": 165,
       "failed_ratio": 0.1854
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -169,23 +169,23 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm-aged": {
       "total": 9541,
       "stat": 8800,
       "open": 527,
-      "unique_paths": 6470,
-      "component_ops": 438,
+      "unique_paths": 6469,
+      "component_ops": 237,
       "failed_ratio": 0.177
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -193,23 +193,23 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm-aged": {
       "total": 8751,
       "stat": 8331,
       "open": 206,
-      "unique_paths": 6266,
-      "component_ops": 332,
+      "unique_paths": 6265,
+      "component_ops": 131,
       "failed_ratio": 0.1848
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -217,23 +217,23 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm-aged": {
       "total": 8860,
       "stat": 8439,
       "open": 204,
-      "unique_paths": 6368,
-      "component_ops": 335,
+      "unique_paths": 6367,
+      "component_ops": 131,
       "failed_ratio": 0.1878
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -241,23 +241,23 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm-aged": {
       "total": 8577,
       "stat": 8083,
       "open": 285,
-      "unique_paths": 6075,
-      "component_ops": 365,
+      "unique_paths": 6073,
+      "component_ops": 165,
       "failed_ratio": 0.1848
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -267,15 +267,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -283,15 +283,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -299,15 +299,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -315,15 +315,15 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -333,15 +333,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -349,15 +349,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -365,15 +365,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -381,15 +381,15 @@
       "stat": 10342,
       "open": 4600,
       "unique_paths": 8704,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -399,15 +399,15 @@
       "stat": 11150,
       "open": 4994,
       "unique_paths": 9047,
-      "component_ops": 2247,
+      "component_ops": 2015,
       "failed_ratio": 0.1069
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -415,15 +415,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -431,15 +431,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -447,15 +447,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -465,15 +465,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -481,15 +481,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -497,15 +497,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -513,15 +513,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -531,23 +531,23 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm-aged": {
       "total": 9598,
       "stat": 8063,
       "open": 1291,
-      "unique_paths": 6517,
-      "component_ops": 465,
+      "unique_paths": 6516,
+      "component_ops": 234,
       "failed_ratio": 0.1822
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -555,23 +555,23 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm-aged": {
       "total": 8841,
       "stat": 7689,
       "open": 908,
-      "unique_paths": 6326,
-      "component_ops": 362,
+      "unique_paths": 6325,
+      "component_ops": 131,
       "failed_ratio": 0.1897
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -579,23 +579,23 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm-aged": {
       "total": 8917,
       "stat": 7714,
       "open": 956,
-      "unique_paths": 6415,
-      "component_ops": 362,
+      "unique_paths": 6414,
+      "component_ops": 128,
       "failed_ratio": 0.1933
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -603,23 +603,23 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm-aged": {
       "total": 8560,
       "stat": 7192,
       "open": 1158,
-      "unique_paths": 6067,
-      "component_ops": 366,
+      "unique_paths": 6065,
+      "component_ops": 165,
       "failed_ratio": 0.1854
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -629,23 +629,23 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm-aged": {
       "total": 9541,
       "stat": 8800,
       "open": 527,
-      "unique_paths": 6470,
-      "component_ops": 438,
+      "unique_paths": 6469,
+      "component_ops": 237,
       "failed_ratio": 0.177
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -653,23 +653,23 @@
       "stat": 10613,
       "open": 4601,
       "unique_paths": 8840,
-      "component_ops": 2128,
+      "component_ops": 1896,
       "failed_ratio": 0.1087
     },
     "home.warm-aged": {
       "total": 8738,
       "stat": 8328,
       "open": 196,
-      "unique_paths": 6263,
-      "component_ops": 329,
+      "unique_paths": 6262,
+      "component_ops": 128,
       "failed_ratio": 0.1851
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -677,23 +677,23 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm-aged": {
       "total": 8860,
       "stat": 8439,
       "open": 204,
-      "unique_paths": 6368,
-      "component_ops": 335,
+      "unique_paths": 6367,
+      "component_ops": 131,
       "failed_ratio": 0.1878
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -701,23 +701,23 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm-aged": {
       "total": 8577,
       "stat": 8083,
       "open": 285,
-      "unique_paths": 6075,
-      "component_ops": 365,
+      "unique_paths": 6073,
+      "component_ops": 165,
       "failed_ratio": 0.1848
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -727,15 +727,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -743,15 +743,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -759,15 +759,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -775,15 +775,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -793,23 +793,23 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm-aged": {
       "total": 9598,
       "stat": 8063,
       "open": 1291,
-      "unique_paths": 6517,
-      "component_ops": 465,
+      "unique_paths": 6516,
+      "component_ops": 234,
       "failed_ratio": 0.1822
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -817,23 +817,23 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm-aged": {
       "total": 8808,
       "stat": 7666,
       "open": 898,
-      "unique_paths": 6313,
-      "component_ops": 359,
+      "unique_paths": 6312,
+      "component_ops": 128,
       "failed_ratio": 0.1904
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -841,23 +841,23 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm-aged": {
       "total": 8917,
       "stat": 7714,
       "open": 956,
-      "unique_paths": 6415,
-      "component_ops": 362,
+      "unique_paths": 6414,
+      "component_ops": 128,
       "failed_ratio": 0.1933
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -865,23 +865,23 @@
       "stat": 10342,
       "open": 4600,
       "unique_paths": 8704,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm-aged": {
       "total": 8560,
       "stat": 7192,
       "open": 1158,
-      "unique_paths": 6067,
-      "component_ops": 366,
+      "unique_paths": 6065,
+      "component_ops": 165,
       "failed_ratio": 0.1854
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -891,23 +891,23 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm-aged": {
       "total": 9541,
       "stat": 8800,
       "open": 527,
-      "unique_paths": 6470,
-      "component_ops": 438,
+      "unique_paths": 6469,
+      "component_ops": 237,
       "failed_ratio": 0.177
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -915,23 +915,23 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm-aged": {
       "total": 8751,
       "stat": 8331,
       "open": 206,
-      "unique_paths": 6266,
-      "component_ops": 332,
+      "unique_paths": 6265,
+      "component_ops": 131,
       "failed_ratio": 0.1848
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -939,23 +939,23 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm-aged": {
       "total": 8860,
       "stat": 8439,
       "open": 204,
-      "unique_paths": 6368,
-      "component_ops": 335,
+      "unique_paths": 6367,
+      "component_ops": 131,
       "failed_ratio": 0.1878
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -963,23 +963,23 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm-aged": {
       "total": 8577,
       "stat": 8083,
       "open": 285,
-      "unique_paths": 6075,
-      "component_ops": 365,
+      "unique_paths": 6073,
+      "component_ops": 165,
       "failed_ratio": 0.1848
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -989,15 +989,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1005,15 +1005,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1021,15 +1021,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1037,15 +1037,15 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1055,15 +1055,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -1071,15 +1071,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -1087,15 +1087,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -1103,15 +1103,15 @@
       "stat": 10342,
       "open": 4600,
       "unique_paths": 8704,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -1121,15 +1121,15 @@
       "stat": 11150,
       "open": 4994,
       "unique_paths": 9047,
-      "component_ops": 2247,
+      "component_ops": 2015,
       "failed_ratio": 0.1069
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1137,15 +1137,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1153,15 +1153,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1169,15 +1169,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1187,15 +1187,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1203,15 +1203,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1219,15 +1219,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1235,15 +1235,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1253,15 +1253,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -1269,15 +1269,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -1285,15 +1285,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -1301,15 +1301,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -1319,15 +1319,15 @@
       "stat": 11150,
       "open": 4994,
       "unique_paths": 9047,
-      "component_ops": 2247,
+      "component_ops": 2015,
       "failed_ratio": 0.1069
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1335,15 +1335,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1351,15 +1351,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1367,15 +1367,15 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1385,15 +1385,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1401,15 +1401,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1417,15 +1417,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1433,15 +1433,15 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1451,15 +1451,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -1467,15 +1467,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -1483,15 +1483,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -1499,15 +1499,15 @@
       "stat": 10342,
       "open": 4600,
       "unique_paths": 8704,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -1517,15 +1517,15 @@
       "stat": 11150,
       "open": 4994,
       "unique_paths": 9047,
-      "component_ops": 2247,
+      "component_ops": 2015,
       "failed_ratio": 0.1069
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1533,15 +1533,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1549,15 +1549,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1565,15 +1565,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1583,15 +1583,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1599,15 +1599,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1615,15 +1615,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1631,15 +1631,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1649,15 +1649,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -1665,15 +1665,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -1681,15 +1681,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -1697,15 +1697,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -1715,15 +1715,15 @@
       "stat": 11150,
       "open": 4994,
       "unique_paths": 9047,
-      "component_ops": 2247,
+      "component_ops": 2015,
       "failed_ratio": 0.1069
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1731,15 +1731,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1747,15 +1747,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1763,15 +1763,15 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1781,15 +1781,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1797,15 +1797,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1813,15 +1813,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1829,15 +1829,15 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1847,15 +1847,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -1863,15 +1863,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -1879,15 +1879,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -1895,15 +1895,15 @@
       "stat": 10342,
       "open": 4600,
       "unique_paths": 8704,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -1913,15 +1913,15 @@
       "stat": 11150,
       "open": 4994,
       "unique_paths": 9047,
-      "component_ops": 2247,
+      "component_ops": 2015,
       "failed_ratio": 0.1069
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1929,15 +1929,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -1945,15 +1945,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -1961,15 +1961,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -1979,15 +1979,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -1995,15 +1995,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -2011,15 +2011,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -2027,15 +2027,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   },
@@ -2045,15 +2045,15 @@
       "stat": 11127,
       "open": 4984,
       "unique_paths": 9034,
-      "component_ops": 2244,
+      "component_ops": 2012,
       "failed_ratio": 0.1071
     },
     "cart.warm": {
       "total": 5905,
       "stat": 4371,
       "open": 1291,
-      "unique_paths": 3583,
-      "component_ops": 463,
+      "unique_paths": 3582,
+      "component_ops": 233,
       "failed_ratio": 0.2959
     },
     "home.cold": {
@@ -2061,15 +2061,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 5115,
       "stat": 3974,
       "open": 898,
-      "unique_paths": 3330,
-      "component_ops": 357,
+      "unique_paths": 3329,
+      "component_ops": 127,
       "failed_ratio": 0.3275
     },
     "product.cold": {
@@ -2077,15 +2077,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 5224,
       "stat": 4022,
       "open": 956,
-      "unique_paths": 3432,
-      "component_ops": 360,
+      "unique_paths": 3431,
+      "component_ops": 127,
       "failed_ratio": 0.3296
     },
     "wp-admin.cold": {
@@ -2093,15 +2093,15 @@
       "stat": 10344,
       "open": 4601,
       "unique_paths": 8705,
-      "component_ops": 2140,
+      "component_ops": 1909,
       "failed_ratio": 0.1086
     },
     "wp-admin.warm": {
       "total": 5127,
       "stat": 3760,
       "open": 1158,
-      "unique_paths": 3440,
-      "component_ops": 364,
+      "unique_paths": 3438,
+      "component_ops": 164,
       "failed_ratio": 0.3091
     }
   },
@@ -2111,15 +2111,15 @@
       "stat": 11150,
       "open": 4994,
       "unique_paths": 9047,
-      "component_ops": 2247,
+      "component_ops": 2015,
       "failed_ratio": 0.1069
     },
     "cart.warm": {
       "total": 5023,
       "stat": 4299,
       "open": 517,
-      "unique_paths": 3021,
-      "component_ops": 427,
+      "unique_paths": 3020,
+      "component_ops": 233,
       "failed_ratio": 0.3335
     },
     "home.cold": {
@@ -2127,15 +2127,15 @@
       "stat": 10590,
       "open": 4591,
       "unique_paths": 8827,
-      "component_ops": 2125,
+      "component_ops": 1893,
       "failed_ratio": 0.1089
     },
     "home.warm": {
       "total": 4305,
       "stat": 3902,
       "open": 196,
-      "unique_paths": 2836,
-      "component_ops": 321,
+      "unique_paths": 2835,
+      "component_ops": 127,
       "failed_ratio": 0.3724
     },
     "product.cold": {
@@ -2143,15 +2143,15 @@
       "stat": 10706,
       "open": 4649,
       "unique_paths": 8947,
-      "component_ops": 2138,
+      "component_ops": 1903,
       "failed_ratio": 0.1107
     },
     "product.warm": {
       "total": 4354,
       "stat": 3950,
       "open": 194,
-      "unique_paths": 2883,
-      "component_ops": 324,
+      "unique_paths": 2882,
+      "component_ops": 127,
       "failed_ratio": 0.379
     },
     "wp-admin.cold": {
@@ -2159,15 +2159,15 @@
       "stat": 10321,
       "open": 4591,
       "unique_paths": 8692,
-      "component_ops": 2137,
+      "component_ops": 1906,
       "failed_ratio": 0.1088
     },
     "wp-admin.warm": {
       "total": 4233,
       "stat": 3746,
       "open": 285,
-      "unique_paths": 2651,
-      "component_ops": 357,
+      "unique_paths": 2649,
+      "component_ops": 164,
       "failed_ratio": 0.3711
     }
   }

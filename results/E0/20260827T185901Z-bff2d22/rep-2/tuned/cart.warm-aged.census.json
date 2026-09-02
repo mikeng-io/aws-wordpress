@@ -16,9 +16,9 @@
     "chdir": 2,
     "mkdirat": 1
   },
-  "unique_paths": 6470,
-  "path_component_ops": 438,
-  "distinct_file_ops": 9103,
+  "unique_paths": 6469,
+  "path_component_ops": 237,
+  "distinct_file_ops": 9304,
   "failed_ops": 1689,
   "failed_ratio": 0.177,
   "errno": {
@@ -28,10 +28,6 @@
   },
   "top_paths": [
     {
-      "path": "/var/www/html",
-      "ops": 200
-    },
-    {
       "path": "/var/www/html/wp-content/plugins/broken-link-checker/core/external/hub-connector/inc/class-frontend.php",
       "ops": 92
     },
@@ -40,11 +36,11 @@
       "ops": 33
     },
     {
-      "path": "/var/www/html/wp-content/wflogs/ips.php",
-      "ops": 24
+      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "ops": 16
     },
     {
-      "path": "/var/www/html/wp-content/plugins/jetpack/vendor/composer/jetpack_autoload_classmap.php",
+      "path": "/var/www/html/wp-content/wflogs/ips.php",
       "ops": 16
     },
     {
@@ -85,6 +81,10 @@
     },
     {
       "path": "/var/www/html/wp-content/plugins/duplicate-post/duplicate-post.php",
+      "ops": 12
+    },
+    {
+      "path": "/var/www/html/wp-content/plugins/elementor/elementor.php",
       "ops": 12
     }
   ]

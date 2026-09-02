@@ -75,11 +75,17 @@ cart has nothing in it — exactly the code path these endpoints exist to observ
 `?add-to-cart=` request establishes a real `wp_woocommerce_session_*` cookie
 first, which then rides along on the traced request. `run.sh` passes this for
 `cart` and `checkout` only — every other endpoint is still traced cart-free, since
-that's the realistic state for a shopper who hasn't added anything yet. Verified
-directly: checkout jumped from 4,095 to 6,493 syscalls (+59%) once the cart held a
-real item, versus cart's own empty→populated jump of +32% — consistent with
-checkout loading strictly more (the gateway/shipping classes on top of what cart
-already renders).
+that's the realistic state for a shopper who hasn't added anything yet.
+
+The mechanism that motivated this fix — checkout jumping ~59% once the cart held a
+real item, versus cart's own ~32% — came from an exploratory browsing session on a
+mutated, non-reproducible content state and is **not a committed result**; see
+[docs/findings/E0-cart-checkout.md](../../docs/findings/E0-cart-checkout.md) for why
+it doesn't count as one. The committed, reproducible number, from a clean apparatus
+run on the standard seeded catalog (`results/E0/20260902T091846Z-158f9cd/`, n=1):
+cart and checkout both land 14–15% above home/product/wp-admin. Directionally the
+same finding, smaller magnitude, and this is the number to cite until the n=10 run
+needed for confidence intervals lands.
 
 ## The install
 
