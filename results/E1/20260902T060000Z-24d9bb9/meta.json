@@ -1,0 +1,26 @@
+{
+  "experiment": "E1-mount-topology",
+  "run_id": "20260902T060000Z-24d9bb9",
+  "utc": "2026-09-02T06:00:00Z",
+  "region": "ap-southeast-1",
+  "availability_zone": "ap-southeast-1a",
+  "availability_zone_id": "apse1-az1",
+  "instance_type": "t4g.small",
+  "ami_id": "ami-0407c0fd5a0c11fd8",
+  "kernel": "6.1.180-225.360.amzn2023.aarch64",
+  "os": "Amazon Linux 2023",
+  "ecs_agent_version": "1.106.1 (fd3c035e)",
+  "cdk_stack": "E1-MountTopology-dev",
+  "git_sha": "24d9bb9",
+  "efs_config": {
+    "transit_encryption": "ENABLED",
+    "authorization_config": "none (no IAM auth, no access point)",
+    "throughput_mode": "ELASTIC",
+    "one_zone": true
+  },
+  "network_mode": "awsvpc",
+  "task_count": 2,
+  "placement": "both tasks on one container instance (forced by desiredCount=2 against a 1-instance cluster)",
+  "pricing_snapshot_date": null,
+  "note": "This experiment measures topology, not latency or cost. No pricing data collected."
+}

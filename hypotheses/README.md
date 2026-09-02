@@ -5,7 +5,7 @@ written before the experiment runs.
 
 | ID | Claim | Status |
 |---|---|---|
-| [H1](H1-cache-locality.md) | Cache locality, not filesystem choice, dominates WordPress FS performance | `UNTESTED` |
+| [H1](H1-cache-locality.md) | Cache locality, not filesystem choice, dominates WordPress FS performance | `MECHANISM REFUTED, CLAIM OPEN` |
 | [H2](H2-fargate-forbids-caching.md) | Fargate's isolation model forbids every effective cache tier | `UNTESTED` |
 | [H3](H3-opcache-dominates.md) | opcache/realpath tuning makes filesystem choice largely irrelevant at steady state | `INCONCLUSIVE` (E0 contradicts) |
 | [H4](H4-cold-start-is-the-metric.md) | Time-to-first-useful-request separates options under autoscaling; steady-state RPS does not | `UNTESTED` |

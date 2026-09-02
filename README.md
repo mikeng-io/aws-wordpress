@@ -37,18 +37,24 @@ that would falsify it, recorded before any experiment runs.
 
 ## Status
 
-One result recorded, provisional. See
-[docs/findings/E0-n10.md](docs/findings/E0-n10.md) — E0 at n=10. Syscall counts are
-deterministic; a warm WordPress request issues ~4,300 filesystem syscalls that
-`php.ini` cannot reduce.
+Two results recorded.
 
-E0 counts syscalls; it does not time them. Latency belongs to E1-E3, on real
-infrastructure. No timing from a laptop should ever be quoted about EFS.
+[E0 at n=10](docs/findings/E0-n10.md): syscall counts are deterministic; a warm
+WordPress request issues ~4,300 filesystem syscalls that `php.ini` cannot reduce.
+Counts, not latency — E0 says nothing about EFS timing, only about the multiplier
+that timing gets applied to.
+
+[E1](docs/findings/E1-mount-per-task.md): ECS mounts EFS once **per task**, not
+once per host. Two co-located tasks on the identical instance get two fully
+independent NFS4 client mounts and two independent TLS proxy processes — confirmed
+directly on the host, not inferred. This refutes the specific shared-cache
+mechanism the working thesis below was written around; see H1 for what that leaves
+open and what it changes about E2.
 
 | Experiment | Question | Cost | Status |
 |---|---|---|---|
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |
-| [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.30/hr | specced, blocked on AWS access |
+| [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
 | E2 | Placement differential: N tasks on 1 host vs N hosts, identical EFS | small | not specced |
 | E3 | Fargate ephemeral storage metadata latency | small | not specced |
 

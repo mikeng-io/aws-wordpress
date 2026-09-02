@@ -1,6 +1,6 @@
 # H1 — Cache locality dominates, not filesystem choice
 
-**Status:** `UNTESTED`
+**Status:** `MECHANISM REFUTED, CLAIM STILL OPEN` — see E1
 
 ## Claim
 
@@ -66,3 +66,22 @@ A warm request under maximum PHP tuning still issues ~4,300 filesystem syscalls,
 These are the numbers per-op latency gets multiplied by, and E0 shows they cannot be
 reduced from inside `php.ini`. That does not confirm H1 — only E2 can — but it
 establishes that the effect H1 proposes has something substantial to act on.
+
+## E1 result: the proposed mechanism does not exist
+
+E1 (run `20260902T060000Z-24d9bb9`) put two tasks on one host against one EFS
+filesystem and inspected the host directly. Result: two fully independent NFS4
+client mounts, two independent `efs-proxy` TLS sessions, one per task - not one
+shared mount bind-mounted into both.
+
+This refutes the specific mechanism proposed above (shared NFS attribute/page
+cache across co-located tasks) for the standard ECS + EFS configuration
+(`transitEncryption: ENABLED`, no IAM auth/access point, `awsvpc` mode).
+
+It does **not** resolve H1's actual claim. A locality effect could still exist
+through a different, weaker mechanism (shared network path to the same-AZ mount
+target, shared host resources) that this result doesn't rule out. E2's placement
+differential remains the direct test - but its design assumed the now-refuted
+mechanism and should be revisited, not carried forward unchanged.
+
+See [docs/findings/E1-mount-per-task.md](../docs/findings/E1-mount-per-task.md).

@@ -1,0 +1,18 @@
+--- mount | grep -i nfs ---
+sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)
+127.0.0.1:/ on /var/lib/ecs/volumes/ecs-E1MountTopologydevTaskDefinition29DA7865-7-efs-cab885c692c69d8faf01 type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20464,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1)
+127.0.0.1:/ on /var/lib/ecs/volumes/ecs-E1MountTopologydevTaskDefinition29DA7865-7-efs-b4baaca0fd8a8abb8101 type nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20572,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1)
+
+--- nfs mount count ---
+2
+
+--- nfsstat -m ---
+/var/lib/ecs/volumes/ecs-E1MountTopologydevTaskDefinition29DA7865-7-efs-cab885c692c69d8faf01 from 127.0.0.1:/
+ Flags:	rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20464,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+
+/var/lib/ecs/volumes/ecs-E1MountTopologydevTaskDefinition29DA7865-7-efs-b4baaca0fd8a8abb8101 from 127.0.0.1:/
+ Flags:	rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20572,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+
+--- efs-proxy processes ---
+root  2710  Ssl  05:59  /sbin/efs-proxy /var/run/efs/stunnel-config.fs-073e6594d52823aef.var.lib.ecs.volumes.ecs-E1MountTopologydevTaskDefinition29DA7865-7-efs-cab885c692c69d8faf01.20464 --tls --no-direct-s3-read
+root  3131  Ssl  05:59  /sbin/efs-proxy /var/run/efs/stunnel-config.fs-073e6594d52823aef.var.lib.ecs.volumes.ecs-E1MountTopologydevTaskDefinition29DA7865-7-efs-b4baaca0fd8a8abb8101.20572 --tls --no-direct-s3-read

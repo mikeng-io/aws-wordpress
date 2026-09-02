@@ -66,9 +66,19 @@ region and AZ.
 
 ## Status
 
-`READY` — apparatus written (`infra/lib/stacks/e1-mount-topology.ts`), synths clean,
-CDK bootstrapped in `ap-southeast-1`. Not yet deployed.
+`COMPLETE` — prediction refuted. See
+[docs/findings/E1-mount-per-task.md](../../docs/findings/E1-mount-per-task.md).
 
-```bash
-cd infra && ./node_modules/.bin/cdk deploy E1MountTopology --require-approval never
-```
+ECS mounts EFS once **per task**, not once per host: two separate NFS4 client
+mounts, two separate `efs-proxy` TLS processes, confirmed directly on the host via
+SSM. Not the "one mount, bind-mounted into each task" this experiment predicted.
+
+Result: `results/E1/20260902T060000Z-24d9bb9/`
+
+Five real deploy bugs were found and fixed en route (CFN not waiting for the ASG,
+a user-data ordering bug, a missing CloudFormation VPC endpoint, a missing package
+on the AMI, and an EFS file-system policy that omitted `ClientMount`) — each
+confirmed by direct evidence before being fixed, not guessed. See the git history
+for `infra/lib/stacks/e1-mount-topology.ts`.
+
+Stack torn down after data collection; nothing left running.
