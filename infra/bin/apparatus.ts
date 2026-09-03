@@ -9,6 +9,7 @@
  */
 import { App, Tags } from 'aws-cdk-lib';
 import { E1MountTopologyStack } from '../lib/stacks/e1-mount-topology.js';
+import { E3FargateEphemeralLatencyStack } from '../lib/stacks/e3-fargate-ephemeral-latency.js';
 import { NatStrategy, natPlanningHourlyUsd } from '../lib/nat-strategy.js';
 
 const app = new App();
@@ -43,9 +44,22 @@ new E1MountTopologyStack(app, 'E1-MountTopology-dev', {
   description: 'E1 - does ECS on EC2 mount EFS per host or per task?',
 });
 
+new E3FargateEphemeralLatencyStack(app, 'E3-FargateEphemeralLatency-dev', {
+  env,
+  experimentId: 'E3',
+  topology: 'dev',
+  // No NAT, no ASG, no EC2-agent endpoints - a one-shot Fargate RunTask is
+  // structurally cheaper than E1's persistent EC2 service. 3 interface endpoints
+  // (~0.04) + EFS at near-zero usage + Fargate vCPU/memory-seconds for a run
+  // measured in minutes, not hours.
+  estimatedHourlyUsd: 0.04,
+  description: 'E3 - is Fargate ephemeral storage actually fast, or just not EFS?',
+});
+
 // E2 - placement differential (N tasks on 1 host vs N hosts, identical EFS)
-// E3 - Fargate ephemeral storage latency
-// Neither is specced as apparatus yet; E1 gates whether E2 is worth building.
+// Not specced yet. Its original design assumed the shared-NFS-client mechanism
+// E1 refuted; needs redesigning around what E1 actually found before it's worth
+// building.
 
 Tags.of(app).add('Study', 'aws-wordpress');
 
