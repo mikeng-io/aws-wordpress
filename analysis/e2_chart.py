@@ -28,11 +28,15 @@ BLOCK = {"light": "#2a78d6", "dark": "#3987e5"}
 SERVER = {"light": "#eb6834", "dark": "#d95926"}
 
 TIERS = [
-    ("ec2/instance_store", "instance store", "block", "c7gd.large · 118 GB NVMe"),
-    ("ec2/ebs", "EBS gp3", "block", "network block device"),
-    ("fargate/ephemeral", "Fargate ephemeral", "block", "network-backed task volume"),
-    ("ec2/efs", "EFS (from EC2)", "server", "NFSv4.1 + TLS"),
-    ("fargate/efs", "EFS (from Fargate)", "server", "NFSv4.1 + TLS"),
+    ("ec2/instance_store", "instance store", "block", "EC2 · attached NVMe"),
+    ("ec2/ebs", "EBS gp3", "block", "EC2 · network block device"),
+    ("fargate/ephemeral", "Fargate ephemeral", "block", "Fargate · task volume"),
+    ("ec2/efs", "EFS direct + TLS", "server", "EC2 · container mounts FS, per task"),
+    ("ec2/efs_plain", "EFS direct, no TLS", "server", "EC2 · container mounts FS, no proxy"),
+    ("ec2/efs_host_tls", "EFS via host + TLS", "server", "EC2 mounts FS, container binds it"),
+    ("ec2/efs_host_plain", "EFS via host, no TLS", "server", "EC2 mounts FS, no proxy"),
+    ("fargate/efs", "EFS direct + TLS", "server", "Fargate · container mounts FS"),
+    ("fargate/efs_plain", "EFS direct, no TLS", "server", "Fargate · container mounts FS"),
 ]
 OPS = [
     ("stat", "stat()", "~3,900× per WordPress request"),

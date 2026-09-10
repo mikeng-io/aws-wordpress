@@ -96,6 +96,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
       SsmMessages: ec2.InterfaceVpcEndpointAwsService.SSM_MESSAGES,
       Ec2Messages: ec2.InterfaceVpcEndpointAwsService.EC2_MESSAGES,
       CloudFormation: ec2.InterfaceVpcEndpointAwsService.CLOUDFORMATION,
+      Efs: ec2.InterfaceVpcEndpointAwsService.ELASTIC_FILESYSTEM,
     };
     for (const [endpointId, service] of Object.entries(interfaceEndpoints)) {
       vpc.addInterfaceEndpoint(`${endpointId}Endpoint`, {
@@ -173,6 +174,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
     });
     asg.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'));
 
+    // User data mounts EFS directly, so the mount target has to exist first.
+    asg.node.addDependency(fileSystem.mountTargetsAvailable);
+
     const capacityProvider = new ecs.AsgCapacityProvider(this, 'BlockBackedCapacityProvider', {
       autoScalingGroup: asg,
       enableManagedTerminationProtection: false,
@@ -198,6 +202,36 @@ export class E2StorageMatrixStack extends ExperimentStack {
       // Prove the mount took before anything downstream depends on it.
       'test "$(stat -c %d /mnt/instance-store)" != "$(stat -c %d /)"',
       'chmod 777 /mnt/instance-store /mnt/ebs-bench',
+
+      // --- host-mounted EFS, the configuration ECS does not give you ---------
+      //
+      // The ECS-managed efsVolumeConfiguration below mounts EFS once PER TASK,
+      // each with its own NFS client and its own efs-proxy TLS process (E1
+      // established this directly on the host). Mounting on the host instead and
+      // bind-mounting into the container is a materially different topology - one
+      // client shared by every container - and it is the configuration H1's
+      // original cache-sharing mechanism actually assumed. E1 refuted "ECS does
+      // this for you"; it never tested "do it yourself".
+      //
+      // Two host mounts, because they separate two different costs:
+      //   efs-host-tls    same TLS proxy as ECS uses, but one per HOST
+      //   efs-host-plain  no TLS at all - isolates what the stunnel hop costs
+      'dnf install -y amazon-efs-utils',
+      'mkdir -p /mnt/efs-host-tls /mnt/efs-host-plain',
+      `EFS_ID=${fileSystem.fileSystemId}`,
+      `EFS_DNS=${fileSystem.fileSystemId}.efs.${Stack.of(this).region}.amazonaws.com`,
+      // A mount target can report available before it answers, so retry rather
+      // than racing it.
+      'for i in $(seq 1 30); do getent hosts "$EFS_DNS" && break || sleep 5; done',
+      'for i in $(seq 1 12); do mount -t efs -o tls "$EFS_ID":/ /mnt/efs-host-tls && break || sleep 10; done',
+      'for i in $(seq 1 12); do mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport "$EFS_DNS":/ /mnt/efs-host-plain && break || sleep 10; done',
+      // Same fail-closed rule as the container applies here: a directory that is
+      // not actually a mount would be measured as the root volume and reported as
+      // EFS, which is the one error that looks like a result.
+      'test "$(stat -c %d /mnt/efs-host-tls)" != "$(stat -c %d /)"',
+      'test "$(stat -c %d /mnt/efs-host-plain)" != "$(stat -c %d /)"',
+      'mkdir -p /mnt/efs-host-tls/bench-tls /mnt/efs-host-plain/bench-plain',
+      'chmod 777 /mnt/efs-host-tls/bench-tls /mnt/efs-host-plain/bench-plain',
     );
 
     // cfn-signal must be the LAST user-data line: addAsgCapacityProvider appends
@@ -223,11 +257,30 @@ export class E2StorageMatrixStack extends ExperimentStack {
       name: 'ebs',
       host: { sourcePath: '/mnt/ebs-bench' },
     });
+    // Bind mounts of the host's own EFS mounts. Pointed at a subdirectory rather
+    // than the filesystem root so the two arms cannot collide on the same paths.
+    ec2TaskDefinition.addVolume({
+      name: 'efs-host-tls',
+      host: { sourcePath: '/mnt/efs-host-tls/bench-tls' },
+    });
+    ec2TaskDefinition.addVolume({
+      name: 'efs-host-plain',
+      host: { sourcePath: '/mnt/efs-host-plain/bench-plain' },
+    });
     ec2TaskDefinition.addVolume({
       name: 'efs',
       efsVolumeConfiguration: {
         fileSystemId: fileSystem.fileSystemId,
         transitEncryption: 'ENABLED',
+      },
+    });
+    // The same ECS-managed per-task mount without the efs-proxy hop, so the
+    // container-direct row has both halves of the TLS modifier.
+    ec2TaskDefinition.addVolume({
+      name: 'efs-plain',
+      efsVolumeConfiguration: {
+        fileSystemId: fileSystem.fileSystemId,
+        transitEncryption: 'DISABLED',
       },
     });
 
@@ -236,7 +289,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
       memoryReservationMiB: 512,
       cpu: 1024,
       environment: {
-        BENCH_MOUNTS: 'instance_store=/bench/instance-store ebs=/bench/ebs efs=/bench/efs',
+        BENCH_MOUNTS: 'instance_store=/bench/instance-store ebs=/bench/ebs '
+          + 'efs=/bench/efs efs_plain=/bench/efs-plain '
+          + 'efs_host_tls=/bench/efs-host-tls efs_host_plain=/bench/efs-host-plain',
         BENCH_S3_BUCKET: resultsBucket.bucketName,
         BENCH_ARM: 'ec2',
       },
@@ -246,6 +301,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
       ['/bench/instance-store', 'instance-store'],
       ['/bench/ebs', 'ebs'],
       ['/bench/efs', 'efs'],
+      ['/bench/efs-plain', 'efs-plain'],
+      ['/bench/efs-host-tls', 'efs-host-tls'],
+      ['/bench/efs-host-plain', 'efs-host-plain'],
     ] as const) {
       ec2Container.addMountPoints({ containerPath, sourceVolume, readOnly: false });
     }
@@ -266,22 +324,30 @@ export class E2StorageMatrixStack extends ExperimentStack {
         transitEncryption: 'ENABLED',
       },
     });
+    fargateTaskDefinition.addVolume({
+      name: 'efs-plain',
+      efsVolumeConfiguration: {
+        fileSystemId: fileSystem.fileSystemId,
+        transitEncryption: 'DISABLED',
+      },
+    });
     const fargateContainer = fargateTaskDefinition.addContainer('bench', {
       image: benchImage,
       environment: {
         // 'ephemeral' is exempt from the entrypoint's root-filesystem check by
         // design: on Fargate the task's own writable layer IS the tier measured.
-        BENCH_MOUNTS: 'ephemeral=/bench/ephemeral efs=/bench/efs',
+        BENCH_MOUNTS: 'ephemeral=/bench/ephemeral efs=/bench/efs efs_plain=/bench/efs-plain',
         BENCH_S3_BUCKET: resultsBucket.bucketName,
         BENCH_ARM: 'fargate',
       },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'e2-fargate', logGroup }),
     });
-    fargateContainer.addMountPoints({
-      containerPath: '/bench/efs',
-      sourceVolume: 'efs',
-      readOnly: false,
-    });
+    for (const [containerPath, sourceVolume] of [
+      ['/bench/efs', 'efs'],
+      ['/bench/efs-plain', 'efs-plain'],
+    ] as const) {
+      fargateContainer.addMountPoints({ containerPath, sourceVolume, readOnly: false });
+    }
 
     resultsBucket.grantWrite(ec2TaskDefinition.taskRole);
     resultsBucket.grantWrite(fargateTaskDefinition.taskRole);
