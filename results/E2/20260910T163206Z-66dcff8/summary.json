@@ -476,6 +476,422 @@
       ]
     }
   },
+  "noise_floor": {
+    "ec2/ebs": {
+      "create": {
+        "per_rep_medians_ns": [
+          19972,
+          19949,
+          19771
+        ],
+        "spread": 1.01
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          1266,
+          1280,
+          1277
+        ],
+        "spread": 1.011
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          5323,
+          5339,
+          5331
+        ],
+        "spread": 1.003
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          3269,
+          3391,
+          3228
+        ],
+        "spread": 1.05
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          7661,
+          7647,
+          7591
+        ],
+        "spread": 1.009
+      }
+    },
+    "ec2/efs": {
+      "create": {
+        "per_rep_medians_ns": [
+          6463379,
+          8667090,
+          7476403
+        ],
+        "spread": 1.341
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          707328,
+          957624,
+          1042840
+        ],
+        "spread": 1.474
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          670261,
+          839337,
+          931132
+        ],
+        "spread": 1.389
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          754468,
+          1185880,
+          1091020
+        ],
+        "spread": 1.572
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          2676838,
+          3069718,
+          3139122
+        ],
+        "spread": 1.173
+      }
+    },
+    "ec2/instance_store": {
+      "create": {
+        "per_rep_medians_ns": [
+          19292,
+          19895,
+          19662
+        ],
+        "spread": 1.031
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          1274,
+          1274,
+          1280
+        ],
+        "spread": 1.005
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          5262,
+          5205,
+          5175
+        ],
+        "spread": 1.017
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          2891,
+          3179,
+          2856
+        ],
+        "spread": 1.113
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          7431,
+          7721,
+          7437
+        ],
+        "spread": 1.039
+      }
+    },
+    "fargate/efs": {
+      "create": {
+        "per_rep_medians_ns": [
+          6586235,
+          8055661,
+          7015763
+        ],
+        "spread": 1.223
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          737352,
+          797099,
+          888152
+        ],
+        "spread": 1.205
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          660967,
+          757417,
+          637753
+        ],
+        "spread": 1.188
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          837664,
+          819432,
+          918262
+        ],
+        "spread": 1.121
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          2722087,
+          3045760,
+          3021861
+        ],
+        "spread": 1.119
+      }
+    },
+    "fargate/ephemeral": {
+      "create": {
+        "per_rep_medians_ns": [
+          21855,
+          22123,
+          21707
+        ],
+        "spread": 1.019
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          1793,
+          1855,
+          1810
+        ],
+        "spread": 1.035
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          5641,
+          5851,
+          5709
+        ],
+        "spread": 1.037
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          3964,
+          4541,
+          3843
+        ],
+        "spread": 1.182
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          11319,
+          11716,
+          11394
+        ],
+        "spread": 1.035
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "stat",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.002,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.011,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "open_read",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.026,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.017,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "create",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.013,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.031,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "unlink",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.015,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.039,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "stat",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.047,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.474,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "open_read",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.33,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.389,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "create",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.051,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.341,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "unlink",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.022,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.173,
+      "inside_noise_floor": true
+    }
+  ],
+  "clusters": {
+    "ec2/ebs": {
+      "stat": {
+        "fast_share": 0.673,
+        "fast_median_ns": 1228,
+        "slow_median_ns": 1431,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.5813,
+        "fast_median_ns": 4467,
+        "slow_median_ns": 6705,
+        "centroid_separation": 1.6,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs": {
+      "stat": {
+        "fast_share": 0.2857,
+        "fast_median_ns": 1762,
+        "slow_median_ns": 1016230,
+        "centroid_separation": 555.0,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.81,
+        "fast_median_ns": 870638,
+        "slow_median_ns": 1548381,
+        "centroid_separation": 2.0,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/instance_store": {
+      "stat": {
+        "fast_share": 0.631,
+        "fast_median_ns": 1232,
+        "slow_median_ns": 1423,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.5577,
+        "fast_median_ns": 4348,
+        "slow_median_ns": 6365,
+        "centroid_separation": 1.6,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/efs": {
+      "stat": {
+        "fast_share": 0.307,
+        "fast_median_ns": 1644,
+        "slow_median_ns": 861383,
+        "centroid_separation": 537.2,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.679,
+        "fast_median_ns": 633133,
+        "slow_median_ns": 1224365,
+        "centroid_separation": 2.0,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/ephemeral": {
+      "stat": {
+        "fast_share": 0.805,
+        "fast_median_ns": 1777,
+        "slow_median_ns": 2143,
+        "centroid_separation": 1.3,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.4737,
+        "fast_median_ns": 5007,
+        "slow_median_ns": 6335,
+        "centroid_separation": 1.3,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    }
+  },
   "prediction_5": {
     "status": "PARTIALLY SUPPORTED",
     "checks": [

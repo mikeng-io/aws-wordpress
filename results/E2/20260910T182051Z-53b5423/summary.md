@@ -21,6 +21,50 @@
 | `unlink` | SEPARATED | INCONCLUSIVE ⚠ | 1.6× |
 | `open_read` | SEPARATED | TIE ⚠ | 1.17× |
 
+### Declared comparisons, judged against the noise floor
+
+| Comparison | op | ratio | verdict | rep-to-rep spread | inside noise? |
+|---|---|--:|---|--:|---|
+| device: attached NVMe vs network block | `stat` | 1.00× | TIE | 1.04× | yes |
+| device: attached NVMe vs network block | `open_read` | 1.06× | TIE | 1.06× | yes |
+| device: attached NVMe vs network block | `create` | 1.02× | TIE | 1.02× | yes |
+| device: attached NVMe vs network block | `unlink` | 1.02× | TIE | 1.02× | yes |
+| TLS cost, container-direct (EC2) | `stat` | 1.00× | TIE | 1.52× | yes |
+| TLS cost, container-direct (EC2) | `open_read` | 1.03× | TIE | 1.48× | yes |
+| TLS cost, container-direct (EC2) | `create` | 1.00× | TIE | 1.19× | yes |
+| TLS cost, container-direct (EC2) | `unlink` | 1.01× | TIE | 1.24× | yes |
+| TLS cost, host mount (EC2) | `stat` | 1.08× | TIE | 1.82× | yes |
+| TLS cost, host mount (EC2) | `open_read` | 1.18× | TIE | 1.48× | yes |
+| TLS cost, host mount (EC2) | `create` | 1.03× | TIE | 1.23× | yes |
+| TLS cost, host mount (EC2) | `unlink` | 1.05× | TIE | 1.22× | yes |
+| TLS cost, container-direct (Fargate) | `stat` | 1.10× | TIE | 1.77× | yes |
+| TLS cost, container-direct (Fargate) | `open_read` | 1.01× | TIE | 1.46× | yes |
+| TLS cost, container-direct (Fargate) | `create` | 1.02× | TIE | 1.21× | yes |
+| TLS cost, container-direct (Fargate) | `unlink` | 1.03× | TIE | 1.20× | yes |
+| mount topology, TLS held | `stat` | 1.00× | TIE | 1.54× | yes |
+| mount topology, TLS held | `open_read` | 1.03× | TIE | 1.48× | yes |
+| mount topology, TLS held | `create` | 1.01× | TIE | 1.23× | yes |
+| mount topology, TLS held | `unlink` | 1.03× | TIE | 1.24× | yes |
+| mount topology, plain held | `stat` | 1.09× | TIE | 1.82× | yes |
+| mount topology, plain held | `open_read` | 1.11× | TIE | 1.48× | yes |
+| mount topology, plain held | `create` | 1.02× | TIE | 1.23× | yes |
+| mount topology, plain held | `unlink` | 1.02× | TIE | 1.22× | yes |
+| compute type, direct+TLS held | `stat` | 1.06× | TIE | 1.52× | yes |
+| compute type, direct+TLS held | `open_read` | 1.08× | TIE | 1.48× | yes |
+| compute type, direct+TLS held | `create` | 1.01× | TIE | 1.21× | yes |
+| compute type, direct+TLS held | `unlink` | 1.02× | TIE | 1.24× | yes |
+
+### Bimodality (1-D k-means on log10, E3's gates)
+
+| Tier | op | fast share | fast median | slow median | separation |
+|---|---|--:|--:|--:|--:|
+| `ec2/efs` | `stat` | 31.5% | 1.8 µs | 814.8 µs | 493× |
+| `ec2/efs_host_plain` | `stat` | 32.8% | 1.7 µs | 809.4 µs | 512× |
+| `ec2/efs_host_tls` | `stat` | 32.1% | 1.7 µs | 838.4 µs | 504× |
+| `ec2/efs_plain` | `stat` | 32.3% | 1.7 µs | 821.6 µs | 509× |
+| `fargate/efs` | `stat` | 30.3% | 1.7 µs | 1.01 ms | 562× |
+| `fargate/efs_plain` | `stat` | 31.3% | 1.7 µs | 830.8 µs | 530× |
+
 ### Between-replication agreement (median of each rep)
 
 | Tier | op | per-rep medians | spread |

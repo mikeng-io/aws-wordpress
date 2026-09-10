@@ -39,6 +39,21 @@ SEPARATION_MIN_RATIO = 3.0
 DEVICE_TOUCHING_OPS = ["create", "unlink", "open_read"]
 CACHE_ANSWERED_OPS = ["stat"]
 
+# Comparisons the study actually makes claims about, declared here rather than
+# assembled ad hoc after seeing the data. Each is (label, tier_a, tier_b): the
+# question is always "does this axis move anything", so the expected answer for all
+# of them is TIE and a SEPARATED verdict would be the interesting one.
+DECLARED_COMPARISONS = [
+    ("device: attached NVMe vs network block", "ec2/instance_store", "ec2/ebs"),
+    ("TLS cost, container-direct (EC2)", "ec2/efs", "ec2/efs_plain"),
+    ("TLS cost, host mount (EC2)", "ec2/efs_host_tls", "ec2/efs_host_plain"),
+    ("TLS cost, container-direct (Fargate)", "fargate/efs", "fargate/efs_plain"),
+    ("mount topology, TLS held", "ec2/efs", "ec2/efs_host_tls"),
+    ("mount topology, plain held", "ec2/efs_plain", "ec2/efs_host_plain"),
+    ("compute type, direct+TLS held", "ec2/efs", "fargate/efs"),
+]
+COMPARISON_OPS = ["stat", "open_read", "create", "unlink"]
+
 
 def load_csv(path: Path) -> dict[str, list[int]]:
     """Read bench output: bare "op,ns" lines, no header.
@@ -191,7 +206,88 @@ def grade_prediction_5(stats: dict) -> dict:
     }
 
 
-def render(stats: dict, agreement: dict, pred5: dict) -> str:
+def noise_floor(agreement: dict) -> dict:
+    """Between-replication spread per tier/op - the floor any claim must clear.
+
+    A 1.08x difference between two tiers means nothing if the same tier varies 1.8x
+    between deployments of itself. Published as a first-class number for exactly that
+    reason, rather than left for the reader to derive.
+    """
+    out: dict[str, dict] = {}
+    for tier, ops in agreement.items():
+        for op, meds in ops.items():
+            if len(meds) < 2 or not min(meds):
+                continue
+            out.setdefault(tier, {})[op] = {
+                "per_rep_medians_ns": meds,
+                "spread": round(max(meds) / min(meds), 3),
+            }
+    return out
+
+
+def comparisons(stats: dict, floors: dict) -> list[dict]:
+    """Every declared comparison, judged against the between-rep noise floor."""
+    out = []
+    for label, a, b in DECLARED_COMPARISONS:
+        if a not in stats or b not in stats:
+            continue
+        for op in COMPARISON_OPS:
+            if op not in stats[a] or op not in stats[b]:
+                continue
+            v, r = verdict(stats[a][op], stats[b][op])
+            # The worst between-rep spread of either arm on this op. A difference
+            # smaller than this is indistinguishable from re-running the same thing.
+            fl = max(
+                floors.get(a, {}).get(op, {}).get("spread", 1.0),
+                floors.get(b, {}).get(op, {}).get("spread", 1.0),
+            )
+            out.append({
+                "comparison": label, "op": op, "a": a, "b": b,
+                "ratio": round(r, 3), "verdict": v,
+                "noise_floor_spread": fl,
+                "inside_noise_floor": r <= fl,
+            })
+    return out
+
+
+def clusters(run_dir: Path, pooled: dict) -> dict:
+    """Bimodality test per tier/op, reusing E3's gates unchanged.
+
+    Imported rather than reimplemented: E3 found EFS stat to be two populations, and
+    a second implementation of the same test is how two experiments quietly stop
+    being comparable.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from e3_clusters import kmeans2_log, MIN_CLUSTER_SHARE, MIN_LOG10_SEPARATION
+
+    out: dict[str, dict] = {}
+    for tier, ops in pooled.items():
+        for op in ("stat", "open_read"):
+            vals = ops.get(op)
+            if not vals or len(vals) < 100:
+                continue
+            lo, hi, c_lo, c_hi = kmeans2_log(vals)
+            if not lo or not hi:
+                continue
+            share = len(lo) / len(vals)
+            bimodal = (
+                share >= MIN_CLUSTER_SHARE
+                and (1 - share) >= MIN_CLUSTER_SHARE
+                and (c_hi - c_lo) >= MIN_LOG10_SEPARATION
+            )
+            out.setdefault(tier, {})[op] = {
+                "fast_share": round(share, 4),
+                "fast_median_ns": int(statistics.median(lo)),
+                "slow_median_ns": int(statistics.median(hi)),
+                "centroid_separation": round(10 ** (c_hi - c_lo), 1),
+                "bimodal": bimodal,
+                "gates": {"min_cluster_share": MIN_CLUSTER_SHARE,
+                          "min_log10_separation": MIN_LOG10_SEPARATION},
+            }
+    return out
+
+
+def render(stats: dict, agreement: dict, pred5: dict, comps: list, clus: dict) -> str:
     ops = ["stat", "stat_enoent", "open_read", "create", "unlink"]
     lines = ["| Tier | " + " | ".join(f"{o} p50" for o in ops) + " |",
              "|---" * (len(ops) + 1) + "|"]
@@ -209,6 +305,25 @@ def render(stats: dict, agreement: dict, pred5: dict) -> str:
         for c in pred5["checks"]:
             mark = "" if c["observed"] == c["expected"] else " ⚠"
             lines.append(f"| `{c['op']}` | {c['expected']} | {c['observed']}{mark} | {c['ratio']}× |")
+
+    if comps:
+        lines += ["", "### Declared comparisons, judged against the noise floor", "",
+                  "| Comparison | op | ratio | verdict | rep-to-rep spread | inside noise? |",
+                  "|---|---|--:|---|--:|---|"]
+        for c in comps:
+            lines.append(
+                f"| {c['comparison']} | `{c['op']}` | {c['ratio']:.2f}× | {c['verdict']} | "
+                f"{c['noise_floor_spread']:.2f}× | {'yes' if c['inside_noise_floor'] else '**NO**'} |")
+
+    bim = [(t_, o, d) for t_, ops in clus.items() for o, d in ops.items() if d["bimodal"]]
+    if bim:
+        lines += ["", "### Bimodality (1-D k-means on log10, E3's gates)", "",
+                  "| Tier | op | fast share | fast median | slow median | separation |",
+                  "|---|---|--:|--:|--:|--:|"]
+        for t_, o, d in sorted(bim):
+            lines.append(f"| `{t_}` | `{o}` | {d['fast_share'] * 100:.1f}% | "
+                         f"{fmt_ns(d['fast_median_ns'])} | {fmt_ns(d['slow_median_ns'])} | "
+                         f"{d['centroid_separation']:.0f}× |")
 
     lines += ["", "### Between-replication agreement (median of each rep)", "",
               "| Tier | op | per-rep medians | spread |", "|---|---|---|--:|"]
@@ -235,6 +350,9 @@ def main(run_dir: Path) -> int:
     stats = {tier: {op: summarize(v) for op, v in ops.items()} for tier, ops in pooled.items()}
     agreement = per_rep_medians(run_dir)
     pred5 = grade_prediction_5(stats)
+    floors = noise_floor(agreement)
+    comps = comparisons(stats, floors)
+    clus = clusters(run_dir, pooled)
 
     out = {
         "experiment": "E2",
@@ -242,10 +360,13 @@ def main(run_dir: Path) -> int:
         "replications": len(list(run_dir.glob("rep-*"))),
         "tiers": stats,
         "between_rep_medians": {t: dict(o) for t, o in agreement.items()},
+        "noise_floor": floors,
+        "comparisons": comps,
+        "clusters": clus,
         "prediction_5": pred5,
     }
     (run_dir / "summary.json").write_text(json.dumps(out, indent=2) + "\n")
-    table = render(stats, agreement, pred5)
+    table = render(stats, agreement, pred5, comps, clus)
     (run_dir / "summary.md").write_text(table + "\n")
     print(table)
     return 0

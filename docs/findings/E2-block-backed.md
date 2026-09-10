@@ -201,6 +201,16 @@ between-replication variance on `stat` is **1.49× to 1.82×** across independen
 deployments. Every difference above is 1.00–1.10× — comfortably inside it. These
 are not small effects; they are no effect.
 
+Every figure in this section is stored in the run's `summary.json` under
+`comparisons`, `noise_floor` and `clusters`, each carrying the noise floor it was
+judged against and an `inside_noise_floor` flag, so the verdicts are recomputable
+rather than asserted: `python3 analysis/e2_stats.py results/E2/<run-id>`.
+
+The bimodality also replicates across **all six** EFS configurations, not just the
+two measured in the first run — fast-cluster share 30.3–32.8%, centroid separation
+493–562×. Mount topology and transit encryption change neither the share nor the
+separation, which is the same null result seen from the distribution's side.
+
 ## All six EFS configurations are one tier
 
 | Op | 6 EFS configs | spread | 3 block-backed | gap |

@@ -17,6 +17,26 @@
 | `unlink` | SEPARATED | INCONCLUSIVE ⚠ | 1.52× |
 | `open_read` | SEPARATED | TIE ⚠ | 1.1× |
 
+### Declared comparisons, judged against the noise floor
+
+| Comparison | op | ratio | verdict | rep-to-rep spread | inside noise? |
+|---|---|--:|---|--:|---|
+| device: attached NVMe vs network block | `stat` | 1.00× | TIE | 1.01× | yes |
+| device: attached NVMe vs network block | `open_read` | 1.03× | TIE | 1.02× | **NO** |
+| device: attached NVMe vs network block | `create` | 1.01× | TIE | 1.03× | yes |
+| device: attached NVMe vs network block | `unlink` | 1.01× | TIE | 1.04× | yes |
+| compute type, direct+TLS held | `stat` | 1.05× | TIE | 1.47× | yes |
+| compute type, direct+TLS held | `open_read` | 1.33× | TIE | 1.39× | yes |
+| compute type, direct+TLS held | `create` | 1.05× | TIE | 1.34× | yes |
+| compute type, direct+TLS held | `unlink` | 1.02× | TIE | 1.17× | yes |
+
+### Bimodality (1-D k-means on log10, E3's gates)
+
+| Tier | op | fast share | fast median | slow median | separation |
+|---|---|--:|--:|--:|--:|
+| `ec2/efs` | `stat` | 28.6% | 1.8 µs | 1.02 ms | 555× |
+| `fargate/efs` | `stat` | 30.7% | 1.6 µs | 861.4 µs | 537× |
+
 ### Between-replication agreement (median of each rep)
 
 | Tier | op | per-rep medians | spread |

@@ -852,6 +852,886 @@
       ]
     }
   },
+  "noise_floor": {
+    "ec2/ebs": {
+      "create": {
+        "per_rep_medians_ns": [
+          19877,
+          19940,
+          19701
+        ],
+        "spread": 1.012
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          1271,
+          1216,
+          1253
+        ],
+        "spread": 1.045
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          5448,
+          5587,
+          5253
+        ],
+        "spread": 1.064
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          3257,
+          3077,
+          3046
+        ],
+        "spread": 1.069
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          7533,
+          7472,
+          7508
+        ],
+        "spread": 1.008
+      }
+    },
+    "ec2/efs": {
+      "create": {
+        "per_rep_medians_ns": [
+          7267716,
+          6298198,
+          7462536
+        ],
+        "spread": 1.185
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          756923,
+          697777,
+          1059338
+        ],
+        "spread": 1.518
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          691526,
+          648786,
+          963077
+        ],
+        "spread": 1.484
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          1949582,
+          763626,
+          1109938
+        ],
+        "spread": 2.553
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          2895737,
+          2611418,
+          3235616
+        ],
+        "spread": 1.239
+      }
+    },
+    "ec2/efs_host_plain": {
+      "create": {
+        "per_rep_medians_ns": [
+          7378256,
+          5989397,
+          7340052
+        ],
+        "spread": 1.232
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          697853,
+          640299,
+          1163066
+        ],
+        "spread": 1.816
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          681591,
+          547796,
+          811488
+        ],
+        "spread": 1.481
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          1020538,
+          716068,
+          1020576
+        ],
+        "spread": 1.425
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          2935179,
+          2545801,
+          3090647
+        ],
+        "spread": 1.214
+      }
+    },
+    "ec2/efs_host_tls": {
+      "create": {
+        "per_rep_medians_ns": [
+          7582450,
+          6167673,
+          7557865
+        ],
+        "spread": 1.229
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          767554,
+          688123,
+          1057968
+        ],
+        "spread": 1.537
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          761532,
+          700947,
+          959413
+        ],
+        "spread": 1.369
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          1038227,
+          775384,
+          1166070
+        ],
+        "spread": 1.504
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          3128277,
+          2608568,
+          3184466
+        ],
+        "spread": 1.221
+      }
+    },
+    "ec2/efs_plain": {
+      "create": {
+        "per_rep_medians_ns": [
+          7258689,
+          6418663,
+          7474892
+        ],
+        "spread": 1.165
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          703392,
+          742588,
+          1064828
+        ],
+        "spread": 1.514
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          764607,
+          631661,
+          902923
+        ],
+        "spread": 1.429
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          854638,
+          806477,
+          1095974
+        ],
+        "spread": 1.359
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          2942516,
+          2616533,
+          3195433
+        ],
+        "spread": 1.221
+      }
+    },
+    "ec2/instance_store": {
+      "create": {
+        "per_rep_medians_ns": [
+          19305,
+          19196,
+          19616
+        ],
+        "spread": 1.022
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          1265,
+          1234,
+          1235
+        ],
+        "spread": 1.025
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          5285,
+          5077,
+          5054
+        ],
+        "spread": 1.046
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          2970,
+          2767,
+          2961
+        ],
+        "spread": 1.073
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          7428,
+          7303,
+          7404
+        ],
+        "spread": 1.017
+      }
+    },
+    "fargate/efs": {
+      "create": {
+        "per_rep_medians_ns": [
+          7739261,
+          6383273,
+          7342159
+        ],
+        "spread": 1.212
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          881426,
+          695166,
+          1033700
+        ],
+        "spread": 1.487
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          688934,
+          648088,
+          869748
+        ],
+        "spread": 1.342
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          881110,
+          752611,
+          1070629
+        ],
+        "spread": 1.423
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          3060100,
+          2634492,
+          3150273
+        ],
+        "spread": 1.196
+      }
+    },
+    "fargate/efs_plain": {
+      "create": {
+        "per_rep_medians_ns": [
+          7348733,
+          6253194,
+          7356451
+        ],
+        "spread": 1.176
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          746408,
+          659859,
+          1169162
+        ],
+        "spread": 1.772
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          759938,
+          585604,
+          854562
+        ],
+        "spread": 1.459
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          1672489,
+          712531,
+          1037882
+        ],
+        "spread": 2.347
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          2885946,
+          2590743,
+          3102259
+        ],
+        "spread": 1.197
+      }
+    },
+    "fargate/ephemeral": {
+      "create": {
+        "per_rep_medians_ns": [
+          22130,
+          22990,
+          21726
+        ],
+        "spread": 1.058
+      },
+      "stat": {
+        "per_rep_medians_ns": [
+          1847,
+          2016,
+          1850
+        ],
+        "spread": 1.091
+      },
+      "open_read": {
+        "per_rep_medians_ns": [
+          6173,
+          6228,
+          5738
+        ],
+        "spread": 1.085
+      },
+      "stat_enoent": {
+        "per_rep_medians_ns": [
+          4921,
+          5058,
+          4106
+        ],
+        "spread": 1.232
+      },
+      "unlink": {
+        "per_rep_medians_ns": [
+          11903,
+          12221,
+          11436
+        ],
+        "spread": 1.069
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "stat",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.001,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.045,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "open_read",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.059,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.064,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "create",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.022,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.022,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "unlink",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.017,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.017,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "stat",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.004,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.518,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "open_read",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.032,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.484,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "create",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.005,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.185,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "unlink",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.009,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.239,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "stat",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.085,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.816,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "open_read",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.177,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.481,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "create",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.027,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.232,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "unlink",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.048,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.221,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "stat",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.096,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.772,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "open_read",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.008,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.459,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "create",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.023,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.212,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "unlink",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.028,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.197,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "stat",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.001,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.537,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "open_read",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.031,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.484,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "create",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.011,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.229,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "unlink",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.034,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.239,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "stat",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.088,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.816,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "open_read",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.106,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.481,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "create",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.021,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.232,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "unlink",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.023,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.221,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "stat",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.062,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.518,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "open_read",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.079,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.484,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "create",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.012,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.212,
+      "inside_noise_floor": true
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "unlink",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.018,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.239,
+      "inside_noise_floor": true
+    }
+  ],
+  "clusters": {
+    "ec2/ebs": {
+      "stat": {
+        "fast_share": 0.628,
+        "fast_median_ns": 1183,
+        "slow_median_ns": 1389,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.4893,
+        "fast_median_ns": 4335,
+        "slow_median_ns": 6536,
+        "centroid_separation": 1.6,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs": {
+      "stat": {
+        "fast_share": 0.3147,
+        "fast_median_ns": 1759,
+        "slow_median_ns": 814819,
+        "centroid_separation": 493.0,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.6227,
+        "fast_median_ns": 666188,
+        "slow_median_ns": 1197514,
+        "centroid_separation": 1.9,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs_host_plain": {
+      "stat": {
+        "fast_share": 0.3283,
+        "fast_median_ns": 1744,
+        "slow_median_ns": 809401,
+        "centroid_separation": 512.2,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.659,
+        "fast_median_ns": 616973,
+        "slow_median_ns": 1094585,
+        "centroid_separation": 1.9,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs_host_tls": {
+      "stat": {
+        "fast_share": 0.3213,
+        "fast_median_ns": 1738,
+        "slow_median_ns": 838365,
+        "centroid_separation": 503.7,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.6897,
+        "fast_median_ns": 745180,
+        "slow_median_ns": 1453766,
+        "centroid_separation": 1.9,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs_plain": {
+      "stat": {
+        "fast_share": 0.3233,
+        "fast_median_ns": 1725,
+        "slow_median_ns": 821570,
+        "centroid_separation": 509.2,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.6643,
+        "fast_median_ns": 707237,
+        "slow_median_ns": 1165017,
+        "centroid_separation": 1.8,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/instance_store": {
+      "stat": {
+        "fast_share": 0.683,
+        "fast_median_ns": 1187,
+        "slow_median_ns": 1423,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.4783,
+        "fast_median_ns": 4147,
+        "slow_median_ns": 6079,
+        "centroid_separation": 1.5,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/efs": {
+      "stat": {
+        "fast_share": 0.303,
+        "fast_median_ns": 1703,
+        "slow_median_ns": 1005092,
+        "centroid_separation": 562.1,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.6877,
+        "fast_median_ns": 681316,
+        "slow_median_ns": 1227129,
+        "centroid_separation": 1.9,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/efs_plain": {
+      "stat": {
+        "fast_share": 0.313,
+        "fast_median_ns": 1707,
+        "slow_median_ns": 830778,
+        "centroid_separation": 529.6,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.6737,
+        "fast_median_ns": 709375,
+        "slow_median_ns": 1097663,
+        "centroid_separation": 1.8,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/ephemeral": {
+      "stat": {
+        "fast_share": 0.7067,
+        "fast_median_ns": 1832,
+        "slow_median_ns": 2174,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.4677,
+        "fast_median_ns": 5234,
+        "slow_median_ns": 6675,
+        "centroid_separation": 1.3,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    }
+  },
   "prediction_5": {
     "status": "PARTIALLY SUPPORTED",
     "checks": [
