@@ -1,0 +1,891 @@
+{
+  "experiment": "E2",
+  "run_id": "20260910T182051Z-53b5423",
+  "replications": 3,
+  "tiers": {
+    "ec2/ebs": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 19815,
+        "p90_ns": 25494,
+        "p99_ns": 42986,
+        "median_ci95_ns": [
+          19603,
+          20014
+        ],
+        "geomean_ns": 19975.8,
+        "geomean_over_median": 1.008,
+        "tail_p99_over_p50": 2.17
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 1248,
+        "p90_ns": 1464,
+        "p99_ns": 1731,
+        "median_ci95_ns": [
+          1244,
+          1253
+        ],
+        "geomean_ns": 1264.2,
+        "geomean_over_median": 1.013,
+        "tail_p99_over_p50": 1.39
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 5437,
+        "p90_ns": 7767,
+        "p99_ns": 10999,
+        "median_ci95_ns": [
+          5356,
+          5515
+        ],
+        "geomean_ns": 5430.0,
+        "geomean_over_median": 0.999,
+        "tail_p99_over_p50": 2.02
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 3149,
+        "p90_ns": 3813,
+        "p99_ns": 11405,
+        "median_ci95_ns": [
+          3046,
+          3280
+        ],
+        "geomean_ns": 3352.9,
+        "geomean_over_median": 1.065,
+        "tail_p99_over_p50": 3.62
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 7506,
+        "p90_ns": 9421,
+        "p99_ns": 140527,
+        "median_ci95_ns": [
+          7442,
+          7589
+        ],
+        "geomean_ns": 8153.7,
+        "geomean_over_median": 1.086,
+        "tail_p99_over_p50": 18.72
+      }
+    },
+    "ec2/efs": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 7081014,
+        "p90_ns": 9511568,
+        "p99_ns": 14519689,
+        "median_ci95_ns": [
+          7036954,
+          7116417
+        ],
+        "geomean_ns": 7304525.4,
+        "geomean_over_median": 1.032,
+        "tail_p99_over_p50": 2.05
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 739662,
+        "p90_ns": 1095861,
+        "p99_ns": 1540270,
+        "median_ci95_ns": [
+          734114,
+          745464
+        ],
+        "geomean_ns": 125820.4,
+        "geomean_over_median": 0.17,
+        "tail_p99_over_p50": 2.08
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 904100,
+        "p90_ns": 1584968,
+        "p99_ns": 2976899,
+        "median_ci95_ns": [
+          895933,
+          911934
+        ],
+        "geomean_ns": 915914.1,
+        "geomean_over_median": 1.013,
+        "tail_p99_over_p50": 3.29
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 1086462,
+        "p90_ns": 2352245,
+        "p99_ns": 3011466,
+        "median_ci95_ns": [
+          894781,
+          1135787
+        ],
+        "geomean_ns": 1133198.6,
+        "geomean_over_median": 1.043,
+        "tail_p99_over_p50": 2.77
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 2936181,
+        "p90_ns": 3671338,
+        "p99_ns": 5664078,
+        "median_ci95_ns": [
+          2906759,
+          2972060
+        ],
+        "geomean_ns": 3020668.2,
+        "geomean_over_median": 1.029,
+        "tail_p99_over_p50": 1.93
+      }
+    },
+    "ec2/efs_host_plain": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 6967276,
+        "p90_ns": 9472149,
+        "p99_ns": 13798949,
+        "median_ci95_ns": [
+          6918177,
+          7013041
+        ],
+        "geomean_ns": 7151255.3,
+        "geomean_over_median": 1.026,
+        "tail_p99_over_p50": 1.98
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 682807,
+        "p90_ns": 1215500,
+        "p99_ns": 2172119,
+        "median_ci95_ns": [
+          678242,
+          688555
+        ],
+        "geomean_ns": 116409.4,
+        "geomean_over_median": 0.17,
+        "tail_p99_over_p50": 3.18
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 792216,
+        "p90_ns": 1444988,
+        "p99_ns": 2486672,
+        "median_ci95_ns": [
+          787504,
+          796920
+        ],
+        "geomean_ns": 797574.4,
+        "geomean_over_median": 1.007,
+        "tail_p99_over_p50": 3.14
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 994806,
+        "p90_ns": 1084369,
+        "p99_ns": 1555491,
+        "median_ci95_ns": [
+          866116,
+          1016353
+        ],
+        "geomean_ns": 914464.6,
+        "geomean_over_median": 0.919,
+        "tail_p99_over_p50": 1.56
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 2894916,
+        "p90_ns": 3441548,
+        "p99_ns": 6185975,
+        "median_ci95_ns": [
+          2867011,
+          2926497
+        ],
+        "geomean_ns": 2944857.6,
+        "geomean_over_median": 1.017,
+        "tail_p99_over_p50": 2.14
+      }
+    },
+    "ec2/efs_host_tls": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 7156234,
+        "p90_ns": 9460118,
+        "p99_ns": 13305387,
+        "median_ci95_ns": [
+          7094382,
+          7204414
+        ],
+        "geomean_ns": 7313996.9,
+        "geomean_over_median": 1.022,
+        "tail_p99_over_p50": 1.86
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 740561,
+        "p90_ns": 1099024,
+        "p99_ns": 1482377,
+        "median_ci95_ns": [
+          733962,
+          746549
+        ],
+        "geomean_ns": 120991.5,
+        "geomean_over_median": 0.163,
+        "tail_p99_over_p50": 2.0
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 932496,
+        "p90_ns": 1614222,
+        "p99_ns": 2876981,
+        "median_ci95_ns": [
+          928155,
+          936415
+        ],
+        "geomean_ns": 940629.3,
+        "geomean_over_median": 1.009,
+        "tail_p99_over_p50": 3.09
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 1038449,
+        "p90_ns": 1349690,
+        "p99_ns": 1662167,
+        "median_ci95_ns": [
+          880160,
+          1155431
+        ],
+        "geomean_ns": 1004563.1,
+        "geomean_over_median": 0.967,
+        "tail_p99_over_p50": 1.6
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 3034779,
+        "p90_ns": 3630294,
+        "p99_ns": 5956012,
+        "median_ci95_ns": [
+          3012271,
+          3054418
+        ],
+        "geomean_ns": 3054261.3,
+        "geomean_over_median": 1.006,
+        "tail_p99_over_p50": 1.96
+      }
+    },
+    "ec2/efs_plain": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 7116339,
+        "p90_ns": 9521727,
+        "p99_ns": 14479375,
+        "median_ci95_ns": [
+          7066019,
+          7176859
+        ],
+        "geomean_ns": 7342552.6,
+        "geomean_over_median": 1.032,
+        "tail_p99_over_p50": 2.03
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 742908,
+        "p90_ns": 1117297,
+        "p99_ns": 2099346,
+        "median_ci95_ns": [
+          736483,
+          748801
+        ],
+        "geomean_ns": 119888.2,
+        "geomean_over_median": 0.161,
+        "tail_p99_over_p50": 2.83
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 875823,
+        "p90_ns": 1517362,
+        "p99_ns": 1700171,
+        "median_ci95_ns": [
+          871190,
+          880728
+        ],
+        "geomean_ns": 872534.5,
+        "geomean_over_median": 0.996,
+        "tail_p99_over_p50": 1.94
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 872654,
+        "p90_ns": 1191921,
+        "p99_ns": 1549488,
+        "median_ci95_ns": [
+          824239,
+          1072695
+        ],
+        "geomean_ns": 950244.6,
+        "geomean_over_median": 1.089,
+        "tail_p99_over_p50": 1.78
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 2961234,
+        "p90_ns": 3537436,
+        "p99_ns": 6067216,
+        "median_ci95_ns": [
+          2921943,
+          2991187
+        ],
+        "geomean_ns": 3006628.3,
+        "geomean_over_median": 1.015,
+        "tail_p99_over_p50": 2.05
+      }
+    },
+    "ec2/instance_store": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 19389,
+        "p90_ns": 25015,
+        "p99_ns": 39349,
+        "median_ci95_ns": [
+          19128,
+          19628
+        ],
+        "geomean_ns": 19523.6,
+        "geomean_over_median": 1.007,
+        "tail_p99_over_p50": 2.03
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 1247,
+        "p90_ns": 1495,
+        "p99_ns": 1807,
+        "median_ci95_ns": [
+          1242,
+          1250
+        ],
+        "geomean_ns": 1266.8,
+        "geomean_over_median": 1.016,
+        "tail_p99_over_p50": 1.45
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 5132,
+        "p90_ns": 7006,
+        "p99_ns": 10021,
+        "median_ci95_ns": [
+          5066,
+          5201
+        ],
+        "geomean_ns": 5098.1,
+        "geomean_over_median": 0.993,
+        "tail_p99_over_p50": 1.95
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 2893,
+        "p90_ns": 3756,
+        "p99_ns": 8832,
+        "median_ci95_ns": [
+          2801,
+          2975
+        ],
+        "geomean_ns": 3043.6,
+        "geomean_over_median": 1.052,
+        "tail_p99_over_p50": 3.05
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 7382,
+        "p90_ns": 9116,
+        "p99_ns": 130744,
+        "median_ci95_ns": [
+          7315,
+          7442
+        ],
+        "geomean_ns": 7969.6,
+        "geomean_over_median": 1.08,
+        "tail_p99_over_p50": 17.71
+      }
+    },
+    "fargate/efs": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 7164927,
+        "p90_ns": 9444540,
+        "p99_ns": 13727729,
+        "median_ci95_ns": [
+          7127443,
+          7203945
+        ],
+        "geomean_ns": 7400780.0,
+        "geomean_over_median": 1.033,
+        "tail_p99_over_p50": 1.92
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 785789,
+        "p90_ns": 1181806,
+        "p99_ns": 2615324,
+        "median_ci95_ns": [
+          773475,
+          804336
+        ],
+        "geomean_ns": 144015.7,
+        "geomean_over_median": 0.183,
+        "tail_p99_over_p50": 3.33
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 837536,
+        "p90_ns": 1528419,
+        "p99_ns": 2737277,
+        "median_ci95_ns": [
+          831200,
+          842890
+        ],
+        "geomean_ns": 863164.3,
+        "geomean_over_median": 1.031,
+        "tail_p99_over_p50": 3.27
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 881955,
+        "p90_ns": 1105013,
+        "p99_ns": 1735934,
+        "median_ci95_ns": [
+          794833,
+          1047019
+        ],
+        "geomean_ns": 923341.4,
+        "geomean_over_median": 1.047,
+        "tail_p99_over_p50": 1.97
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 2988100,
+        "p90_ns": 3486066,
+        "p99_ns": 5654210,
+        "median_ci95_ns": [
+          2966849,
+          3009342
+        ],
+        "geomean_ns": 3011621.4,
+        "geomean_over_median": 1.008,
+        "tail_p99_over_p50": 1.89
+      }
+    },
+    "fargate/efs_plain": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 7005964,
+        "p90_ns": 9744403,
+        "p99_ns": 14636615,
+        "median_ci95_ns": [
+          6955870,
+          7059578
+        ],
+        "geomean_ns": 7321081.9,
+        "geomean_over_median": 1.045,
+        "tail_p99_over_p50": 2.09
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 717064,
+        "p90_ns": 1217838,
+        "p99_ns": 2093456,
+        "median_ci95_ns": [
+          709878,
+          723707
+        ],
+        "geomean_ns": 129369.2,
+        "geomean_over_median": 0.18,
+        "tail_p99_over_p50": 2.92
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 831211,
+        "p90_ns": 1475543,
+        "p99_ns": 2881177,
+        "median_ci95_ns": [
+          826789,
+          835103
+        ],
+        "geomean_ns": 843666.0,
+        "geomean_over_median": 1.015,
+        "tail_p99_over_p50": 3.47
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 1005184,
+        "p90_ns": 2139598,
+        "p99_ns": 2676918,
+        "median_ci95_ns": [
+          814404,
+          1056722
+        ],
+        "geomean_ns": 1036805.7,
+        "geomean_over_median": 1.031,
+        "tail_p99_over_p50": 2.66
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 2905889,
+        "p90_ns": 3453268,
+        "p99_ns": 6632024,
+        "median_ci95_ns": [
+          2878919,
+          2932935
+        ],
+        "geomean_ns": 2964125.0,
+        "geomean_over_median": 1.02,
+        "tail_p99_over_p50": 2.28
+      }
+    },
+    "fargate/ephemeral": {
+      "create": {
+        "n": 3000,
+        "p50_ns": 22282,
+        "p90_ns": 29186,
+        "p99_ns": 36952,
+        "median_ci95_ns": [
+          21930,
+          22640
+        ],
+        "geomean_ns": 21838.9,
+        "geomean_over_median": 0.98,
+        "tail_p99_over_p50": 1.66
+      },
+      "stat": {
+        "n": 3000,
+        "p50_ns": 1910,
+        "p90_ns": 2263,
+        "p99_ns": 2903,
+        "median_ci95_ns": [
+          1901,
+          1923
+        ],
+        "geomean_ns": 1939.5,
+        "geomean_over_median": 1.015,
+        "tail_p99_over_p50": 1.52
+      },
+      "open_read": {
+        "n": 3000,
+        "p50_ns": 6030,
+        "p90_ns": 7309,
+        "p99_ns": 9338,
+        "median_ci95_ns": [
+          5985,
+          6078
+        ],
+        "geomean_ns": 5996.5,
+        "geomean_over_median": 0.994,
+        "tail_p99_over_p50": 1.55
+      },
+      "stat_enoent": {
+        "n": 60,
+        "p50_ns": 4604,
+        "p90_ns": 6019,
+        "p99_ns": 11850,
+        "median_ci95_ns": [
+          4170,
+          4965
+        ],
+        "geomean_ns": 4721.3,
+        "geomean_over_median": 1.025,
+        "tail_p99_over_p50": 2.57
+      },
+      "unlink": {
+        "n": 3000,
+        "p50_ns": 11841,
+        "p90_ns": 14215,
+        "p99_ns": 16678,
+        "median_ci95_ns": [
+          11731,
+          11949
+        ],
+        "geomean_ns": 11797.5,
+        "geomean_over_median": 0.996,
+        "tail_p99_over_p50": 1.41
+      }
+    }
+  },
+  "between_rep_medians": {
+    "ec2/ebs": {
+      "create": [
+        19877,
+        19940,
+        19701
+      ],
+      "stat": [
+        1271,
+        1216,
+        1253
+      ],
+      "open_read": [
+        5448,
+        5587,
+        5253
+      ],
+      "stat_enoent": [
+        3257,
+        3077,
+        3046
+      ],
+      "unlink": [
+        7533,
+        7472,
+        7508
+      ]
+    },
+    "ec2/efs": {
+      "create": [
+        7267716,
+        6298198,
+        7462536
+      ],
+      "stat": [
+        756923,
+        697777,
+        1059338
+      ],
+      "open_read": [
+        691526,
+        648786,
+        963077
+      ],
+      "stat_enoent": [
+        1949582,
+        763626,
+        1109938
+      ],
+      "unlink": [
+        2895737,
+        2611418,
+        3235616
+      ]
+    },
+    "ec2/efs_host_plain": {
+      "create": [
+        7378256,
+        5989397,
+        7340052
+      ],
+      "stat": [
+        697853,
+        640299,
+        1163066
+      ],
+      "open_read": [
+        681591,
+        547796,
+        811488
+      ],
+      "stat_enoent": [
+        1020538,
+        716068,
+        1020576
+      ],
+      "unlink": [
+        2935179,
+        2545801,
+        3090647
+      ]
+    },
+    "ec2/efs_host_tls": {
+      "create": [
+        7582450,
+        6167673,
+        7557865
+      ],
+      "stat": [
+        767554,
+        688123,
+        1057968
+      ],
+      "open_read": [
+        761532,
+        700947,
+        959413
+      ],
+      "stat_enoent": [
+        1038227,
+        775384,
+        1166070
+      ],
+      "unlink": [
+        3128277,
+        2608568,
+        3184466
+      ]
+    },
+    "ec2/efs_plain": {
+      "create": [
+        7258689,
+        6418663,
+        7474892
+      ],
+      "stat": [
+        703392,
+        742588,
+        1064828
+      ],
+      "open_read": [
+        764607,
+        631661,
+        902923
+      ],
+      "stat_enoent": [
+        854638,
+        806477,
+        1095974
+      ],
+      "unlink": [
+        2942516,
+        2616533,
+        3195433
+      ]
+    },
+    "ec2/instance_store": {
+      "create": [
+        19305,
+        19196,
+        19616
+      ],
+      "stat": [
+        1265,
+        1234,
+        1235
+      ],
+      "open_read": [
+        5285,
+        5077,
+        5054
+      ],
+      "stat_enoent": [
+        2970,
+        2767,
+        2961
+      ],
+      "unlink": [
+        7428,
+        7303,
+        7404
+      ]
+    },
+    "fargate/efs": {
+      "create": [
+        7739261,
+        6383273,
+        7342159
+      ],
+      "stat": [
+        881426,
+        695166,
+        1033700
+      ],
+      "open_read": [
+        688934,
+        648088,
+        869748
+      ],
+      "stat_enoent": [
+        881110,
+        752611,
+        1070629
+      ],
+      "unlink": [
+        3060100,
+        2634492,
+        3150273
+      ]
+    },
+    "fargate/efs_plain": {
+      "create": [
+        7348733,
+        6253194,
+        7356451
+      ],
+      "stat": [
+        746408,
+        659859,
+        1169162
+      ],
+      "open_read": [
+        759938,
+        585604,
+        854562
+      ],
+      "stat_enoent": [
+        1672489,
+        712531,
+        1037882
+      ],
+      "unlink": [
+        2885946,
+        2590743,
+        3102259
+      ]
+    },
+    "fargate/ephemeral": {
+      "create": [
+        22130,
+        22990,
+        21726
+      ],
+      "stat": [
+        1847,
+        2016,
+        1850
+      ],
+      "open_read": [
+        6173,
+        6228,
+        5738
+      ],
+      "stat_enoent": [
+        4921,
+        5058,
+        4106
+      ],
+      "unlink": [
+        11903,
+        12221,
+        11436
+      ]
+    }
+  },
+  "prediction_5": {
+    "status": "PARTIALLY SUPPORTED",
+    "checks": [
+      {
+        "op": "stat",
+        "expected": "TIE",
+        "observed": "INCONCLUSIVE",
+        "ratio": 1.53
+      },
+      {
+        "op": "create",
+        "expected": "SEPARATED",
+        "observed": "TIE",
+        "ratio": 1.15
+      },
+      {
+        "op": "unlink",
+        "expected": "SEPARATED",
+        "observed": "INCONCLUSIVE",
+        "ratio": 1.6
+      },
+      {
+        "op": "open_read",
+        "expected": "SEPARATED",
+        "observed": "TIE",
+        "ratio": 1.17
+      }
+    ],
+    "met": 0,
+    "total": 4,
+    "uniform_across_ops": false,
+    "thresholds": {
+      "tie_max_ratio": 1.5,
+      "separation_min_ratio": 3.0
+    }
+  }
+}

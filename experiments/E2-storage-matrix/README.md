@@ -1,6 +1,6 @@
 # E2 — the storage matrix
 
-**Status:** `BLOCK-BACKED GROUP COMPLETE` — server-backed group specced and costed,
+**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` — server-backed group specced and costed,
 not yet built.
 
 > **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md)

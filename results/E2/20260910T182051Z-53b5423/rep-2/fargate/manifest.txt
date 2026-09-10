@@ -1,0 +1,3 @@
+ephemeral
+efs
+efs_plain

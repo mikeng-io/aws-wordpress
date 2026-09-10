@@ -1,4 +1,4 @@
-# E2 — the device does not matter; the protocol boundary is everything
+# E2 — the device does not matter, and neither does the mount; the protocol boundary is everything
 
 **Result:** `results/E2/20260910T163206Z-66dcff8/` (3 replications, 3 independent
 deployments, 60,300 timed ops)
@@ -162,3 +162,78 @@ verifies. One self-inflicted failure is worth recording too: editing `collect.sh
 while it was running corrupted the final line of the third replication, because bash
 reads scripts incrementally by byte offset. The data was already collected and the
 stack already destroyed; the run is complete and valid.
+
+---
+
+# Follow-up: the mount-topology matrix
+
+**Result:** `results/E2/20260910T182051Z-53b5423/` (3 replications, 9 arms, 108,540 ops)
+
+The first run measured EFS only as the ECS-managed volume — `efsVolumeConfiguration`,
+one mount per task, transit encryption on. That is one cell of a 2×2, and the other
+three mattered for two reasons. Every EFS number published above carried the
+`efs-proxy` TLS hop with nothing isolating it, and the host-mount topology is the
+shared NFS client that [H1](../../hypotheses/H1-cache-locality.md)'s original
+mechanism assumed — [E1](E1-mount-per-task.md) refuted *"ECS mounts per host for
+you"* but never tested *"mount it yourself"*.
+
+Both host mounts were verified on a live instance before spending replications, and
+the two paths are visibly different in `/proc/mounts` rather than assumed:
+
+```
+/mnt/efs-host-tls    127.0.0.1:/ port=20559   <- local efs-proxy hop
+/mnt/efs-host-plain  10.44.0.145              <- straight to the mount target
+```
+
+## Every comparison is a tie
+
+| Comparison | `stat` | `create` |
+|---|--:|--:|
+| TLS vs plain — container-direct, EC2 | 1.00× | 1.00× |
+| TLS vs plain — host mount, EC2 | 1.08× | 1.03× |
+| TLS vs plain — container-direct, Fargate | 1.10× | 1.02× |
+| container-direct vs host mount — TLS held | 1.00× | 1.01× |
+| container-direct vs host mount — plain held | 1.09× | 1.02× |
+| EC2 vs Fargate — direct + TLS held | 1.06× | 1.01× |
+
+**The noise floor makes this rigorous rather than merely suggestive.** EFS's own
+between-replication variance on `stat` is **1.49× to 1.82×** across independent
+deployments. Every difference above is 1.00–1.10× — comfortably inside it. These
+are not small effects; they are no effect.
+
+## All six EFS configurations are one tier
+
+| Op | 6 EFS configs | spread | 3 block-backed | gap |
+|---|--:|--:|--:|--:|
+| `stat` | 683–786 µs | **1.15×** | 1.2–1.9 µs | 357–630× |
+| `open+read` | 792–933 µs | 1.18× | 5.1–6.0 µs | 131–182× |
+| `create` | 6.97–7.16 ms | 1.03× | 19.4–22.3 µs | 313–370× |
+| `unlink` | 2.89–3.03 ms | 1.05× | 7.4–11.8 µs | 244–411× |
+
+## What this settles
+
+**The TLS proxy is not where the time goes.** The concern that published EFS numbers
+were partly measuring stunnel was reasonable and is now refuted: turning transit
+encryption off changes nothing measurable. The ~700 µs is the NFS round trip itself.
+Encrypt in transit; it is free at this workload's shape.
+
+**Mount topology is not a lever.** Host-mounting EFS and bind-mounting it in performs
+identically to the ECS-managed per-task mount. E1 showed ECS *will not* share a
+client for you; this shows that making it share one *by hand* buys nothing for a
+single task. The remaining untested claim is narrower than before — whether two
+concurrent tasks sharing one host mount warm each other's attribute cache — and that
+needs a bench mode that reads a tree it did not create. Recorded as the open piece;
+it is no longer a gap in the topology axis, only in the sharing axis.
+
+**Two of the three axes collapse.** Compute type and mount topology both make no
+difference to EFS. What is left is the filesystem itself — which is exactly where
+the remaining matrix cells are, and why they are worth the money.
+
+## Threats to validity
+
+- **Single task per arm.** This measures topology, not sharing. Two tasks against one
+  host mount is a different question and is not answered here.
+- **Same-AZ, warm mount.** Every arm mounts a One Zone filesystem in its own AZ, and
+  the mount is established before the benchmark runs, so nothing here includes mount
+  establishment cost.
+- The block-backed caveats from the first run carry over unchanged.
