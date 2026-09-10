@@ -55,6 +55,11 @@ data. The rules below are its summary, not a substitute for it.
    difference" are outcomes, not failures. They're often the most useful ones.
 4. **Results are immutable.** Never edit a file under `results/`. Re-running
    produces a new run ID. Analysis reads; it does not rewrite.
+   *One narrow exception, for reference data only:* a pricing snapshot under
+   `results/pricing/` may supersede an earlier one from the same day when every
+   price is verified identical key-by-key and the new snapshot only adds fields.
+   That is enrichment of one observation, not a second observation. It never
+   applies to experiment output, where a re-run is always a new run.
 5. **Provenance or it didn't happen.** Every result carries: run ID, UTC timestamp,
    region, AZ, instance type, kernel version, image digest, CDK stack version,
    and a pricing snapshot date.

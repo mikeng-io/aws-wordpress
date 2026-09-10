@@ -253,6 +253,110 @@ def instance_store_specs() -> dict[str, dict]:
     return out
 
 
+# FSx cost is not driven by the per-GB rate. It is driven by minimum provisioned
+# capacity and throughput floors, which differ per file-system type and generation,
+# and which the Pricing API does not express. They are declared here, with the
+# documentation that fixes each one, and the hourly cost is then computed from the
+# snapshot's own rates rather than typed in.
+#
+# Each arm is the CHEAPEST DEFENSIBLE configuration for a benchmark: Single-AZ
+# throughout (no replication - this is apparatus, not production), first-generation
+# ONTAP because its throughput floor is 128 MBps against second-generation's 384.
+HOURS_PER_MONTH = 730  # AWS's own convention for converting monthly rates
+
+FSX_MINIMUM_CONFIGS = {
+    "OpenZFS Single-AZ 1": {
+        "storage_gib": 64,
+        "throughput_mbps": 64,
+        "storage_match": "per GB-Month for provisioned OpenZFS Single-AZ SSD storage",
+        "throughput_match": "per MBps-Month for provisioned Single-AZ OpenZFS throughput capac",
+        "floor_source": "https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/limits.html",
+        "note": "Min 64 GiB / 64 MBps. SINGLE_AZ_1 throughput steps start at 64; "
+                "SINGLE_AZ_2 and MULTI_AZ_1 start at 160.",
+    },
+    "Lustre Scratch (SSD)": {
+        "storage_gib": 1200,
+        "throughput_mbps": 0,  # scratch bundles throughput with capacity
+        "storage_match": "per GB-Month of provisioned Lustre storage",
+        "throughput_match": None,
+        "floor_source": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/limits.html",
+        "note": "Min 1200 GiB for SCRATCH_2 / PERSISTENT_1 / PERSISTENT_2 on SSD. "
+                "No separate throughput charge; scratch has no replication.",
+    },
+    "Lustre Persistent-2 (125 MB/s/TiB)": {
+        "storage_gib": 1200,
+        "throughput_mbps": 0,
+        "storage_match": "per GB-Month of persistent SSD Lustre storage with 125 MB/s per T",
+        "throughput_match": None,
+        "floor_source": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/limits.html",
+        "note": "Same 1200 GiB floor. Throughput is sold per TiB of storage, not "
+                "separately, so the storage rate carries it.",
+    },
+    "ONTAP Single-AZ gen-1": {
+        "storage_gib": 1024,
+        "throughput_mbps": 128,
+        "storage_match": "per GB-Month of provisioned ONTAP Single-AZ SSD storage",
+        "throughput_match": "per MBps-Month of provisioned ONTAP Single-AZ throughput capacity",
+        "floor_source": "https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/limits.html",
+        "note": "Min 1024 GiB per HA pair. First-generation throughput floor is "
+                "128 MBps; second-generation is 384 MBps, so gen-1 is cheaper.",
+    },
+}
+
+
+def _rate(rows: list[dict], needle: str) -> tuple[float, str]:
+    """Find exactly one price dimension whose description contains `needle`.
+
+    Deliberately strict. A silent first-match would let a Multi-AZ rate stand in for
+    a Single-AZ one and nothing downstream would notice.
+    """
+    hits = {(r["usd"], r["unit"]) for r in rows if needle in r["description"]}
+    if len(hits) != 1:
+        raise RuntimeError(
+            f"expected exactly one rate matching {needle!r}, got {len(hits)}: {sorted(hits)}"
+        )
+    return hits.pop()
+
+
+def cost_fsx_minimums(fsx_rows: list[dict]) -> dict[str, dict]:
+    """Hourly cost of the cheapest defensible configuration of each FSx arm."""
+    out = {}
+    for name, cfg in FSX_MINIMUM_CONFIGS.items():
+        storage_rate, storage_unit = _rate(fsx_rows, cfg["storage_match"])
+        storage_monthly = storage_rate * cfg["storage_gib"]
+        tp_monthly, tp_rate = 0.0, None
+        if cfg["throughput_match"]:
+            tp_rate, _ = _rate(fsx_rows, cfg["throughput_match"])
+            tp_monthly = tp_rate * cfg["throughput_mbps"]
+        monthly = storage_monthly + tp_monthly
+        out[name] = {
+            "storage_gib": cfg["storage_gib"],
+            "throughput_mbps": cfg["throughput_mbps"] or None,
+            "storage_rate_usd": storage_rate,
+            "storage_rate_unit": storage_unit,
+            "throughput_rate_usd": tp_rate,
+            "usd_per_month": round(monthly, 4),
+            "usd_per_hour": round(monthly / HOURS_PER_MONTH, 5),
+            "floor_source": cfg["floor_source"],
+            "note": cfg["note"],
+        }
+    return out
+
+
+def render_fsx_table(costs: dict[str, dict]) -> str:
+    lines = [
+        "| FSx arm | Minimum capacity | Minimum throughput | $/hr | $/day |",
+        "|---|--:|--:|--:|--:|",
+    ]
+    for name, c in sorted(costs.items(), key=lambda kv: kv[1]["usd_per_hour"]):
+        tp = f"{c['throughput_mbps']} MBps" if c["throughput_mbps"] else "bundled"
+        lines.append(
+            f"| {name} | {c['storage_gib']} GiB | {tp} | "
+            f"${c['usd_per_hour']:.4f} | ${c['usd_per_hour'] * 24:.2f} |"
+        )
+    return "\n".join(lines)
+
+
 def render_instance_table(instances: dict, stores: dict) -> str:
     lines = [
         "| Instance | vCPU | Memory | Instance store | $/hr | Premium over storeless |",
@@ -300,8 +404,13 @@ def main() -> int:
     snapshot["fargate"] = price_fargate()
     snapshot["storage"] = price_storage()
 
+    snapshot["fsx_minimum_configs"] = cost_fsx_minimums(snapshot["storage"]["fsx"])
+
     table = render_instance_table(snapshot["ec2_instances"], snapshot["instance_store"])
+    fsx_table = render_fsx_table(snapshot["fsx_minimum_configs"])
     print(table)
+    print()
+    print(fsx_table)
 
     if args.dry_run:
         return 0
@@ -317,6 +426,7 @@ def main() -> int:
     out_dir.mkdir(parents=True)
     (out_dir / "pricing.json").write_text(json.dumps(snapshot, indent=2) + "\n")
     (out_dir / "instances.md").write_text(table + "\n")
+    (out_dir / "fsx-minimums.md").write_text(fsx_table + "\n")
     print(f"\nwrote {out_dir.relative_to(REPO)}", file=sys.stderr)
     return 0
 

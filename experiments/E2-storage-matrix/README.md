@@ -1,6 +1,6 @@
 # E2 — the storage matrix
 
-**Status:** `SPECCED` — apparatus not yet written.
+**Status:** `SPECCED, COSTED` — apparatus not yet written.
 
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md) (which tier is reachable
 decides performance), [H7](../../hypotheses/H7-cheapest-storage-loses.md) (cost at
@@ -158,7 +158,7 @@ lands in the cost table below rather than being guessed at.
 
 ## Cost
 
-Snapshot `results/pricing/20260910T154846Z-4299cd3/` (on-demand list prices, `ap-southeast-1`,
+Snapshot `results/pricing/20260910T155953Z-52175fd/` (on-demand list prices, `ap-southeast-1`,
 regenerate with `make pricing`). No savings plans, no reserved capacity, no free
 tier. Every priced row in that snapshot carries its own `location` field, and the
 generator refuses any product not in `Asia Pacific (Singapore)` — so the region is
@@ -217,12 +217,44 @@ the reason it is a gate on E4 rather than a footnote.
 
 ### Storage tiers
 
-**`UNVERIFIED` for the FSx arms.** The per-GB-month rates are in the snapshot
-(`storage.fsx`), but FSx cost is not driven by the per-GB rate — it is driven by
-minimum provisioned capacity and throughput floors, which differ per deployment
-type and are not derivable from the pricing API alone. Costing those honestly means
-picking a concrete configuration per FSx arm first. That is design work E2 has not
-done yet, and per `CLAUDE.md` nothing deploys until it is done and written here.
+EFS is known from the E1/E3 runs: elastic throughput, near-zero at benchmark
+volumes — $0.04/GB read, $0.07/GB write, plus storage.
 
-EFS is already known from E1/E3 runs: elastic throughput, near-zero at benchmark
-volumes, $0.04/GB read and $0.07/GB write on Elastic Throughput plus storage.
+FSx cost is **not** driven by its per-GB rate. It is driven by minimum provisioned
+capacity and throughput floors that differ per file-system type and generation, and
+that the Pricing API does not express. Those floors are declared in
+`analysis/aws_pricing.py` with the documentation that fixes each one, and the hourly
+figure is computed from the snapshot's own rates:
+
+| FSx arm | Minimum capacity | Minimum throughput | $/hr | $/day |
+|---|--:|--:|--:|--:|
+| OpenZFS Single-AZ 1 | 64 GiB | 64 MBps | $0.0352 | $0.84 |
+| Lustre Scratch (SSD) | 1200 GiB | bundled | $0.2762 | $6.63 |
+| Lustre Persistent-2 (125 MB/s/TiB) | 1200 GiB | bundled | $0.2910 | $6.98 |
+| ONTAP Single-AZ gen-1 | 1024 GiB | 128 MBps | $0.3559 | $8.54 |
+
+Each is the cheapest *defensible* configuration: Single-AZ throughout, since this is
+apparatus rather than production and replication would only add cost without
+changing what is being measured; first-generation ONTAP because its throughput floor
+is 128 MBps against second-generation's 384.
+
+**The floors bite on capacity, not on price.** Lustre cannot be provisioned below
+1200 GiB and ONTAP below 1024 GiB, so both arms must rent roughly a terabyte to
+benchmark a working set of a few gigabytes. That is a distortion worth stating
+plainly in any writeup: the metadata numbers are measured on a file system far
+larger than the workload needs, because no smaller one can be bought.
+
+OpenZFS is the outlier at 64 GiB, which makes it the only FSx arm that can be sized
+near the actual working set — and, at $0.035/hr, cheaper than the `c7gd.large`
+carrying the benchmark.
+
+### What the whole matrix costs to run
+
+All four FSx arms simultaneously come to **~$0.96/hr**. With the compute arms and
+endpoints, a full matrix run is on the order of **$1.50/hr**, and the protocol's
+three replications are hours, not days.
+
+**FSx is a teardown risk, not a run-cost risk.** $0.96/hr is $690/month if something
+is left standing. Every FSx arm therefore deploys and destroys inside one `make`
+target, tagged `Experiment=E2`, and no arm is created without its destroy path
+tested first — the trap `CLAUDE.md` names is forgetting, not spending.

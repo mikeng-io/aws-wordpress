@@ -1,5 +1,5 @@
 {
-  "snapshot_utc": "2026-09-10T15:48:46.037870+00:00",
+  "snapshot_utc": "2026-09-10T15:59:53.222389+00:00",
   "region": "ap-southeast-1",
   "location": "Asia Pacific (Singapore)",
   "note": "On-demand list prices. No savings plans, no reserved capacity, no free tier.",
@@ -69,6 +69,42 @@
     }
   },
   "instance_store": {
+    "t4g.small": {
+      "total_gb": null,
+      "nvme": null,
+      "disks": [],
+      "encrypted_at_rest": null
+    },
+    "r7gd.large": {
+      "total_gb": 118,
+      "nvme": "required",
+      "disks": [
+        {
+          "count": 1,
+          "size_gb": 118,
+          "type": "ssd"
+        }
+      ],
+      "encrypted_at_rest": "required"
+    },
+    "m7gd.large": {
+      "total_gb": 118,
+      "nvme": "required",
+      "disks": [
+        {
+          "count": 1,
+          "size_gb": 118,
+          "type": "ssd"
+        }
+      ],
+      "encrypted_at_rest": "required"
+    },
+    "c7g.large": {
+      "total_gb": null,
+      "nvme": null,
+      "disks": [],
+      "encrypted_at_rest": null
+    },
     "c7gd.large": {
       "total_gb": 118,
       "nvme": "required",
@@ -87,43 +123,7 @@
       "disks": [],
       "encrypted_at_rest": null
     },
-    "c7g.large": {
-      "total_gb": null,
-      "nvme": null,
-      "disks": [],
-      "encrypted_at_rest": null
-    },
-    "m7gd.large": {
-      "total_gb": 118,
-      "nvme": "required",
-      "disks": [
-        {
-          "count": 1,
-          "size_gb": 118,
-          "type": "ssd"
-        }
-      ],
-      "encrypted_at_rest": "required"
-    },
-    "r7gd.large": {
-      "total_gb": 118,
-      "nvme": "required",
-      "disks": [
-        {
-          "count": 1,
-          "size_gb": 118,
-          "type": "ssd"
-        }
-      ],
-      "encrypted_at_rest": "required"
-    },
     "r7g.large": {
-      "total_gb": null,
-      "nvme": null,
-      "disks": [],
-      "encrypted_at_rest": null
-    },
-    "t4g.small": {
       "total_gb": null,
       "nvme": null,
       "disks": [],
@@ -1174,5 +1174,51 @@
       }
     ]
   },
-  "run_id": "20260910T154846Z-4299cd3"
+  "fsx_minimum_configs": {
+    "OpenZFS Single-AZ 1": {
+      "storage_gib": 64,
+      "throughput_mbps": 64,
+      "storage_rate_usd": 0.108,
+      "storage_rate_unit": "GB-Mo",
+      "throughput_rate_usd": 0.293,
+      "usd_per_month": 25.664,
+      "usd_per_hour": 0.03516,
+      "floor_source": "https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/limits.html",
+      "note": "Min 64 GiB / 64 MBps. SINGLE_AZ_1 throughput steps start at 64; SINGLE_AZ_2 and MULTI_AZ_1 start at 160."
+    },
+    "Lustre Scratch (SSD)": {
+      "storage_gib": 1200,
+      "throughput_mbps": null,
+      "storage_rate_usd": 0.168,
+      "storage_rate_unit": "GB-Mo",
+      "throughput_rate_usd": null,
+      "usd_per_month": 201.6,
+      "usd_per_hour": 0.27616,
+      "floor_source": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/limits.html",
+      "note": "Min 1200 GiB for SCRATCH_2 / PERSISTENT_1 / PERSISTENT_2 on SSD. No separate throughput charge; scratch has no replication."
+    },
+    "Lustre Persistent-2 (125 MB/s/TiB)": {
+      "storage_gib": 1200,
+      "throughput_mbps": null,
+      "storage_rate_usd": 0.177,
+      "storage_rate_unit": "GB-Mo",
+      "throughput_rate_usd": null,
+      "usd_per_month": 212.4,
+      "usd_per_hour": 0.29096,
+      "floor_source": "https://docs.aws.amazon.com/fsx/latest/LustreGuide/limits.html",
+      "note": "Same 1200 GiB floor. Throughput is sold per TiB of storage, not separately, so the storage rate carries it."
+    },
+    "ONTAP Single-AZ gen-1": {
+      "storage_gib": 1024,
+      "throughput_mbps": 128,
+      "storage_rate_usd": 0.15,
+      "storage_rate_unit": "GB-Mo",
+      "throughput_rate_usd": 0.83,
+      "usd_per_month": 259.84,
+      "usd_per_hour": 0.35595,
+      "floor_source": "https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/limits.html",
+      "note": "Min 1024 GiB per HA pair. First-generation throughput floor is 128 MBps; second-generation is 384 MBps, so gen-1 is cheaper."
+    }
+  },
+  "run_id": "20260910T155953Z-52175fd"
 }
