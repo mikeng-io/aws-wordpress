@@ -30,6 +30,17 @@ performance by deciding which cache tiers are reachable at all.
 
 If that is right, "which filesystem is fastest for WordPress" is the wrong question.
 
+## Method
+
+[`docs/benchmark-protocol.md`](docs/benchmark-protocol.md) — the standard every
+experiment meets: pre-registration, replication vs repetition, which statistics
+apply to which data, the clustering method and its gates, the results schema, and
+a completion checklist.
+
+[`docs/measurement-methodology.md`](docs/measurement-methodology.md) — how each
+existing measurement was actually taken: instruments, isolation, statistical
+choices with reasons, and threats to validity.
+
 ## Register
 
 See [`hypotheses/`](hypotheses/) — seven pre-registered claims, each with the outcome
@@ -46,7 +57,8 @@ that timing gets applied to.
 
 [E3](docs/findings/E3-fargate-ephemeral.md) supplies the other half of that
 multiplication: on the same Fargate task, a `stat()` costs **3.1 µs** on local
-ephemeral storage against **1.08 ms** on EFS — ~348×, with a local-disk-shaped tail
+ephemeral storage against **0.84 ms** on EFS — **~271×** once the measured 24.4%
+attribute-cache hit rate is accounted for — with a local-disk-shaped tail
 (p99 4.6 µs). Fargate's ephemeral tier is genuinely fast, so the constraint on
 Fargate is not that it lacks a fast local disk; it is that it cannot *share* one.
 The gap is also metadata-shaped, not throughput-shaped: `open+read` is only ~91×,
@@ -72,7 +84,7 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
 | E2 | Placement differential: N tasks on 1 host vs N hosts, identical EFS | small | not specced |
-| [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete: ~348× faster than EFS for `stat`** |
+| [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete: ~271× faster than EFS for `stat`** |
 
 E0–E3 are ordered by kill-power per dollar. Between them they either support the
 central thesis or destroy it, cheaply and early.

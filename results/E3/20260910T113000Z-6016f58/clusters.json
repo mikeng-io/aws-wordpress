@@ -1,0 +1,113 @@
+{
+  "run": "20260910T113000Z-6016f58",
+  "method": {
+    "algorithm": "1-D k-means (k=2, Lloyd) on log10(latency_ns)",
+    "initialisation": "deterministic: 10th and 90th percentile of log10 values",
+    "bimodal_criteria": {
+      "min_log10_centroid_separation": 0.5,
+      "min_cluster_share": 0.02
+    }
+  },
+  "results": {
+    "stat": {
+      "local": {
+        "n": 3000,
+        "pooled_median_ns": 3109,
+        "log10_centroid_separation": 0.184,
+        "separation_factor": 1.5,
+        "verdict": "unimodal"
+      },
+      "efs": {
+        "n": 3000,
+        "pooled_median_ns": 1037143,
+        "log10_centroid_separation": 2.618,
+        "separation_factor": 415.4,
+        "verdict": "bimodal",
+        "clusters": {
+          "fast": {
+            "n": 731,
+            "share": 0.2437,
+            "median_ns": 2585,
+            "median_ci95_ns": [
+              2568,
+              2609
+            ]
+          },
+          "slow": {
+            "n": 2269,
+            "share": 0.7563,
+            "median_ns": 1108421,
+            "median_ci95_ns": [
+              1099660,
+              1116972
+            ]
+          }
+        }
+      }
+    },
+    "stat_enoent": {
+      "local": {
+        "n": 60,
+        "pooled_median_ns": 7245,
+        "log10_centroid_separation": 0.458,
+        "separation_factor": 2.9,
+        "verdict": "unimodal"
+      },
+      "efs": {
+        "n": 60,
+        "pooled_median_ns": 1235372,
+        "log10_centroid_separation": 0.131,
+        "separation_factor": 1.4,
+        "verdict": "unimodal"
+      }
+    },
+    "open_read": {
+      "local": {
+        "n": 3000,
+        "pooled_median_ns": 11258,
+        "log10_centroid_separation": 1.808,
+        "separation_factor": 64.3,
+        "verdict": "unimodal"
+      },
+      "efs": {
+        "n": 3000,
+        "pooled_median_ns": 1029711,
+        "log10_centroid_separation": 0.255,
+        "separation_factor": 1.8,
+        "verdict": "unimodal"
+      }
+    },
+    "create": {
+      "local": {
+        "n": 3000,
+        "pooled_median_ns": 38523,
+        "log10_centroid_separation": 0.197,
+        "separation_factor": 1.6,
+        "verdict": "unimodal"
+      },
+      "efs": {
+        "n": 3000,
+        "pooled_median_ns": 7775574,
+        "log10_centroid_separation": 0.177,
+        "separation_factor": 1.5,
+        "verdict": "unimodal"
+      }
+    },
+    "unlink": {
+      "local": {
+        "n": 3000,
+        "pooled_median_ns": 19758,
+        "log10_centroid_separation": 0.108,
+        "separation_factor": 1.3,
+        "verdict": "unimodal"
+      },
+      "efs": {
+        "n": 3000,
+        "pooled_median_ns": 3316824,
+        "log10_centroid_separation": 0.289,
+        "separation_factor": 1.9,
+        "verdict": "unimodal"
+      }
+    }
+  }
+}

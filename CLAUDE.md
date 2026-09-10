@@ -29,6 +29,11 @@ if a problem can only be solved with one, that's a finding, not a fix.
 
 ## The discipline
 
+**[`docs/benchmark-protocol.md`](docs/benchmark-protocol.md) is binding on every
+experiment** — design, execution, statistics, storage schema, and reporting, with a
+completion checklist. Read it before specifying an experiment, not after collecting
+data. The rules below are its summary, not a substitute for it.
+
 1. **No claim without a result file.** Every statement in a README, doc, or commit
    message that asserts a performance or cost fact must cite a file in `results/`.
    Statements without one are marked `HYPOTHESIS` or `UNVERIFIED`.
@@ -61,14 +66,18 @@ that can say so; do not design experiments that can only confirm it.
 | `experiments/` | One directory per experiment. Question, method, apparatus, how to run. |
 | `infra/` | CDK v2 app. Apparatus for experiments needing real AWS resources. |
 | `results/` | Immutable raw output, committed. Never edited. |
-| `analysis/` | Scripts turning results into findings. Reads `results/`, writes `docs/`. |
+| `analysis/` | Scripts turning results into findings. Reads `results/`, writes `docs/`. Every published statistic must be recomputable by running one of these against committed raw data. |
 | `docs/` | Study design, protocol, and findings. |
 
 ## Conventions
 
 - Experiments are `E<n>-<slug>`; hypotheses are `H<n>-<slug>`. Both are stable once
   assigned — never renumber, since results reference them.
-- Result paths: `results/E<n>/<run-id>/` with a `meta.json` carrying provenance.
+- Result paths: `results/E<n>/<run-id>/rep-<k>/` with a `meta.json` carrying
+  provenance. Full schema and required fields in the benchmark protocol, §4.
+- Hypothesis status vocabulary is four-valued: `UNTESTED` / `SUPPORTED` / `REFUTED` /
+  `INCONCLUSIVE`, plus `MECHANISM REFUTED, CLAIM OPEN` where a claim and its
+  proposed mechanism diverge.
 - CDK stack IDs: `<ExperimentId>-<PascalSlug>-<topology>`, e.g. `E1-MountTopology-dev`.
   Stack IDs are load-bearing — renaming one orphans the CloudFormation stack — so
   they are decided before the first deploy, never after.

@@ -43,7 +43,7 @@ The small-file metadata latency of Fargate ephemeral storage was not documented
 anywhere found. E3 measured it (`results/E3/20260910T113000Z-6016f58/`, 3 reps):
 
 **Fargate ephemeral storage is genuinely fast.** `stat()` p50 of 3.1 µs against
-EFS's 1.08 ms on the same task — ~348×. Critically the *tail* is local-disk-shaped
+EFS's cache-aware 0.84 ms on the same task — ~271×. Critically the *tail* is local-disk-shaped
 too (p99 4.6 µs, a 1.5× spread over p50), not the EFS-like tail that would have
 meant "network volume wearing a local costume."
 
