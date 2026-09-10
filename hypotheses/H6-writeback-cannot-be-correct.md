@@ -1,6 +1,11 @@
 # H6 — Bidirectional write-back caching cannot be made correct
 
-**Status:** `UNTESTED`
+**Status:** `UNTESTED — CENTRAL TO E4`
+
+> Promoted. A cache adapter placing local storage in front of a shared origin
+> (E4) has exactly the write-back problem this hypothesis describes. E4 either
+> refutes this by exhibiting a correct design, or is disqualified by it — which
+> makes this hypothesis the gate on that experiment rather than a side claim.
 
 ## Claim
 

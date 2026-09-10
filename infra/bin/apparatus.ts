@@ -25,10 +25,11 @@ const env = {
 // load-bearing - renaming one orphans the CloudFormation stack rather than renaming
 // it - so the topology suffix is present from the first deploy, not retrofitted
 // when a prod variant is eventually needed.
-// E1 asks a question about mount topology, not about egress. The instance sits in a
-// private isolated subnet with no public IP and no internet route, reaching AWS
-// services through interface endpoints. No NAT because nothing needs the public
-// internet - the choice is declared rather than assumed.
+// E1 asks about mount topology, not egress: the workload sits in a private
+// isolated subnet with no public IP and no internet route, reaching AWS services
+// through interface endpoints. Five compute arms (t4g / m7g / c7g / r7g /
+// Fargate) share one EFS and one VPC in a single deployment, so no arm's result
+// can be explained by a different filesystem or network.
 const e1Nat: NatStrategy = { kind: 'none' };
 
 new E1MountTopologyStack(app, 'E1-MountTopology-dev', {
@@ -36,12 +37,12 @@ new E1MountTopologyStack(app, 'E1-MountTopology-dev', {
   experimentId: 'E1',
   topology: 'dev',
   nat: e1Nat,
-  // 1x t4g.small (~0.019) + 10 interface endpoints (~0.13) + EFS at near-zero usage,
-  // plus whatever the egress strategy costs. Planning estimate, not a measurement -
-  // see H7. Endpoints cost more than the public-subnet shortcut they replace; that
-  // shortcut was the wrong trade.
-  estimatedHourlyUsd: 0.15 + natPlanningHourlyUsd(e1Nat),
-  description: 'E1 - does ECS on EC2 mount EFS per host or per task?',
+  tasksPerArm: 2,
+  // 4 EC2 instances (t4g.small ~0.019, m7g.large ~0.095, c7g.large ~0.085,
+  // r7g.large ~0.125) + 10 interface endpoints (~0.13) + 2 Fargate tasks (~0.02)
+  // + EFS at near-zero usage. Planning estimate, not a measurement - see H7.
+  estimatedHourlyUsd: 0.48 + natPlanningHourlyUsd(e1Nat),
+  description: 'E1 - does EFS mount per host or per task, across t/m/c/r and Fargate?',
 });
 
 new E3FargateEphemeralLatencyStack(app, 'E3-FargateEphemeralLatency-dev', {
@@ -56,10 +57,15 @@ new E3FargateEphemeralLatencyStack(app, 'E3-FargateEphemeralLatency-dev', {
   description: 'E3 - is Fargate ephemeral storage actually fast, or just not EFS?',
 });
 
-// E2 - placement differential (N tasks on 1 host vs N hosts, identical EFS)
-// Not specced yet. Its original design assumed the shared-NFS-client mechanism
-// E1 refuted; needs redesigning around what E1 actually found before it's worth
-// building.
+// E2 - storage matrix. Retired from its original "placement differential" design,
+// which assumed the shared-NFS-client mechanism E1 refuted, and redefined in place
+// as the per-tier metadata-cost matrix: local ephemeral, EFS, FSx (OpenZFS /
+// Lustre / ONTAP), JuiceFS, SeaweedFS, Mountpoint-S3. Specced in
+// experiments/E2-storage-matrix/README.md; no stack yet, because the tier list has
+// to survive a correctness gate before any of it is worth deploying.
+//
+// E4 - cache adapter. Specced and deliberately unbuilt: gated on E2, since there is
+// no point building a cache tier if an off-the-shelf one already delivers it.
 
 Tags.of(app).add('Study', 'aws-wordpress');
 

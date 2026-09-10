@@ -1,6 +1,12 @@
 # H5 — The database axis is H1 again, on a different resource
 
-**Status:** `UNTESTED`
+**Status:** `UNTESTED — PARKED`
+
+> Parked deliberately, not forgotten. The database is a different axis from
+> storage, and the study's current line of enquiry is the filesystem matrix (E2)
+> and the cache adapter (E4). This stays on the register because the claim is real;
+> it is simply not what is being worked on. See
+> [docs/scope-audit.md](../docs/scope-audit.md).
 
 ## Claim
 

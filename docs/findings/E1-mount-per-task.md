@@ -56,10 +56,18 @@ effect through other means the mount-per-task finding doesn't rule out — share
 network path to the same-AZ mount target (both proxies still terminate through the
 same physical NIC and the same short RTT to the mount target), shared CPU/memory
 contention effects, or the EFS server side itself serving cached data faster to a
-"nearby" client for unrelated reasons. E2's placement differential is still the
-direct test of whether locality matters — but it is no longer testing the mechanism
-E1 assumed. It would be testing a different, weaker, unnamed mechanism, and E2's
-design should be revisited before it runs rather than carried forward unchanged.
+"nearby" client for unrelated reasons. Any of those would be a different, weaker,
+unnamed mechanism than the one E1 assumed.
+
+> **Update, 2026-09-10.** That revisit happened, and the verdict was to stop rather
+> than redesign. A placement differential would now be hunting an unnamed effect
+> with no predicted magnitude — the kind of experiment that can only produce a
+> number, not an answer. E2 was retired at its old design and its number redefined
+> as the storage matrix, which asks the question the placement differential was only
+> ever a proxy for: what does each tier charge per metadata op. See
+> [docs/scope-audit.md](../scope-audit.md) and
+> [H1](../../hypotheses/H1-cache-locality.md) for the reframed claim. The
+> measurement below is unaffected; only what happens next changed.
 
 ## Provenance
 

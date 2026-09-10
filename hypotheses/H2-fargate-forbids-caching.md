@@ -61,4 +61,7 @@ See [docs/findings/E3-fargate-ephemeral.md](../docs/findings/E3-fargate-ephemera
 ## Bearing experiments
 
 - `E3-fargate-ephemeral-latency` — gates the whole branch
-- `E2-placement-differential`
+- `E2-storage-matrix` — establishes which tiers Fargate can reach at all, which
+  is this hypothesis stated as a matrix
+- `E4-cache-adapter` — the constructive test: if a cache tier can be built on
+  Fargate's ephemeral storage, H2 is refuted

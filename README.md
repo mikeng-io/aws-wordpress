@@ -10,25 +10,46 @@ AWS — measured, not asserted.
 
 ## The premise
 
-Everyone says WordPress is legacy. Everyone still runs WordPress. Real estates are
-too large to refactor, so the levers available to their operators are *infrastructure*
-levers, not application ones.
+WordPress is the **instrument**, not the subject.
 
-So the governing constraint is: **infrastructure is in scope, the application is a
-black box.** No S3-offload plugin, no HyperDB, no object-cache plugin. If a problem
-can only be solved by changing WordPress, that is a finding, not a fix.
+It is here because it is an unusually pure specimen of a much larger class:
+applications written before object storage was normal, which assume a POSIX
+filesystem underneath them and issue enormous numbers of metadata operations
+to it. That class is most of the software actually running in production. Its
+owners cannot rewrite it, so the only levers they have are infrastructure levers.
+
+This is why "just add S3 offload, a CDN and an object cache" is not an answer.
+Those help with *content* delivery. They do not change the fact that the
+application's own code — its core, its plugins, its themes, its templates —
+lives on a filesystem and is consulted thousands of times per request. E0
+measured that directly: ~4,300 filesystem syscalls on a warm request, ~3,900 of
+them `stat`, and `php.ini` cannot reduce it because the floor is plugin code.
+
+So the governing constraint is: **infrastructure is in scope, the application is
+a black box.** No S3-offload plugin, no HyperDB, no object-cache plugin. If a
+problem can only be solved by changing the application, that is a finding, not a
+fix.
 
 ## The question
 
-The 2020 architecture paired Fargate with a shared filesystem. Those pull in opposite
-directions, and this study is an attempt to say precisely why, and what replaces it.
+Given a fixed, irreducible demand for filesystem metadata operations, **what does
+each storage tier charge per operation, and which tiers does the compute platform
+actually let you reach?**
 
-The working thesis — **untested, and the study is built to be able to refute it** —
-is that shared-filesystem performance is dominated by *cache locality* rather than
-filesystem choice, and that the compute platform silently determines storage
-performance by deciding which cache tiers are reachable at all.
+That is the study's core, and it is what E2 is built to answer across the full
+matrix: local ephemeral, EFS, FSx (OpenZFS / Lustre / ONTAP), JuiceFS, SeaweedFS,
+and Mountpoint-S3.
 
-If that is right, "which filesystem is fastest for WordPress" is the wrong question.
+The availability column of that matrix is itself a finding. Four of those tiers
+need FUSE, FUSE needs `CAP_SYS_ADMIN`, and Fargate does not grant it — so the
+compute choice deletes most of the storage matrix before any performance
+discussion begins.
+
+E4 then asks the obvious follow-up: if the fast tier is local and the durable
+tier is remote, can a **cache adapter** sit between them — local ephemeral in
+front of S3/EFS, the way Redis sits in front of Postgres? E3 measured both ends
+of that gap on the same task (3.1 µs vs 0.84 ms), which is what makes the
+question worth asking rather than assuming.
 
 ## Method
 
@@ -67,9 +88,10 @@ which is the asymmetry this study has argued from E0 onward, now measured direct
 [E1](docs/findings/E1-mount-per-task.md): ECS mounts EFS once **per task**, not
 once per host. Two co-located tasks on the identical instance get two fully
 independent NFS4 client mounts and two independent TLS proxy processes — confirmed
-directly on the host, not inferred. This refutes the specific shared-cache
-mechanism the working thesis below was written around; see H1 for what that leaves
-open and what it changes about E2.
+directly on the host, not inferred. This refutes the shared-cache mechanism the
+study originally proposed: there is no host-level cache to share, so placement is
+not a lever. [H1](hypotheses/H1-cache-locality.md) records what survived that
+refutation — the tier, not the placement, is what sets the per-op cost.
 
 [E0's cart/checkout endpoints](docs/findings/E0-cart-checkout.md): fixed a
 catalog bug that had made every WooCommerce cart/checkout trace measure an empty
@@ -83,11 +105,17 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 |---|---|---|---|
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
-| E2 | Placement differential: N tasks on 1 host vs N hosts, identical EFS | small | not specced |
+| [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | see its README | specced, not built — **the core** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete: ~271× faster than EFS for `stat`** |
+| [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced, **gated on E2** |
 
-E0–E3 are ordered by kill-power per dollar. Between them they either support the
-central thesis or destroy it, cheaply and early.
+E0–E3 were ordered by kill-power per dollar; between them they either support the
+central claim or destroy it, cheaply and early. E2 is where the study's actual
+question gets answered, and E4 only gets built if E2 shows nothing off the shelf
+already solves it.
+
+See [docs/scope-audit.md](docs/scope-audit.md) for what each experiment and
+hypothesis is currently worth, and why some are parked.
 
 ## Region
 

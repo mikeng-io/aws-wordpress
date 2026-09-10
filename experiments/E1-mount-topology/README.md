@@ -3,14 +3,16 @@
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md) — decides whether its
 mechanism physically exists.
 
-**Cost:** ~$0.14/hr while up — one `t4g.small`, nine interface VPC endpoints, EFS at
-near-zero usage. Torn down in the same command that runs it. Nothing persists.
+**Cost:** ~$0.48/hr while up for the current five-arm apparatus — four EC2 instances
+(`t4g.small`, `m7g.large`, `c7g.large`, `r7g.large`), two Fargate tasks, ten VPC
+endpoints (nine interface + the free S3 gateway), EFS at near-zero usage. The first
+round cost ~$0.14/hr on one instance. Torn down in the same command that runs it.
+Nothing persists.
 
-Most of that is the endpoints. Running the instance in a public subnet with a public
-IP would cost ~$0.024/hr instead, and was the original design here. It was the wrong
-trade: a workload that needs no inbound access and no internet route belongs in a
-private isolated subnet, and paying $0.11/hr to keep it there is not a real cost
-question.
+Most of that is the endpoints. Running the instances in a public subnet with public
+IPs would cost less, and was the original design here. It was the wrong trade: a
+workload that needs no inbound access and no internet route belongs in a private
+isolated subnet, and paying to keep it there is not a real cost question.
 
 ## Question
 
@@ -82,3 +84,41 @@ confirmed by direct evidence before being fixed, not guessed. See the git histor
 for `infra/lib/stacks/e1-mount-topology.ts`.
 
 Stack torn down after data collection; nothing left running.
+
+## Round two: does the finding generalise?
+
+The result above was measured on one instance type. "ECS mounts EFS per task" is
+being asserted as a property of ECS, but a single `t4g.small` cannot distinguish
+that from a property of *that instance* — its kernel, its NIC, its size class, its
+ECS agent build.
+
+Under the numbering rule (`CLAUDE.md`), the apparatus was **replaced in place**
+rather than forked into an E1b: `infra/lib/stacks/e1-mount-topology.ts` now stands
+up five arms against **one** VPC and **one** EFS filesystem, so no arm's result can
+be attributed to a different filesystem or a different network path:
+
+| Arm | Why it is in the matrix |
+|---|---|
+| `t4g.small` | the original arm — makes round two comparable to round one |
+| `m7g.large` | general purpose, the default anyone would actually pick |
+| `c7g.large` | compute optimised — same Graviton generation, different size/NIC class |
+| `r7g.large` | memory optimised — most page cache available to hold attributes |
+| Fargate | no host to inspect at all; the arm where the question changes shape |
+
+The Fargate arm is not a fifth data point, it is a different question. There is no
+instance to run `mount` or `nfsstat -c` on, so the topology has to be inferred from
+inside the task. That difference is the point: if the only way to observe your own
+storage topology is to not use Fargate, that is a finding about the platform.
+
+**Prediction, pre-registered:** per-task mounts on all four EC2 arms, with no
+family-dependent variation, because the mechanism found in round one is an ECS agent
+behaviour rather than a kernel or instance one.
+
+**Kill condition:** any arm showing one host mount bind-mounted into both tasks. That
+would mean round one measured an instance property and the finding does not
+generalise.
+
+**Status:** apparatus written and typechecking; `cdk list` resolves it as
+`E1-MountTopology-dev`. **Not deployed.** Three replications per
+[the protocol](../../docs/benchmark-protocol.md), so this is a spending decision, not
+a one-command run.

@@ -18,6 +18,17 @@ WordPress core, plugins, and themes are treated as unmodifiable legacy. This is
 the entire premise: real WordPress estates are too large to refactor, so the only
 available levers are compute, network, storage, database topology, and edge.
 
+**WordPress is the instrument, not the subject.** It stands in for the large class
+of applications that predate object storage, assume a POSIX filesystem, and consult
+it thousands of times per request. Findings should be written so they hold for that
+class — a result that only means something to WordPress operators is a weaker
+result than the same measurement framed as a property of the storage tier.
+
+This is also why content-layer answers are out of scope rather than merely
+disallowed: S3 offload, a CDN, and an object cache move *content*. They do not move
+the application's own code, which is what the ~3,900 `stat` calls per warm request
+are actually looking at.
+
 In scope: task definitions, mount topology, instance selection, container images,
 `php.ini` / opcache (ships in the image, not the app), proxies, load balancer
 routing, CDN, WAF.
@@ -50,13 +61,17 @@ data. The rules below are its summary, not a substitute for it.
 
 ## The thesis under test
 
-**HYPOTHESIS (H1), not yet established:** WordPress shared-filesystem performance
-is dominated by *cache locality* — where metadata and page caches are permitted to
-live — rather than by filesystem choice. Compute platform determines which cache
-tiers are reachable, so compute silently determines storage performance.
+**HYPOTHESIS (H1), partially refuted and reframed:** cost is
+`(metadata ops per request) × (per-op cost of the tier serving them)`. E0 fixed the
+first factor and showed the application cannot reduce it. So the only lever is the
+second — and the compute platform decides which tiers are reachable at all, since
+FUSE-backed tiers need `CAP_SYS_ADMIN` that Fargate does not grant.
 
-This is the idea the study was built to test. It may be wrong. Design experiments
-that can say so; do not design experiments that can only confirm it.
+The study's original mechanism — co-located tasks sharing a host NFS cache — was
+**refuted by E1**: ECS mounts EFS per task, not per host. That refutation is the
+model for how this file should be read: the thesis is a target, not a commitment.
+Design experiments that can say it is wrong; do not design experiments that can
+only confirm it.
 
 ## Layout
 
@@ -73,11 +88,21 @@ that can say so; do not design experiments that can only confirm it.
 
 - Experiments are `E<n>-<slug>`; hypotheses are `H<n>-<slug>`. Both are stable once
   assigned — never renumber, since results reference them.
+- **One number each, forever.** There is no `E2v2`, no `E2a`/`E2b`, no `-new` or
+  `-final` suffix. When an experiment's design changes, its apparatus is **replaced
+  in place** and its README records what changed and why; when its question is
+  answered or abandoned, it is retired in place, not superseded by a sibling. The
+  same applies to apparatus files: edit `e1-mount-topology.ts`, never create
+  `e1-mount-topology-v2.ts`. Version history is git's job.
 - Result paths: `results/E<n>/<run-id>/rep-<k>/` with a `meta.json` carrying
   provenance. Full schema and required fields in the benchmark protocol, §4.
-- Hypothesis status vocabulary is four-valued: `UNTESTED` / `SUPPORTED` / `REFUTED` /
-  `INCONCLUSIVE`, plus `MECHANISM REFUTED, CLAIM OPEN` where a claim and its
-  proposed mechanism diverge.
+- Hypothesis status is a **verdict**, optionally followed by a **priority
+  qualifier** after an em dash. Verdicts: `UNTESTED` / `SUPPORTED` / `REFUTED` /
+  `INCONCLUSIVE`, plus `MECHANISM REFUTED, CLAIM <OPEN|REFRAMED>` where a claim and
+  its proposed mechanism diverge. Qualifiers say what the study is doing about it —
+  `PROMOTED`, `PARKED`, `PERIPHERAL`, `CENTRAL TO E<n>` — and are never a substitute
+  for a verdict. A qualifier change needs a line saying why; a verdict change needs
+  a result file.
 - CDK stack IDs: `<ExperimentId>-<PascalSlug>-<topology>`, e.g. `E1-MountTopology-dev`.
   Stack IDs are load-bearing — renaming one orphans the CloudFormation stack — so
   they are decided before the first deploy, never after.

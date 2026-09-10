@@ -1,6 +1,10 @@
 # H3 — opcache tuning makes filesystem choice largely irrelevant at steady state
 
-**Status:** `INCONCLUSIVE` — first evidence contradicts the prediction
+**Status:** `INCONCLUSIVE — PERIPHERAL` — first evidence contradicts the prediction
+
+> Marked peripheral under the reframed study. This is a WordPress-tuning question,
+> and WordPress is the study's instrument rather than its subject. It stays because
+> E0's data already bears on it, but it is not a priority.
 
 ## Claim
 
@@ -52,7 +56,8 @@ matrix matters mainly for cold starts and writes — which promotes H4.
 ## Bearing experiments
 
 - `E0-syscall-census` — measures op counts per profile directly, locally, for free
-- `E2-placement-differential`
+- `E2-storage-matrix` — the only experiment that can settle this, since H3's kill
+  condition concerns the spread *across storage backends* and E0 measures none
 
 ## First evidence (E0, run `20260826T105956Z-c16d429`)
 

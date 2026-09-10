@@ -1,6 +1,11 @@
 # H4 — Time-to-first-useful-request is the metric, not steady-state RPS
 
-**Status:** `UNTESTED`
+**Status:** `UNTESTED — PROMOTED`
+
+> More central under the reframed study, not less: a cache tier's warming cost
+> *is* a cold-start cost, so E4 cannot be evaluated without settling this. E0 already
+> supplies the relevant magnitude — a cold request issues ~15,400 syscalls against
+> ~4,300 warm.
 
 ## Claim
 
