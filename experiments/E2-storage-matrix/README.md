@@ -3,7 +3,8 @@
 **Status:** `BLOCK-BACKED GROUP COMPLETE` — server-backed group specced and costed,
 not yet built.
 
-> **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md).
+> **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md)
+> · [figures](../../docs/charts/e2-storage-matrix.html).
 > Prediction 5 **failed**: instance store and Fargate ephemeral tied on every op,
 > and EBS tied with them to within 3%. The device is irrelevant for this workload
 > shape; the tier boundary is a protocol boundary. Block-backed → EFS is 638× on

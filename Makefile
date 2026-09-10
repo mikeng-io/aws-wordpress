@@ -52,6 +52,10 @@ e0: ## E0 syscall census - local Docker, no AWS, no cost
 e2: ## E2 storage matrix - deploys, runs both arms, collects, DESTROYS. ~$0.29/hr while up
 	@set -a; . ./.env; set +a; ./experiments/E2-storage-matrix/scripts/collect.sh $(REPS)
 
+.PHONY: charts
+charts: ## Regenerate E2's figures from the committed raw results
+	@python3 analysis/e2_chart.py $$(ls -d results/E2/*/ | tail -1)
+
 .PHONY: pricing
 pricing: ## Refresh the AWS pricing snapshot used by every cost table
 	@set -a; . ./.env; set +a; python3 analysis/aws_pricing.py

@@ -1,0 +1,170 @@
+<title>The Protocol Boundary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,600;1,400&display=swap">
+<style>
+:root {
+  --surface: #fcfcfb;
+  --panel: #f5f4f1;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #83817b;
+  --rule: #e2e0da;
+  --block: #2a78d6;
+  --server: #eb6834;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --serif: "IBM Plex Serif", Georgia, serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #1a1a19; --panel: #232322; --ink: #ffffff;
+    --ink-2: #c3c2b7; --ink-3: #8d8b82; --rule: #35342f;
+    --block: #3987e5; --server: #d95926;
+  }
+}
+:root[data-theme="dark"] {
+  --surface: #1a1a19; --panel: #232322; --ink: #ffffff;
+  --ink-2: #c3c2b7; --ink-3: #8d8b82; --rule: #35342f;
+  --block: #3987e5; --server: #d95926;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--surface); color: var(--ink);
+  font-family: var(--sans); line-height: 1.6;
+  margin: 0; padding: 48px 24px 96px;
+}
+main { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+.eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px;
+}
+h1 {
+  font-family: var(--serif); font-weight: 600; font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.1; margin: 0 0 14px; text-wrap: balance; letter-spacing: -.01em;
+}
+h2 {
+  font-family: var(--serif); font-weight: 600; font-size: 23px;
+  margin: 0 0 6px; text-wrap: balance;
+}
+p { margin: 0 0 14px; max-width: 68ch; color: var(--ink-2); }
+p.lede { font-size: 18px; color: var(--ink); }
+strong { color: var(--ink); font-weight: 600; }
+code { font-family: var(--mono); font-size: .92em; }
+section { border-top: 1px solid var(--rule); padding-top: 28px; }
+.figure { background: var(--panel); border-radius: 10px; padding: 18px 14px 10px; overflow-x: auto; }
+svg { display: block; min-width: 720px; width: 100%; height: auto; }
+.grid { stroke: var(--rule); stroke-width: 1; }
+.tick { font-family: var(--mono); font-size: 11px; fill: var(--ink-3); }
+.op { font-family: var(--mono); font-size: 14px; font-weight: 500; fill: var(--ink); }
+.opnote { font-family: var(--sans); font-size: 11px; fill: var(--ink-3); }
+.span { stroke: var(--rule); stroke-width: 2; }
+.ratio { font-family: var(--mono); font-size: 11px; fill: var(--ink-3); }
+.dot { stroke: var(--panel); stroke-width: 2; cursor: pointer; }
+.dot.block, .bar.block, .swatch.block { fill: var(--block); }
+.dot.server, .bar.server, .swatch.server { fill: var(--server); }
+.dot:hover, .dot:focus { stroke: var(--ink); outline: none; }
+.bar { opacity: .85; }
+.legend { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.legend li { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); }
+.legend b { font-weight: 500; color: var(--ink); font-family: var(--mono); font-size: 12.5px; }
+.legend .sub { color: var(--ink-3); font-size: 12px; }
+.swatch { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 8px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); }
+th { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+td.num { font-family: var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+td.ratio-cell { color: var(--block); font-weight: 600; }
+.big { font-family: var(--mono); font-size: clamp(46px, 9vw, 76px); font-weight: 600; line-height: 1; color: var(--block); letter-spacing: -.03em; }
+.big-note { font-size: 14px; color: var(--ink-2); max-width: 42ch; }
+.split { display: flex; gap: 28px; align-items: baseline; flex-wrap: wrap; }
+footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 13px; color: var(--ink-3); }
+footer code { color: var(--ink-2); }
+#tip {
+  position: fixed; pointer-events: none; opacity: 0; transition: opacity .12s;
+  background: var(--ink); color: var(--surface); font-family: var(--mono);
+  font-size: 12px; padding: 7px 10px; border-radius: 6px; z-index: 10; line-height: 1.5;
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main>
+  <header>
+    <p class="eyebrow">E2 · storage matrix · block-backed group</p>
+    <h1>A faster disk did nothing. The protocol was everything.</h1>
+    <p class="lede">Three storage tiers, one benchmark, 60,300 timed syscalls across
+    3 independent deployments. Attached NVMe, a network block device and Fargate's
+    ephemeral volume came out within 1.5× of each other. EFS sat <strong>638×</strong>
+    away.</p>
+  </header>
+
+  <section>
+    <h2>Every operation, one log scale</h2>
+    <p>Latency spans microseconds to milliseconds, so the axis is log-10. The marks
+    fall into two bands with nothing in between — that gap is the finding.</p>
+    <div class="figure"><svg viewBox="0 0 900 434" role="img" aria-label="Latency by operation and storage tier, log scale"><line class="grid" x1="236.0" y1="22" x2="236.0" y2="386"/><text class="tick" x="236.0" y="16" text-anchor="middle">1.0 µs</text><line class="grid" x1="384.6" y1="22" x2="384.6" y2="386"/><text class="tick" x="384.6" y="16" text-anchor="middle">10.0 µs</text><line class="grid" x1="533.1" y1="22" x2="533.1" y2="386"/><text class="tick" x="533.1" y="16" text-anchor="middle">100.0 µs</text><line class="grid" x1="681.7" y1="22" x2="681.7" y2="386"/><text class="tick" x="681.7" y="16" text-anchor="middle">1.00 ms</text><line class="grid" x1="830.3" y1="22" x2="830.3" y2="386"/><text class="tick" x="830.3" y="16" text-anchor="middle">10.00 ms</text><text class="op" x="222" y="58" text-anchor="end">stat()</text><text class="opnote" x="222" y="73" text-anchor="end">~3,900× per WordPress request</text><line class="span" x1="251.6" y1="54" x2="668.5" y2="54"/><text class="ratio" x="460.0" y="41" text-anchor="middle">639× apart</text><circle class="dot block" cx="251.6" cy="54.0" r="5.5" tabindex="0" data-tier="EBS gp3" data-op="stat()" data-p50="1.3 µs" data-p99="1.8 µs" data-n="3,000"/><circle class="dot block" cx="251.7" cy="46.0" r="5.5" tabindex="0" data-tier="instance store" data-op="stat()" data-p50="1.3 µs" data-p99="1.8 µs" data-n="3,000"/><circle class="dot block" cx="274.7" cy="54.0" r="5.5" tabindex="0" data-tier="Fargate ephemeral" data-op="stat()" data-p50="1.8 µs" data-p99="2.7 µs" data-n="3,000"/><circle class="dot server" cx="665.5" cy="54.0" r="5.5" tabindex="0" data-tier="EFS (from Fargate)" data-op="stat()" data-p50="777.7 µs" data-p99="2.43 ms" data-n="3,000"/><circle class="dot server" cx="668.5" cy="46.0" r="5.5" tabindex="0" data-tier="EFS (from EC2)" data-op="stat()" data-p50="814.3 µs" data-p99="2.80 ms" data-n="3,000"/><text class="op" x="222" y="132" text-anchor="end">stat() ENOENT</text><text class="opnote" x="222" y="147" text-anchor="end">a file that is not there</text><line class="span" x1="305.8" y1="128" x2="685.9" y2="128"/><text class="ratio" x="495.8" y="115" text-anchor="middle">362× apart</text><circle class="dot block" cx="305.8" cy="128.0" r="5.5" tabindex="0" data-tier="instance store" data-op="stat() ENOENT" data-p50="2.9 µs" data-p99="9.2 µs" data-n="60"/><circle class="dot block" cx="313.6" cy="128.0" r="5.5" tabindex="0" data-tier="EBS gp3" data-op="stat() ENOENT" data-p50="3.3 µs" data-p99="12.0 µs" data-n="60"/><circle class="dot block" cx="325.7" cy="128.0" r="5.5" tabindex="0" data-tier="Fargate ephemeral" data-op="stat() ENOENT" data-p50="4.0 µs" data-p99="7.0 µs" data-n="60"/><circle class="dot server" cx="671.8" cy="128.0" r="5.5" tabindex="0" data-tier="EFS (from Fargate)" data-op="stat() ENOENT" data-p50="858.1 µs" data-p99="1.11 ms" data-n="60"/><circle class="dot server" cx="685.9" cy="128.0" r="5.5" tabindex="0" data-tier="EFS (from EC2)" data-op="stat() ENOENT" data-p50="1.07 ms" data-p99="2.48 ms" data-n="60"/><text class="op" x="222" y="206" text-anchor="end">open + read</text><text class="opnote" x="222" y="221" text-anchor="end">actually moving bytes</text><line class="span" x1="342.4" y1="202" x2="675.2" y2="202"/><text class="ratio" x="508.8" y="189" text-anchor="middle">174× apart</text><circle class="dot block" cx="342.4" cy="202.0" r="5.5" tabindex="0" data-tier="instance store" data-op="open + read" data-p50="5.2 µs" data-p99="11.6 µs" data-n="3,000"/><circle class="dot block" cx="344.1" cy="194.0" r="5.5" tabindex="0" data-tier="EBS gp3" data-op="open + read" data-p50="5.3 µs" data-p99="11.1 µs" data-n="3,000"/><circle class="dot block" cx="348.7" cy="186.0" r="5.5" tabindex="0" data-tier="Fargate ephemeral" data-op="open + read" data-p50="5.7 µs" data-p99="8.9 µs" data-n="3,000"/><circle class="dot server" cx="656.8" cy="202.0" r="5.5" tabindex="0" data-tier="EFS (from Fargate)" data-op="open + read" data-p50="679.3 µs" data-p99="2.75 ms" data-n="3,000"/><circle class="dot server" cx="675.2" cy="202.0" r="5.5" tabindex="0" data-tier="EFS (from EC2)" data-op="open + read" data-p50="903.6 µs" data-p99="3.06 ms" data-n="3,000"/><text class="op" x="222" y="280" text-anchor="end">create</text><text class="opnote" x="222" y="295" text-anchor="end">a new file</text><line class="span" x1="428.2" y1="276" x2="810.4" y2="276"/><text class="ratio" x="619.3" y="263" text-anchor="middle">373× apart</text><circle class="dot block" cx="428.2" cy="276.0" r="5.5" tabindex="0" data-tier="instance store" data-op="create" data-p50="19.7 µs" data-p99="41.8 µs" data-n="3,000"/><circle class="dot block" cx="429.1" cy="268.0" r="5.5" tabindex="0" data-tier="EBS gp3" data-op="create" data-p50="19.9 µs" data-p99="41.8 µs" data-n="3,000"/><circle class="dot block" cx="435.1" cy="260.0" r="5.5" tabindex="0" data-tier="Fargate ephemeral" data-op="create" data-p50="21.9 µs" data-p99="43.9 µs" data-n="3,000"/><circle class="dot server" cx="807.2" cy="276.0" r="5.5" tabindex="0" data-tier="EFS (from Fargate)" data-op="create" data-p50="6.99 ms" data-p99="15.69 ms" data-n="3,000"/><circle class="dot server" cx="810.4" cy="268.0" r="5.5" tabindex="0" data-tier="EFS (from EC2)" data-op="create" data-p50="7.34 ms" data-p99="14.31 ms" data-n="3,000"/><text class="op" x="222" y="354" text-anchor="end">unlink</text><text class="opnote" x="222" y="369" text-anchor="end">removing one</text><line class="span" x1="366.2" y1="350" x2="752.6" y2="350"/><text class="ratio" x="559.4" y="337" text-anchor="middle">399× apart</text><circle class="dot block" cx="366.2" cy="350.0" r="5.5" tabindex="0" data-tier="instance store" data-op="unlink" data-p50="7.5 µs" data-p99="131.3 µs" data-n="3,000"/><circle class="dot block" cx="367.1" cy="342.0" r="5.5" tabindex="0" data-tier="EBS gp3" data-op="unlink" data-p50="7.6 µs" data-p99="141.9 µs" data-n="3,000"/><circle class="dot block" cx="393.3" cy="350.0" r="5.5" tabindex="0" data-tier="Fargate ephemeral" data-op="unlink" data-p50="11.4 µs" data-p99="15.7 µs" data-n="3,000"/><circle class="dot server" cx="751.2" cy="350.0" r="5.5" tabindex="0" data-tier="EFS (from Fargate)" data-op="unlink" data-p50="2.93 ms" data-p99="5.88 ms" data-n="3,000"/><circle class="dot server" cx="752.6" cy="342.0" r="5.5" tabindex="0" data-tier="EFS (from EC2)" data-op="unlink" data-p50="3.00 ms" data-p99="5.74 ms" data-n="3,000"/></svg></div>
+    <ul class="legend"><li><span class="swatch block"></span><b>instance store</b><span class="sub">c7gd.large · 118 GB NVMe</span></li><li><span class="swatch block"></span><b>EBS gp3</b><span class="sub">network block device</span></li><li><span class="swatch block"></span><b>Fargate ephemeral</b><span class="sub">network-backed task volume</span></li><li><span class="swatch server"></span><b>EFS (from EC2)</b><span class="sub">NFSv4.1 + TLS</span></li><li><span class="swatch server"></span><b>EFS (from Fargate)</b><span class="sub">NFSv4.1 + TLS</span></li></ul>
+  </section>
+
+  <section>
+    <h2>The prediction that failed</h2>
+    <div class="split">
+      <div class="big">1.00×</div>
+      <p class="big-note">Predicted: 118 GB of attached NVMe rated 33,542 IOPS would beat a
+      network-attached EBS volume on the operations that reach a device. It did not — on
+      any of them, tails included.</p>
+    </div>
+    <table>
+      <thead><tr><th>Operation</th><th class="num">Instance store</th><th class="num">EBS gp3</th><th class="num">Ratio</th></tr></thead>
+      <tbody><tr><td><code>stat()</code></td><td class="num">1.3 µs</td><td class="num">1.3 µs</td><td class="num ratio-cell">1.00×</td></tr><tr><td><code>stat() ENOENT</code></td><td class="num">2.9 µs</td><td class="num">3.3 µs</td><td class="num ratio-cell">1.13×</td></tr><tr><td><code>open + read</code></td><td class="num">5.2 µs</td><td class="num">5.3 µs</td><td class="num ratio-cell">1.03×</td></tr><tr><td><code>create</code></td><td class="num">19.7 µs</td><td class="num">19.9 µs</td><td class="num ratio-cell">1.01×</td></tr><tr><td><code>unlink</code></td><td class="num">7.5 µs</td><td class="num">7.6 µs</td><td class="num ratio-cell">1.02×</td></tr></tbody>
+    </table>
+    <p style="margin-top:16px">The working set is ~50 MB against 4 GiB of RAM, so after the
+    first pass the kernel answers from cache and the disk is never consulted. A faster device
+    cannot speed up an operation that never reaches it.</p>
+  </section>
+
+  <section>
+    <h2>Why EFS is different — it is two distributions</h2>
+    <p>EBS is <em>also</em> on the far end of a wire. The difference is not distance, it is
+    what sits at the other end: EBS is a <strong>block</strong> device, so your own kernel runs
+    the filesystem and owns the metadata. EFS is a <strong>file protocol</strong>, so the server
+    owns it and your kernel has to ask.</p>
+    <p>It only sometimes has to ask. The NFS attribute cache absorbs roughly 30% of lookups —
+    the left spike, sitting exactly on top of the block-backed tiers. The other 70% go to the
+    wire, and that is the whole gap.</p>
+    <div class="figure"><svg viewBox="0 0 900 210" role="img" aria-label="Distribution of stat latency: EFS is two populations"><line class="grid" x1="236.0" y1="26" x2="236.0" y2="168"/><text class="tick" x="236.0" y="188" text-anchor="middle">1.0 µs</text><line class="grid" x1="384.6" y1="26" x2="384.6" y2="168"/><text class="tick" x="384.6" y="188" text-anchor="middle">10.0 µs</text><line class="grid" x1="533.1" y1="26" x2="533.1" y2="168"/><text class="tick" x="533.1" y="188" text-anchor="middle">100.0 µs</text><line class="grid" x1="681.7" y1="26" x2="681.7" y2="168"/><text class="tick" x="681.7" y="188" text-anchor="middle">1.00 ms</text><line class="grid" x1="830.3" y1="26" x2="830.3" y2="168"/><text class="tick" x="830.3" y="188" text-anchor="middle">10.00 ms</text><rect class="bar block" x="236.0" y="91.1" width="11.6" height="76.9"/><rect class="bar block" x="249.6" y="26.0" width="11.6" height="142.0"/><rect class="bar block" x="263.1" y="148.1" width="11.6" height="19.9"/><rect class="bar block" x="276.7" y="166.8" width="11.6" height="1.2"/><rect class="bar block" x="290.3" y="167.8" width="11.6" height="0.2"/><rect class="bar block" x="358.1" y="167.9" width="11.6" height="0.1"/><rect class="bar block" x="371.7" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="249.6" y="164.5" width="11.6" height="3.5"/><rect class="bar server" x="263.1" y="49.5" width="11.6" height="118.5"/><rect class="bar server" x="276.7" y="129.3" width="11.6" height="38.7"/><rect class="bar server" x="290.3" y="165.3" width="11.6" height="2.7"/><rect class="bar server" x="303.8" y="165.9" width="11.6" height="2.1"/><rect class="bar server" x="317.4" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="344.5" y="167.6" width="11.6" height="0.4"/><rect class="bar server" x="358.1" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="385.2" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="602.3" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="615.8" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="629.4" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="643.0" y="163.9" width="11.6" height="4.1"/><rect class="bar server" x="656.5" y="41.2" width="11.6" height="126.8"/><rect class="bar server" x="670.1" y="77.9" width="11.6" height="90.1"/><rect class="bar server" x="683.7" y="26.0" width="11.6" height="142.0"/><rect class="bar server" x="697.2" y="153.4" width="11.6" height="14.6"/><rect class="bar server" x="710.8" y="155.4" width="11.6" height="12.6"/><rect class="bar server" x="724.3" y="156.0" width="11.6" height="12.0"/><rect class="bar server" x="737.9" y="158.9" width="11.6" height="9.1"/><rect class="bar server" x="751.5" y="165.3" width="11.6" height="2.7"/><rect class="bar server" x="765.0" y="167.0" width="11.6" height="1.0"/><rect class="bar server" x="778.6" y="167.8" width="11.6" height="0.2"/><rect class="bar server" x="805.7" y="167.6" width="11.6" height="0.4"/></svg></div>
+    <ul class="legend">
+      <li><span class="swatch block"></span><b>instance store</b><span class="sub">stat(), one population</span></li>
+      <li><span class="swatch server"></span><b>EFS</b><span class="sub">stat(), two populations ~550× apart</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Run <code>20260910T163206Z-66dcff8</code> · 3 independent deployments, torn down after each ·
+    <code>ap-southeast-1a</code> · <code>c7gd.large</code>, Amazon Linux 2023, kernel 6.1.182.
+    Percentiles pooled across replications. Figures generated from the committed raw CSVs by
+    <code>analysis/e2_chart.py</code>.</p>
+    <p>Equivalence between EBS and instance store is claimed for this workload shape — a
+    metadata-heavy read path whose working set fits in page cache — not in general. A working
+    set exceeding RAM, or a sustained write flood binding gp3's baseline IOPS, would separate
+    them.</p>
+  </footer>
+</main>
+<div id="tip"></div>
+<script>
+const tip = document.getElementById('tip');
+function show(el) {
+  const d = el.dataset;
+  tip.innerHTML = `<b>${d.tier}</b><br>${d.op} p50 ${d.p50}<br>p99 ${d.p99} · n=${d.n}`;
+  const r = el.getBoundingClientRect();
+  tip.style.opacity = 1;
+  tip.style.left = Math.min(r.left, window.innerWidth - 210) + 'px';
+  tip.style.top = (r.top - 64) + 'px';
+}
+for (const dot of document.querySelectorAll('.dot')) {
+  dot.addEventListener('mouseenter', () => show(dot));
+  dot.addEventListener('focus', () => show(dot));
+  dot.addEventListener('mouseleave', () => tip.style.opacity = 0);
+  dot.addEventListener('blur', () => tip.style.opacity = 0);
+}
+</script>

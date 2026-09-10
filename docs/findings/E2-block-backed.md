@@ -31,6 +31,11 @@ fourth missed by two hundredths. The one check that passed did not pass for the
 reason predicted — it is part of a uniform tie, not evidence of a mechanism that
 distinguishes the two tiers.
 
+**Figures:** [docs/charts/e2-storage-matrix.html](../charts/e2-storage-matrix.html),
+generated from the committed raw CSVs by `analysis/e2_chart.py` — a shared log-10
+axis across every operation, so the two-cluster structure is a spatial fact rather
+than something the reader has to assemble from a table.
+
 ## What the data actually says
 
 Pooled across 3 replications (p50):
