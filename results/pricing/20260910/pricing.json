@@ -1,0 +1,964 @@
+{
+  "snapshot_utc": "2026-09-10T15:43:33.003110+00:00",
+  "region": "ap-southeast-1",
+  "location": "Asia Pacific (Singapore)",
+  "note": "On-demand list prices. No savings plans, no reserved capacity, no free tier.",
+  "ec2_instances": {
+    "t4g.small": {
+      "usd_per_hour": 0.0212,
+      "vcpu": "2",
+      "memory": "2 GiB",
+      "storage": "EBS only",
+      "network": "Up to 5 Gigabit"
+    },
+    "m7g.large": {
+      "usd_per_hour": 0.102,
+      "vcpu": "2",
+      "memory": "8 GiB",
+      "storage": "EBS only",
+      "network": "Up to 12500 Megabit"
+    },
+    "m7gd.large": {
+      "usd_per_hour": 0.1332,
+      "vcpu": "2",
+      "memory": "8 GiB",
+      "storage": "1 x 118 NVMe SSD",
+      "network": "Up to 12500 Megabit"
+    },
+    "c7g.large": {
+      "usd_per_hour": 0.0833,
+      "vcpu": "2",
+      "memory": "4 GiB",
+      "storage": "EBS only",
+      "network": "Up to 12500 Megabit"
+    },
+    "c7gd.large": {
+      "usd_per_hour": 0.1058,
+      "vcpu": "2",
+      "memory": "4 GiB",
+      "storage": "1 x 118 NVMe SSD",
+      "network": "Up to 12500 Megabit"
+    },
+    "r7g.large": {
+      "usd_per_hour": 0.1292,
+      "vcpu": "2",
+      "memory": "16 GiB",
+      "storage": "EBS only",
+      "network": "Up to 12500 Megabit"
+    },
+    "r7gd.large": {
+      "usd_per_hour": 0.1644,
+      "vcpu": "2",
+      "memory": "16 GiB",
+      "storage": "1 x 118 NVMe SSD",
+      "network": "Up to 12500 Megabit"
+    }
+  },
+  "instance_store": {
+    "t4g.small": {
+      "total_gb": null,
+      "nvme": null,
+      "disks": [],
+      "encrypted_at_rest": null
+    },
+    "m7gd.large": {
+      "total_gb": 118,
+      "nvme": "required",
+      "disks": [
+        {
+          "count": 1,
+          "size_gb": 118,
+          "type": "ssd"
+        }
+      ],
+      "encrypted_at_rest": "required"
+    },
+    "r7gd.large": {
+      "total_gb": 118,
+      "nvme": "required",
+      "disks": [
+        {
+          "count": 1,
+          "size_gb": 118,
+          "type": "ssd"
+        }
+      ],
+      "encrypted_at_rest": "required"
+    },
+    "r7g.large": {
+      "total_gb": null,
+      "nvme": null,
+      "disks": [],
+      "encrypted_at_rest": null
+    },
+    "m7g.large": {
+      "total_gb": null,
+      "nvme": null,
+      "disks": [],
+      "encrypted_at_rest": null
+    },
+    "c7gd.large": {
+      "total_gb": 118,
+      "nvme": "required",
+      "disks": [
+        {
+          "count": 1,
+          "size_gb": 118,
+          "type": "ssd"
+        }
+      ],
+      "encrypted_at_rest": "required"
+    },
+    "c7g.large": {
+      "total_gb": null,
+      "nvme": null,
+      "disks": [],
+      "encrypted_at_rest": null
+    }
+  },
+  "vpc_endpoint": [
+    {
+      "usd": 0.013,
+      "unit": "Hrs",
+      "description": "$0.013 per Hrs for VpcEndpoint-GWLBE-Hours:VpcEndpoint in Asia Pacific (Singapore)",
+      "usagetype": "APS1-VpcEndpoint-GWLBE-Hours",
+      "endpoint_type": "Gateway Load Balancer Endpoint"
+    },
+    {
+      "usd": 0.013,
+      "unit": "Hrs",
+      "description": "$0.013 per VPC Endpoint Hour",
+      "usagetype": "APS1-VpcEndpoint-Hours",
+      "endpoint_type": "PrivateLink"
+    },
+    {
+      "usd": 0.026,
+      "unit": "Hrs",
+      "description": "$0.026 - Hourly charge to access ODB Network Resource through Resource-endpoint",
+      "usagetype": "APS1-VpcEndpoint-ODB-Resource-Hours",
+      "endpoint_type": "Resource"
+    },
+    {
+      "usd": 0.026,
+      "unit": "Hrs",
+      "description": "$0.026 per hour per VPC resource for VPC endpoint of type 'resource' in  Asia Pacific (Singapore)",
+      "usagetype": "APS1-VpcEndpoint-Resource-Hours",
+      "endpoint_type": "Resource"
+    },
+    {
+      "usd": 0.05,
+      "unit": "Hrs",
+      "description": "$0.05 per hour per active remote region for a VPCE service",
+      "usagetype": "APS1-VpcEndpoint-Service-Hours",
+      "endpoint_type": "Endpoint Service"
+    }
+  ],
+  "fargate": [
+    {
+      "usd": 0.00442,
+      "unit": "hours",
+      "description": "AWS Fargate - ARM - Memory - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-ARM-GB-Hours",
+      "cputype": null
+    },
+    {
+      "usd": 0.04045,
+      "unit": "hours",
+      "description": "AWS Fargate - ARM - vCPU - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-ARM-vCPU-Hours:perCPU",
+      "cputype": "perCPU"
+    },
+    {
+      "usd": 0.000133,
+      "unit": "GB-Hours",
+      "description": "AWS Fargate - Ephemeral Storage - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-EphemeralStorage-GB-Hours",
+      "cputype": null
+    },
+    {
+      "usd": 0.00553,
+      "unit": "hours",
+      "description": "AWS Fargate - Memory - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-GB-Hours",
+      "cputype": null
+    },
+    {
+      "usd": 0.0063595,
+      "unit": "hours",
+      "description": "AWS Fargate - Windows - Memory  - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-Windows-GB-Hours",
+      "cputype": null
+    },
+    {
+      "usd": 0.046,
+      "unit": "hours",
+      "description": "AWS Fargate - Windows - OS  - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-Windows-OS-Hours:perCPU",
+      "cputype": "perCPU OS License Fee"
+    },
+    {
+      "usd": 0.058144,
+      "unit": "hours",
+      "description": "AWS Fargate - Windows - vCPU  - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-Windows-vCPU-Hours:perCPU",
+      "cputype": "perCPU"
+    },
+    {
+      "usd": 0.05056,
+      "unit": "hours",
+      "description": "AWS Fargate - vCPU - Asia Pacific (Singapore)",
+      "usagetype": "APS1-Fargate-vCPU-Hours:perCPU",
+      "cputype": "perCPU"
+    }
+  ],
+  "storage": {
+    "efs": [
+      {
+        "usd": 7.2,
+        "unit": "MiBps-Mo",
+        "description": "USD $7.20 per MiBps-Mo for Provisioned Throughput (APS1)",
+        "family": "Provisioned Throughput",
+        "type": "APS1-ProvisionedTP-MiBpsHrs",
+        "deployment": null
+      },
+      {
+        "usd": 0.01,
+        "unit": "GB-Mo",
+        "description": "USD $0.01 per GB-Mo for Archive storage (APS1)",
+        "family": "Storage",
+        "type": "Archive",
+        "deployment": null
+      },
+      {
+        "usd": 0.036,
+        "unit": "GB",
+        "description": "USD $0.036 per GB-Mo for Archive writes/tiering (APS1)",
+        "family": "Storage",
+        "type": "Archive",
+        "deployment": null
+      },
+      {
+        "usd": 0.036,
+        "unit": "GB",
+        "description": "USD $0.036 per GB-Mo for Archive reads (APS1)",
+        "family": "Storage",
+        "type": "Archive",
+        "deployment": null
+      },
+      {
+        "usd": 0.01,
+        "unit": "GB-Mo",
+        "description": "USD $0.01 per GB-Mo for prorated Archive usage for small file rounding on early deletions (APS1)",
+        "family": "Storage",
+        "type": "Archive-EarlyDelete-SmallFiles",
+        "deployment": null
+      },
+      {
+        "usd": 0.01,
+        "unit": "GB-Mo",
+        "description": "USD $0.01 per GB-Mo for Archive usage from small file rounding (<128 KB) (APS1)",
+        "family": "Storage",
+        "type": "Archive-SmallFiles",
+        "deployment": null
+      },
+      {
+        "usd": 0.04,
+        "unit": "GB",
+        "description": "USD $0.04 per GB for Elastic Throughput reads (APS1)",
+        "family": "Storage",
+        "type": "EFS Storage",
+        "deployment": null
+      },
+      {
+        "usd": 0.07,
+        "unit": "GB",
+        "description": "USD $0.07 per GB for Elastic Throughput writes (APS1)",
+        "family": "Storage",
+        "type": "EFS Storage",
+        "deployment": null
+      },
+      {
+        "usd": 0.36,
+        "unit": "GB-Mo",
+        "description": "USD $0.36 per GB-Mo for Standard storage (APS1)",
+        "family": "Storage",
+        "type": "General Purpose",
+        "deployment": null
+      },
+      {
+        "usd": 0.012,
+        "unit": "GB",
+        "description": "USD $0.012 per GB for Infrequent Access reads (APS1)",
+        "family": "Storage",
+        "type": "Infrequent Access",
+        "deployment": null
+      },
+      {
+        "usd": 0.012,
+        "unit": "GB",
+        "description": "USD $0.012 per GB for Infrequent Access writes (APS1)",
+        "family": "Storage",
+        "type": "Infrequent Access",
+        "deployment": null
+      },
+      {
+        "usd": 0.0272,
+        "unit": "GB-Mo",
+        "description": "USD $0.0272 per GB-Mo for Standard-Infrequent Access storage (APS1)",
+        "family": "Storage",
+        "type": "Infrequent Access",
+        "deployment": null
+      },
+      {
+        "usd": 0.02,
+        "unit": "GB-Mo",
+        "description": "USD $0.02 per GB-Mo for Infrequent Access storage with Elastic Throughput (APS1)",
+        "family": "Storage",
+        "type": "Infrequent Access-ET",
+        "deployment": null
+      },
+      {
+        "usd": 0.02,
+        "unit": "GB-Mo",
+        "description": "USD $0.02 per GB-Mo for Infrequent Access usage from small file rounding (<128 KB) with Elastic Throughput (APS1)",
+        "family": "Storage",
+        "type": "Infrequent Access-ET-SmallFiles",
+        "deployment": null
+      },
+      {
+        "usd": 0.0272,
+        "unit": "GB-Mo",
+        "description": "USD $0.0272 per GB-Mo for Infrequent Access usage from small file rounding (<128 KB) (APS1)",
+        "family": "Storage",
+        "type": "Infrequent Access-SmallFiles",
+        "deployment": null
+      },
+      {
+        "usd": 0.192,
+        "unit": "GB-Mo",
+        "description": "$0.192 per GB-Mo for One Zone Storage in Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "One Zone-General Purpose",
+        "deployment": null
+      },
+      {
+        "usd": 0.0145,
+        "unit": "GB-Mo",
+        "description": "$0.0145 per GB-Mo for One Zone-Infrequent Access Storage in Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "One Zone-Infrequent Access",
+        "deployment": null
+      }
+    ],
+    "fsx": [
+      {
+        "usd": 1.506,
+        "unit": "GB-Mo",
+        "description": "$1.506 per GB-Month of File Cache Lustre storage with 1000 MB/s/TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "APS1-Storage.1000",
+        "deployment": null
+      },
+      {
+        "usd": 4e-07,
+        "unit": "Operations",
+        "description": "$0.00040 per 1,000 read requests to Lustre Intelligent-Tiering storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 5e-06,
+        "unit": "Operations",
+        "description": "$0.00500 per 1,000 write requests to Lustre Intelligent-Tiering storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.0006,
+        "unit": "GB-Mo",
+        "description": "$0.0006 per GB-Month of Lustre Intelligent-Tiering storage for monitoring and automation - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.005,
+        "unit": "GB-Mo",
+        "description": "$0.0050 per GB-Month of Lustre Intelligent-Tiering storage in the Archive Instant Access tier - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.0138,
+        "unit": "GB-Mo",
+        "description": "$0.0138 per GB-Month of Lustre Intelligent-Tiering storage in the Infrequent Access tier - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.025,
+        "unit": "GB-Mo",
+        "description": "$0.0250 per GB-Month of Lustre Intelligent-Tiering storage in the Frequent Access tier - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.027,
+        "unit": "GB-Mo",
+        "description": "$0.027 per GB-Month of persistent HDD Lustre storage with 12 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.05,
+        "unit": "GB-Mo",
+        "description": "$0.05 per GB-Month of persistent HDD Lustre storage with 12 MB/s per TiB with SSD cache - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.05,
+        "unit": "GB-Mo",
+        "description": "$0.05 per GB-Month of FSx for Lustre backup storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.063,
+        "unit": "IOPS-Mo",
+        "description": "$0.063 per IOPS-Month of provisioned Lustre Metadata IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.09,
+        "unit": "GB-Mo",
+        "description": "$0.09 per GB-Month of persistent HDD Lustre storage with 40 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.108,
+        "unit": "GB-Mo",
+        "description": "$0.108 per GB-Month of Lustre Intelligent-Tiering provisioned SSD read cache - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.112,
+        "unit": "GB-Mo",
+        "description": "$0.112 per GB-Month of persistent HDD Lustre storage with 40 MB/s per TiB with SSD cache - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.166,
+        "unit": "GB-Mo",
+        "description": "$0.166 - per GB-Month of provisioned persistent Lustre storage with 50 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.168,
+        "unit": "GB-Mo",
+        "description": "$0.168 per GB-Month of provisioned Lustre storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.177,
+        "unit": "GB-Mo",
+        "description": "$0.177 per GB-Month of persistent SSD Lustre storage with 125 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.223,
+        "unit": "GB-Mo",
+        "description": "$0.223 - per GB-Month of provisioned persistent Lustre storage with 100 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.258,
+        "unit": "GB-Mo",
+        "description": "$0.258 per GB-Month of persistent SSD Lustre storage with 250 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.339,
+        "unit": "GB-Mo",
+        "description": "$0.339 - per GB-Month of provisioned persistent Lustre storage with 200 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.421,
+        "unit": "GB-Mo",
+        "description": "$0.421 per GB-Month of persistent SSD Lustre storage with 500 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.586,
+        "unit": "MiBps-Mo",
+        "description": "$0.586 per MBps-Month of persistent Intelligent-Tiering Lustre provisioned throughput - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 0.746,
+        "unit": "GB-Mo",
+        "description": "$0.746 per GB-Month of persistent SSD Lustre storage with 1000 MB/s per TiB - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Lustre",
+        "deployment": "Persistent"
+      },
+      {
+        "usd": 4e-07,
+        "unit": "Operations",
+        "description": "$0.00040 per 1,000 read requests to ONTAP standard capacity pool storage - Asia Pacific (Singapore)",
+        "family": "Request",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 4e-07,
+        "unit": "Operations",
+        "description": "$0.00040 per 1,000 read requests to ONTAP standard capacity pool storage - Asia Pacific (Singapore)",
+        "family": "Request",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N"
+      },
+      {
+        "usd": 5e-06,
+        "unit": "Operations",
+        "description": "$0.0050 per 1,000 write requests to ONTAP standard capacity pool storage - Asia Pacific (Singapore)",
+        "family": "Request",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N"
+      },
+      {
+        "usd": 5e-06,
+        "unit": "Operations",
+        "description": "$0.0050 per 1,000 write requests to ONTAP standard capacity pool storage - Asia Pacific (Singapore)",
+        "family": "Request",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.0204,
+        "unit": "IOPS-Mo",
+        "description": "$0.0204 per IOPS-Month of provisioned ONTAP Single-AZ-2 SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N-2"
+      },
+      {
+        "usd": 0.0204,
+        "unit": "IOPS-Mo",
+        "description": "$0.0204 per IOPS-Month of provisioned ONTAP Single-AZ SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N"
+      },
+      {
+        "usd": 0.0238,
+        "unit": "GB-Mo",
+        "description": "$0.0238 per GB-Month of ONTAP standard capacity pool storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N"
+      },
+      {
+        "usd": 0.0408,
+        "unit": "IOPS-Mo",
+        "description": "$0.0408 per IOPS-Month of provisioned ONTAP Multi-AZ-2 SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ-2"
+      },
+      {
+        "usd": 0.0408,
+        "unit": "IOPS-Mo",
+        "description": "$0.0408 per IOPS-Month of provisioned ONTAP Multi-AZ SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.0476,
+        "unit": "GB-Mo",
+        "description": "$0.0476 per GB-Month of ONTAP standard capacity pool storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.05,
+        "unit": "GB-Mo",
+        "description": "$0.050 per GB-Month of ONTAP backup storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "ONTAP",
+        "deployment": "N/A"
+      },
+      {
+        "usd": 0.15,
+        "unit": "GB-Mo",
+        "description": "$0.150 per GB-Month of provisioned ONTAP Single-AZ SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N"
+      },
+      {
+        "usd": 0.15,
+        "unit": "GB-Mo",
+        "description": "$0.150 per GB-Month of provisioned ONTAP Single-AZ-2 SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N-2"
+      },
+      {
+        "usd": 0.3,
+        "unit": "GB-Mo",
+        "description": "$0.300 per GB-Month of provisioned ONTAP Multi-AZ-2 SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ-2"
+      },
+      {
+        "usd": 0.3,
+        "unit": "GB-Mo",
+        "description": "$0.300 per GB-Month of provisioned ONTAP Multi-AZ SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.83,
+        "unit": "MiBps-Mo",
+        "description": "$0.830 per MBps-Month of provisioned ONTAP Single-AZ throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N"
+      },
+      {
+        "usd": 1.384,
+        "unit": "MiBps-Mo",
+        "description": "$1.384 per MBps-Month of provisioned ONTAP Multi-AZ throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 1.844,
+        "unit": "MiBps-Mo",
+        "description": "$1.844 per MBps-Month of provisioned ONTAP Single-AZ-2 throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "ONTAP",
+        "deployment": "Single-AZ_2N-2"
+      },
+      {
+        "usd": 2.883,
+        "unit": "MiBps-Mo",
+        "description": "$2.883 per MBps-Month of provisioned ONTAP Multi-AZ-2 throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "ONTAP",
+        "deployment": "Multi-AZ-2"
+      },
+      {
+        "usd": 4e-07,
+        "unit": "Operations",
+        "description": "$0.0004 per 1,000 read requests to OpenZFS Intelligent-Tiering storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 5e-06,
+        "unit": "Operations",
+        "description": "$0.0050 per 1,000 write requests to OpenZFS Intelligent-Tiering storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.0006,
+        "unit": "GB-Mo",
+        "description": "$0.0006 per GB-Month of OpenZFS Intelligent-Tiering storage for monitoring and automation - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.005,
+        "unit": "GB-Mo",
+        "description": "$0.0050 per GB-Month of OpenZFS Intelligent-Tiering storage in the Archive Instant Access tier - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.0066,
+        "unit": "IOPS-Mo",
+        "description": "$0.0066 per IOPS-Month for provisioned OpenZFS Single-AZ SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.0066,
+        "unit": "IOPS-Mo",
+        "description": "$0.0066 per IOPS-Month for provisioned OpenZFS Single-AZ SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_2"
+      },
+      {
+        "usd": 0.0138,
+        "unit": "GB-Mo",
+        "description": "$0.0138 per GB-Month of OpenZFS Intelligent-Tiering storage in the Infrequent Access tier - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.0144,
+        "unit": "IOPS-Mo",
+        "description": "$0.0144 per IOPS-Month for provisioned OpenZFS Single-AZ (HA) SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_HA"
+      },
+      {
+        "usd": 0.0144,
+        "unit": "IOPS-Mo",
+        "description": "$0.0144 per IOPS-Month for provisioned OpenZFS Single-AZ (HA) SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_HA_2"
+      },
+      {
+        "usd": 0.025,
+        "unit": "GB-Mo",
+        "description": "$0.0250 per GB-Month of OpenZFS Intelligent-Tiering storage in the Frequent Access tier - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.0288,
+        "unit": "IOPS-Mo",
+        "description": "$0.0288 per IOPS-Month of OpenZFS Multi-AZ Provisioned SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.05,
+        "unit": "GB-Mo",
+        "description": "$0.05 per GB-Month for OpenZFS backup storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "N/A"
+      },
+      {
+        "usd": 0.05,
+        "unit": "GB-Mo",
+        "description": "$0.05 per GB-Month of OpenZFS Multi-AZ Backup storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.108,
+        "unit": "GB-Mo",
+        "description": "$0.108 per GB-Month for provisioned OpenZFS Single-AZ (HA) SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_HA"
+      },
+      {
+        "usd": 0.108,
+        "unit": "GB-Mo",
+        "description": "$0.108 per GB-Month for provisioned OpenZFS Single-AZ (HA) SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_HA_2"
+      },
+      {
+        "usd": 0.108,
+        "unit": "GB-Mo",
+        "description": "$0.108 per GB-Month for provisioned OpenZFS Single-AZ SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.108,
+        "unit": "GB-Mo",
+        "description": "$0.108 per GB-Month for provisioned OpenZFS Single-AZ SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_2"
+      },
+      {
+        "usd": 0.216,
+        "unit": "GB-Mo",
+        "description": "$0.216 per GB-Month of provisioned OpenZFS Multi-AZ SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.216,
+        "unit": "GB-Mo",
+        "description": "$0.2160 per GB-Month of OpenZFS Intelligent-Tiering Multi-AZ provisioned SSD read cache - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.293,
+        "unit": "MiBps-Mo",
+        "description": "$0.293 per MBps-Month for provisioned Single-AZ OpenZFS throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_2"
+      },
+      {
+        "usd": 0.293,
+        "unit": "MiBps-Mo",
+        "description": "$0.293 per MBps-Month for provisioned Single-AZ OpenZFS throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.586,
+        "unit": "MiBps-Mo",
+        "description": "$0.586 per MBps-Month for provisioned Single-AZ (HA) OpenZFS throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_HA_2"
+      },
+      {
+        "usd": 0.586,
+        "unit": "MiBps-Mo",
+        "description": "$0.586 per MBps-Month for provisioned Single-AZ (HA) OpenZFS throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "OpenZFS",
+        "deployment": "Single-AZ_HA"
+      },
+      {
+        "usd": 1.0034,
+        "unit": "MiBps-Mo",
+        "description": "$1.0034 per MBps-Month of OpenZFS Multi-AZ Provisioned throughput - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "OpenZFS",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.0144,
+        "unit": "IOPS-Mo",
+        "description": "$0.0144 per IOPS-Month of Windows File Server Single-AZ provisioned SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "Windows",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.016,
+        "unit": "GB-Mo",
+        "description": "$0.016 per GB-Month of provisioned Windows File Server Single-AZ HDD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Windows",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.0288,
+        "unit": "IOPS-Mo",
+        "description": "$0.0288 per IOPS-Month of Windows File Server Multi-AZ provisioned SSD IOPS - Asia Pacific (Singapore)",
+        "family": "Provisioned IOPS",
+        "type": "Windows",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.03,
+        "unit": "GB-Mo",
+        "description": "$0.030 per GB-Month of provisioned Windows File Server Multi-AZ HDD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Windows",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.05,
+        "unit": "GB-Mo",
+        "description": "$0.05 per GB-Month of Windows File Server backup storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Windows",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.05,
+        "unit": "GB-Mo",
+        "description": "$0.05 per GB-Month of Multi-AZ Windows File Server backup storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Windows",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 0.156,
+        "unit": "GB-Mo",
+        "description": "$0.156 per GB-Month of provisioned Windows File Server storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Windows",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 0.276,
+        "unit": "GB-Mo",
+        "description": "$0.276 per GB-Month of provisioned Windows File Server Multi-AZ SSD storage - Asia Pacific (Singapore)",
+        "family": "Storage",
+        "type": "Windows",
+        "deployment": "Multi-AZ"
+      },
+      {
+        "usd": 2.479,
+        "unit": "MiBps-Mo",
+        "description": "$2.479 per MB-per-second-Month of provisioned Windows File Server throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "Windows",
+        "deployment": "Single-AZ"
+      },
+      {
+        "usd": 5.085,
+        "unit": "MiBps-Mo",
+        "description": "$5.085 per MBps-Month of provisioned Multi-AZ Windows File Server throughput capacity - Asia Pacific (Singapore)",
+        "family": "Provisioned Throughput",
+        "type": "Windows",
+        "deployment": "Multi-AZ"
+      }
+    ]
+  }
+}

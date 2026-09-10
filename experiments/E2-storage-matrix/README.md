@@ -158,12 +158,69 @@ lands in the cost table below rather than being guessed at.
 
 ## Cost
 
-**`UNVERIFIED` — not yet costed per tier.** FSx and the JuiceFS/SeaweedFS control
-planes are the expensive arms; FSx in particular is the trap flagged in
-`CLAUDE.md`, since Lustre and ONTAP carry minimum-capacity floors that make the
-cheapest possible deployment considerably more than an hourly rate suggests.
+Snapshot `results/pricing/20260910/` (on-demand list prices, `ap-southeast-1`,
+regenerate with `make pricing`). No savings plans, no reserved capacity, no free
+tier. These are apparatus costs for running the matrix, not a cost model of
+production — that is [H7](../../hypotheses/H7-cheapest-storage-loses.md)'s job.
 
-Per `CLAUDE.md`, nothing here deploys until this section holds real per-tier hourly
-figures with a pricing snapshot date. Those come from a script in `analysis/` that
-queries the pricing API, not from hand-typed numbers, so the table can be
-regenerated rather than trusted.
+### Compute arms
+
+| Instance | vCPU / mem | Instance store | $/hr | Premium |
+|---|---|---|--:|--:|
+| `t4g.small` | 2 / 2 GiB | — | $0.0212 | — |
+| `c7g.large` | 2 / 4 GiB | — | $0.0833 | — |
+| `c7gd.large` | 2 / 4 GiB | 1 × 118 GB NVMe | $0.1058 | **+27.0%** |
+| `m7g.large` | 2 / 8 GiB | — | $0.1020 | — |
+| `m7gd.large` | 2 / 8 GiB | 1 × 118 GB NVMe | $0.1332 | **+30.6%** |
+| `r7g.large` | 2 / 16 GiB | — | $0.1292 | — |
+| `r7gd.large` | 2 / 16 GiB | 1 × 118 GB NVMe | $0.1644 | **+27.2%** |
+
+The instance-store premium is **~27–31%**, not the single-digit rounding error it
+is often assumed to be. That is a real number the cache-adapter argument has to
+clear.
+
+### Fargate, at the same shape
+
+| Line item | Rate |
+|---|--:|
+| vCPU (ARM) | $0.040450 / vCPU-hr |
+| Memory (ARM) | $0.004420 / GB-hr |
+| Ephemeral storage above the included 20 GiB | $0.000133 / GB-hr |
+
+A 2 vCPU / 4 GiB ARM task is **$0.0986/hr** against `c7g.large`'s $0.0833 for the
+same shape — Fargate costs **18% more** before any storage is attached.
+
+### The cache-capacity comparison, which is E4's actual economics
+
+| | EC2 instance store | Fargate ephemeral |
+|---|---|---|
+| 118 GB costs | **+$0.0225/hr, flat** | **+$0.0130/hr, per task** |
+| shared across tasks on the host | yes | no |
+| included free | none | first 20 GiB |
+| crossover | \-- | **1.73 tasks/host** |
+
+Two readings, and they disagree, which is why this belongs in a measured
+experiment rather than an argument:
+
+- **At 2+ tasks per host, instance store is cheaper** for the same cache capacity,
+  and it also amortises hydration once per host instead of once per task.
+- **But if the working set fits in 20 GiB, Fargate's ephemeral cache is free**, and
+  the instance-store premium is +27% for capacity nobody needed. A WordPress code
+  tree is single-digit GB, so this is the likely case rather than the edge case.
+
+So the honest current position is that the cost argument favours Fargate and the
+amortisation argument favours EC2, and which one dominates is an empirical question
+about hydration cost — [H4](../../hypotheses/H4-cold-start-is-the-metric.md), and
+the reason it is a gate on E4 rather than a footnote.
+
+### Storage tiers
+
+**`UNVERIFIED` for the FSx arms.** The per-GB-month rates are in the snapshot
+(`storage.fsx`), but FSx cost is not driven by the per-GB rate — it is driven by
+minimum provisioned capacity and throughput floors, which differ per deployment
+type and are not derivable from the pricing API alone. Costing those honestly means
+picking a concrete configuration per FSx arm first. That is design work E2 has not
+done yet, and per `CLAUDE.md` nothing deploys until it is done and written here.
+
+EFS is already known from E1/E3 runs: elastic throughput, near-zero at benchmark
+volumes, $0.04/GB read and $0.07/GB write on Elastic Throughput plus storage.

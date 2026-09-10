@@ -57,6 +57,10 @@ partly to tell them apart:
 | shared across tasks | **no**, by construction | **yes**, it is a host resource |
 | hydration cost | paid **once per task** | paid **once per host** |
 | survives task restart | no | yes, until the instance goes |
+| cost for 118 GB | +$0.0130/hr **per task** | +$0.0225/hr **flat** |
+| cost if the working set fits in 20 GiB | **free** | still +$0.0225/hr |
+
+(Prices: `results/pricing/20260910/`, on-demand, `ap-southeast-1`.)
 
 That third and fourth row change the economics rather than the design. A per-task
 cache pays the full cold-hydration cost every time a task starts, which is why

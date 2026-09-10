@@ -48,6 +48,10 @@ e0: ## E0 syscall census - local Docker, no AWS, no cost
 
 # --- results ----------------------------------------------------------------
 
+.PHONY: pricing
+pricing: ## Refresh the AWS pricing snapshot used by every cost table
+	@set -a; . ./.env; set +a; python3 analysis/aws_pricing.py
+
 .PHONY: results
 results: ## List recorded runs
 	@find results -mindepth 2 -maxdepth 2 -type d 2>/dev/null | sort || echo "no runs yet"
