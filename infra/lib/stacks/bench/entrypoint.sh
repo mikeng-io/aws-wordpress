@@ -51,11 +51,29 @@ for pair in $BENCH_MOUNTS; do
     echo "$name done, $(wc -l < "/tmp/$name.csv") ops"
 done
 
-# Printed to stdout (captured by awslogs) because a task's ephemeral storage does
-# not survive task exit - this is the only way results leave the task.
-for pair in $BENCH_MOUNTS; do
-    name="${pair%%=*}"
-    echo "===CSV_START:$name==="
-    cat "/tmp/$name.csv"
-    echo "===CSV_END:$name==="
-done
+# Results go to S3, not stdout.
+#
+# stdout was the original transport and it does not scale: the awslogs driver emits
+# one CloudWatch event per line, three tiers is ~12,000 events, and a single
+# GetLogEvents call returns at most 10,000 - so the last tier silently vanished
+# from the collected output while the task still exited 0. A truncated result that
+# looks complete is the exact failure mode this apparatus is supposed to refuse.
+if [ -n "${BENCH_S3_BUCKET:-}" ]; then
+    arm="${BENCH_ARM:-unknown}"
+    for pair in $BENCH_MOUNTS; do
+        name="${pair%%=*}"
+        aws s3 cp "/tmp/$name.csv" "s3://$BENCH_S3_BUCKET/$arm/$name.csv" --only-show-errors
+        echo "uploaded $name.csv -> s3://$BENCH_S3_BUCKET/$arm/$name.csv"
+    done
+    # A manifest the collector checks against, so a missing tier is caught at
+    # collection time rather than discovered during analysis.
+    for pair in $BENCH_MOUNTS; do echo "${pair%%=*}"; done \
+        | aws s3 cp - "s3://$BENCH_S3_BUCKET/$arm/manifest.txt" --only-show-errors
+    echo "all tiers uploaded"
+else
+    echo "BENCH_S3_BUCKET unset - printing to stdout (only safe for small runs)"
+    for pair in $BENCH_MOUNTS; do
+        name="${pair%%=*}"
+        echo "===CSV_START:$name==="; cat "/tmp/$name.csv"; echo "===CSV_END:$name==="
+    done
+fi

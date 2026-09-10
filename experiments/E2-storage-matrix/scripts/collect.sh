@@ -24,7 +24,9 @@ if [ -e "$OUT_ROOT" ]; then
     exit 1
 fi
 
-log() { echo "[$(date -u +%H:%M:%S)] $*"; }
+# stderr, not stdout: run_task returns its task id on stdout, and a progress line
+# landing there gets captured into the caller's variable instead of being read.
+log() { echo "[$(date -u +%H:%M:%S)] $*" >&2; }
 
 destroy() {
     log "destroying $STACK"
@@ -32,6 +34,17 @@ destroy() {
         echo "TEARDOWN FAILED - check the console, this is billing now" >&2
         exit 2
     }
+}
+
+# An ECS task id is 32 hex characters. Anything else means the capture picked up
+# something that was not the id, and the resulting log-stream lookup would fail with
+# a regex complaint that says nothing about the real cause.
+require_task_id() {
+    if ! [[ "$1" =~ ^[0-9a-f]{32}$ ]]; then
+        echo "FATAL: $2 task id is malformed: ${1@Q}" >&2
+        echo "       Expected 32 hex chars. Something wrote to run_task's stdout." >&2
+        exit 1
+    fi
 }
 
 stack_output() {
@@ -70,21 +83,28 @@ run_task() {
     echo "${task_arn##*/}"
 }
 
-# Split the task's stdout into one CSV per tier, using the entrypoint's markers.
-extract() {
-    local raw="$1" dest="$2"
-    python3 - "$raw" "$dest" <<'PY'
-import pathlib, re, sys
-raw = pathlib.Path(sys.argv[1]).read_text()
-dest = pathlib.Path(sys.argv[2]); dest.mkdir(parents=True, exist_ok=True)
-blocks = re.findall(r"===CSV_START:(\w+)===\n(.*?)===CSV_END:\1===", raw, re.S)
-if not blocks:
-    print("no CSV blocks found in task output", file=sys.stderr); sys.exit(1)
-for name, body in blocks:
-    rows = [l for l in body.splitlines() if re.match(r"^[a-z_]+,\d+$", l.strip())]
-    (dest / f"{name}.csv").write_text("op,ns\n" + "\n".join(rows) + "\n")
-    print(f"  {name}: {len(rows)} ops -> {dest.name}/{name}.csv")
-PY
+# Pull one arm's results out of the bucket and verify every tier the task said it
+# would upload actually arrived. A missing tier must fail here, loudly, rather than
+# be discovered as a gap during analysis weeks later.
+collect_arm() {
+    local arm="$1" dest="$2"
+    mkdir -p "$dest"
+    aws s3 sync "s3://$BUCKET/$arm/" "$dest/" --only-show-errors
+    if [ ! -f "$dest/manifest.txt" ]; then
+        echo "FATAL: no manifest for arm $arm - the task did not finish uploading" >&2
+        exit 1
+    fi
+    local missing=0
+    while read -r tier; do
+        [ -z "$tier" ] && continue
+        if [ ! -s "$dest/$tier.csv" ]; then
+            echo "FATAL: arm $arm declared tier '$tier' but its CSV is missing or empty" >&2
+            missing=1
+        else
+            log "  $arm/$tier: $(( $(wc -l < "$dest/$tier.csv") - 1 )) ops"
+        fi
+    done < "$dest/manifest.txt"
+    [ "$missing" -eq 0 ] || exit 1
 }
 
 for rep in $(seq 1 "$REPS"); do
@@ -104,6 +124,7 @@ for rep in $(seq 1 "$REPS"); do
     CAPACITY_PROVIDER=$(stack_output CapacityProviderName)
     ASG=$(stack_output AsgName)
     INSTANCE_TYPE=$(stack_output InstanceType)
+    BUCKET=$(stack_output ResultsBucketName)
 
     trap destroy EXIT
 
@@ -133,20 +154,16 @@ for rep in $(seq 1 "$REPS"); do
     log "running EC2 arm (instance store / EBS / EFS)"
     EC2_TASK=$(run_task ec2 "$EC2_TD" \
         "--capacity-provider-strategy capacityProvider=$CAPACITY_PROVIDER,weight=1" "e2-ec2")
-    aws logs get-log-events --region "$REGION" --log-group-name "$LOG_GROUP" \
-        --log-stream-name "e2-ec2/bench/$EC2_TASK" --start-from-head \
-        --query 'events[].message' --output text > "$REP_DIR/ec2-raw.txt"
-    extract "$REP_DIR/ec2-raw.txt" "$REP_DIR"
+    require_task_id "$EC2_TASK" ec2
+    collect_arm ec2 "$REP_DIR/ec2"
 
     # --- Fargate arm ---------------------------------------------------------
     log "running Fargate arm (task ephemeral / EFS)"
     FARGATE_TASK=$(run_task fargate "$FARGATE_TD" "--launch-type FARGATE" "e2-fargate")
-    aws logs get-log-events --region "$REGION" --log-group-name "$LOG_GROUP" \
-        --log-stream-name "e2-fargate/bench/$FARGATE_TASK" --start-from-head \
-        --query 'events[].message' --output text > "$REP_DIR/fargate-raw.txt"
-    # Fargate's EFS numbers land as efs_fargate so the two arms' EFS readings stay
-    # distinguishable - they are the same filesystem but a different client.
-    extract "$REP_DIR/fargate-raw.txt" "$REP_DIR/fargate"
+    require_task_id "$FARGATE_TASK" fargate
+    # The two arms' EFS readings stay in separate directories: same filesystem,
+    # different client, and collapsing them would hide exactly that difference.
+    collect_arm fargate "$REP_DIR/fargate"
 
     cat > "$REP_DIR/meta.json" <<META
 {

@@ -8,7 +8,9 @@
 # ECR Public has no PrivateLink, so it cannot be pulled from an isolated subnet.
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 
-RUN dnf install -y gcc && dnf clean all
+# awscli-2 comes from AL2023's own repos, which are S3-backed - so it installs
+# through the S3 gateway endpoint with no NAT and no public egress.
+RUN dnf install -y gcc awscli-2 && dnf clean all
 
 COPY bench.c /src/bench.c
 RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c

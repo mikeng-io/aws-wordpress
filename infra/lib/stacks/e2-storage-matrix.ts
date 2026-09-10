@@ -5,6 +5,7 @@ import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as efs from 'aws-cdk-lib/aws-efs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Platform } from 'aws-cdk-lib/aws-ecr-assets';
 import * as path from 'node:path';
 import { Construct } from 'constructs';
@@ -143,6 +144,18 @@ export class E2StorageMatrixStack extends ExperimentStack {
       platform: Platform.LINUX_ARM64,
     });
 
+    // Results land in S3, not in the task log. Three tiers is ~12,000 CSV lines,
+    // the awslogs driver emits one CloudWatch event per line, and a single
+    // GetLogEvents call caps at 10,000 - so the last tier silently disappeared
+    // from collection while the task still exited 0. The bucket is torn down with
+    // the stack; the results are pulled out before that happens.
+    const resultsBucket = new s3.Bucket(this, 'ResultsBucket', {
+      removalPolicy: RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      enforceSSL: true,
+    });
+
     // --- EC2 arm: instance store + EBS root + EFS ----------------------------
     const asg = new autoscaling.AutoScalingGroup(this, 'BlockBackedAsg', {
       vpc,
@@ -224,6 +237,8 @@ export class E2StorageMatrixStack extends ExperimentStack {
       cpu: 1024,
       environment: {
         BENCH_MOUNTS: 'instance_store=/bench/instance-store ebs=/bench/ebs efs=/bench/efs',
+        BENCH_S3_BUCKET: resultsBucket.bucketName,
+        BENCH_ARM: 'ec2',
       },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'e2-ec2', logGroup }),
     });
@@ -257,6 +272,8 @@ export class E2StorageMatrixStack extends ExperimentStack {
         // 'ephemeral' is exempt from the entrypoint's root-filesystem check by
         // design: on Fargate the task's own writable layer IS the tier measured.
         BENCH_MOUNTS: 'ephemeral=/bench/ephemeral efs=/bench/efs',
+        BENCH_S3_BUCKET: resultsBucket.bucketName,
+        BENCH_ARM: 'fargate',
       },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'e2-fargate', logGroup }),
     });
@@ -265,6 +282,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
       sourceVolume: 'efs',
       readOnly: false,
     });
+
+    resultsBucket.grantWrite(ec2TaskDefinition.taskRole);
+    resultsBucket.grantWrite(fargateTaskDefinition.taskRole);
 
     // Both arms are one-shot RunTasks, not services: this produces a comparison,
     // not a fleet. Nothing here restarts, so nothing here needs a circuit breaker
@@ -279,5 +299,6 @@ export class E2StorageMatrixStack extends ExperimentStack {
     new CfnOutput(this, 'FileSystemId', { value: fileSystem.fileSystemId });
     new CfnOutput(this, 'AsgName', { value: asg.autoScalingGroupName });
     new CfnOutput(this, 'InstanceType', { value: instanceType.toString() });
+    new CfnOutput(this, 'ResultsBucketName', { value: resultsBucket.bucketName });
   }
 }
