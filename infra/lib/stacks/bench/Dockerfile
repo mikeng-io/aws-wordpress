@@ -1,5 +1,9 @@
-# E3 apparatus image. One-shot benchmark: builds a small-file tree on two mount
-# points (local ephemeral, EFS) and times every op individually. Built locally
+# Shared benchmark image for the storage experiments (E2, E3). One instrument,
+# built once: every tier's numbers have to be comparable to every other tier's,
+# and a per-experiment copy of bench.c is how that quietly stops being true.
+#
+# The mounts to measure are named at runtime via BENCH_MOUNTS, so the image is
+# identical across experiments and only the task definition differs. Built locally
 # and pushed to the private CDK assets repository - same reason as E1's probe:
 # ECR Public has no PrivateLink, so it cannot be pulled from an isolated subnet.
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023

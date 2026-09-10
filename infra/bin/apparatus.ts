@@ -9,6 +9,7 @@
  */
 import { App, Tags } from 'aws-cdk-lib';
 import { E1MountTopologyStack } from '../lib/stacks/e1-mount-topology.js';
+import { E2StorageMatrixStack } from '../lib/stacks/e2-storage-matrix.js';
 import { E3FargateEphemeralLatencyStack } from '../lib/stacks/e3-fargate-ephemeral-latency.js';
 import { NatStrategy, natPlanningHourlyUsd } from '../lib/nat-strategy.js';
 
@@ -59,11 +60,24 @@ new E3FargateEphemeralLatencyStack(app, 'E3-FargateEphemeralLatency-dev', {
 
 // E2 - storage matrix. Retired from its original "placement differential" design,
 // which assumed the shared-NFS-client mechanism E1 refuted, and redefined in place
-// as the per-tier metadata-cost matrix: local ephemeral, EFS, FSx (OpenZFS /
-// Lustre / ONTAP), JuiceFS, SeaweedFS, Mountpoint-S3. Specced in
-// experiments/E2-storage-matrix/README.md; no stack yet, because the tier list has
-// to survive a correctness gate before any of it is worth deploying.
+// as the per-tier metadata-cost matrix.
 //
+// This deployment is the BLOCK-BACKED group only - the three tiers where the kernel
+// owns the filesystem, plus EFS as the ruler carried across both arms. The FSx and
+// FUSE tiers are costed (see the experiment README) but not yet built; they extend
+// this same stack rather than getting a sibling.
+new E2StorageMatrixStack(app, 'E2-StorageMatrix-dev', {
+  env,
+  experimentId: 'E2',
+  topology: 'dev',
+  // 1 c7gd.large (~0.106) + 10 interface endpoints (~0.13) + one short-lived
+  // Fargate task (~0.05/hr while running) + EFS at near-zero benchmark volumes.
+  // Both arms are one-shot RunTasks, so the standing cost is the instance and the
+  // endpoints. Planning estimate, not a measurement - see H7.
+  estimatedHourlyUsd: 0.29,
+  description: 'E2 - what does each storage tier charge per metadata op?',
+});
+
 // E4 - cache adapter. Specced and deliberately unbuilt: gated on E2, since there is
 // no point building a cache tier if an off-the-shelf one already delivers it.
 

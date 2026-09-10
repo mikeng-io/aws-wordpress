@@ -125,9 +125,16 @@ export class E3FargateEphemeralLatencyStack extends ExperimentStack {
     });
 
     const container = taskDefinition.addContainer('bench', {
-      image: ecs.ContainerImage.fromAsset(path.join(__dirname, 'e3-bench'), {
+      image: ecs.ContainerImage.fromAsset(path.join(__dirname, 'bench'), {
         platform: Platform.LINUX_ARM64,
       }),
+      // The instrument is shared with E2 and names its mounts at runtime, so both
+      // experiments measure with the same binary rather than two copies of it.
+      // 'ephemeral' is exempt from the entrypoint's root-filesystem check by
+      // design: on Fargate the task's writable layer IS the tier being measured.
+      environment: {
+        BENCH_MOUNTS: 'ephemeral=/local-bench efs=/efs-bench',
+      },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'e3', logGroup }),
     });
     container.addMountPoints({
