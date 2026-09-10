@@ -315,18 +315,21 @@ footer code {{ color: var(--ink-2); }}
 
 <main>
   <header>
-    <p class="eyebrow">E2 · storage matrix · block-backed group</p>
-    <h1>A faster disk did nothing. The protocol was everything.</h1>
-    <p class="lede">Three storage tiers, one benchmark, {total_ops} timed syscalls across
+    <p class="eyebrow">E2 · storage matrix · block-backed tiers &amp; EFS mount topology</p>
+    <h1>A faster disk did nothing. Neither did the mount. The protocol was everything.</h1>
+    <p class="lede">Nine configurations, one benchmark, {total_ops} timed syscalls across
     {reps} independent deployments. Attached NVMe, a network block device and Fargate's
-    ephemeral volume came out within 1.5× of each other. EFS sat <strong>{headline}</strong>
-    away.</p>
+    ephemeral volume land within 1.5× of each other. Six different ways of mounting EFS
+    land within 1.15× of <em>each other</em> — and <strong>{headline}</strong> away from
+    the block-backed group.</p>
   </header>
 
   <section>
     <h2>Every operation, one log scale</h2>
-    <p>Latency spans microseconds to milliseconds, so the axis is log-10. The marks
-    fall into two bands with nothing in between — that gap is the finding.</p>
+    <p>Latency spans microseconds to milliseconds, so the axis is log-10. Nine
+    configurations, and they collapse into two bands with nothing in between. Which band
+    a configuration lands in is decided by one thing only: whether your kernel runs the
+    filesystem or a server does.</p>
     <div class="figure">{main_chart}</div>
     <ul class="legend">{legend_items}</ul>
   </section>
@@ -346,6 +349,20 @@ footer code {{ color: var(--ink-2); }}
     <p style="margin-top:16px">The working set is ~50 MB against 4 GiB of RAM, so after the
     first pass the kernel answers from cache and the disk is never consulted. A faster device
     cannot speed up an operation that never reaches it.</p>
+  </section>
+
+  <section>
+    <h2>Six ways to mount EFS. None of them mattered.</h2>
+    <p>EFS was measured across every combination of mount topology, transit encryption
+    and compute type. <strong>Every comparison tied at 1.00×–1.10×</strong> — including
+    mounting the filesystem on the EC2 host and bind-mounting it into the container,
+    which is a genuinely different topology (one NFS client per host instead of one per
+    task).</p>
+    <p>What makes that a result rather than a shrug is the noise floor. EFS's own
+    variance between independent deployments is <strong>1.49×–1.82×</strong> on
+    <code>stat()</code>. Every difference measured sits inside it. These are not small
+    effects; they are no effect. Two practical consequences: transit encryption is free,
+    and hand-mounting EFS on the host buys nothing.</p>
   </section>
 
   <section>
