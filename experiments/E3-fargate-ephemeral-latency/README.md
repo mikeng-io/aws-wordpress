@@ -66,4 +66,10 @@ quietly into H2's existing framing.
 
 ## Status
 
-`SPECCED` — apparatus not yet written.
+`COMPLETE` — both predictions confirmed, kill condition did not fire.
+
+Local ephemeral `stat()` p50 3.1 µs vs EFS 1.08 ms (~348×), with a local-disk-shaped
+tail (p99 4.6 µs). Result: `results/E3/20260910T113000Z-6016f58/` (3 reps).
+See [docs/findings/E3-fargate-ephemeral.md](../../docs/findings/E3-fargate-ephemeral.md).
+
+Stack torn down after data collection.

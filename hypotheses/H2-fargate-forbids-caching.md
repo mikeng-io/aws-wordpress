@@ -1,6 +1,6 @@
 # H2 — Fargate's isolation model forbids every effective cache tier
 
-**Status:** `UNTESTED`
+**Status:** `PARTIALLY TESTED` — E3 resolved the gating unknown in H2's favour
 
 ## Claim
 
@@ -37,11 +37,26 @@ measurably behind, and will pay for it in task start latency.
 **H2 is refuted if** an infrastructure-only Fargate design closes most of the gap
 to EC2 at acceptable start latency.
 
-## Open unknown that gates this
+## Open unknown that gates this — RESOLVED by E3
 
-The small-file metadata latency of Fargate ephemeral storage is not documented
-anywhere found so far. If it is poor, the hydration family of designs collapses and
-the finding becomes "Fargate has no fast local tier at all." See E3.
+The small-file metadata latency of Fargate ephemeral storage was not documented
+anywhere found. E3 measured it (`results/E3/20260910T113000Z-6016f58/`, 3 reps):
+
+**Fargate ephemeral storage is genuinely fast.** `stat()` p50 of 3.1 µs against
+EFS's 1.08 ms on the same task — ~348×. Critically the *tail* is local-disk-shaped
+too (p99 4.6 µs, a 1.5× spread over p50), not the EFS-like tail that would have
+meant "network volume wearing a local costume."
+
+So the hydration family of designs does **not** collapse. Fargate has a genuinely
+fast local tier; what it lacks is any way to *share* that tier across tasks, which
+is a different constraint and the one H2's remaining claims rest on.
+
+What E3 does **not** resolve: whether an actual hydrate-at-startup design closes
+most of the gap to EC2 *at acceptable start latency*. That is H2's real kill
+condition and still needs the design built and measured. E3 only establishes that
+the substrate it would rely on is fast enough to be worth building on.
+
+See [docs/findings/E3-fargate-ephemeral.md](../docs/findings/E3-fargate-ephemeral.md).
 
 ## Bearing experiments
 

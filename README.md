@@ -37,12 +37,20 @@ that would falsify it, recorded before any experiment runs.
 
 ## Status
 
-Two results recorded.
+Three experiments complete.
 
 [E0 at n=10](docs/findings/E0-n10.md): syscall counts are deterministic; a warm
 WordPress request issues ~4,300 filesystem syscalls that `php.ini` cannot reduce.
 Counts, not latency — E0 says nothing about EFS timing, only about the multiplier
 that timing gets applied to.
+
+[E3](docs/findings/E3-fargate-ephemeral.md) supplies the other half of that
+multiplication: on the same Fargate task, a `stat()` costs **3.1 µs** on local
+ephemeral storage against **1.08 ms** on EFS — ~348×, with a local-disk-shaped tail
+(p99 4.6 µs). Fargate's ephemeral tier is genuinely fast, so the constraint on
+Fargate is not that it lacks a fast local disk; it is that it cannot *share* one.
+The gap is also metadata-shaped, not throughput-shaped: `open+read` is only ~91×,
+which is the asymmetry this study has argued from E0 onward, now measured directly.
 
 [E1](docs/findings/E1-mount-per-task.md): ECS mounts EFS once **per task**, not
 once per host. Two co-located tasks on the identical instance get two fully
@@ -64,7 +72,7 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
 | E2 | Placement differential: N tasks on 1 host vs N hosts, identical EFS | small | not specced |
-| E3 | Fargate ephemeral storage metadata latency | small | not specced |
+| [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete: ~348× faster than EFS for `stat`** |
 
 E0–E3 are ordered by kill-power per dollar. Between them they either support the
 central thesis or destroy it, cheaply and early.

@@ -1,0 +1,29 @@
+{
+  "experiment": "E3-fargate-ephemeral-latency",
+  "run_id": "20260910T113000Z-6016f58",
+  "utc": "2026-09-10T11:30:00Z",
+  "measures": "per-syscall latency in nanoseconds, not counts",
+  "region": "ap-southeast-1",
+  "availability_zone": "ap-southeast-1a",
+  "launch_type": "FARGATE",
+  "fargate_platform_version": "1.4.0",
+  "platform_family": "Linux",
+  "cpu_architecture": "ARM64",
+  "task_cpu": "512",
+  "task_memory_mib": "1024",
+  "ephemeral_storage_gib": 20,
+  "efs_config": {
+    "transit_encryption": "ENABLED",
+    "authorization_config": "none (no IAM auth, no access point)",
+    "throughput_mode": "ELASTIC",
+    "performance_mode": "GENERAL_PURPOSE",
+    "one_zone": true
+  },
+  "reps": 3,
+  "ops_per_rep_per_mount": 4020,
+  "tree_shape": "20 dirs x 50 files, 2-50KB, deterministic sizes",
+  "cdk_stack": "E3-FargateEphemeralLatency-dev",
+  "git_sha": "6016f58",
+  "pricing_snapshot_date": null,
+  "note": "Latency experiment. Both mounts measured in the same task, same run, so only the mount differs."
+}
