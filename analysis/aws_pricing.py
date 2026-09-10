@@ -80,6 +80,22 @@ def get_products(service_code: str, filters: dict[str, str], limit: int = 100) -
             return docs
 
 
+def check_location(doc: dict) -> str:
+    """Return the product's location, refusing anything outside the study's region.
+
+    The API filter should already guarantee this. Checking anyway is the point: a
+    silently mis-filtered price is indistinguishable from a correct one once it is
+    in a table, and a cost table that cannot prove its own region is not provenance.
+    """
+    loc = doc["product"]["attributes"].get("location")
+    if loc != LOCATION:
+        raise RuntimeError(
+            f"price document for location {loc!r}, expected {LOCATION!r} - "
+            f"sku {doc['product'].get('sku')}"
+        )
+    return loc
+
+
 def on_demand_dimensions(doc: dict) -> list[tuple[float, str, str]]:
     """Extract (price, unit, description) for every on-demand dimension of a product.
 
@@ -120,10 +136,14 @@ def price_ec2_instances() -> dict[str, dict]:
             out[itype] = {"error": "no price returned"}
             continue
         # Several SKUs can match; the on-demand hourly rate is identical across them.
+        for doc in docs:
+            check_location(doc)
         dim = cheapest(docs[0])
         attrs = docs[0]["product"]["attributes"]
         out[itype] = {
             "usd_per_hour": dim[0] if dim else None,
+            "location": attrs.get("location"),
+            "usagetype": attrs.get("usagetype"),
             "vcpu": attrs.get("vcpu"),
             "memory": attrs.get("memory"),
             "storage": attrs.get("storage"),
@@ -145,6 +165,7 @@ def price_storage() -> dict[str, list[dict]]:
     for name, (code, filters) in queries.items():
         rows = []
         for doc in get_products(code, filters, limit=100):
+            check_location(doc)
             dim = cheapest(doc)
             if not dim:
                 continue
@@ -153,6 +174,8 @@ def price_storage() -> dict[str, list[dict]]:
                 "usd": dim[0],
                 "unit": dim[1],
                 "description": dim[2],
+                "location": a.get("location"),
+                "usagetype": a.get("usagetype"),
                 "family": doc["product"].get("productFamily"),
                 "type": a.get("fileSystemType") or a.get("storageClass") or a.get("usagetype"),
                 "deployment": a.get("deploymentOption"),
@@ -171,6 +194,7 @@ def price_fargate() -> list[dict]:
     """
     rows = []
     for doc in get_products("AmazonECS", {"location": LOCATION}):
+        check_location(doc)
         a = doc["product"]["attributes"]
         usage = a.get("usagetype", "")
         if "Fargate" not in usage:
@@ -181,6 +205,7 @@ def price_fargate() -> list[dict]:
             rows.append({
                 "usd": price, "unit": unit, "description": desc,
                 "usagetype": usage, "cputype": a.get("cputype"),
+                "location": a.get("location"),
             })
     rows.sort(key=lambda r: (r["usagetype"], r["usd"]))
     return rows
@@ -190,6 +215,7 @@ def price_vpc_endpoint() -> list[dict]:
     """Interface endpoints are per-hour per-AZ and are E1's dominant line item."""
     rows = []
     for doc in get_products("AmazonVPC", {"location": LOCATION, "productFamily": "VpcEndpoint"}):
+        check_location(doc)
         a = doc["product"]["attributes"]
         usage = a.get("usagetype", "")
         for price, unit, desc in on_demand_dimensions(doc):
@@ -199,6 +225,7 @@ def price_vpc_endpoint() -> list[dict]:
                 rows.append({
                     "usd": price, "unit": unit, "description": desc,
                     "usagetype": usage, "endpoint_type": a.get("endpointType"),
+                    "location": a.get("location"),
                 })
     rows.sort(key=lambda r: r["usd"])
     return rows
@@ -279,7 +306,11 @@ def main() -> int:
     if args.dry_run:
         return 0
 
-    out_dir = REPO / "results" / "pricing" / now.strftime("%Y%m%d")
+    sha = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO,
+                         capture_output=True, text=True).stdout.strip() or "nogit"
+    run_id = f"{now.strftime('%Y%m%dT%H%M%SZ')}-{sha}"
+    snapshot["run_id"] = run_id
+    out_dir = REPO / "results" / "pricing" / run_id
     if out_dir.exists():
         print(f"\nrefusing to overwrite existing snapshot {out_dir}", file=sys.stderr)
         return 1

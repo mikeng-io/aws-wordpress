@@ -158,9 +158,11 @@ lands in the cost table below rather than being guessed at.
 
 ## Cost
 
-Snapshot `results/pricing/20260910/` (on-demand list prices, `ap-southeast-1`,
+Snapshot `results/pricing/20260910T154846Z-4299cd3/` (on-demand list prices, `ap-southeast-1`,
 regenerate with `make pricing`). No savings plans, no reserved capacity, no free
-tier. These are apparatus costs for running the matrix, not a cost model of
+tier. Every priced row in that snapshot carries its own `location` field, and the
+generator refuses any product not in `Asia Pacific (Singapore)` — so the region is
+verifiable from the artifact rather than asserted by this sentence. These are apparatus costs for running the matrix, not a cost model of
 production — that is [H7](../../hypotheses/H7-cheapest-storage-loses.md)'s job.
 
 ### Compute arms
