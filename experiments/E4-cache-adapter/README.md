@@ -25,6 +25,13 @@ E3 measured the two numbers that make the analogy concrete:
 most application-layer cache/database pairs, which is what makes a filesystem cache
 tier worth building rather than merely describing.
 
+One caveat carried from E3: Fargate ephemeral is itself network-backed, so that
+3.1 µs is the kernel answering from its dentry cache, not a disk being fast. The
+cache tier being proposed here is therefore *the kernel's own caches over a block
+device* — which is precisely why it works, and also why E2 must check whether a
+physically attached NVMe (EC2 instance store) does any better before this is
+built.
+
 ## What would be built
 
 A read-through cache adapter: **local ephemeral storage as the cache tier, a
@@ -37,6 +44,33 @@ Fargate is the interesting target precisely because of H2's finding: it *has* a
 fast local tier and cannot share it. A cache adapter does not need to share it. Each
 task keeps its own cache, and the origin is the only shared thing — which is exactly
 the isolation model a per-task cache wants.
+
+### Two substrates, and they are not interchangeable
+
+The cache tier has two candidate substrates, and [E2](../E2-storage-matrix/) exists
+partly to tell them apart:
+
+| | Fargate task ephemeral | EC2 instance store |
+|---|---|---|
+| what it is | network-backed volume, per task | NVMe physically attached to the host |
+| capacity | 20 GiB default, 200 GiB max | 118 GB on `*.large` |
+| shared across tasks | **no**, by construction | **yes**, it is a host resource |
+| hydration cost | paid **once per task** | paid **once per host** |
+| survives task restart | no | yes, until the instance goes |
+
+That third and fourth row change the economics rather than the design. A per-task
+cache pays the full cold-hydration cost every time a task starts, which is why
+[H4](../../hypotheses/H4-cold-start-is-the-metric.md) is a gate on this experiment
+and not a side issue — E0 measured a cold request at ~15,400 syscalls against
+~4,300 warm. A per-host cache amortises that across every task on the instance and
+survives task churn, so the same adapter has a materially different hit rate
+depending on which substrate it sits on.
+
+It also inverts the usual reading of the compute choice. Fargate is the *harder*
+target for a cache adapter, not the easier one: the platform that most needs a
+local cache tier is the one that can least amortise it. If that turns out to
+dominate, the honest finding is that the cache adapter is an argument for EC2 —
+which would be a result about the platform, not about the adapter.
 
 ## The hard part is correctness, not speed
 

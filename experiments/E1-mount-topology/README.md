@@ -122,3 +122,10 @@ generalise.
 `E1-MountTopology-dev`. **Not deployed.** Three replications per
 [the protocol](../../docs/benchmark-protocol.md), so this is a spending decision, not
 a one-command run.
+
+> **Option flagged, not taken.** Running the three large arms as `m7gd`/`c7gd`/`r7gd`
+> instead of `m7g`/`c7g`/`r7g` would attach 118 GB of NVMe instance store to each,
+> at a modest price premium, and leave E2's instance-store arm already provisioned.
+> Not done: E1 asks one question about mount topology, and widening its apparatus
+> to serve a different experiment is how apparatus stops being attributable. If E1
+> round two and E2 end up deploying together, revisit it then.

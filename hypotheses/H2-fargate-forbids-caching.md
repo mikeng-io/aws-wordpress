@@ -65,3 +65,24 @@ See [docs/findings/E3-fargate-ephemeral.md](../docs/findings/E3-fargate-ephemera
   is this hypothesis stated as a matrix
 - `E4-cache-adapter` — the constructive test: if a cache tier can be built on
   Fargate's ephemeral storage, H2 is refuted
+
+## The sharpest form of this claim (added after E2's matrix was extended)
+
+The claim is usually argued from capability — Fargate withholds `CAP_SYS_ADMIN`, so
+no FUSE, so no JuiceFS/SeaweedFS/Mountpoint-S3. That is true but incomplete, and it
+understates the case.
+
+The stronger argument is about **amortisation**. EC2 instance store is a *host*
+resource: 118 GB of physically attached NVMe on a `*.large`, visible to every task
+on the instance, surviving task restarts. Fargate task ephemeral is 20 GiB, per
+task, gone when the task stops. So a cache tier on EC2 pays hydration **once per
+host** and a cache tier on Fargate pays it **once per task** — the platform with
+the most need for a local cache is the one least able to amortise building one.
+
+That is a structural property, not a tuning one, and it is testable: E2's
+block-backed group measures both substrates, and [E4](../experiments/E4-cache-adapter/)
+is where the amortisation cost becomes a number rather than an argument.
+
+Note this cuts against the hypothesis' own framing as well as for it. If a per-task
+cache hydrates fast enough that the difference does not matter in practice, H2 is
+weakened by its own strongest argument — which is the outcome to watch for.
