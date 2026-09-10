@@ -45,7 +45,22 @@ fast local tier and cannot share it. A cache adapter does not need to share it. 
 task keeps its own cache, and the origin is the only shared thing — which is exactly
 the isolation model a per-task cache wants.
 
-### Two substrates, and they are not interchangeable
+### Two substrates — and E2 showed they are interchangeable after all
+
+> **Superseded by measurement, 2026-09-10.** The table below was written expecting
+> attached NVMe to outperform a network-backed ephemeral volume.
+> [E2 measured it](../../docs/findings/E2-block-backed.md) and they are the same
+> tier: instance store, EBS and Fargate ephemeral fall within 1.5× of each other on
+> every op, while EFS sits 638× away on `stat`. So the substrate question is
+> **closed** — a cache adapter needs no `d`-class instance and no special device,
+> just a block device with a local filesystem, which every platform already has.
+>
+> What survives is the right-hand column only: **sharing and persistence**, not
+> speed. Instance store is a host resource that outlives a task; Fargate ephemeral
+> is per-task and does not. That is an amortisation question, and it is the whole
+> of what E4 still has to answer.
+
+### The original two-substrate table, kept as the audit record
 
 The cache tier has two candidate substrates, and [E2](../E2-storage-matrix/) exists
 partly to tell them apart:

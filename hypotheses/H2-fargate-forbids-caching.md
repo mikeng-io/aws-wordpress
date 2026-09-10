@@ -86,3 +86,17 @@ is where the amortisation cost becomes a number rather than an argument.
 Note this cuts against the hypothesis' own framing as well as for it. If a per-task
 cache hydrates fast enough that the difference does not matter in practice, H2 is
 weakened by its own strongest argument — which is the outcome to watch for.
+
+## E2 settles the substrate half of this (2026-09-10)
+
+The amortisation argument above assumed instance store was a *better* cache
+substrate than Fargate ephemeral, and that the question was whether sharing paid for
+the premium. [E2](../docs/findings/E2-block-backed.md) removes the premise:
+instance store, EBS and Fargate ephemeral are the same tier to within 1.5× on every
+op measured. The +27% instance-store premium buys nothing for this workload shape.
+
+So the surviving form of H2 is narrower and cleaner. Fargate is not short of a fast
+local tier — it has one, and it is as fast as attached NVMe. What Fargate lacks is
+the ability to **share** that tier across tasks and to keep it across task restarts.
+The hypothesis stands or falls on amortisation alone, which is
+[H4](H4-cold-start-is-the-metric.md)'s territory, and not on device speed at all.

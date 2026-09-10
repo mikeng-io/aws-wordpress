@@ -1,6 +1,13 @@
 # E2 — the storage matrix
 
-**Status:** `SPECCED, COSTED` — apparatus not yet written.
+**Status:** `BLOCK-BACKED GROUP COMPLETE` — server-backed group specced and costed,
+not yet built.
+
+> **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md).
+> Prediction 5 **failed**: instance store and Fargate ephemeral tied on every op,
+> and EBS tied with them to within 3%. The device is irrelevant for this workload
+> shape; the tier boundary is a protocol boundary. Block-backed → EFS is 638× on
+> `stat`. E3's EFS bimodality replicated on independent hardware.
 
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md) (which tier is reachable
 decides performance), [H7](../../hypotheses/H7-cheapest-storage-loses.md) (cost at

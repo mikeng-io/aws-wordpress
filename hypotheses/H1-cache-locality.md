@@ -1,6 +1,6 @@
 # H1 — Tier reachability dominates, not filesystem choice
 
-**Status:** `MECHANISM REFUTED, CLAIM REFRAMED` — see E1, and the rewrite below
+**Status:** `MECHANISM REFUTED, CLAIM REFRAMED — SUPPORTED` — see E1, E2, and the rewrite below
 
 > **Rewritten** after E1 and E3. The original claim was that co-located tasks share
 > a warm NFS cache, so *placement* determines performance. E1 refuted that
@@ -21,6 +21,10 @@ Three measurements now support this shape:
 - **The per-op cost is a tier property.** E3: 3.1 µs local vs 0.84 ms EFS, ~271×,
   measured on the same task at the same moment.
 - **You cannot share your way out of it.** E1: per-task mounts, no shared cache.
+- **And you cannot buy your way out of it either.** E2: attached NVMe, network EBS
+  and Fargate's ephemeral volume are all within 1.5× of each other, while EFS is
+  638× away on `stat`. The boundary is whether the kernel or a server owns the
+  filesystem — not how fast the disk is.
 
 So the product of a fixed count and a tier-determined cost is the whole story, and
 the only lever that moves it is which tier serves the ops.

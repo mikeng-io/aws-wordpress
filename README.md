@@ -69,7 +69,7 @@ that would falsify it, recorded before any experiment runs.
 
 ## Status
 
-Three experiments complete.
+Four experiments complete.
 
 [E0 at n=10](docs/findings/E0-n10.md): syscall counts are deterministic; a warm
 WordPress request issues ~4,300 filesystem syscalls that `php.ini` cannot reduce.
@@ -93,6 +93,16 @@ study originally proposed: there is no host-level cache to share, so placement i
 not a lever. [H1](hypotheses/H1-cache-locality.md) records what survived that
 refutation — the tier, not the placement, is what sets the per-op cost.
 
+[E2](docs/findings/E2-block-backed.md) answers the study's central question for the
+block-backed tiers, and refutes its own pre-registered prediction doing it. EC2
+instance store (118 GB attached NVMe), an EBS gp3 root volume, and Fargate's task
+ephemeral storage are **the same tier**: within 1.5× of each other on `stat`,
+`open+read`, `create` and `unlink`, with EBS and instance store matching to 1.00–1.03×
+including tails. Against EFS the same block-backed tiers are **638× faster on
+`stat`**. So the boundary is not fast-disk versus slow-disk — it is whether the
+kernel owns the filesystem or a server does. E3's EFS bimodality also replicated on
+independent hardware (28.6% / 30.7% attribute-cache hits, ~550× separation).
+
 [E0's cart/checkout endpoints](docs/findings/E0-cart-checkout.md): fixed a
 catalog bug that had made every WooCommerce cart/checkout trace measure an empty
 cart since E0 was first built. Populated, both endpoints run 14–15% above
@@ -105,14 +115,18 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 |---|---|---|---|
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
-| [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | see its README | specced, not built — **the core** |
+| [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.29/hr, torn down | **block-backed group complete: the device does not matter, the protocol boundary does** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete: ~271× faster than EFS for `stat`** |
-| [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced, **gated on E2** |
+| [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
 
 E0–E3 were ordered by kill-power per dollar; between them they either support the
 central claim or destroy it, cheaply and early. E2 is where the study's actual
-question gets answered, and E4 only gets built if E2 shows nothing off the shelf
-already solves it.
+question gets answered. Its block-backed group is done; the server-backed group
+(FSx OpenZFS / Lustre / ONTAP, JuiceFS, SeaweedFS, Mountpoint-S3) is specced and
+costed at ~$0.96/hr for all four FSx arms, and not yet built.
+
+E4 has already been narrowed by E2 without being built: a cache adapter needs no
+special substrate, because every platform's block-backed tier performs the same.
 
 See [docs/scope-audit.md](docs/scope-audit.md) for what each experiment and
 hypothesis is currently worth, and why some are parked.

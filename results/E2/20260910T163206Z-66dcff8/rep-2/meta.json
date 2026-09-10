@@ -1,0 +1,17 @@
+{
+  "experiment": "E2",
+  "run_id": "20260910T163206Z-66dcff8",
+  "replication": 2,
+  "utc": "2026-09-10T16:48:50Z",
+  "region": "ap-southeast-1",
+  "availability_zone": "ap-southeast-1a",
+  "instance_type": "c7gd.large",
+  "instance_id": "i-085729031c05f55b5",
+  "ami_id": "ami-09660453b6adf2ddc",
+  "stack": "E2-StorageMatrix-dev",
+  "git_sha": "66dcff82003a64db1eaf096b54f8d475143d6145",
+  "git_dirty": false,
+  "ec2_task": "b37a5165caaa440082c441b1785286a2",
+  "fargate_task": "cfa439b6bfd84062b7957c6756a538aa",
+  "pricing_snapshot": "20260910T155953Z-52175fd"
+}

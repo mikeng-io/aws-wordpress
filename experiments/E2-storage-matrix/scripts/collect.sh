@@ -101,7 +101,8 @@ collect_arm() {
             echo "FATAL: arm $arm declared tier '$tier' but its CSV is missing or empty" >&2
             missing=1
         else
-            log "  $arm/$tier: $(( $(wc -l < "$dest/$tier.csv") - 1 )) ops"
+            # No header row - bench writes bare "op,ns" lines, so every line is an op.
+            log "  $arm/$tier: $(wc -l < "$dest/$tier.csv" | tr -d ' ') ops"
         fi
     done < "$dest/manifest.txt"
     [ "$missing" -eq 0 ] || exit 1
