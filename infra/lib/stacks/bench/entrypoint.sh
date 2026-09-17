@@ -43,6 +43,27 @@ for pair in $BENCH_MOUNTS; do
     echo "  $name -> $path (st_dev=$(stat -c %d "$path"), fs=$(stat -f -c %T "$path"))"
 done
 
+# --- conformance gate, before any timing -------------------------------------
+#
+# H6: a tier that cannot hold POSIX semantics is not eligible for a latency
+# number. Running this first means a disqualified tier is recorded as such rather
+# than showing up in a chart as merely fast.
+#
+# A failure does NOT abort the run. The result IS the finding - E2 pre-registered
+# that Mountpoint-S3 fails here rather than on latency - so the gate records the
+# verdict and the benchmark still runs, letting the writeup say both what it
+# scored and why the score does not count.
+for pair in $BENCH_MOUNTS; do
+    name="${pair%%=*}"; path="${pair#*=}"
+    echo "conformance: $name"
+    if conformance "$path" > "/tmp/$name.conformance.csv" 2>&1; then
+        echo "  $name: POSIX conformance PASSED"
+    else
+        echo "  $name: POSIX conformance FAILED - $(grep -c ',FAIL' "/tmp/$name.conformance.csv" || true) check(s)"
+        grep ',FAIL' "/tmp/$name.conformance.csv" || true
+    fi
+done
+
 for pair in $BENCH_MOUNTS; do
     name="${pair%%=*}"; path="${pair#*=}"
     echo "benchmarking $name at $path"
@@ -63,7 +84,9 @@ if [ -n "${BENCH_S3_BUCKET:-}" ]; then
     for pair in $BENCH_MOUNTS; do
         name="${pair%%=*}"
         aws s3 cp "/tmp/$name.csv" "s3://$BENCH_S3_BUCKET/$arm/$name.csv" --only-show-errors
-        echo "uploaded $name.csv -> s3://$BENCH_S3_BUCKET/$arm/$name.csv"
+        aws s3 cp "/tmp/$name.conformance.csv" \
+            "s3://$BENCH_S3_BUCKET/$arm/$name.conformance.csv" --only-show-errors
+        echo "uploaded $name.csv + conformance -> s3://$BENCH_S3_BUCKET/$arm/"
     done
     # A manifest the collector checks against, so a missing tier is caught at
     # collection time rather than discovered during analysis.

@@ -10,11 +10,15 @@ FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 
 # awscli-2 comes from AL2023's own repos, which are S3-backed - so it installs
 # through the S3 gateway endpoint with no NAT and no public egress.
-RUN dnf install -y gcc awscli-2 && dnf clean all
+# util-linux-core supplies flock(1); without it the conformance gate reports a
+# missing tool as a filesystem defect, which is the exact misattribution it
+# exists to prevent.
+RUN dnf install -y gcc awscli-2 util-linux-core && dnf clean all
 
 COPY bench.c /src/bench.c
 RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c
 
+COPY conformance.sh /usr/local/bin/conformance
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
