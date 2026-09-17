@@ -199,7 +199,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
       // Lustre is not NFS: LNet uses 988 for the data path and 1021-1023 for the
       // management traffic, so an NFS-shaped rule would silently fail to mount.
       fsxSecurityGroup.addIngressRule(workloadSecurityGroup, ec2.Port.tcp(988), 'Lustre LNet');
-      fsxSecurityGroup.addIngressRule(workloadSecurityGroup, ec2.Port.tcpRange(1021, 1023), 'Lustre management');
+      fsxSecurityGroup.addIngressRule(workloadSecurityGroup, ec2.Port.tcpRange(1018, 1023), 'Lustre management');
       // FSx file servers talk to each other and back to clients on the same ports.
       fsxSecurityGroup.addIngressRule(fsxSecurityGroup, ec2.Port.allTraffic(), 'FSx internal');
       // Lustre's LNet is BIDIRECTIONAL: the file servers open connections back to
@@ -295,6 +295,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
         // -o flock is REQUIRED for POSIX locking on Lustre; without it flock(2) is
         // silently a no-op and the conformance gate would report a lock failure that
         // is a configuration choice rather than a property of the filesystem.
+        `LUSTRE_HOST=${lustre.dnsName}`,
         `for i in $(seq 1 24); do mount -t lustre -o noatime,flock ${lustre.dnsName}@tcp:/${lustre.mountName} /mnt/fsx-lustre && break || sleep 10; done`,
         // The ONTAP NFS endpoint is asked for rather than string-built: the DNS name
         // is derived from ids in a format that is easy to get subtly wrong, and a
@@ -316,6 +317,11 @@ export class E2StorageMatrixStack extends ExperimentStack {
         // the one durable place to put this.
         `aws s3 cp /var/log/cloud-init-output.log s3://${diagnosticsBucketName}/e2-diagnostics/$(date -u +%Y%m%dT%H%M%SZ)-$(hostname)-cloud-init.log --only-show-errors || true`,
         'findmnt -t nfs,nfs4,lustre -o TARGET,SOURCE,FSTYPE > /tmp/mounts.txt 2>&1 || true',
+        // mount.lustre reports "Invalid argument" for every cause, so the useful
+        // signal is in the ring buffer and in whether LNet can reach the servers.
+        '{ echo "--- dmesg lustre ---"; dmesg 2>&1 | grep -i -E "lustre|lnet" | tail -40; '
+          + 'echo "--- lnet ---"; lctl list_nids 2>&1; '
+          + `lctl ping ${'${LUSTRE_HOST:-}'} 2>&1; } >> /tmp/mounts.txt || true`,
         `aws s3 cp /tmp/mounts.txt s3://${diagnosticsBucketName}/e2-diagnostics/$(date -u +%Y%m%dT%H%M%SZ)-$(hostname)-mounts.txt --only-show-errors || true`,
         'FSX_MOUNT_FAILURES=0',
         'for m in /mnt/fsx-openzfs /mnt/fsx-lustre /mnt/fsx-ontap; do',
@@ -326,7 +332,15 @@ export class E2StorageMatrixStack extends ExperimentStack {
         '    mkdir -p "$m/bench" && chmod 777 "$m/bench"',
         '  fi',
         'done',
-        'test "$FSX_MOUNT_FAILURES" -eq 0',
+        // Fatal by default - a deployment that cannot mount its arms is not a usable
+        // deployment. Overridable ONLY for apparatus debugging
+        // (`cdk deploy --context mountFatal=false`), because a rollback terminates the
+        // instance and each FSx create/destroy cycle is over an hour; keeping a
+        // broken instance alive to iterate on the mount command is far cheaper than
+        // guessing across deploys. Never set false for a run that produces results.
+        this.node.tryGetContext('mountFatal') === 'false'
+          ? 'echo "mountFatal=false: continuing with $FSX_MOUNT_FAILURES unmounted arm(s) - DEBUG ONLY, not valid for results" >&2'
+          : 'test "$FSX_MOUNT_FAILURES" -eq 0',
       );
 
       fsxMounts.push(
