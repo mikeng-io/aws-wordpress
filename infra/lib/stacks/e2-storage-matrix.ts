@@ -177,7 +177,13 @@ export class E2StorageMatrixStack extends ExperimentStack {
     // (nfsvers=4.1, 1 MiB rsize/wsize, hard, timeo=600). That is the whole point -
     // if the tiers were tuned differently the comparison would measure tuning rather
     // than protocol, which is the confound this experiment exists to avoid.
-    const fsxMountOptions = 'nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport';
+    // Identical to the EFS arms except for one flag, and the exception is forced
+    // rather than chosen: EFS *requires* `noresvport`, and FSx OpenZFS *rejects* it -
+    // its default export demands a reserved source port, so the mount fails with
+    // "mount.nfs: Operation not permitted". Dropped from both FSx NFS arms so those
+    // two are identical to each other. It selects a source port and does not touch
+    // the data path, so it is not a performance variable.
+    const fsxMountOptions = 'nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2';
     const fsxMounts: string[] = [];
     const fsxUserData: string[] = [];
 
@@ -194,6 +200,12 @@ export class E2StorageMatrixStack extends ExperimentStack {
       fsxSecurityGroup.addIngressRule(workloadSecurityGroup, ec2.Port.tcpRange(1021, 1023), 'Lustre management');
       // FSx file servers talk to each other and back to clients on the same ports.
       fsxSecurityGroup.addIngressRule(fsxSecurityGroup, ec2.Port.allTraffic(), 'FSx internal');
+      // Lustre's LNet is BIDIRECTIONAL: the file servers open connections back to
+      // the client, so an outbound-only client rule is not enough. Without these the
+      // mount fails with "client profile could not be read from the MGS", which
+      // reads like a wrong filesystem name rather than a firewall.
+      workloadSecurityGroup.addIngressRule(fsxSecurityGroup, ec2.Port.tcp(988), 'Lustre LNet back to client');
+      workloadSecurityGroup.addIngressRule(fsxSecurityGroup, ec2.Port.tcpRange(1018, 1023), 'Lustre management back to client');
 
       const subnetId = vpc.isolatedSubnets[0].subnetId;
 
@@ -290,10 +302,21 @@ export class E2StorageMatrixStack extends ExperimentStack {
         `for i in $(seq 1 24); do mount -t nfs -o ${fsxMountOptions} "$ONTAP_DNS":/vol1 /mnt/fsx-ontap && break || sleep 10; done`,
         // Same fail-closed rule as every other mount: a path that is not really a
         // mount gets measured as the root volume and reported under a tier's name.
+        // FATAL, not a warning. The previous version logged and continued, and the
+        // stack reported CREATE_COMPLETE with two of three FSx arms silently
+        // unmounted - they were ordinary directories on the root volume, writable,
+        // and would have benchmarked as "FSx is as fast as EBS". A deployment that
+        // cannot mount its arms is not a usable deployment, so cfn-signal must fail.
+        'FSX_MOUNT_FAILURES=0',
         'for m in /mnt/fsx-openzfs /mnt/fsx-lustre /mnt/fsx-ontap; do',
-        '  test "$(stat -c %d $m)" != "$(stat -c %d /)" || echo "WARNING: $m is not a mount" >&2',
-        '  mkdir -p "$m/bench" && chmod 777 "$m/bench" || true',
+        '  if [ "$(stat -c %d $m)" = "$(stat -c %d /)" ]; then',
+        '    echo "FATAL: $m is not a mount - it is a directory on the root volume" >&2',
+        '    FSX_MOUNT_FAILURES=$((FSX_MOUNT_FAILURES + 1))',
+        '  else',
+        '    mkdir -p "$m/bench" && chmod 777 "$m/bench"',
+        '  fi',
         'done',
+        'test "$FSX_MOUNT_FAILURES" -eq 0',
       );
 
       fsxMounts.push(
