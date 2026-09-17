@@ -70,11 +70,17 @@ new E2StorageMatrixStack(app, 'E2-StorageMatrix-dev', {
   env,
   experimentId: 'E2',
   topology: 'dev',
-  // 1 c7gd.large (~0.106) + 10 interface endpoints (~0.13) + one short-lived
-  // Fargate task (~0.05/hr while running) + EFS at near-zero benchmark volumes.
-  // Both arms are one-shot RunTasks, so the standing cost is the instance and the
-  // endpoints. Planning estimate, not a measurement - see H7.
-  estimatedHourlyUsd: 0.29,
+  includeFsx: true,
+  // 1 c7gd.large (~0.106) + 12 interface endpoints (~0.16) + one short-lived
+  // Fargate task + EFS at near-zero benchmark volumes, plus the three FSx arms at
+  // their documented minimum configurations: OpenZFS 64 GiB/64 MBps (~0.035),
+  // Lustre Scratch 1200 GiB (~0.276), ONTAP Single-AZ gen-1 1024 GiB/128 MBps
+  // (~0.356). Figures from results/pricing/, not typed by hand - see `make pricing`.
+  //
+  // FSx is a TEARDOWN risk rather than a run-cost risk: ~$1/hr is ~$700/month if
+  // something is left standing, which is why collection destroys the stack after
+  // every replication, including on failure.
+  estimatedHourlyUsd: 0.97,
   description: 'E2 - what does each storage tier charge per metadata op?',
 });
 

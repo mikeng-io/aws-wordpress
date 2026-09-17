@@ -3,6 +3,7 @@ import * as autoscaling from 'aws-cdk-lib/aws-autoscaling';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as efs from 'aws-cdk-lib/aws-efs';
+import * as fsx from 'aws-cdk-lib/aws-fsx';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
@@ -14,6 +15,13 @@ import { ExperimentStack, ExperimentStackProps } from '../experiment-stack.js';
 export interface E2StorageMatrixProps extends ExperimentStackProps {
   /** Instance type for the EC2 arm. Must carry NVMe instance store (a `*d` type). */
   readonly instanceType?: ec2.InstanceType;
+  /**
+   * Include the three FSx arms. Off by default because they dominate both the cost
+   * (~$0.67/hr against ~$0.29 without) and the deploy time - ONTAP alone takes
+   * 20-30 minutes to create, which turns a replication cycle from ~14 minutes into
+   * ~45. Iterating on the apparatus without them is much faster.
+   */
+  readonly includeFsx?: boolean;
 }
 
 /**
@@ -97,6 +105,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
       Ec2Messages: ec2.InterfaceVpcEndpointAwsService.EC2_MESSAGES,
       CloudFormation: ec2.InterfaceVpcEndpointAwsService.CLOUDFORMATION,
       Efs: ec2.InterfaceVpcEndpointAwsService.ELASTIC_FILESYSTEM,
+      Fsx: ec2.InterfaceVpcEndpointAwsService.FSX,
     };
     for (const [endpointId, service] of Object.entries(interfaceEndpoints)) {
       vpc.addInterfaceEndpoint(`${endpointId}Endpoint`, {
@@ -156,6 +165,140 @@ export class E2StorageMatrixStack extends ExperimentStack {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       enforceSSL: true,
     });
+
+    // --- FSx arms: the server-backed tiers AWS manages for you ----------------
+    //
+    // All three are the cheapest DEFENSIBLE configuration, chosen and costed in the
+    // experiment README before anything was built: Single-AZ throughout, since this
+    // is apparatus rather than production and replication would add cost without
+    // changing what is measured.
+    //
+    // Mount options are held identical to the EFS arms wherever the protocol allows
+    // (nfsvers=4.1, 1 MiB rsize/wsize, hard, timeo=600). That is the whole point -
+    // if the tiers were tuned differently the comparison would measure tuning rather
+    // than protocol, which is the confound this experiment exists to avoid.
+    const fsxMountOptions = 'nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport';
+    const fsxMounts: string[] = [];
+    const fsxUserData: string[] = [];
+
+    if (props.includeFsx) {
+      const fsxSecurityGroup = new ec2.SecurityGroup(this, 'FsxSecurityGroup', {
+        vpc,
+        description: 'E2 FSx file systems',
+        allowAllOutbound: false,
+      });
+      fsxSecurityGroup.addIngressRule(workloadSecurityGroup, ec2.Port.tcp(2049), 'NFS (OpenZFS, ONTAP)');
+      // Lustre is not NFS: LNet uses 988 for the data path and 1021-1023 for the
+      // management traffic, so an NFS-shaped rule would silently fail to mount.
+      fsxSecurityGroup.addIngressRule(workloadSecurityGroup, ec2.Port.tcp(988), 'Lustre LNet');
+      fsxSecurityGroup.addIngressRule(workloadSecurityGroup, ec2.Port.tcpRange(1021, 1023), 'Lustre management');
+      // FSx file servers talk to each other and back to clients on the same ports.
+      fsxSecurityGroup.addIngressRule(fsxSecurityGroup, ec2.Port.allTraffic(), 'FSx internal');
+
+      const subnetId = vpc.isolatedSubnets[0].subnetId;
+
+      // OpenZFS: 64 GiB / 64 MBps is the documented floor, and the only FSx arm
+      // that can be sized anywhere near the actual working set.
+      const openzfs = new fsx.CfnFileSystem(this, 'FsxOpenZfs', {
+        fileSystemType: 'OPENZFS',
+        subnetIds: [subnetId],
+        securityGroupIds: [fsxSecurityGroup.securityGroupId],
+        storageCapacity: 64,
+        storageType: 'SSD',
+        openZfsConfiguration: {
+          deploymentType: 'SINGLE_AZ_1',
+          throughputCapacity: 64,
+          rootVolumeConfiguration: {
+            // no_root_squash: the benchmark container runs as root and would
+            // otherwise be squashed to nobody, failing every write as a permission
+            // error that looks like a filesystem defect.
+            nfsExports: [{
+              clientConfigurations: [{ clients: '*', options: ['rw', 'crossmnt', 'no_root_squash'] }],
+            }],
+          },
+        },
+      });
+
+      // Lustre Scratch: the throughput-marketed configuration prediction 1 names
+      // explicitly. 1200 GiB is the floor - it cannot be bought smaller.
+      const lustre = new fsx.LustreFileSystem(this, 'FsxLustre', {
+        vpc,
+        vpcSubnet: vpc.isolatedSubnets[0],
+        securityGroup: fsxSecurityGroup,
+        storageCapacityGiB: 1200,
+        lustreConfiguration: { deploymentType: fsx.LustreDeploymentType.SCRATCH_2 },
+        removalPolicy: RemovalPolicy.DESTROY,
+      });
+
+      // ONTAP is three resources, not one: a file system, a storage virtual machine
+      // that owns the NFS endpoint, and a volume with a junction path to mount.
+      const ontap = new fsx.CfnFileSystem(this, 'FsxOntap', {
+        fileSystemType: 'ONTAP',
+        subnetIds: [subnetId],
+        securityGroupIds: [fsxSecurityGroup.securityGroupId],
+        storageCapacity: 1024,
+        storageType: 'SSD',
+        ontapConfiguration: {
+          // First generation: its throughput floor is 128 MBps against
+          // second-generation's 384, which makes it the cheaper arm.
+          deploymentType: 'SINGLE_AZ_1',
+          throughputCapacity: 128,
+          preferredSubnetId: subnetId,
+        },
+      });
+      const svm = new fsx.CfnStorageVirtualMachine(this, 'FsxOntapSvm', {
+        fileSystemId: ontap.ref,
+        name: 'e2svm',
+        rootVolumeSecurityStyle: 'UNIX',
+      });
+      const ontapVolume = new fsx.CfnVolume(this, 'FsxOntapVolume', {
+        name: 'e2vol',
+        volumeType: 'ONTAP',
+        ontapConfiguration: {
+          storageVirtualMachineId: svm.attrStorageVirtualMachineId,
+          junctionPath: '/vol1',
+          sizeInBytes: String(64 * 1024 * 1024 * 1024),
+          securityStyle: 'UNIX',
+          tieringPolicy: { name: 'NONE' },
+        },
+      });
+
+      fsxUserData.push(
+        'mkdir -p /mnt/fsx-openzfs /mnt/fsx-lustre /mnt/fsx-ontap',
+        `for i in $(seq 1 24); do mount -t nfs -o ${fsxMountOptions} ${openzfs.attrDnsName}:/fsx /mnt/fsx-openzfs && break || sleep 10; done`,
+        // Lustre needs its kernel module, which is in AL2023's own S3-backed repo -
+        // so it installs through the gateway endpoint with no NAT. The running
+        // kernel (6.1.182) is well past the documented 6.1.79 minimum.
+        'dnf install -y lustre-client',
+        // -o flock is REQUIRED for POSIX locking on Lustre; without it flock(2) is
+        // silently a no-op and the conformance gate would report a lock failure that
+        // is a configuration choice rather than a property of the filesystem.
+        `for i in $(seq 1 24); do mount -t lustre -o noatime,flock ${lustre.dnsName}@tcp:/${lustre.mountName} /mnt/fsx-lustre && break || sleep 10; done`,
+        // The ONTAP NFS endpoint is asked for rather than string-built: the DNS name
+        // is derived from ids in a format that is easy to get subtly wrong, and a
+        // wrong name fails as a timeout rather than an error.
+        `ONTAP_DNS=$(aws fsx describe-storage-virtual-machines --region ${Stack.of(this).region} --storage-virtual-machine-ids ${svm.attrStorageVirtualMachineId} --query 'StorageVirtualMachines[0].Endpoints.Nfs.DNSName' --output text)`,
+        'if [ -z "$ONTAP_DNS" ] || [ "$ONTAP_DNS" = "None" ]; then echo "could not resolve ONTAP NFS endpoint" >&2; fi',
+        `for i in $(seq 1 24); do mount -t nfs -o ${fsxMountOptions} "$ONTAP_DNS":/vol1 /mnt/fsx-ontap && break || sleep 10; done`,
+        // Same fail-closed rule as every other mount: a path that is not really a
+        // mount gets measured as the root volume and reported under a tier's name.
+        'for m in /mnt/fsx-openzfs /mnt/fsx-lustre /mnt/fsx-ontap; do',
+        '  test "$(stat -c %d $m)" != "$(stat -c %d /)" || echo "WARNING: $m is not a mount" >&2',
+        '  mkdir -p "$m/bench" && chmod 777 "$m/bench" || true',
+        'done',
+      );
+
+      fsxMounts.push(
+        'fsx_openzfs=/bench/fsx-openzfs',
+        'fsx_lustre=/bench/fsx-lustre',
+        'fsx_ontap=/bench/fsx-ontap',
+      );
+
+      ontapVolume.node.addDependency(svm);
+      new CfnOutput(this, 'FsxOpenZfsDns', { value: openzfs.attrDnsName });
+      new CfnOutput(this, 'FsxLustreDns', { value: lustre.dnsName });
+      new CfnOutput(this, 'FsxOntapSvmId', { value: svm.attrStorageVirtualMachineId });
+    }
 
     // --- EC2 arm: instance store + EBS root + EFS ----------------------------
     const asg = new autoscaling.AutoScalingGroup(this, 'BlockBackedAsg', {
@@ -234,6 +377,15 @@ export class E2StorageMatrixStack extends ExperimentStack {
       'chmod 777 /mnt/efs-host-tls/bench-tls /mnt/efs-host-plain/bench-plain',
     );
 
+    if (fsxUserData.length) {
+      asg.addUserData(...fsxUserData);
+      asg.role.addToPrincipalPolicy(new iam.PolicyStatement({
+        // Read-only, and scoped to the one call the boot sequence makes.
+        actions: ['fsx:DescribeStorageVirtualMachines', 'fsx:DescribeFileSystems'],
+        resources: ['*'],
+      }));
+    }
+
     // cfn-signal must be the LAST user-data line: addAsgCapacityProvider appends
     // the ECS_CLUSTER config, and signalling earlier would report success before
     // the instance knows which cluster to join. aws-cfn-bootstrap is not
@@ -284,14 +436,27 @@ export class E2StorageMatrixStack extends ExperimentStack {
       },
     });
 
+    for (const [volName, hostPath] of [
+      ['fsx-openzfs', '/mnt/fsx-openzfs/bench'],
+      ['fsx-lustre', '/mnt/fsx-lustre/bench'],
+      ['fsx-ontap', '/mnt/fsx-ontap/bench'],
+    ] as const) {
+      if (props.includeFsx) {
+        ec2TaskDefinition.addVolume({ name: volName, host: { sourcePath: hostPath } });
+      }
+    }
+
     const ec2Container = ec2TaskDefinition.addContainer('bench', {
       image: benchImage,
       memoryReservationMiB: 512,
       cpu: 1024,
       environment: {
-        BENCH_MOUNTS: 'instance_store=/bench/instance-store ebs=/bench/ebs '
-          + 'efs=/bench/efs efs_plain=/bench/efs-plain '
-          + 'efs_host_tls=/bench/efs-host-tls efs_host_plain=/bench/efs-host-plain',
+        BENCH_MOUNTS: [
+          'instance_store=/bench/instance-store', 'ebs=/bench/ebs',
+          'efs=/bench/efs', 'efs_plain=/bench/efs-plain',
+          'efs_host_tls=/bench/efs-host-tls', 'efs_host_plain=/bench/efs-host-plain',
+          ...fsxMounts,
+        ].join(' '),
         BENCH_S3_BUCKET: resultsBucket.bucketName,
         BENCH_ARM: 'ec2',
       },
@@ -306,6 +471,15 @@ export class E2StorageMatrixStack extends ExperimentStack {
       ['/bench/efs-host-plain', 'efs-host-plain'],
     ] as const) {
       ec2Container.addMountPoints({ containerPath, sourceVolume, readOnly: false });
+    }
+    if (props.includeFsx) {
+      for (const [containerPath, sourceVolume] of [
+        ['/bench/fsx-openzfs', 'fsx-openzfs'],
+        ['/bench/fsx-lustre', 'fsx-lustre'],
+        ['/bench/fsx-ontap', 'fsx-ontap'],
+      ] as const) {
+        ec2Container.addMountPoints({ containerPath, sourceVolume, readOnly: false });
+      }
     }
 
     // --- Fargate arm: task ephemeral + the same EFS --------------------------

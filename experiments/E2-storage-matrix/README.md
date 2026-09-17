@@ -164,6 +164,51 @@ instance-store row is not free even before the engineering. That premium is
 `UNVERIFIED` here — the pricing API was unreachable when this was written — and
 lands in the cost table below rather than being guessed at.
 
+## Method decisions for the FSx arms
+
+Fixed before the run. These are *method*, not new predictions — predictions 1 and 3
+already cover FSx and are unchanged.
+
+- **Mount options are held identical to the EFS arms** wherever the protocol allows:
+  `nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport`. If
+  the tiers were tuned differently the comparison would measure tuning rather than
+  protocol, which is the confound this whole experiment exists to avoid.
+- **Lustre arm is Scratch 2**, not Persistent-2. It is the throughput-marketed
+  configuration prediction 1 names explicitly, and the cheaper of the two.
+- **Lustre is mounted `-o flock`.** POSIX locking is off by default on Lustre, and
+  without the option `flock(2)` silently succeeds while excluding nobody. Mounting
+  with it measures the sane production configuration; the default is noted here
+  because "the default does not lock" is itself worth knowing.
+- **OpenZFS exports `no_root_squash`.** The benchmark container runs as root and
+  would otherwise be squashed to `nobody`, turning every write into a permission
+  error that looks like a filesystem defect.
+- **ONTAP is first-generation Single-AZ**, whose throughput floor is 128 MBps
+  against second-generation's 384 — the cheaper arm for an identical measurement.
+- **The ONTAP NFS endpoint is queried from the API at boot**, not assembled from
+  resource ids. A mis-built DNS name fails as a mount timeout rather than an error,
+  which is expensive to diagnose and easy to misread as the tier being slow.
+
+### The conformance gate, and what it is scoped to
+
+`analysis`-adjacent apparatus now exists (`infra/lib/stacks/bench/conformance.sh`)
+and runs on every mount **before any timing**, per H6. Ten checks, chosen for what
+actually breaks on object-store-backed FUSE rather than for coverage: rename over an
+existing file, in-place write at an offset, append, truncate, `fsync`, hardlink,
+symlink, directory rename, an `flock` that genuinely excludes a second holder, and
+`mtime` advancing on write — the last because opcache revalidation is a
+stat-and-compare-`mtime`, so a filesystem that does not move it serves stale
+bytecode silently.
+
+It is the **single-node** gate and says so. Cross-node consistency — two hosts, one
+file, close-to-open ordering — needs a second instance and belongs to H6/E4.
+Conflating the two would let a tier fail here for a reason unrelated to whether it
+earns a latency number.
+
+`PASS` / `FAIL` / `ERROR` are kept distinct and an `ERROR` is never counted as a
+`PASS`: `FAIL` is a verdict about the tier, `ERROR` means the check could not be
+performed and says nothing about the filesystem. A failure does not abort the run —
+for Mountpoint-S3 the failure *is* the pre-registered result.
+
 ## Cost
 
 Snapshot `results/pricing/20260910T155953Z-52175fd/` (on-demand list prices, `ap-southeast-1`,
