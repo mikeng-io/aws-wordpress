@@ -184,6 +184,8 @@ export class E2StorageMatrixStack extends ExperimentStack {
     // two are identical to each other. It selects a source port and does not touch
     // the data path, so it is not a performance variable.
     const fsxMountOptions = 'nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2';
+    // Outlives this stack, so it still holds the logs after a rollback.
+    const diagnosticsBucketName = `cdk-hnb659fds-assets-${Stack.of(this).account}-${Stack.of(this).region}`;
     const fsxMounts: string[] = [];
     const fsxUserData: string[] = [];
 
@@ -307,6 +309,14 @@ export class E2StorageMatrixStack extends ExperimentStack {
         // unmounted - they were ordinary directories on the root volume, writable,
         // and would have benchmarked as "FSx is as fast as EBS". A deployment that
         // cannot mount its arms is not a usable deployment, so cfn-signal must fail.
+        // Diagnostics BEFORE the fatal check, and to a bucket outside this stack.
+        // A rollback terminates the instance and deletes the stack's own bucket and
+        // log group, so a failed deploy previously destroyed the only evidence of
+        // why it failed. The CDK bootstrap bucket outlives the stack, which makes it
+        // the one durable place to put this.
+        `aws s3 cp /var/log/cloud-init-output.log s3://${diagnosticsBucketName}/e2-diagnostics/$(date -u +%Y%m%dT%H%M%SZ)-$(hostname)-cloud-init.log --only-show-errors || true`,
+        'findmnt -t nfs,nfs4,lustre -o TARGET,SOURCE,FSTYPE > /tmp/mounts.txt 2>&1 || true',
+        `aws s3 cp /tmp/mounts.txt s3://${diagnosticsBucketName}/e2-diagnostics/$(date -u +%Y%m%dT%H%M%SZ)-$(hostname)-mounts.txt --only-show-errors || true`,
         'FSX_MOUNT_FAILURES=0',
         'for m in /mnt/fsx-openzfs /mnt/fsx-lustre /mnt/fsx-ontap; do',
         '  if [ "$(stat -c %d $m)" = "$(stat -c %d /)" ]; then',
@@ -414,6 +424,10 @@ export class E2StorageMatrixStack extends ExperimentStack {
         // Read-only, and scoped to the one call the boot sequence makes.
         actions: ['fsx:DescribeStorageVirtualMachines', 'fsx:DescribeFileSystems'],
         resources: ['*'],
+      }));
+      asg.role.addToPrincipalPolicy(new iam.PolicyStatement({
+        actions: ['s3:PutObject'],
+        resources: [`arn:aws:s3:::${diagnosticsBucketName}/e2-diagnostics/*`],
       }));
     }
 
