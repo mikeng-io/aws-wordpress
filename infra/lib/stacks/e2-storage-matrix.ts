@@ -260,6 +260,14 @@ export class E2StorageMatrixStack extends ExperimentStack {
           sizeInBytes: String(64 * 1024 * 1024 * 1024),
           securityStyle: 'UNIX',
           tieringPolicy: { name: 'NONE' },
+          // Required by the FSx API even though CDK's L1 types mark it optional -
+          // omitting it fails the deploy with a BadRequest, not a synth error.
+          //
+          // Set FALSE deliberately. Storage efficiency is ONTAP's dedup/compression
+          // layer; leaving it on would mean measuring that engine rather than the
+          // filesystem, and the benchmark tree is highly compressible small files,
+          // which is exactly the shape that would flatter it.
+          storageEfficiencyEnabled: 'false',
         },
       });
 
