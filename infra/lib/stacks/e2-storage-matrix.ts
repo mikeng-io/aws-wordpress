@@ -208,6 +208,16 @@ export class E2StorageMatrixStack extends ExperimentStack {
       // reads like a wrong filesystem name rather than a firewall.
       workloadSecurityGroup.addIngressRule(fsxSecurityGroup, ec2.Port.tcp(988), 'Lustre LNet back to client');
       workloadSecurityGroup.addIngressRule(fsxSecurityGroup, ec2.Port.tcpRange(1018, 1023), 'Lustre management back to client');
+      // allowAllOutbound:false above means this group has NO egress at all until it
+      // is granted. Security groups are stateful, so client-initiated mounts still
+      // work and this hides itself - but the file servers' own outbound connections
+      // (LNet callbacks, lock revocation) are blocked, which surfaces later as
+      // evictions and stalls rather than as a mount failure.
+      // https://docs.aws.amazon.com/fsx/latest/LustreGuide/limit-access-security-groups.html
+      fsxSecurityGroup.addEgressRule(workloadSecurityGroup, ec2.Port.tcp(988), 'Lustre LNet to client');
+      fsxSecurityGroup.addEgressRule(workloadSecurityGroup, ec2.Port.tcpRange(1018, 1023), 'Lustre mgmt to client');
+      fsxSecurityGroup.addEgressRule(workloadSecurityGroup, ec2.Port.tcp(2049), 'NFS to client (OpenZFS, ONTAP)');
+      fsxSecurityGroup.addEgressRule(fsxSecurityGroup, ec2.Port.allTraffic(), 'FSx internal');
 
       const subnetId = vpc.isolatedSubnets[0].subnetId;
 
@@ -241,6 +251,14 @@ export class E2StorageMatrixStack extends ExperimentStack {
         securityGroup: fsxSecurityGroup,
         storageCapacityGiB: 1200,
         lustreConfiguration: { deploymentType: fsx.LustreDeploymentType.SCRATCH_2 },
+        // MUST be set explicitly. The CreateFileSystem API default for SCRATCH_2 is
+        // Lustre **2.10**, and AWS's own compatibility matrix says an Amazon Linux
+        // 2023 client - which only ships the 2.15 client - CANNOT mount a 2.10 file
+        // system. Omitting this is what produced "mount.lustre: Invalid argument"
+        // and "client profile could not be read from the MGS": a protocol rejection,
+        // not the firewall it looks like.
+        // https://docs.aws.amazon.com/fsx/latest/LustreGuide/lustre-client-matrix.html
+        fileSystemTypeVersion: fsx.FileSystemTypeVersion.V_2_15,
         removalPolicy: RemovalPolicy.DESTROY,
       });
 
