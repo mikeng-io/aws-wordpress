@@ -184,8 +184,23 @@ export class E2StorageMatrixStack extends ExperimentStack {
     // two are identical to each other. It selects a source port and does not touch
     // the data path, so it is not a performance variable.
     const fsxMountOptions = 'nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2';
-    // Outlives this stack, so it still holds the logs after a rollback.
-    const diagnosticsBucketName = `cdk-hnb659fds-assets-${Stack.of(this).account}-${Stack.of(this).region}`;
+
+    // Boot diagnostics need to survive a rollback, because a rollback deletes the
+    // instance, the log group and the results bucket - i.e. every record of why the
+    // deploy failed. So this bucket is RETAINed rather than destroyed with the stack.
+    //
+    // It was briefly pointed at the CDK bootstrap assets bucket, which worked but was
+    // borrowing infrastructure owned by `cdk bootstrap` for something it was never
+    // meant to hold, and which a bootstrap upgrade could clear. This is the same thing
+    // done properly: a bucket this stack declares, with a lifecycle rule so retained
+    // diagnostics expire on their own instead of accumulating forever.
+    const diagnosticsBucket = new s3.Bucket(this, 'DiagnosticsBucket', {
+      removalPolicy: RemovalPolicy.RETAIN,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      enforceSSL: true,
+      lifecycleRules: [{ expiration: Duration.days(14) }],
+    });
+    const diagnosticsBucketName = diagnosticsBucket.bucketName;
     const fsxMounts: string[] = [];
     const fsxUserData: string[] = [];
 
@@ -457,10 +472,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
         actions: ['fsx:DescribeStorageVirtualMachines', 'fsx:DescribeFileSystems'],
         resources: ['*'],
       }));
-      asg.role.addToPrincipalPolicy(new iam.PolicyStatement({
-        actions: ['s3:PutObject'],
-        resources: [`arn:aws:s3:::${diagnosticsBucketName}/e2-diagnostics/*`],
-      }));
+      diagnosticsBucket.grantPut(asg.role);
     }
 
     // cfn-signal must be the LAST user-data line: addAsgCapacityProvider appends
