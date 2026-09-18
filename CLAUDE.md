@@ -114,6 +114,18 @@ only confirm it.
 - Every experiment README states its question, prediction, method, and the
   hypothesis it bears on, before any code.
 
+## Research
+
+`.mcp.json` registers the **AWS Knowledge MCP server**
+(`https://knowledge-mcp.global.api.aws`, unauthenticated, rate-limited). It carries
+AWS documentation, regional availability, and AWS's own agent skills.
+
+Use it before guessing at AWS behaviour. This repo has already paid for the
+alternative: an FSx for Lustre mount failure was met with three targeted doc lookups
+and then a guess at a port range, which cost two deploy cycles at roughly an hour
+each and did not fix it. A wrong guess about AWS semantics is not cheap here —
+every test of one costs a create-and-destroy cycle.
+
 ## Toolchain
 
 - Node pinned in `.nvmrc` (22.17.0). CDK v2 will not run on the system default.
