@@ -188,6 +188,41 @@ already cover FSx and are unchanged.
   resource ids. A mis-built DNS name fails as a mount timeout rather than an error,
   which is expensive to diagnose and easy to misread as the tier being slow.
 
+### Configuration cross-checked against official AWS guidance
+
+Every FSx arm was re-checked against AWS's own documentation rather than left at
+whatever the API default produced. What changed, and what deliberately did not:
+
+| Setting | Decision | Why |
+|---|---|---|
+| Lustre `fileSystemTypeVersion` | **2.15**, explicit | API default for SCRATCH_2 is 2.10, which AL2023's 2.15-only client cannot mount |
+| OpenZFS `throughputCapacity` | **128 MBps**, not the 64 floor | Provisioned throughput sizes the file server's in-memory *metadata* cache, and AWS recommends ≥128 MBps for metadata-intensive workloads |
+| OpenZFS `dataCompressionType` | **NONE**, pinned | An inherited default differing between tiers would be measured as a property of the filesystem |
+| OpenZFS export `sync` | left at default | `async` acknowledges writes before durability — a different guarantee, not a faster filesystem |
+| ONTAP `snapshotPolicy` | **none** | The default takes hourly/daily/weekly snapshots; background I/O during a latency run surfaces as unattributable tail latency |
+| ONTAP `storageEfficiencyEnabled` | **false** | Dedup/compression would be measured instead of the filesystem |
+| NFS version | **4.1 everywhere** | AWS's OpenZFS example uses 4.2 and its ONTAP example 4.1; holding one version across all NFS arms keeps EFS usable as the common ruler. Comparability beats per-tier optimisation in a comparison study. |
+
+**`noresvport` is dropped on FSx and kept on EFS**, and that asymmetry is forced
+rather than chosen: it is an EFS-specific recommendation (EFS ignores source ports),
+and OpenZFS rejects it outright by enforcing the standard reserved-port export
+default. It selects a source port and does not touch the data path.
+
+**One documented cap deliberately *not* acted on.** OpenZFS at 64/128 MBps caps
+`rsize` at 256/512 KiB rather than the 1 MiB requested. It cannot bind here —
+`bench.c` writes files of 2–50 KB, five times under even the lowest cap — so raising
+throughput to "fix" `rsize` would have been cargo-cult. The throughput change above
+is for the metadata cache, which is a different mechanism.
+
+**Two things the docs do not settle, so they are measured instead.** The negotiated
+(not requested) mount options are recorded per tier to `mount-facts.csv` in every
+run, because a client can ask for 1 MiB and be silently given 256 KiB. And the
+conformance gate now includes `root_not_squashed`: OpenZFS's documented default is
+`root_squash` and this study overrides it, while FSx ONTAP's default `superuser`
+setting is not documented by AWS anywhere findable. If one tier squashes root and
+another does not, the arms run as different users and every write is compared across
+different permission paths — so it is checked per tier rather than assumed.
+
 ### The conformance gate, and what it is scoped to
 
 `analysis`-adjacent apparatus now exists (`infra/lib/stacks/bench/conformance.sh`)
@@ -211,7 +246,7 @@ for Mountpoint-S3 the failure *is* the pre-registered result.
 
 ## Cost
 
-Snapshot `results/pricing/20260910T155953Z-52175fd/` (on-demand list prices, `ap-southeast-1`,
+Snapshot `results/pricing/20260918T080950Z-c94ac10/` (on-demand list prices, `ap-southeast-1`,
 regenerate with `make pricing`). No savings plans, no reserved capacity, no free
 tier. Every priced row in that snapshot carries its own `location` field, and the
 generator refuses any product not in `Asia Pacific (Singapore)` — so the region is
@@ -281,7 +316,7 @@ figure is computed from the snapshot's own rates:
 
 | FSx arm | Minimum capacity | Minimum throughput | $/hr | $/day |
 |---|--:|--:|--:|--:|
-| OpenZFS Single-AZ 1 | 64 GiB | 64 MBps | $0.0352 | $0.84 |
+| OpenZFS Single-AZ 1 | 64 GiB | 128 MBps | $0.0608 | $1.46 |
 | Lustre Scratch (SSD) | 1200 GiB | bundled | $0.2762 | $6.63 |
 | Lustre Persistent-2 (125 MB/s/TiB) | 1200 GiB | bundled | $0.2910 | $6.98 |
 | ONTAP Single-AZ gen-1 | 1024 GiB | 128 MBps | $0.3559 | $8.54 |
@@ -303,7 +338,7 @@ carrying the benchmark.
 
 ### What the whole matrix costs to run
 
-All four FSx arms simultaneously come to **~$0.96/hr**. With the compute arms and
+All four FSx arms simultaneously come to **~$0.98/hr**. With the compute arms and
 endpoints, a full matrix run is on the order of **$1.50/hr**, and the protocol's
 three replications are hours, not days.
 

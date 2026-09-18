@@ -75,7 +75,7 @@ partly to tell them apart:
 | cost for 118 GB | +$0.0130/hr **per task** | +$0.0225/hr **flat** |
 | cost if the working set fits in 20 GiB | **free** | still +$0.0225/hr |
 
-(Prices: `results/pricing/20260910T155953Z-52175fd/`, on-demand, `ap-southeast-1`.)
+(Prices: `results/pricing/20260918T080950Z-c94ac10/`, on-demand, `ap-southeast-1`.)
 
 That third and fourth row change the economics rather than the design. A per-task
 cache pays the full cold-hydration cost every time a task starts, which is why

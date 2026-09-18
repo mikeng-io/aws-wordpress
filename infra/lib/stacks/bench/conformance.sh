@@ -100,6 +100,27 @@ else
     bad flock_excludes "could not take an exclusive lock at all"
 fi
 
+# --- is root actually root on this mount? ------------------------------------
+# NFS servers may map UID 0 to an anonymous user (root squash). OpenZFS's documented
+# default is root_squash and this study overrides it with no_root_squash; ONTAP's
+# FSx default superuser setting is NOT documented by AWS anywhere I could find. If
+# one tier squashes and another does not, the arms are not running as the same user
+# and every write op is being compared across different permission paths.
+#
+# This is checked rather than assumed precisely because the docs do not settle it.
+# Reported as its own line so the writeup can state it per tier either way.
+if [ "$(id -u)" != "0" ]; then
+    err root_not_squashed "not running as root, cannot assess squashing"
+else
+    printf 'x' > "$DIR/squash" 2>/dev/null
+    owner=$(stat -c %u "$DIR/squash" 2>/dev/null)
+    if [ "$owner" = "0" ]; then
+        ok root_not_squashed
+    else
+        bad root_not_squashed "root-created file is owned by uid $owner (squashed)"
+    fi
+fi
+
 # --- mtime moves on write ----------------------------------------------------
 # PHP's opcache revalidation is a stat-and-compare-mtime. A filesystem that does
 # not move mtime silently serves stale bytecode.

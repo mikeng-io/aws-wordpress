@@ -267,12 +267,16 @@ HOURS_PER_MONTH = 730  # AWS's own convention for converting monthly rates
 FSX_MINIMUM_CONFIGS = {
     "OpenZFS Single-AZ 1": {
         "storage_gib": 64,
-        "throughput_mbps": 64,
+        # 128, not the 64 MBps floor: AWS recommends at least 128 MBps for request-
+        # and metadata-intensive workloads because provisioned throughput sizes the
+        # file server's in-memory metadata cache, which is the thing E2 measures.
+        "throughput_mbps": 128,
         "storage_match": "per GB-Month for provisioned OpenZFS Single-AZ SSD storage",
         "throughput_match": "per MBps-Month for provisioned Single-AZ OpenZFS throughput capac",
         "floor_source": "https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/limits.html",
-        "note": "Min 64 GiB / 64 MBps. SINGLE_AZ_1 throughput steps start at 64; "
-                "SINGLE_AZ_2 and MULTI_AZ_1 start at 160.",
+        "note": "Floor is 64 GiB / 64 MBps, but provisioned at 128 MBps per AWS's "
+                "recommendation for metadata-intensive workloads. SINGLE_AZ_1 steps "
+                "start at 64; SINGLE_AZ_2 and MULTI_AZ_1 start at 160.",
     },
     "Lustre Scratch (SSD)": {
         "storage_gib": 1200,

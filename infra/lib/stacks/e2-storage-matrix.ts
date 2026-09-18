@@ -246,7 +246,19 @@ export class E2StorageMatrixStack extends ExperimentStack {
         storageType: 'SSD',
         openZfsConfiguration: {
           deploymentType: 'SINGLE_AZ_1',
-          throughputCapacity: 64,
+          // 128, not the 64 MBps floor. AWS: "Some request- or metadata-intensive
+          // workloads will also benefit from a larger file server in-memory cache...
+          // we recommend provisioning at least 128 MBps of throughput capacity for
+          // these types of workloads." This benchmark is ~3,900 stat() per request -
+          // it IS that workload, and provisioned throughput is what sizes the
+          // metadata cache being measured.
+          //
+          // NOT changed for the documented rsize cap (64 MBps caps rsize at 256 KiB,
+          // 128 MBps at 512 KiB). That cap cannot bind here: bench.c writes files of
+          // 2-50 KB, so the largest read is 5x under even the lowest cap. Raising
+          // throughput to "fix" rsize would have been cargo-cult.
+          // https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance.html
+          throughputCapacity: 128,
           rootVolumeConfiguration: {
             // no_root_squash: the benchmark container runs as root and would
             // otherwise be squashed to nobody, failing every write as a permission
@@ -254,6 +266,13 @@ export class E2StorageMatrixStack extends ExperimentStack {
             nfsExports: [{
               clientConfigurations: [{ clients: '*', options: ['rw', 'crossmnt', 'no_root_squash'] }],
             }],
+            // Pinned, not inherited. Compression materially changes read throughput,
+            // and a default that differs between tiers would be measured as a
+            // property of the filesystem. NONE keeps every tier comparing raw bytes.
+            dataCompressionType: 'NONE',
+            // sync (the default) is deliberately NOT overridden: async would give
+            // "substantially higher performance" by acknowledging writes before they
+            // are durable, which is a different guarantee, not a faster filesystem.
           },
         },
       });
@@ -307,6 +326,10 @@ export class E2StorageMatrixStack extends ExperimentStack {
           sizeInBytes: String(64 * 1024 * 1024 * 1024),
           securityStyle: 'UNIX',
           tieringPolicy: { name: 'NONE' },
+          // The default snapshot policy takes hourly, daily and weekly snapshots.
+          // Background I/O during a latency run is exactly the kind of noise that
+          // shows up as unexplained tail latency and cannot be attributed afterwards.
+          snapshotPolicy: 'none',
           // Required by the FSx API even though CDK's L1 types mark it optional -
           // omitting it fails the deploy with a BadRequest, not a synth error.
           //
