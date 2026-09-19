@@ -197,8 +197,30 @@ leaves an ordinary directory on the root volume, and the benchmark would have
 reported the root volume's latency under another tier's name. Given that EBS and
 instance store turn out to be indistinguishable, a failed instance-store mount would
 have produced *exactly the numbers reported here* and been undetectable in the data.
-The host was independently confirmed via SSM: `nvme1n1`, 109.9 G, XFS at
-`/mnt/instance-store`, separate device from the 30 G EBS root.
+
+> **Correction, 2026-09-19.** The sentence above originally continued "the `st_dev`
+> check in the entrypoint is what rules that out." That was wrong about the
+> mechanism. The check compared each mount against the **container's** `/`, and
+> inside a container `/` is an overlay mount with its own device id — so a
+> bind-mounted path never equals it, whether it is a real mount or a plain directory
+> on the host's root volume. Verified empirically: container `/` = 62, bind-mounted
+> plain host directory = 49. That branch was **inert for every bind-mounted tier.**
+>
+> What actually protected this run was the *other* half of the same check: `st_dev`
+> must be distinct **across tiers**. The `ebs` arm is deliberately anchored to the
+> host's root volume, so any tier that silently fell back to host root would have
+> collided with it and been caught. That is real protection, and it is why the
+> numbers here stand — but it was luck rather than design, and it evaporates the
+> moment `ebs` is not in the mount list.
+>
+> Independent of both: the host was confirmed directly via SSM — `nvme1n1`, 109.9 G,
+> XFS at `/mnt/instance-store`, a separate device from the 30 G EBS root. That
+> observation, not the container-side check, is the firm evidence for this run.
+>
+> Fixed for future runs: the host now writes its own root device number to a file
+> the container reads, so the comparison is against the host's root rather than the
+> container's. A malformed or empty file falls back with a loud warning instead of
+> passing silently — a case hit while testing the fix.
 
 Two collection bugs were found and fixed before this dataset:
 stdout transport silently truncated the third tier (12,060 log lines against

@@ -366,19 +366,6 @@ export class E2StorageMatrixStack extends ExperimentStack {
         // unmounted - they were ordinary directories on the root volume, writable,
         // and would have benchmarked as "FSx is as fast as EBS". A deployment that
         // cannot mount its arms is not a usable deployment, so cfn-signal must fail.
-        // Diagnostics BEFORE the fatal check, and to a bucket outside this stack.
-        // A rollback terminates the instance and deletes the stack's own bucket and
-        // log group, so a failed deploy previously destroyed the only evidence of
-        // why it failed. The CDK bootstrap bucket outlives the stack, which makes it
-        // the one durable place to put this.
-        `aws s3 cp /var/log/cloud-init-output.log s3://${diagnosticsBucketName}/e2-diagnostics/$(date -u +%Y%m%dT%H%M%SZ)-$(hostname)-cloud-init.log --only-show-errors || true`,
-        'findmnt -t nfs,nfs4,lustre -o TARGET,SOURCE,FSTYPE > /tmp/mounts.txt 2>&1 || true',
-        // mount.lustre reports "Invalid argument" for every cause, so the useful
-        // signal is in the ring buffer and in whether LNet can reach the servers.
-        '{ echo "--- dmesg lustre ---"; dmesg 2>&1 | grep -i -E "lustre|lnet" | tail -40; '
-          + 'echo "--- lnet ---"; lctl list_nids 2>&1; '
-          + `lctl ping ${'${LUSTRE_HOST:-}'} 2>&1; } >> /tmp/mounts.txt || true`,
-        `aws s3 cp /tmp/mounts.txt s3://${diagnosticsBucketName}/e2-diagnostics/$(date -u +%Y%m%dT%H%M%SZ)-$(hostname)-mounts.txt --only-show-errors || true`,
         'FSX_MOUNT_FAILURES=0',
         'for m in /mnt/fsx-openzfs /mnt/fsx-lustre /mnt/fsx-ontap; do',
         '  if [ "$(stat -c %d $m)" = "$(stat -c %d /)" ]; then',
@@ -431,6 +418,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
     // User data mounts EFS directly, so the mount target has to exist first.
     asg.node.addDependency(fileSystem.mountTargetsAvailable);
 
+    // Unconditional: the ERR trap above runs on every boot, FSx or not.
+    diagnosticsBucket.grantPut(asg.role);
+
     const capacityProvider = new ecs.AsgCapacityProvider(this, 'BlockBackedCapacityProvider', {
       autoScalingGroup: asg,
       enableManagedTerminationProtection: false,
@@ -446,8 +436,32 @@ export class E2StorageMatrixStack extends ExperimentStack {
     // The device is found by its stable by-id symlink rather than /dev/nvme1n1,
     // because NVMe enumeration order is not guaranteed and picking the wrong
     // device here would reformat the root volume.
+    // Diagnostics are installed FIRST and unconditionally, as an ERR trap.
+    //
+    // They used to live inside the FSx block and after the instance-store and EFS
+    // fatal assertions. That meant the bucket built to preserve evidence covered
+    // only FSx failures that happened after everything else had already succeeded -
+    // and covered nothing at all when includeFsx was false, which is the mode
+    // recommended for iterating on the apparatus. The two mount families that boot
+    // first were the ones with no evidence.
+    //
+    // As a trap on ERR, this fires wherever `set -e` aborts, so the failing step is
+    // always the last thing in the uploaded log.
     asg.addUserData(
       'set -euxo pipefail',
+      `DIAG_S3=s3://${diagnosticsBucketName}/e2-diagnostics`,
+      'dump_diagnostics() {',
+      '  local stamp; stamp=$(date -u +%Y%m%dT%H%M%SZ)-$(hostname)',
+      '  { echo "--- mounts ---"; findmnt -t nfs,nfs4,lustre,xfs,ext4 -o TARGET,SOURCE,FSTYPE 2>&1;',
+      '    echo "--- block devices ---"; lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINT 2>&1;',
+      '    echo "--- dmesg lustre/lnet ---"; dmesg 2>&1 | grep -i -E "lustre|lnet" | tail -40;',
+      '    echo "--- lnet nids ---"; lctl list_nids 2>&1;',
+      '    echo "--- lctl ping ---"; lctl ping "${LUSTRE_HOST:-}" 2>&1;',
+      '  } > /tmp/diag.txt 2>&1 || true',
+      '  aws s3 cp /var/log/cloud-init-output.log "$DIAG_S3/$stamp-cloud-init.log" --only-show-errors || true',
+      '  aws s3 cp /tmp/diag.txt "$DIAG_S3/$stamp-diag.txt" --only-show-errors || true',
+      '}',
+      'trap dump_diagnostics ERR EXIT',
       'INSTANCE_STORE_DEV=$(find /dev/disk/by-id -name "nvme-Amazon_EC2_NVMe_Instance_Storage_*" ! -name "*-part*" | sort | head -1)',
       'if [ -z "$INSTANCE_STORE_DEV" ]; then echo "no instance store device found" >&2; exit 1; fi',
       'mkfs.xfs -f "$INSTANCE_STORE_DEV"',
@@ -457,7 +471,21 @@ export class E2StorageMatrixStack extends ExperimentStack {
       'test "$(stat -c %d /mnt/instance-store)" != "$(stat -c %d /)"',
       'chmod 777 /mnt/instance-store /mnt/ebs-bench',
 
+      // The container's fail-closed mount check needs the HOST's root device number,
+      // and cannot derive it. Inside a container, `/` is an overlay mount with its
+      // own device id, so comparing a bind-mounted path against the CONTAINER's root
+      // never matches - whether that path is a real mount or a plain directory on
+      // the host's root volume. Verified empirically: container / = 62, bind-mounted
+      // plain host dir = 49. The check could not fire, for any bind-mounted tier.
+      //
+      // The host knows the answer, so the host writes it down and shares it.
+      'mkdir -p /mnt/host-facts',
+      'stat -c %d / > /mnt/host-facts/root-dev',
+      'chmod -R 755 /mnt/host-facts',
+
       // --- host-mounted EFS, the configuration ECS does not give you ---------
+      // (diagnostics for this block are installed unconditionally below, before any
+      // fatal assertion, so a failure here still leaves evidence)
       //
       // The ECS-managed efsVolumeConfiguration below mounts EFS once PER TASK,
       // each with its own NFS client and its own efs-proxy TLS process (E1
@@ -495,7 +523,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
         actions: ['fsx:DescribeStorageVirtualMachines', 'fsx:DescribeFileSystems'],
         resources: ['*'],
       }));
-      diagnosticsBucket.grantPut(asg.role);
+
     }
 
     // cfn-signal must be the LAST user-data line: addAsgCapacityProvider appends
@@ -520,6 +548,10 @@ export class E2StorageMatrixStack extends ExperimentStack {
     ec2TaskDefinition.addVolume({
       name: 'ebs',
       host: { sourcePath: '/mnt/ebs-bench' },
+    });
+    ec2TaskDefinition.addVolume({
+      name: 'host-facts',
+      host: { sourcePath: '/mnt/host-facts' },
     });
     // Bind mounts of the host's own EFS mounts. Pointed at a subdirectory rather
     // than the filesystem root so the two arms cannot collide on the same paths.
@@ -584,6 +616,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
     ] as const) {
       ec2Container.addMountPoints({ containerPath, sourceVolume, readOnly: false });
     }
+    ec2Container.addMountPoints({
+      containerPath: '/bench/host-facts', sourceVolume: 'host-facts', readOnly: true,
+    });
     if (props.includeFsx) {
       for (const [containerPath, sourceVolume] of [
         ['/bench/fsx-openzfs', 'fsx-openzfs'],

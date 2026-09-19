@@ -28,12 +28,33 @@ fi
 # landing there gets captured into the caller's variable instead of being read.
 log() { echo "[$(date -u +%H:%M:%S)] $*" >&2; }
 
+# FSx takes a FINAL BACKUP when a file system or volume is deleted, and that backup
+# is NOT a CloudFormation resource: `cdk destroy` reports success and leaves it
+# billing indefinitely. Seven of them accumulated across four failed deploy cycles
+# before anyone looked, and every teardown check up to that point had reported the
+# account clean because none of them queried describe-backups.
+#
+# Both OpenZFS file systems and ONTAP volumes do this. There is no SkipFinalBackup
+# equivalent exposed through CloudFormation for AWS::FSx::Volume, so it cannot be
+# turned off in the stack - it has to be swept afterwards.
+sweep_fsx_backups() {
+    local ids
+    ids=$(aws fsx describe-backups --region "$REGION" --query 'Backups[].BackupId' --output text 2>/dev/null || true)
+    [ -z "$ids" ] && return 0
+    for b in $ids; do
+        log "  deleting orphaned FSx backup $b"
+        aws fsx delete-backup --region "$REGION" --backup-id "$b" >/dev/null 2>&1 || true
+    done
+}
+
 destroy() {
     log "destroying $STACK"
     (cd "$REPO/infra" && ./node_modules/.bin/cdk destroy "$STACK" --force) || {
         echo "TEARDOWN FAILED - check the console, this is billing now" >&2
         exit 2
     }
+    log "sweeping FSx final backups (not CloudFormation resources)"
+    sweep_fsx_backups
 }
 
 # An ECS task id is 32 hex characters. Anything else means the capture picked up
@@ -100,11 +121,24 @@ collect_arm() {
         if [ ! -s "$dest/$tier.csv" ]; then
             echo "FATAL: arm $arm declared tier '$tier' but its CSV is missing or empty" >&2
             missing=1
+        elif [ ! -s "$dest/$tier.conformance.csv" ]; then
+            # H6 makes the conformance gate a precondition for a tier's latency number
+            # meaning anything. A missing gate result must fail here for the same
+            # reason a missing CSV does, rather than surface during analysis.
+            echo "FATAL: arm $arm tier '$tier' has no conformance result" >&2
+            missing=1
         else
             # No header row - bench writes bare "op,ns" lines, so every line is an op.
-            log "  $arm/$tier: $(wc -l < "$dest/$tier.csv" | tr -d ' ') ops"
+            conf=$(grep -c ',FAIL' "$dest/$tier.conformance.csv" || true)
+            log "  $arm/$tier: $(wc -l < "$dest/$tier.csv" | tr -d ' ') ops, conformance failures: $conf"
         fi
     done < "$dest/manifest.txt"
+    if [ ! -s "$dest/mount-facts.csv" ]; then
+        echo "FATAL: arm $arm has no mount-facts.csv - the negotiated mount options," >&2
+        echo "       run order, MTU and kernel are the evidence that the tiers are" >&2
+        echo "       comparable. Without it the comparison is asserted, not measured." >&2
+        missing=1
+    fi
     [ "$missing" -eq 0 ] || exit 1
 }
 

@@ -19,7 +19,31 @@ set -euo pipefail
 # CSV, so it is checked here rather than trusted: st_dev must be distinct across
 # every named mount, and no mount may share st_dev with /.
 declare -A seen_dev
-root_dev=$(stat -c %d /)
+
+# The HOST's root device, written by the host because the container cannot work it
+# out. Inside a container `/` is an overlay mount with its own device id, so
+# comparing a bind-mounted path against the CONTAINER's root never matches - for a
+# real mount or a silently-failed one alike. Verified: container / = 62, bind-mounted
+# plain host dir = 49. This check was therefore inert for every bind-mounted tier,
+# and what actually caught failures was the st_dev collision test below, because the
+# 'ebs' arm is deliberately anchored to the host root. That was luck, not design: it
+# evaporates the moment 'ebs' is not in the mount list.
+host_root_dev=$(cat /bench/host-facts/root-dev 2>/dev/null || true)
+# Must be a non-empty integer. An empty or malformed file would otherwise compare
+# equal to nothing and let every tier through - a check that passes because it is
+# broken is worse than no check, and this exact case was hit while testing.
+if printf '%s' "$host_root_dev" | grep -qE '^[0-9]+$'; then
+    root_dev=$host_root_dev
+    echo "host root device (from host): $root_dev"
+else
+    root_dev=$(stat -c %d /)
+    # Fargate has no host to ask, and its tiers are the task's own writable layer
+    # plus EFS - neither is a host bind mount - so the container's own root is the
+    # right reference there. On EC2 this fallback means the check is weaker than it
+    # looks, so it says so rather than passing quietly.
+    echo "WARNING: no host root-dev provided; using container root ($root_dev)." >&2
+    echo "         Bind-mounted tiers cannot be checked against the host root." >&2
+fi
 for pair in $BENCH_MOUNTS; do
     name="${pair%%=*}"; path="${pair#*=}"
     mkdir -p "$path"
