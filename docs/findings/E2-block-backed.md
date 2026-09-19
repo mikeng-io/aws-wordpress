@@ -127,6 +127,53 @@ block device with a local filesystem on it — which every compute platform alre
 has, Fargate included. The two-substrate table in E4's README should be read as
 one substrate with two price tags.
 
+## Correction: the mount-option parity claim was asserted, not measured
+
+**Added 2026-09-19 after an independent audit.** This writeup says the six EFS
+configurations differ only in mount topology and transit encryption. That was read
+off the CDK source. It was never read off the running mounts, because the apparatus
+did not capture negotiated mount options until 2026-09-18 — eight days after both
+runs. Neither result directory contains a `mount-facts.csv`; I checked.
+
+The repo's own rule is that a client can request `rsize=1048576` and be silently
+given less, which is exactly why that capture exists. For these two runs the claim
+rests on intent rather than observation, and it is marked as such here rather than
+left to look verified.
+
+**What does support it, mechanistically.** ECS's `efsVolumeConfiguration` on the EC2
+launch type requires `amazon-efs-utils` and the `amazon-ecs-volume-plugin` on the
+host — it invokes the **same mount helper binary** as the hand-written host mounts,
+not a separate client
+([ECS EFS volumes](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/efs-volumes.html)).
+And the options written by hand for `efs_host_plain` are a verbatim match for that
+helper's documented defaults
+([mount helper settings](https://docs.aws.amazon.com/efs/latest/ug/mount-helper-setting.html)).
+So the container-direct vs host-mount null is not merely an empirical tie — it is
+the expected outcome of both paths driving the same client. That is a stronger
+statement than the original writeup made.
+
+**What remains unverified.** Fargate's EFS path runs through an opaque supervisor
+container that AWS does not document at the mount-option level, and there is no host
+to inspect. The two Fargate arms' option parity is plausible and untested.
+
+## A mechanism this writeup got right for an incomplete reason
+
+The bimodal EFS `stat` is attributed above to the NFS attribute cache. That is
+correct, and it is now known to be the *only* available mechanism: **EFS cannot
+grant NFSv4 delegations at all** — `OPEN` always returns `OPEN_DELEGATE_NONE`
+([EFS quotas](https://docs.aws.amazon.com/efs/latest/ug/limits.html)). So the fast
+cluster can only be timer-based attribute caching racing the benchmark's loop.
+
+This matters for what comes next rather than for what is above. FSx for OpenZFS
+**does** support NFSv4 read delegations
+([OpenZFS performance](https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance.html)),
+under which a client answers `stat` locally with no round trip *and* without waiting
+on a cache timer. If OpenZFS shows a larger fast cluster than EFS, that is a protocol
+capability difference, not "OpenZFS is faster", and the FSx writeup must say so.
+Delegation counters are now captured per tier so the distinction is measurable
+instead of arguable. ONTAP's delegation support is not documented by AWS either way
+and is recorded as unverified.
+
 ## Threats to validity
 
 - **The working set fits in page cache.** 20 dirs × 50 files at 2–50 KB is ~50 MB

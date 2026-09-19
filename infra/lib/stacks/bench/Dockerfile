@@ -13,7 +13,7 @@ FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 # util-linux-core supplies flock(1); without it the conformance gate reports a
 # missing tool as a filesystem defect, which is the exact misattribution it
 # exists to prevent.
-RUN dnf install -y gcc awscli-2 util-linux-core && dnf clean all
+RUN dnf install -y gcc awscli-2 util-linux-core nfs-utils && dnf clean all
 
 COPY bench.c /src/bench.c
 RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c

@@ -53,6 +53,40 @@ done
 # that Mountpoint-S3 fails here rather than on latency - so the gate records the
 # verdict and the benchmark still runs, letting the writeup say both what it
 # scored and why the score does not count.
+# --- run order -----------------------------------------------------------------
+#
+# Tiers were previously benchmarked in a fixed order, with the FSx arms always last.
+# That makes tier identity perfectly collinear with sequence position: any monotonic
+# drift over the run - CPU frequency settling, interrupt coalescing, thermals - lands
+# entirely on whichever tiers run late and never on the ones that run early. With a
+# 600x effect that does not matter; the FSx-vs-EFS comparisons are expected to be
+# much closer, where a systematic few percent could change a conclusion.
+#
+# So the order is shuffled per task and the ACTUAL order is recorded. Across the
+# protocol's three independent replications that decorrelates position from tier.
+if [ "${BENCH_SHUFFLE:-1}" = "1" ]; then
+    BENCH_MOUNTS=$(printf '%s\n' $BENCH_MOUNTS | shuf | tr '\n' ' ')
+fi
+echo "run order: $BENCH_MOUNTS"
+i=0
+for pair in $BENCH_MOUNTS; do
+    i=$((i + 1)); echo "order,${pair%%=*},$i" >> /tmp/mount-facts.csv
+done
+
+# --- client-side facts that were previously assumed equal across tiers ----------
+# Kernel: the EC2 host records its own, but nothing recorded Fargate's, so the claim
+# that every arm shares attribute-cache timer defaults was unverified there.
+# MTU: FSx ENIs default to 9001. A 50 KB read is ~34 frames at 1500 against ~6 at
+# 9001, so a mismatch is not negligible for open+read even though stat moves no
+# payload. Capability is documented; the configured value is not, so it is read.
+{
+  echo "kernel,$(uname -r)"
+  for nic in /sys/class/net/*/mtu; do
+      [ -e "$nic" ] || continue
+      echo "mtu,$(basename "$(dirname "$nic")"),$(cat "$nic" 2>/dev/null || echo '?')"
+  done
+} >> /tmp/mount-facts.csv
+
 # What the mount ACTUALLY negotiated, not what was requested. A client can ask for
 # rsize=1048576 and be silently given 262144 by a server with less memory; the
 # request is in the CDK, the negotiated value is only here. Recorded per tier so any
@@ -64,6 +98,26 @@ for pair in $BENCH_MOUNTS; do
     fstype=$(stat -f -c %T "$path" 2>/dev/null || echo "-")
     echo "mount,$name,$fstype,$src,$opts" >> /tmp/mount-facts.csv
 done
+# NFSv4 read delegations are a capability difference between tiers, not a speed
+# difference, and they are easy to mistake for one. EFS documents that OPEN always
+# returns OPEN_DELEGATE_NONE - it cannot grant a delegation at all - while FSx for
+# OpenZFS documents that it can. Under a delegation a client may answer stat/open
+# locally with no wire round trip AND without waiting on an attribute-cache timer,
+# which is exactly the "fast cluster" this study reports. If one tier can do that and
+# another cannot, a difference in fast-cluster share is a protocol capability, and
+# the writeup has to say so rather than let it read as "this filesystem is faster".
+#
+# Counters are recorded before and after the benchmark so the delta is attributable.
+# https://docs.aws.amazon.com/efs/latest/ug/limits.html
+# https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance.html
+snapshot_nfs_counters() {
+    { echo "=== nfs counters ($1) ==="
+      nfsstat -c 2>/dev/null || echo "(nfsstat unavailable)"
+      grep -E "^device|deleg" /proc/self/mountstats 2>/dev/null | head -80
+    } >> /tmp/nfs-counters.txt 2>&1 || true
+}
+snapshot_nfs_counters before
+
 echo "negotiated mount facts:"; cat /tmp/mount-facts.csv
 
 for pair in $BENCH_MOUNTS; do
@@ -85,6 +139,8 @@ for pair in $BENCH_MOUNTS; do
     echo "$name done, $(wc -l < "/tmp/$name.csv") ops"
 done
 
+snapshot_nfs_counters after
+
 # Results go to S3, not stdout.
 #
 # stdout was the original transport and it does not scale: the awslogs driver emits
@@ -104,6 +160,7 @@ if [ -n "${BENCH_S3_BUCKET:-}" ]; then
     # A manifest the collector checks against, so a missing tier is caught at
     # collection time rather than discovered during analysis.
     aws s3 cp /tmp/mount-facts.csv "s3://$BENCH_S3_BUCKET/$arm/mount-facts.csv" --only-show-errors
+    aws s3 cp /tmp/nfs-counters.txt "s3://$BENCH_S3_BUCKET/$arm/nfs-counters.txt" --only-show-errors || true
     for pair in $BENCH_MOUNTS; do echo "${pair%%=*}"; done \
         | aws s3 cp - "s3://$BENCH_S3_BUCKET/$arm/manifest.txt" --only-show-errors
     echo "all tiers uploaded"
