@@ -10,18 +10,54 @@
 # trap CLAUDE.md names is forgetting, not spending.
 #
 # Usage:  ./collect.sh [replications]     (default 3, per the protocol)
+#
+# Pausing between replications, for a human check of replication 1 before paying
+# for 2 and 3:
+#   STOP_AFTER_REP=1 ./collect.sh 3              stops cleanly after rep-1 (stack destroyed)
+#   RESUME_RUN_ID=<run-id> ./collect.sh 3        continues the SAME run at rep-2
+# Resuming keeps every replication of a run in one directory, which is what the
+# graders read. Two separate runs of 1 and 2 replications would each be too small to
+# grade. Pausing costs nothing: the stack is torn down after every replication.
 set -euo pipefail
 
 REPS="${1:-3}"
 STACK="E2-StorageMatrix-dev"
 REGION="${AWS_DEFAULT_REGION:-ap-southeast-1}"
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
-RUN_ID="$(date -u +%Y%m%dT%H%M%SZ)-$(git -C "$REPO" rev-parse --short HEAD)"
-OUT_ROOT="$REPO/results/E2/$RUN_ID"
+STOP_AFTER_REP="${STOP_AFTER_REP:-0}"
+START_REP=1
 
-if [ -e "$OUT_ROOT" ]; then
-    echo "run $RUN_ID already exists - results are immutable, refusing" >&2
-    exit 1
+if [ -n "${RESUME_RUN_ID:-}" ]; then
+    RUN_ID="$RESUME_RUN_ID"
+    OUT_ROOT="$REPO/results/E2/$RUN_ID"
+    [ -d "$OUT_ROOT" ] || { echo "FATAL: no run $RUN_ID to resume" >&2; exit 1; }
+    # Resume after the last COMPLETE replication. A rep directory without meta.json
+    # is a replication that died partway; its files are evidence, and writing a new
+    # attempt over them would destroy it - so that refuses rather than guesses.
+    while [ -f "$OUT_ROOT/rep-$START_REP/meta.json" ]; do START_REP=$((START_REP + 1)); done
+    if [ -e "$OUT_ROOT/rep-$START_REP" ]; then
+        echo "FATAL: $RUN_ID/rep-$START_REP exists but is incomplete - investigate, do not resume over it" >&2
+        exit 1
+    fi
+    # Every replication of one run must come from the same apparatus. Results, docs
+    # and this experiment's README may change between replications (committing
+    # rep-1 and noting what it showed); nothing that measures or collects may.
+    RUN_SHA=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["git_sha"])' "$OUT_ROOT/rep-1/meta.json")
+    if ! git -C "$REPO" diff --quiet "$RUN_SHA" HEAD -- . ':!results' ':!docs' \
+            ':!experiments/E2-storage-matrix/README.md'; then
+        echo "FATAL: apparatus changed since $RUN_ID started at $RUN_SHA - that is a new run, not a resume" >&2
+        git -C "$REPO" diff --stat "$RUN_SHA" HEAD -- . ':!results' ':!docs' \
+            ':!experiments/E2-storage-matrix/README.md' >&2
+        exit 1
+    fi
+    [ "$START_REP" -le "$REPS" ] || { echo "run $RUN_ID already has $REPS replications" >&2; exit 1; }
+else
+    RUN_ID="$(date -u +%Y%m%dT%H%M%SZ)-$(git -C "$REPO" rev-parse --short HEAD)"
+    OUT_ROOT="$REPO/results/E2/$RUN_ID"
+    if [ -e "$OUT_ROOT" ]; then
+        echo "run $RUN_ID already exists - results are immutable, refusing" >&2
+        exit 1
+    fi
 fi
 
 # The first `aws` on PATH is not necessarily a working v2. On the study's own
@@ -265,7 +301,7 @@ collect_arm() {
     [ "$missing" -eq 0 ] || exit 1
 }
 
-for rep in $(seq 1 "$REPS"); do
+for rep in $(seq "$START_REP" "$REPS"); do
     log "=== replication $rep/$REPS ==="
     REP_DIR="$OUT_ROOT/rep-$rep"
     mkdir -p "$REP_DIR"
@@ -366,6 +402,12 @@ META
 
     destroy
     log "replication $rep complete -> results/E2/$RUN_ID/rep-$rep"
+
+    if [ "$rep" -eq "$STOP_AFTER_REP" ] && [ "$rep" -lt "$REPS" ]; then
+        log "STOPPED after replication $rep as asked. Stack destroyed, nothing billing."
+        log "resume with: RESUME_RUN_ID=$RUN_ID ./experiments/E2-storage-matrix/scripts/collect.sh $REPS"
+        exit 0
+    fi
 done
 
 log "all $REPS replications complete: results/E2/$RUN_ID"
