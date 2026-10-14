@@ -544,6 +544,42 @@ The stale hourly figures in the `Makefile` and `apparatus.ts` are corrected to
   launched in a way that survives the terminal closing. If the laptop sleeps
   mid-replication, the stack stays up with nothing tearing it down.
 
+### Attempt log
+
+**`results/E2/20261014T193521Z-7551243`: failed at the mount check, no
+measurements.** Deploy 19:35 → teardown verified 20:16 UTC, ~41 min, ~$0.65.
+- **Cause:** the EC2 task exited 1 about 80 s after starting. Reproduced locally:
+  the entrypoint rejected `ebs` as "did not mount". The EBS tier is a plain
+  directory on the host root *by design*. `ebs` was missing from the root-device
+  exemptions, which went unnoticed while that check was inert. The 2026-09-19 audit
+  made it live, and it fired here. Fixed by checking that `ebs` *is* on the host
+  root, rather than exempting it. All four cases were tested in the image.
+- **The evidence was lost, and that is fixed too.** `collect.sh` printed the task
+  log to stdout inside a function whose stdout is captured as the task ID, and the
+  log group is deleted with the stack. Task logs are now saved into the replication
+  directory, success or not.
+- **What worked, verified independently of the script:**
+  - Teardown and the scoped sweep worked on real FSx: two final backups were deleted
+    and nothing was left in the account.
+  - The FSx provenance capture confirmed Lustre 2.15 and OpenZFS and ONTAP at
+    128 MBps.
+- **What it found:** OpenZFS and ONTAP were built with automatic daily backups ON
+  (the API default: 30 days, daily windows at 20:30 and 18:30 UTC). A complete
+  replication would have put OpenZFS's backup in the middle of the benchmark. Now
+  `automaticBackupRetentionDays: 0` on both, verified in the synthesized template.
+- **Still unchecked: whether a final backup inherits `CopyTagsToBackups`.** The
+  sweep deleted both without recording why they matched. It now logs `matched by
+  id`, `tag` or `id+tag`. The tag index showed an automatic OpenZFS backup carrying
+  the copied tags, so tag copying works for automatic backups at least.
+- **A threat that remains:** each FSx file system gets a weekly 30-minute
+  maintenance window, assigned at random. It cannot be disabled. It is recorded in
+  `fsx-provenance.json`, so a replication that overlaps one can be identified
+  afterwards rather than explained away.
+
+This run directory is kept as the record of a failed attempt and is never graded:
+its `rep-1` has no `meta.json`, so it cannot be resumed or analysed as a run.
+Collection restarts as a new run, because the apparatus changed.
+
 ### Run order
 
 1. **`make e2 REPS=3`.** Each replication is an independent deploy → EC2 arm (block,

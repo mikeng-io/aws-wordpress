@@ -126,7 +126,9 @@ capture_fsx_ids() {
 }
 
 # Backups that are ours, by source ID or by tag, in any lifecycle except DELETED.
-# Prints "id lifecycle" per line.
+# Prints "id lifecycle match" per line, match being id, tag or id+tag. The match is
+# logged because whether a FINAL backup inherits CopyTagsToBackups is undocumented,
+# and the sweep is the one place that sees those backups before they are deleted.
 our_backups() {
     aws fsx describe-backups --region "$REGION" --output json \
       | python3 -c '
@@ -139,7 +141,8 @@ for b in json.load(sys.stdin)["Backups"]:
     tags = {t["Key"]: t["Value"] for t in b.get("Tags", [])}
     tagged = tags.get("Study") == "aws-wordpress" and tags.get("Experiment") == "E2"
     if (src & ids) or tagged:
-        print(b["BackupId"], b["Lifecycle"])
+        match = "+".join(m for m, hit in (("id", bool(src & ids)), ("tag", tagged)) if hit)
+        print(b["BackupId"], b["Lifecycle"], match)
 ' "$FSX_SOURCE_IDS"
 }
 
@@ -157,9 +160,9 @@ sweep_fsx_backups() {
             [ "$empty_seen" -ge 2 ] && { log "  no FSx backups from this stack remain"; return 0; }
         else
             empty_seen=0
-            while read -r id lifecycle; do
+            while read -r id lifecycle match; do
                 if [ "$lifecycle" = "AVAILABLE" ] || [ "$lifecycle" = "FAILED" ]; then
-                    log "  deleting FSx backup $id ($lifecycle)"
+                    log "  deleting FSx backup $id ($lifecycle, matched by $match)"
                     aws fsx delete-backup --region "$REGION" --backup-id "$id" >/dev/null \
                         || log "  delete of $id refused, will retry"
                 else
@@ -234,10 +237,16 @@ run_task() {
     reason=$(aws ecs describe-tasks --region "$REGION" --cluster "$CLUSTER" --tasks "$task_arn" \
         --query 'tasks[0].stoppedReason' --output text)
     log "  $arm exit=$exit_code ($reason)"
+    # The task's log is saved into the replication, success or not. The log group
+    # dies with the stack, so this is the only copy - and the first FSx replication
+    # failed with nothing to read, because this line used to write to stdout, which
+    # the caller captures as the task id, so the evidence went into a variable.
+    aws logs tail "$LOG_GROUP" --region "$REGION" --log-stream-name-prefix "$prefix" --since 1h \
+        > "$REP_DIR/$arm.task.log" 2>&1 || log "  could not fetch $arm task log"
     if [ "$exit_code" != "0" ]; then
         # The entrypoint fails closed when a mount did not take. That is a real
         # result about the apparatus, not a flake to retry around.
-        aws logs tail "$LOG_GROUP" --region "$REGION" --log-stream-name-prefix "$prefix" --since 10m || true
+        tail -40 "$REP_DIR/$arm.task.log" >&2 || true
         echo "$arm task failed - not collecting a result from a failed mount check" >&2
         return 1
     fi

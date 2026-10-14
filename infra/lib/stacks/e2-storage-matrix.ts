@@ -265,6 +265,13 @@ export class E2StorageMatrixStack extends ExperimentStack {
           // ID, in an account shared with unrelated projects. Whether a FINAL backup
           // inherits these tags is not documented; replication 1 checks it.
           copyTagsToBackups: true,
+          // Automatic daily backups OFF. The default is ON with 30-day retention and
+          // a randomly assigned daily window - observed at 20:30 UTC on the first FSx
+          // replication, which would have landed mid-benchmark had it run to the end.
+          // A backup during a latency run is unattributable background I/O on the
+          // tier being timed: the same reason ONTAP's snapshotPolicy is 'none'.
+          // https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-properties-fsx-filesystem-openzfsconfiguration.md
+          automaticBackupRetentionDays: 0,
           rootVolumeConfiguration: {
             // no_root_squash: the benchmark container runs as root and would
             // otherwise be squashed to nobody, failing every write as a permission
@@ -316,6 +323,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
           deploymentType: 'SINGLE_AZ_1',
           throughputCapacity: 128,
           preferredSubnetId: subnetId,
+          // Off for the same reason as OpenZFS's: the default (30 days, daily window
+          // observed at 18:30 UTC) puts backup I/O on the tier during a run.
+          automaticBackupRetentionDays: 0,
         },
       });
       const svm = new fsx.CfnStorageVirtualMachine(this, 'FsxOntapSvm', {

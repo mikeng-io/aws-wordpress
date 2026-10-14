@@ -36,6 +36,7 @@ if printf '%s' "$host_root_dev" | grep -qE '^[0-9]+$'; then
     root_dev=$host_root_dev
     echo "host root device (from host): $root_dev"
 else
+    host_root_dev=""
     root_dev=$(stat -c %d /)
     # Fargate has no host to ask, and its tiers are the task's own writable layer
     # plus EFS - neither is a host bind mount - so the container's own root is the
@@ -48,11 +49,30 @@ for pair in $BENCH_MOUNTS; do
     name="${pair%%=*}"; path="${pair#*=}"
     mkdir -p "$path"
     dev=$(stat -c %d "$path")
-    if [ "$dev" = "$root_dev" ] && [ "$name" != "ephemeral" ] && [ "$name" != "root" ]; then
-        echo "FATAL: $name ($path) is on the root filesystem (st_dev=$dev)." >&2
-        echo "       It did not mount. Refusing to report the root volume as $name." >&2
-        exit 1
-    fi
+    case "$name" in
+        ephemeral|root)
+            # The task's own writable layer IS the tier measured; nothing to check.
+            ;;
+        ebs)
+            # The EBS tier is the host's root volume ON PURPOSE: /mnt/ebs-bench is a
+            # plain directory on it. So the check is inverted, not skipped - it must
+            # BE on the host root. Until 2026-10-15 'ebs' was missing from the exempt
+            # list above, which went unnoticed while the root-dev comparison was inert
+            # and failed the first FSx replication the moment it was made live.
+            if [ -n "$host_root_dev" ] && [ "$dev" != "$root_dev" ]; then
+                echo "FATAL: ebs ($path) is not on the host root volume (st_dev=$dev, root=$root_dev)." >&2
+                echo "       Refusing to report another device as EBS." >&2
+                exit 1
+            fi
+            ;;
+        *)
+            if [ "$dev" = "$root_dev" ]; then
+                echo "FATAL: $name ($path) is on the root filesystem (st_dev=$dev)." >&2
+                echo "       It did not mount. Refusing to report the root volume as $name." >&2
+                exit 1
+            fi
+            ;;
+    esac
     if [ -n "${seen_dev[$dev]:-}" ]; then
         echo "FATAL: $name ($path) shares st_dev=$dev with ${seen_dev[$dev]}." >&2
         echo "       Two arms are the same device. Refusing to report them as distinct." >&2
