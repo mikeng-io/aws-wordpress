@@ -53,6 +53,24 @@ e0: ## E0 syscall census - local Docker, no AWS, no cost
 e2: ## E2 storage matrix - deploys, runs both arms, collects, DESTROYS. ~$0.96/hr while up
 	@set -a; . ./.env; set +a; ./experiments/E2-storage-matrix/scripts/collect.sh $(REPS)
 
+# The same collection, from the pinned runner image rather than the workstation's
+# toolchain. infra/node_modules is shadowed by a named volume so the container's
+# Linux dependencies never overwrite the host's macOS ones. Runs detached, so it
+# survives the terminal closing; follow it with `docker logs -f e2-run`.
+# Pause/resume pass straight through: STOP_AFTER_REP=1, RESUME_RUN_ID=<run-id>.
+.PHONY: runner
+runner: ## Build the pinned deploy/collect runner image (Node 22.17, AWS CLI v2, Docker CLI)
+	docker build -t aws-wordpress-runner infra/runner
+
+.PHONY: e2-container
+e2-container: runner ## E2 from the runner container, detached. Same cost and teardown as `make e2`
+	docker run -d --name e2-run \
+	  -v /var/run/docker.sock:/var/run/docker.sock \
+	  -v "$$PWD":/repo -v aws-wordpress-node-modules:/repo/infra/node_modules \
+	  -e STOP_AFTER_REP="$(STOP_AFTER_REP)" -e RESUME_RUN_ID="$(RESUME_RUN_ID)" \
+	  aws-wordpress-runner \
+	  bash -c 'cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e2 REPS=$(or $(REPS),3)'
+
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results
 	@python3 analysis/e2_chart.py $$(ls -d results/E2/*/ | tail -1)
