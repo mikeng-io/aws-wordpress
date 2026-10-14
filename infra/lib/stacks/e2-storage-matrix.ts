@@ -259,6 +259,12 @@ export class E2StorageMatrixStack extends ExperimentStack {
           // throughput to "fix" rsize would have been cargo-cult.
           // https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance.html
           throughputCapacity: 128,
+          // FSx takes a final backup on delete, and CloudFormation cannot turn that
+          // off, so collect.sh sweeps it. Copying tags means that backup carries
+          // Study/Experiment and the sweep can match it by tag as well as by source
+          // ID, in an account shared with unrelated projects. Whether a FINAL backup
+          // inherits these tags is not documented; replication 1 checks it.
+          copyTagsToBackups: true,
           rootVolumeConfiguration: {
             // no_root_squash: the benchmark container runs as root and would
             // otherwise be squashed to nobody, failing every write as a permission
@@ -338,6 +344,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
           // filesystem, and the benchmark tree is highly compressible small files,
           // which is exactly the shape that would flatter it.
           storageEfficiencyEnabled: 'false',
+          // Same reason as OpenZFS's copyTagsToBackups: lets the final backup be
+          // matched by tag. A string, like storageEfficiencyEnabled, in the L1 type.
+          copyTagsToBackups: 'true',
         },
       });
 
@@ -601,6 +610,13 @@ export class E2StorageMatrixStack extends ExperimentStack {
           'efs_host_tls=/bench/efs-host-tls', 'efs_host_plain=/bench/efs-host-plain',
           ...fsxMounts,
         ].join(' '),
+        // The seven tiers prediction 1 ranks, minus Fargate's one. efs_host_plain
+        // is the EFS configuration on the same client path as FSx: host mount, no
+        // TLS, bind-mounted in. See the README's "Prediction 1" section.
+        BENCH_THROUGHPUT: [
+          'instance_store', 'ebs', 'efs_host_plain',
+          ...(props.includeFsx ? ['fsx_openzfs', 'fsx_lustre', 'fsx_ontap'] : []),
+        ].join(' '),
         BENCH_S3_BUCKET: resultsBucket.bucketName,
         BENCH_ARM: 'ec2',
       },
@@ -658,6 +674,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
         // 'ephemeral' is exempt from the entrypoint's root-filesystem check by
         // design: on Fargate the task's own writable layer IS the tier measured.
         BENCH_MOUNTS: 'ephemeral=/bench/ephemeral efs=/bench/efs efs_plain=/bench/efs-plain',
+        BENCH_THROUGHPUT: 'ephemeral',
         BENCH_S3_BUCKET: resultsBucket.bucketName,
         BENCH_ARM: 'fargate',
       },

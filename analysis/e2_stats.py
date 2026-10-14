@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""E2 storage matrix: per-tier latency statistics, and a verdict on prediction 5.
+"""E2 storage matrix: per-tier latency statistics, and verdicts on predictions 1, 3 and 5.
 
 Reads results/E2/<run-id>/rep-*/<arm>/<tier>.csv and writes summary.json plus a
 markdown table. Same statistical choices as E3 (see docs/benchmark-protocol.md):
@@ -14,6 +14,11 @@ answered by the kernel's dentry cache without reaching a device - and SEPARATE o
 the device-touching ops. This script decides that mechanically rather than by
 eyeballing the table, because a prediction that gets graded by its own author after
 seeing the numbers is not a prediction.
+
+Predictions 1 and 3 are graded by rules fixed in the same README on 2026-10-15,
+before any FSx or throughput data existed ("Prediction 1: the throughput
+measurement", and the sharpened kill conditions). The constants below are those
+rules transcribed, not tuned.
 
 Usage:  python3 analysis/e2_stats.py results/E2/<run-id>
 """
@@ -43,6 +48,11 @@ CACHE_ANSWERED_OPS = ["stat"]
 # assembled ad hoc after seeing the data. Each is (label, tier_a, tier_b): the
 # question is always "does this axis move anything", so the expected answer for all
 # of them is TIE and a SEPARATED verdict would be the interesting one.
+# The FSx pairs were added 2026-10-15, before any FSx data existed. Unlike the EFS
+# pairs they carry no expected verdict: whether a server-backed tier other than EFS
+# moves stat is the open question, and the comparison is reported either way.
+# efs_host_plain is the ruler because it is the same client path as FSx: host
+# mount, no TLS, bind-mounted into the container.
 DECLARED_COMPARISONS = [
     ("device: attached NVMe vs network block", "ec2/instance_store", "ec2/ebs"),
     ("TLS cost, container-direct (EC2)", "ec2/efs", "ec2/efs_plain"),
@@ -51,7 +61,28 @@ DECLARED_COMPARISONS = [
     ("mount topology, TLS held", "ec2/efs", "ec2/efs_host_tls"),
     ("mount topology, plain held", "ec2/efs_plain", "ec2/efs_host_plain"),
     ("compute type, direct+TLS held", "ec2/efs", "fargate/efs"),
+    ("server: FSx OpenZFS vs EFS", "ec2/fsx_openzfs", "ec2/efs_host_plain"),
+    ("server: FSx ONTAP vs EFS", "ec2/fsx_ontap", "ec2/efs_host_plain"),
+    ("server: FSx Lustre vs EFS", "ec2/fsx_lustre", "ec2/efs_host_plain"),
+    ("NFS server, OpenZFS vs ONTAP", "ec2/fsx_openzfs", "ec2/fsx_ontap"),
 ]
+
+# --- prediction 3 -------------------------------------------------------------------
+BLOCK_TIERS = ["ec2/instance_store", "ec2/ebs", "fargate/ephemeral"]
+P3_MIN_FACTOR = 10.0   # "within one order of magnitude" refutes
+
+# --- prediction 1 -------------------------------------------------------------------
+# The seven tiers ranked, the metric, and the thresholds - all from the README.
+P1_TIERS = [
+    "ec2/instance_store", "ec2/ebs", "fargate/ephemeral", "ec2/efs_host_plain",
+    "ec2/fsx_openzfs", "ec2/fsx_lustre", "ec2/fsx_ontap",
+]
+P1_STREAMS = 4                 # graded metric: 4-stream read MB/s
+P1_AGREE_MIN_RHO = 0.7
+P1_DIFFER_MAX_RHO = 0.3
+P1_MAX_RESIDENT_PCT = 1.0      # a read phase starting above this measured RAM
+P1_MIN_EVALUABLE_REPS = 3
+P1_LUSTRE_MIN_RANK_GAP = 2
 COMPARISON_OPS = ["stat", "open_read", "create", "unlink"]
 
 
@@ -118,6 +149,14 @@ def summarize(values: list[int]) -> dict:
     }
 
 
+def latency_csvs(arm_dir: Path) -> list[Path]:
+    """Latency CSVs only. The arm directory also holds conformance, throughput and
+    mount-facts CSVs; their rows happen not to parse as "op,ns" today, but relying on
+    that is how a new file type quietly becomes a tier."""
+    return [p for p in sorted(arm_dir.glob("*.csv"))
+            if "." not in p.stem and p.stem != "mount-facts"]
+
+
 def collect(run_dir: Path) -> dict[str, dict[str, list[int]]]:
     """{tier: {op: [ns, ...]}} pooled across replications, tier keyed as arm/tier."""
     pooled: dict[str, dict[str, list[int]]] = defaultdict(lambda: defaultdict(list))
@@ -128,7 +167,7 @@ def collect(run_dir: Path) -> dict[str, dict[str, list[int]]]:
         for arm_dir in sorted(rep.iterdir()):
             if not arm_dir.is_dir():
                 continue
-            for csv_path in sorted(arm_dir.glob("*.csv")):
+            for csv_path in latency_csvs(arm_dir):
                 key = f"{arm_dir.name}/{csv_path.stem}"
                 for op, values in load_csv(csv_path).items():
                     pooled[key][op].extend(values)
@@ -142,7 +181,7 @@ def per_rep_medians(run_dir: Path) -> dict[str, dict[str, list[int]]]:
         for arm_dir in sorted(rep.iterdir()):
             if not arm_dir.is_dir():
                 continue
-            for csv_path in sorted(arm_dir.glob("*.csv")):
+            for csv_path in latency_csvs(arm_dir):
                 key = f"{arm_dir.name}/{csv_path.stem}"
                 for op, values in load_csv(csv_path).items():
                     if values:
@@ -203,6 +242,139 @@ def grade_prediction_5(stats: dict) -> dict:
         "total": len(checks),
         "uniform_across_ops": uniform,
         "thresholds": {"tie_max_ratio": TIE_MAX_RATIO, "separation_min_ratio": SEPARATION_MIN_RATIO},
+    }
+
+
+def grade_prediction_3(stats: dict) -> dict:
+    """No server-backed tier within one order of magnitude of the block group on stat."""
+    block = [stats[t]["stat"]["p50_ns"] for t in BLOCK_TIERS if "stat" in stats.get(t, {})]
+    if len(block) != len(BLOCK_TIERS):
+        return {"status": "NOT EVALUABLE", "reason": "a block-backed tier is missing"}
+    block_p50 = statistics.median(block)
+    bar = block_p50 * P3_MIN_FACTOR
+    server = {t: s_["stat"]["p50_ns"] for t, s_ in stats.items()
+              if ("efs" in t or "fsx" in t) and "stat" in s_}
+    if not server:
+        return {"status": "NOT EVALUABLE", "reason": "no server-backed tiers"}
+    within = sorted(t for t, p in server.items() if p < bar)
+    return {
+        "status": "REFUTED" if within else "SUPPORTED",
+        "block_group_stat_p50_ns": block_p50,
+        "bar_ns": bar,
+        "server_tiers": {t: {"stat_p50_ns": p, "factor": round(p / block_p50, 1)}
+                         for t, p in sorted(server.items())},
+        "within_one_order": within,
+        # Before 2026-10-15 E2 had no FSx tiers; a verdict on EFS alone is a verdict
+        # on a narrower claim than the prediction makes, and says so.
+        "fsx_tiers_present": sorted(t for t in server if "fsx" in t),
+    }
+
+
+def average_ranks(values: dict[str, float], descending: bool) -> dict[str, float]:
+    """Rank 1 = best. Ties share the mean of the ranks they span."""
+    order = sorted(values, key=lambda k: -values[k] if descending else values[k])
+    ranks: dict[str, float] = {}
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and values[order[j + 1]] == values[order[i]]:
+            j += 1
+        for k in order[i:j + 1]:
+            ranks[k] = (i + j) / 2 + 1
+        i = j + 1
+    return ranks
+
+
+def spearman(a: dict[str, float], b: dict[str, float]) -> float:
+    """Pearson correlation of two rank vectors over the same keys."""
+    keys = sorted(a)
+    xa, xb = [a[k] for k in keys], [b[k] for k in keys]
+    ma, mb = statistics.fmean(xa), statistics.fmean(xb)
+    cov = sum((x - ma) * (y - mb) for x, y in zip(xa, xb))
+    var = math.sqrt(sum((x - ma) ** 2 for x in xa) * sum((y - mb) ** 2 for y in xb))
+    return cov / var if var else 0.0
+
+
+def load_tput(path: Path) -> dict:
+    """{'read_<n>': {...}, 'write_<n>': {...}} or {'error': ...} for one tier."""
+    if not path.is_file():
+        return {"error": "missing"}
+    out: dict = {}
+    for row in csv.reader(path.open()):
+        if len(row) != 5:
+            continue
+        phase, streams, nbytes, ns, resident = row
+        if phase == "error":
+            return {"error": "probe failed"}
+        nbytes_i, ns_i = int(nbytes), int(ns)
+        out[f"{phase}_{streams}"] = {
+            "bytes": nbytes_i, "ns": ns_i,
+            "mb_per_s": round(nbytes_i / ns_i * 1e3, 1) if ns_i else None,
+            "resident_pct": float(resident),
+        }
+    return out
+
+
+def grade_prediction_1(run_dir: Path) -> dict:
+    """Spearman rho between stat-p50 rank and 4-stream read MB/s rank, per replication."""
+    reps_out = []
+    for rep in sorted(run_dir.glob("rep-*")):
+        row: dict = {"rep": rep.name, "tiers": {}}
+        problems = []
+        stat_p50: dict[str, float] = {}
+        tput: dict[str, float] = {}
+        for tier in P1_TIERS:
+            arm, name = tier.split("/")
+            lat = rep / arm / f"{name}.csv"
+            t = load_tput(rep / arm / f"{name}.tput.csv")
+            read = t.get(f"read_{P1_STREAMS}")
+            entry: dict = {"throughput": t}
+            if not lat.is_file() or not load_csv(lat).get("stat"):
+                problems.append(f"{tier}: no stat data")
+            else:
+                stat_p50[tier] = statistics.median(load_csv(lat)["stat"])
+                entry["stat_p50_ns"] = stat_p50[tier]
+            if "error" in t or read is None:
+                problems.append(f"{tier}: throughput ERROR ({t.get('error', 'no 4-stream read')})")
+            elif read["resident_pct"] > P1_MAX_RESIDENT_PCT:
+                problems.append(f"{tier}: throughput ERROR (read started {read['resident_pct']}% resident)")
+            else:
+                tput[tier] = read["mb_per_s"]
+            row["tiers"][tier] = entry
+        if problems:
+            row.update({"evaluable": False, "problems": problems})
+        else:
+            sr = average_ranks(stat_p50, descending=False)
+            tr = average_ranks(tput, descending=True)
+            rho = spearman(sr, tr)
+            reading = ("AGREE" if rho >= P1_AGREE_MIN_RHO
+                       else "DIFFER" if rho <= P1_DIFFER_MAX_RHO else "INCONCLUSIVE")
+            gap = sr["ec2/fsx_lustre"] - tr["ec2/fsx_lustre"]
+            row.update({"evaluable": True, "rho": round(rho, 3), "reading": reading,
+                        "stat_rank": sr, "throughput_rank": tr, "lustre_rank_gap": gap})
+        reps_out.append(row)
+
+    ok = [r for r in reps_out if r["evaluable"]]
+    if len(ok) < P1_MIN_EVALUABLE_REPS:
+        status = "NOT EVALUABLE"
+        lustre = "NOT EVALUABLE"
+    else:
+        readings = {r["reading"] for r in ok}
+        status = ("SUPPORTED" if readings == {"DIFFER"}
+                  else "REFUTED" if readings == {"AGREE"} else "INCONCLUSIVE")
+        gaps = [r["lustre_rank_gap"] for r in ok]
+        lustre = ("SUPPORTED" if all(g >= P1_LUSTRE_MIN_RANK_GAP for g in gaps)
+                  else "REFUTED" if all(g <= 0 for g in gaps) else "INCONCLUSIVE")
+    return {
+        "status": status,
+        "lustre_clause": lustre,
+        "evaluable_reps": len(ok),
+        "replications": reps_out,
+        "rules": {"tiers": P1_TIERS, "streams": P1_STREAMS,
+                  "agree_min_rho": P1_AGREE_MIN_RHO, "differ_max_rho": P1_DIFFER_MAX_RHO,
+                  "max_resident_pct": P1_MAX_RESIDENT_PCT,
+                  "min_evaluable_reps": P1_MIN_EVALUABLE_REPS,
+                  "lustre_min_rank_gap": P1_LUSTRE_MIN_RANK_GAP},
     }
 
 
@@ -287,6 +459,29 @@ def clusters(run_dir: Path, pooled: dict) -> dict:
     return out
 
 
+def render_p1_p3(pred1: dict, pred3: dict) -> list[str]:
+    lines = ["", "### Prediction 1 (pre-registered 2026-10-15, graded mechanically)", "",
+             f"**{pred1['status']}** — {pred1['evaluable_reps']} evaluable replication(s); "
+             f"Lustre clause **{pred1['lustre_clause']}**.", ""]
+    for r in pred1["replications"]:
+        if r["evaluable"]:
+            lines.append(f"- `{r['rep']}`: ρ = {r['rho']} → {r['reading']}; "
+                         f"Lustre stat rank − throughput rank = {r['lustre_rank_gap']}")
+        else:
+            lines.append(f"- `{r['rep']}`: not evaluable — " + "; ".join(r["problems"]))
+    lines += ["", "### Prediction 3 (graded mechanically)", "", f"**{pred3['status']}**"]
+    if "bar_ns" in pred3:
+        lines += [f"", f"Block-group stat p50 {fmt_ns(int(pred3['block_group_stat_p50_ns']))}; "
+                  f"bar is 10× = {fmt_ns(int(pred3['bar_ns']))}. "
+                  f"FSx tiers present: {', '.join(pred3['fsx_tiers_present']) or 'none'}.", "",
+                  "| Server tier | stat p50 | × block group |", "|---|--:|--:|"]
+        for t_, d in pred3["server_tiers"].items():
+            lines.append(f"| `{t_}` | {fmt_ns(d['stat_p50_ns'])} | {d['factor']}× |")
+    elif "reason" in pred3:
+        lines.append(f"— {pred3['reason']}")
+    return lines
+
+
 def render(stats: dict, agreement: dict, pred5: dict, comps: list, clus: dict) -> str:
     ops = ["stat", "stat_enoent", "open_read", "create", "unlink"]
     lines = ["| Tier | " + " | ".join(f"{o} p50" for o in ops) + " |",
@@ -350,6 +545,8 @@ def main(run_dir: Path) -> int:
     stats = {tier: {op: summarize(v) for op, v in ops.items()} for tier, ops in pooled.items()}
     agreement = per_rep_medians(run_dir)
     pred5 = grade_prediction_5(stats)
+    pred3 = grade_prediction_3(stats)
+    pred1 = grade_prediction_1(run_dir)
     floors = noise_floor(agreement)
     comps = comparisons(stats, floors)
     clus = clusters(run_dir, pooled)
@@ -364,9 +561,11 @@ def main(run_dir: Path) -> int:
         "comparisons": comps,
         "clusters": clus,
         "prediction_5": pred5,
+        "prediction_3": pred3,
+        "prediction_1": pred1,
     }
     (run_dir / "summary.json").write_text(json.dumps(out, indent=2) + "\n")
-    table = render(stats, agreement, pred5, comps, clus)
+    table = render(stats, agreement, pred5, comps, clus) + "\n" + "\n".join(render_p1_p3(pred1, pred3))
     (run_dir / "summary.md").write_text(table + "\n")
     print(table)
     return 0

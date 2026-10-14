@@ -17,6 +17,9 @@ RUN dnf install -y gcc awscli-2 util-linux-core nfs-utils && dnf clean all
 
 COPY bench.c /src/bench.c
 RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c
+# Installed as `throughput`, not `tput`: ncurses already owns that name.
+COPY tput.c /src/tput.c
+RUN gcc -O2 -Wall -Werror -pthread -o /usr/local/bin/throughput /src/tput.c
 
 COPY conformance.sh /usr/local/bin/conformance
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

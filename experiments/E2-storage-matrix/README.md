@@ -1,7 +1,8 @@
 # E2 — the storage matrix
 
-**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` — server-backed group specced and costed,
-not yet built.
+**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` — FSx arms and the
+prediction-1 throughput probe are built and locally tested, not yet run (see
+[Run plan for the FSx arms](#run-plan-for-the-fsx-arms)).
 
 > **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md)
 > · [figures](../../docs/charts/e2-storage-matrix.html).
@@ -129,8 +130,14 @@ Pre-registered, per the [protocol](../../docs/benchmark-protocol.md):
 ## Kill conditions
 
 - Prediction 1 is refuted if metadata and throughput rankings substantially agree.
+  "Substantially agree" was not decidable as first written. It is made numeric in
+  [Prediction 1: the throughput measurement](#prediction-1-the-throughput-measurement),
+  fixed 2026-10-15, before any FSx or throughput data exists.
 - Prediction 3 is refuted if any server-backed tier reaches within one order of
-  magnitude of the block-backed group on `stat` p50.
+  magnitude of the block-backed group on `stat` p50. Made exact on the same date:
+  the block-backed group's `stat` p50 is the median of the three block tiers' pooled
+  p50s, and a server-backed tier (every EFS configuration and every FSx tier) refutes
+  it if its pooled `stat` p50 is less than 10× that value.
 - Prediction 5 is refuted by any uniform ranking across ops within the block-backed
   group — either tier winning everything.
 - The premise of the whole matrix is refuted if all tiers land within ~2× of each
@@ -244,6 +251,101 @@ earns a latency number.
 performed and says nothing about the filesystem. A failure does not abort the run —
 for Mountpoint-S3 the failure *is* the pre-registered result.
 
+## Prediction 1: the throughput measurement
+
+Fixed 2026-10-15, before any throughput or FSx data exists. Until this date
+`bench.c` measured only per-operation latency on 2–50 KB files, so the second
+ranking prediction 1 compares against did not exist, and the prediction could not
+be graded. The alternative was to mark it not evaluable, which would have dropped a
+pre-registered test because the apparatus could not run it. The study's central
+claim is "metadata latency, not throughput, separates the tiers", and that cannot be
+argued without measuring throughput. So it is measured.
+
+One caveat is stated up front because it cannot be fixed. The `stat` p50 of the
+three block-backed tiers is already known from the 2026-09-10 runs, and their
+throughput is not. The thresholds below were set with that half of the data in view,
+and with nothing at all known about FSx.
+
+### Probe
+
+`tput` (`infra/lib/stacks/bench/tput.c`) runs once per tier, after the latency
+benchmark, in the same task and the same shuffled order:
+
+1. **Write:** 4 threads each write one 1 GiB file with 1 MiB `write(2)` calls,
+   then `fsync` and close. 4 GiB total, timed as the 4-stream write.
+2. **Two read phases, in an order shuffled per tier and recorded:**
+   - **1-stream:** one thread reads all four files in sequence.
+   - **4-stream:** four threads each read one file.
+   Both use buffered 1 MiB `read(2)`, which is what an application gets.
+3. **Before each read phase,** `posix_fadvise(POSIX_FADV_DONTNEED)` is applied to
+   every file, and then `mincore(2)` measures how much of each file is still
+   resident in the client page cache. A phase that starts with more than 1%
+   resident is recorded with its residency and reported as `ERROR`. That phase
+   measured RAM, not the tier, and an `ERROR` is never ranked.
+4. The files are deleted.
+
+Throughput is bytes divided by wall time, from the release of a start barrier to
+the last thread finishing. **The graded metric is 4-stream read MB/s.** 1-stream
+read and 4-stream write are reported but not graded.
+
+### Decisions, and why
+
+- **Eviction is verified, not inferred from file size.** The usual trick of a file
+  twice the size of RAM assumes the cache behaves. `mincore` checks whether it did,
+  which turns a silent confound into an `ERROR`.
+- **Server-side caches are not controlled.** OpenZFS's ARC, ONTAP's buffer cache
+  and Lustre's OSS cache are part of the tier as sold, and the client cannot evict
+  them. A read straight after a write may be partly served from them, and that is
+  stated as part of what the number means.
+- **4 GiB is a transfer, not a sustained load.** It is media-file scale for a
+  WordPress estate. OpenZFS and ONTAP at 128 MBps, and Lustre Scratch, may serve
+  part of it from burst credit. The ranking is "what a 4 GiB transfer sees", not
+  the tier's sustained ceiling.
+- **The FSx results are mostly the provisioned cap.** OpenZFS and ONTAP are bought
+  at 128 MBps, so their throughput result will be close to that number. The
+  ranking compares tiers as configured at their cheapest defensible settings, not
+  each tier's best.
+- **One EFS configuration, not six.** `ec2/efs_host_plain` is measured because it
+  uses the same client path as the FSx tiers: mounted on the host, no TLS,
+  bind-mounted into the container. The 2026-09-10 runs showed mount topology and
+  TLS do not move `stat` ([finding](../../docs/findings/E2-block-backed.md)).
+  Measuring throughput on all six would multiply EFS's per-GB transfer charge for
+  no question this study asks.
+- **4 streams, not more.** `c7gd.large` has 2 vCPUs. Four streams is enough to show
+  whether a tier scales with parallelism without making the client the
+  bottleneck.
+
+### Tiers ranked, and the grading rule
+
+Seven tiers, one ranking each: `ec2/instance_store`, `ec2/ebs`, `fargate/ephemeral`,
+`ec2/efs_host_plain`, `ec2/fsx_openzfs`, `ec2/fsx_lustre`, `ec2/fsx_ontap`.
+
+For each replication, compute Spearman's ρ between rank by `stat` p50 (fastest =
+1) and rank by 4-stream read MB/s (highest = 1). Ties take average ranks. A
+positive ρ means the two rankings agree.
+
+| Per-replication ρ | Reading |
+|---|---|
+| ≥ 0.7 | AGREE |
+| ≤ 0.3 | DIFFER |
+| between | INCONCLUSIVE |
+
+- **Prediction 1 is SUPPORTED** if every evaluable replication reads DIFFER.
+- **It is REFUTED** if every evaluable replication reads AGREE.
+- **Otherwise it is INCONCLUSIVE.**
+- **It is NOT EVALUABLE** if fewer than three replications are evaluable. A
+  replication is not evaluable if any of the seven tiers has an `ERROR` read.
+
+With n = 7, ρ ≥ 0.7 is close to the conventional significance bound (0.786 at
+p < 0.05, one-tailed). The thresholds are a judgement about "substantially", fixed
+here, and not a significance test.
+
+**The Lustre clause** ("ranks worse on this workload than its headline numbers
+suggest") is graded on its own. It is supported if Lustre's `stat` rank is at least
+two places worse than its throughput rank in every evaluable replication. It is
+refuted if Lustre's `stat` rank is the same as or better than its throughput rank
+in every evaluable replication. Anything else is inconclusive.
+
 ## Cost
 
 Snapshot `results/pricing/20260918T080950Z-c94ac10/` (on-demand list prices, `ap-southeast-1`,
@@ -333,16 +435,150 @@ plainly in any writeup: the metadata numbers are measured on a file system far
 larger than the workload needs, because no smaller one can be bought.
 
 OpenZFS is the outlier at 64 GiB, which makes it the only FSx arm that can be sized
-near the actual working set — and, at $0.035/hr, cheaper than the `c7gd.large`
-carrying the benchmark.
+near the actual working set. At the 128 MBps chosen above it costs $0.0608/hr, still
+cheaper than the `c7gd.large` carrying the benchmark. (An earlier draft of this
+section said $0.035/hr; that was the 64 MBps floor, before the throughput decision.)
 
 ### What the whole matrix costs to run
 
-All four FSx arms simultaneously come to **~$0.98/hr**. With the compute arms and
-endpoints, a full matrix run is on the order of **$1.50/hr**, and the protocol's
-three replications are hours, not days.
+Three FSx arms are built, not four: Persistent-2 Lustre is costed above for
+comparison only. From the same snapshot, the standing cost of one deployment is:
 
-**FSx is a teardown risk, not a run-cost risk.** $0.96/hr is $690/month if something
-is left standing. Every FSx arm therefore deploys and destroys inside one `make`
-target, tagged `Experiment=E2`, and no arm is created without its destroy path
-tested first — the trap `CLAUDE.md` names is forgetting, not spending.
+| Line item | $/hr |
+|---|--:|
+| `c7gd.large` | 0.1058 |
+| 12 interface endpoints × 1 AZ × $0.013 | 0.1560 |
+| FSx OpenZFS + Lustre Scratch + ONTAP gen-1 | 0.6929 |
+| EFS, S3, CloudWatch Logs at benchmark volumes | ~0 |
+| **Standing total** | **~0.955** |
+
+The Fargate task adds ~$0.05/hr only while it runs, which is minutes. An earlier
+version of this section said ~$0.98/hr for FSx alone and ~$1.50/hr in total. Both
+counted a fourth FSx arm that was never built, and both are superseded by this table.
+
+**FSx is a teardown risk, not a run-cost risk.** ~$0.955/hr is ~$700/month if the
+stack is left standing, and ~$506/month of that is FSx alone. A leaked FSx final
+backup bills separately, and no stack destroy will catch it.
+
+## Run plan for the FSx arms
+
+Written 2026-10-15, before any FSx replication has completed. Durations are
+`UNVERIFIED` estimates until replication 1 measures them.
+
+### Budget
+
+| | Estimate |
+|---|---|
+| One replication (deploy → latency → throughput → destroy → sweep) | 70–100 min, `UNVERIFIED`. Block-only replications took 10–14 min. FSx creation and deletion are most of the rest, with ONTAP slowest, and the throughput probe adds ~10 min (4 GiB written and read twice per tier, ~1.5 min per tier at 128 MBps). |
+| EFS transfer from the probe | 4 GiB written + 8 GiB read per replication ≈ $0.60 at $0.07/$0.04 per GB |
+| Three replications | ~3.5–5 h at ~$0.955/hr, plus ~$1.80 of EFS transfer → **~$5–7** |
+| Hard ceiling for this run | **$12**. Past that, stop and diagnose rather than retry. |
+
+### Blockers before the first deploy: status
+
+All seven were fixed on 2026-10-15. They are not yet committed, and none has been
+exercised against real FSx. The first real test is replication 1.
+
+1. **Teardown trap installed after deploy: FIXED.** `collect.sh` installs the
+   `destroy` trap *before* `cdk deploy`, so a failed or rolled-back deploy is torn
+   down and swept. Checked: a failing step followed by a clean teardown still
+   exits non-zero, so `make e2` cannot report success for a failed deploy. The
+   teardown verdict is whether the stack still exists afterwards, not `cdk
+   destroy`'s exit code.
+2. **Region-wide backup sweep: FIXED.** A backup is swept only if its source file
+   system or volume ID came from this stack, or it carries
+   `Study=aws-wordpress` + `Experiment=E2`. The IDs come from the stack's resource
+   list and from its event history, so a rolled-back stack still yields them. The
+   stack now sets `CopyTagsToBackups` on the OpenZFS file system and the ONTAP
+   volume; both are confirmed in the synthesized template. Checked against a mocked
+   account holding a foreign backup: matches by file system, by volume, by
+   rolled-back ID, and by tag were deleted, and the foreign backup was never touched.
+3. **Unverified sweep: FIXED.** The sweep polls until no matching backup exists,
+   and requires seeing that twice, 60 s apart. It waits out `CREATING`, and after
+   40 minutes it exits 3 and names every backup still billing. Checked against a
+   mocked backup stuck in `CREATING`: exit 3, ID printed.
+4. **Broken `aws` on PATH: FIXED.** `collect.sh` and `make doctor` both use the
+   first `aws` on PATH that reports `aws-cli/2`, and refuse to start if there is
+   none. Checked: on this machine they skip the broken v1 and resolve to
+   `/usr/local/bin/aws`. `collect.sh` also refuses to run on a dirty tree, or if
+   `E2-StorageMatrix-dev` already exists (an unknown leftover). The dirty-tree
+   refusal was checked live and stopped before any AWS call.
+5. **Provenance gaps: FIXED.** `meta.json` now records the image digest for each
+   arm (from `describe-tasks`), the FSx source IDs, the CDK CLI version, the
+   `aws-cdk-lib` version and the AWS CLI version. `fsx-provenance.json` records
+   `describe-file-systems` for the run's file systems, as built.
+6. **Prediction 1 ungradable: FIXED by measuring, not by dropping it.** See
+   [Prediction 1: the throughput measurement](#prediction-1-the-throughput-measurement).
+   The probe (`tput.c`, installed as `throughput`) was run in the real image:
+   - After eviction, residency read 0%.
+   - With eviction skipped (`TPUT_SKIP_EVICT`, test-only), it read 100% and the
+     reads ran about twice as fast. The guard can fire, and it matters.
+   - On tmpfs it reads 100%, because tmpfs *is* RAM. A tier like that grades as
+     `ERROR`, not as fast.
+   - A probe failure becomes an error row and the run continues.
+7. **FSx comparisons not pre-registered: FIXED.** `e2_stats.py` declares four FSx
+   pairs (OpenZFS, ONTAP and Lustre against `efs_host_plain`, and OpenZFS against
+   ONTAP), and grades predictions 1 and 3 by the rules above.
+   - Regression-checked on copies of both committed runs: every existing output is
+     identical.
+   - Synthetic runs reach every outcome: SUPPORTED, REFUTED, and NOT EVALUABLE on a
+     cache-resident read and on a probe error.
+
+The stale hourly figures in the `Makefile` and `apparatus.ts` are corrected to
+~$0.96/hr.
+
+### Pre-flight, immediately before deploying
+
+- Working tree clean. `collect.sh` now refuses otherwise.
+- **Node 22.17.0 is not installed** on this machine (`nvm` has 14, 16 and 18; the
+  active Node is 26.8.1). Install it and run `nvm use`, or deploy from a
+  `node:22.17.0` container. `make doctor` must pass. Typecheck and synth of E2 and
+  E3 were verified under Node 22.17.0 in a container (`node:22.17.0-slim`, fresh
+  `npm ci` from the lockfile) on 2026-10-15.
+- Credentials come from `.env`: account `163703054402`, user `aws-wordpress`.
+- Baseline is clean: no stack `E2-StorageMatrix-dev`, no FSx file systems, no FSx
+  backups, nothing tagged `Study=aws-wordpress` beyond inactive task definitions.
+  Last verified clean 2026-10-15, all 18 regions. Record it again on the day.
+- `make pricing` refreshes the snapshot.
+- The machine stays awake for the whole run (`caffeinate -i`), and the run is
+  launched in a way that survives the terminal closing. If the laptop sleeps
+  mid-replication, the stack stays up with nothing tearing it down.
+
+### Run order
+
+1. **`make e2 REPS=3`.** Each replication is an independent deploy → EC2 arm (block,
+   EFS and FSx tiers, run in randomized order) → Fargate arm → collect → destroy →
+   scoped sweep. Replication 1 doubles as the smoke test. A failed mount, a missing
+   conformance CSV, or a missing `mount-facts.csv` stops the run and tears it down.
+   That failure is a result about the apparatus, and the run is not retried around it.
+2. **After replication 1 completes, check before letting 2 and 3 count.** Per tier,
+   `mount-facts.csv` shows the negotiated `rsize`/`wsize`, NFS version, Lustre
+   `flock`, and whether OpenZFS granted a delegation. The conformance CSV shows
+   `PASS` on all ten checks, or a `FAIL` that is itself the finding. Also check
+   whether the FSx final backups carried the tags (blocker 2). Each throughput
+   tier must have both read phases starting at ≤1% residency. Record the measured
+   replication duration in this README.
+3. **If anything in step 2 is wrong,** stop. Replications 2 and 3 have not cost
+   anything yet, and a run with a known confound is not worth finishing.
+
+### Teardown, and how it is verified
+
+Teardown is not done until a check, other than `cdk destroy`'s exit code, shows it.
+
+- After every replication: `cdk destroy`, then a scoped backup sweep that polls to
+  zero.
+- After the run, sweeping every region: no stack `E2-StorageMatrix-dev`; no FSx
+  file systems; no FSx backups from this stack; nothing tagged `Study=aws-wordpress`
+  except inactive task definitions. The tagging index still lists deleted FSx SVMs,
+  so an SVM is confirmed against `describe-storage-virtual-machines` before it is
+  counted as live.
+- The result of that sweep is recorded here with its timestamp.
+- Backstop for an interrupted run: anything still standing is billing at ~$0.955/hr,
+  and `make e2` resumes nothing. Recovery is `cdk destroy E2-StorageMatrix-dev`
+  followed by the scoped sweep, run by hand.
+
+### After the run
+
+Extend `e2_chart.py` and `e2_stats.py` with the FSx tiers, then grade predictions 3
+and (if it is evaluable) 1 against the pre-registered thresholds, publish
+`docs/findings/`, and update H1 and H7. A verdict change cites the run directory.

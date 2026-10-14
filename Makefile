@@ -17,9 +17,10 @@ doctor: ## Check the toolchain is usable before anything else
 	@echo "node active   : $$(node -v 2>/dev/null || echo MISSING)"
 	@node -e 'const w="v$(NODE_VERSION)",g=process.version; if(g!==w){console.error("\n  WRONG NODE. run: nvm use\n");process.exit(1)}' \
 	  && echo "  node OK"
-	@printf 'aws cli       : '; aws --version 2>&1 | head -1
-	@aws --version 2>&1 | grep -q '^aws-cli/2' \
-	  || echo "  WARNING: AWS CLI v2 required for deployment work; v1 detected"
+	@# collect.sh uses the first WORKING v2 on PATH, not the first aws; check the same.
+	@v2=""; for c in $$(type -ap aws); do "$$c" --version 2>&1 | grep -q '^aws-cli/2' && { v2=$$c; break; }; done; \
+	  if [ -n "$$v2" ]; then echo "aws cli       : $$("$$v2" --version 2>&1 | head -1) ($$v2)"; \
+	  else echo "aws cli       : MISSING - no working AWS CLI v2 on PATH"; exit 1; fi
 	@printf 'docker        : '; docker --version 2>&1 | head -1
 	@printf 'cdk           : '; (cd infra && npx cdk --version 2>/dev/null || echo "not installed - run make bootstrap")
 
@@ -49,7 +50,7 @@ e0: ## E0 syscall census - local Docker, no AWS, no cost
 # --- results ----------------------------------------------------------------
 
 .PHONY: e2
-e2: ## E2 storage matrix - deploys, runs both arms, collects, DESTROYS. ~$0.29/hr while up
+e2: ## E2 storage matrix - deploys, runs both arms, collects, DESTROYS. ~$0.96/hr while up
 	@set -a; . ./.env; set +a; ./experiments/E2-storage-matrix/scripts/collect.sh $(REPS)
 
 .PHONY: charts

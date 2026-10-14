@@ -165,6 +165,37 @@ done
 
 snapshot_nfs_counters after
 
+# --- throughput, for the tiers prediction 1 ranks ------------------------------
+#
+# After every latency run, never interleaved with one: 4 GiB of streaming through a
+# tier would otherwise sit in the page cache and the server caches while another
+# tier's stat() is being timed. Opt-in per task through BENCH_THROUGHPUT, so E3's
+# use of this image is unchanged.
+#
+# Read-phase order is shuffled per tier, for the same reason the tier order is: a
+# fixed order would make "1-stream" and "ran first" the same variable. tput prints
+# its phases in the order it ran them, so the CSV records the order itself.
+#
+# A probe that fails is recorded as an error row and the run continues. Failing the
+# task here would throw away every tier's latency data over one tier's throughput,
+# and the collector and grader both treat the error row as ERROR, never as a number.
+for name in ${BENCH_THROUGHPUT:-}; do
+    path=""
+    for pair in $BENCH_MOUNTS; do [ "${pair%%=*}" = "$name" ] && path="${pair#*=}"; done
+    if [ -z "$path" ]; then
+        echo "FATAL: BENCH_THROUGHPUT names '$name', which is not in BENCH_MOUNTS" >&2
+        exit 1
+    fi
+    order=$(shuf -n1 -e 1,4 4,1)
+    echo "throughput: $name (read order $order)"
+    if ! throughput "$path/tput" "$order" > "/tmp/$name.tput.csv" 2> "/tmp/$name.tput.err"; then
+        echo "error,0,0,0,-1" >> "/tmp/$name.tput.csv"
+        rm -rf "${path:?}/tput"
+        echo "  $name: throughput probe FAILED: $(cat "/tmp/$name.tput.err")" >&2
+    fi
+    cat "/tmp/$name.tput.csv"
+done
+
 # Results go to S3, not stdout.
 #
 # stdout was the original transport and it does not scale: the awslogs driver emits
@@ -181,6 +212,13 @@ if [ -n "${BENCH_S3_BUCKET:-}" ]; then
             "s3://$BENCH_S3_BUCKET/$arm/$name.conformance.csv" --only-show-errors
         echo "uploaded $name.csv + conformance -> s3://$BENCH_S3_BUCKET/$arm/"
     done
+    for name in ${BENCH_THROUGHPUT:-}; do
+        aws s3 cp "/tmp/$name.tput.csv" "s3://$BENCH_S3_BUCKET/$arm/$name.tput.csv" --only-show-errors
+    done
+    # The collector checks this list the way it checks the manifest: a tier that was
+    # supposed to have a throughput result and does not is a collection failure.
+    printf '%s\n' ${BENCH_THROUGHPUT:-} \
+        | aws s3 cp - "s3://$BENCH_S3_BUCKET/$arm/throughput-manifest.txt" --only-show-errors
     # A manifest the collector checks against, so a missing tier is caught at
     # collection time rather than discovered during analysis.
     aws s3 cp /tmp/mount-facts.csv "s3://$BENCH_S3_BUCKET/$arm/mount-facts.csv" --only-show-errors
