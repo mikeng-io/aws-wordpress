@@ -1,0 +1,126 @@
+=== nfs counters (before) ===
+Client rpc stats:
+calls      retrans    authrefrsh
+32         0          32      
+
+Client nfs v4:
+null             read             write            commit           open             
+6         4%     0         0%     0         0%     0         0%     0         0%     
+open_conf        open_noat        open_dgrd        close            setattr          
+0         0%     0         0%     0         0%     0         0%     4         2%     
+fsinfo           renew            setclntid        confirm          lock             
+14        9%     0         0%     0         0%     0         0%     0         0%     
+lockt            locku            access           getattr          lookup           
+0         0%     0         0%     8         5%     16       11%     5         3%     
+lookup_root      remove           rename           link             symlink          
+6         4%     0         0%     0         0%     0         0%     0         0%     
+create           pathconf         statfs           readlink         readdir          
+4         2%     8         5%     12        8%     0         0%     0         0%     
+server_caps      delegreturn      getacl           setacl           fs_locations     
+22       15%     0         0%     0         0%     0         0%     0         0%     
+rel_lkowner      secinfo          fsid_present     exchange_id      create_session   
+0         0%     0         0%     0         0%     12        8%     6         4%     
+destroy_session  sequence         get_lease_time   reclaim_comp     layoutget        
+0         0%     9         6%     0         0%     6         4%     0         0%     
+getdevinfo       layoutcommit     layoutreturn     secinfo_no       test_stateid     
+0         0%     0         0%     0         0%     6         4%     0         0%     
+free_stateid     getdevicelist    bind_conn_to_ses destroy_clientid seek             
+0         0%     0         0%     0         0%     0         0%     0         0%     
+allocate         deallocate       layoutstats      clone            
+0         0%     0         0%     0         0%     0         0%     
+
+device overlay mounted on / with fstype overlay
+device proc mounted on /proc with fstype proc
+device tmpfs mounted on /dev with fstype tmpfs
+device devpts mounted on /dev/pts with fstype devpts
+device sysfs mounted on /sys with fstype sysfs
+device cgroup mounted on /sys/fs/cgroup with fstype cgroup2
+device mqueue mounted on /dev/mqueue with fstype mqueue
+device /dev/nvme0n1p1 mounted on /bench/ebs with fstype xfs
+device 127.0.0.1:/ mounted on /bench/efs with fstype nfs4 statvers=1.1
+device fs-0aaec6695fb87c756.efs.ap-southeast-1.amazonaws.com:/bench-plain mounted on /bench/efs-host-plain with fstype nfs4 statvers=1.1
+device /dev/nvme0n1p1 mounted on /bench/host-facts with fstype xfs
+device fs-048b6649e2b2e4bd0.fsx.ap-southeast-1.amazonaws.com:/fsx/bench mounted on /bench/fsx-openzfs with fstype nfs4 statvers=1.1
+device 10.44.0.36@tcp:/l4u6bbev mounted on /bench/fsx-lustre with fstype lustre
+device /dev/nvme1n1 mounted on /bench/instance-store with fstype xfs
+device 127.0.0.1:/ mounted on /bench/efs-plain with fstype nfs4 statvers=1.1
+device 127.0.0.1:/bench-tls mounted on /bench/efs-host-tls with fstype nfs4 statvers=1.1
+device svm-077c187580cb1feef.fs-0621adfddeca6d5bf.fsx.ap-southeast-1.amazonaws.com:/vol1/bench mounted on /bench/fsx-ontap with fstype nfs4 statvers=1.1
+device /dev/nvme0n1p1 mounted on /etc/resolv.conf with fstype xfs
+device /dev/nvme0n1p1 mounted on /etc/hostname with fstype xfs
+device /dev/nvme0n1p1 mounted on /etc/hosts with fstype xfs
+device shm mounted on /dev/shm with fstype tmpfs
+device proc mounted on /proc/bus with fstype proc
+device proc mounted on /proc/fs with fstype proc
+device proc mounted on /proc/irq with fstype proc
+device proc mounted on /proc/sys with fstype proc
+device proc mounted on /proc/sysrq-trigger with fstype proc
+device tmpfs mounted on /proc/acpi with fstype tmpfs
+device tmpfs mounted on /proc/kcore with fstype tmpfs
+device tmpfs mounted on /proc/keys with fstype tmpfs
+device tmpfs mounted on /proc/latency_stats with fstype tmpfs
+device tmpfs mounted on /proc/timer_list with fstype tmpfs
+device tmpfs mounted on /sys/firmware with fstype tmpfs
+=== nfs counters (after) ===
+Client rpc stats:
+calls      retrans    authrefrsh
+13758      0          13758   
+
+Client nfs v4:
+null             read             write            commit           open             
+6         0%     7         0%     6078     14%     0         0%     6060     14%     
+open_conf        open_noat        open_dgrd        close            setattr          
+0         0%     6090     14%     0         0%     12138    29%     16        0%     
+fsinfo           renew            setclntid        confirm          lock             
+14        0%     0         0%     0         0%     0         0%     12        0%     
+lockt            locku            access           getattr          lookup           
+0         0%     12        0%     305       0%     2917      7%     185       0%     
+lookup_root      remove           rename           link             symlink          
+6         0%     6084     14%     12        0%     6         0%     6         0%     
+create           pathconf         statfs           readlink         readdir          
+268       0%     8         0%     12        0%     0         0%     18        0%     
+server_caps      delegreturn      getacl           setacl           fs_locations     
+22        0%     1002      2%     0         0%     0         0%     0         0%     
+rel_lkowner      secinfo          fsid_present     exchange_id      create_session   
+0         0%     0         0%     0         0%     12        0%     6         0%     
+destroy_session  sequence         get_lease_time   reclaim_comp     layoutget        
+0         0%     13        0%     0         0%     6         0%     0         0%     
+getdevinfo       layoutcommit     layoutreturn     secinfo_no       test_stateid     
+0         0%     0         0%     0         0%     6         0%     0         0%     
+free_stateid     getdevicelist    bind_conn_to_ses destroy_clientid seek             
+12        0%     0         0%     0         0%     0         0%     0         0%     
+allocate         deallocate       layoutstats      clone            
+0         0%     0         0%     0         0%     0         0%     
+
+device overlay mounted on / with fstype overlay
+device proc mounted on /proc with fstype proc
+device tmpfs mounted on /dev with fstype tmpfs
+device devpts mounted on /dev/pts with fstype devpts
+device sysfs mounted on /sys with fstype sysfs
+device cgroup mounted on /sys/fs/cgroup with fstype cgroup2
+device mqueue mounted on /dev/mqueue with fstype mqueue
+device /dev/nvme0n1p1 mounted on /bench/ebs with fstype xfs
+device 127.0.0.1:/ mounted on /bench/efs with fstype nfs4 statvers=1.1
+device fs-0aaec6695fb87c756.efs.ap-southeast-1.amazonaws.com:/bench-plain mounted on /bench/efs-host-plain with fstype nfs4 statvers=1.1
+device /dev/nvme0n1p1 mounted on /bench/host-facts with fstype xfs
+device fs-048b6649e2b2e4bd0.fsx.ap-southeast-1.amazonaws.com:/fsx/bench mounted on /bench/fsx-openzfs with fstype nfs4 statvers=1.1
+device 10.44.0.36@tcp:/l4u6bbev mounted on /bench/fsx-lustre with fstype lustre
+device /dev/nvme1n1 mounted on /bench/instance-store with fstype xfs
+device 127.0.0.1:/ mounted on /bench/efs-plain with fstype nfs4 statvers=1.1
+device 127.0.0.1:/bench-tls mounted on /bench/efs-host-tls with fstype nfs4 statvers=1.1
+device svm-077c187580cb1feef.fs-0621adfddeca6d5bf.fsx.ap-southeast-1.amazonaws.com:/vol1/bench mounted on /bench/fsx-ontap with fstype nfs4 statvers=1.1
+device /dev/nvme0n1p1 mounted on /etc/resolv.conf with fstype xfs
+device /dev/nvme0n1p1 mounted on /etc/hostname with fstype xfs
+device /dev/nvme0n1p1 mounted on /etc/hosts with fstype xfs
+device shm mounted on /dev/shm with fstype tmpfs
+device proc mounted on /proc/bus with fstype proc
+device proc mounted on /proc/fs with fstype proc
+device proc mounted on /proc/irq with fstype proc
+device proc mounted on /proc/sys with fstype proc
+device proc mounted on /proc/sysrq-trigger with fstype proc
+device tmpfs mounted on /proc/acpi with fstype tmpfs
+device tmpfs mounted on /proc/kcore with fstype tmpfs
+device tmpfs mounted on /proc/keys with fstype tmpfs
+device tmpfs mounted on /proc/latency_stats with fstype tmpfs
+device tmpfs mounted on /proc/timer_list with fstype tmpfs
+device tmpfs mounted on /sys/firmware with fstype tmpfs

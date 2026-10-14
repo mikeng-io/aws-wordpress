@@ -1,0 +1,136 @@
+=== nfs counters (before) ===
+Client rpc stats:
+calls      retrans    authrefrsh
+32         0          32      
+
+Client nfs v4:
+null             read             write            commit           open             
+2         6%     0         0%     0         0%     0         0%     0         0%     
+open_conf        open_noat        open_dgrd        close            setattr          
+0         0%     0         0%     0         0%     0         0%     0         0%     
+fsinfo           renew            setclntid        confirm          lock             
+4        12%     0         0%     0         0%     0         0%     0         0%     
+lockt            locku            access           getattr          lookup           
+0         0%     0         0%     0         0%     2         6%     0         0%     
+lookup_root      remove           rename           link             symlink          
+2         6%     0         0%     0         0%     0         0%     0         0%     
+create           pathconf         statfs           readlink         readdir          
+0         0%     2         6%     4        12%     0         0%     0         0%     
+server_caps      delegreturn      getacl           setacl           fs_locations     
+6        18%     0         0%     0         0%     0         0%     0         0%     
+rel_lkowner      secinfo          fsid_present     exchange_id      create_session   
+0         0%     0         0%     0         0%     4        12%     2         6%     
+destroy_session  sequence         get_lease_time   reclaim_comp     layoutget        
+0         0%     0         0%     0         0%     2         6%     0         0%     
+getdevinfo       layoutcommit     layoutreturn     secinfo_no       test_stateid     
+0         0%     0         0%     0         0%     2         6%     0         0%     
+free_stateid     getdevicelist    bind_conn_to_ses destroy_clientid seek             
+0         0%     0         0%     0         0%     0         0%     0         0%     
+allocate         deallocate       layoutstats      clone            
+0         0%     0         0%     0         0%     0         0%     
+
+device overlay mounted on / with fstype overlay
+device proc mounted on /proc with fstype proc
+device tmpfs mounted on /dev with fstype tmpfs
+device devpts mounted on /dev/pts with fstype devpts
+device shm mounted on /dev/shm with fstype tmpfs
+device mqueue mounted on /dev/mqueue with fstype mqueue
+device sysfs mounted on /sys with fstype sysfs
+device tmpfs mounted on /sys/fs/cgroup with fstype tmpfs
+device cgroup mounted on /sys/fs/cgroup/systemd with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/devices with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/net_cls,net_prio with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/hugetlb with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpuset with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/freezer with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/misc with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpu,cpuacct with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/pids with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/memory with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/perf_event with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/blkio with fstype cgroup
+device 127.0.0.1:/ mounted on /bench/efs with fstype nfs4 statvers=1.1
+device 127.0.0.1:/ mounted on /bench/efs-plain with fstype nfs4 statvers=1.1
+device /dev/nvme1n1 mounted on /etc/hosts with fstype ext4
+device /dev/nvme1n1 mounted on /etc/resolv.conf with fstype ext4
+device /dev/nvme1n1 mounted on /etc/hostname with fstype ext4
+device proc mounted on /proc/bus with fstype proc
+device proc mounted on /proc/fs with fstype proc
+device proc mounted on /proc/irq with fstype proc
+device proc mounted on /proc/sys with fstype proc
+device proc mounted on /proc/sysrq-trigger with fstype proc
+device tmpfs mounted on /proc/acpi with fstype tmpfs
+device tmpfs mounted on /proc/kcore with fstype tmpfs
+device tmpfs mounted on /proc/keys with fstype tmpfs
+device tmpfs mounted on /proc/latency_stats with fstype tmpfs
+device tmpfs mounted on /proc/timer_list with fstype tmpfs
+device tmpfs mounted on /sys/firmware with fstype tmpfs
+device tmpfs mounted on /proc/scsi with fstype tmpfs
+=== nfs counters (after) ===
+Client rpc stats:
+calls      retrans    authrefrsh
+13759      0          13759   
+
+Client nfs v4:
+null             read             write            commit           open             
+2         0%     2         0%     2026     14%     0         0%     2020     14%     
+open_conf        open_noat        open_dgrd        close            setattr          
+0         0%     2030     14%     0         0%     4046     29%     4         0%     
+fsinfo           renew            setclntid        confirm          lock             
+4         0%     0         0%     0         0%     0         0%     4         0%     
+lockt            locku            access           getattr          lookup           
+0         0%     4         0%     97        0%     1234      8%     128       0%     
+lookup_root      remove           rename           link             symlink          
+2         0%     2028     14%     4         0%     2         0%     2         0%     
+create           pathconf         statfs           readlink         readdir          
+88        0%     2         0%     4         0%     0         0%     6         0%     
+server_caps      delegreturn      getacl           setacl           fs_locations     
+6         0%     0         0%     0         0%     0         0%     0         0%     
+rel_lkowner      secinfo          fsid_present     exchange_id      create_session   
+0         0%     0         0%     0         0%     4         0%     2         0%     
+destroy_session  sequence         get_lease_time   reclaim_comp     layoutget        
+0         0%     0         0%     0         0%     2         0%     0         0%     
+getdevinfo       layoutcommit     layoutreturn     secinfo_no       test_stateid     
+0         0%     0         0%     0         0%     2         0%     0         0%     
+free_stateid     getdevicelist    bind_conn_to_ses destroy_clientid seek             
+4         0%     0         0%     0         0%     0         0%     0         0%     
+allocate         deallocate       layoutstats      clone            
+0         0%     0         0%     0         0%     0         0%     
+
+device overlay mounted on / with fstype overlay
+device proc mounted on /proc with fstype proc
+device tmpfs mounted on /dev with fstype tmpfs
+device devpts mounted on /dev/pts with fstype devpts
+device shm mounted on /dev/shm with fstype tmpfs
+device mqueue mounted on /dev/mqueue with fstype mqueue
+device sysfs mounted on /sys with fstype sysfs
+device tmpfs mounted on /sys/fs/cgroup with fstype tmpfs
+device cgroup mounted on /sys/fs/cgroup/systemd with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/devices with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/net_cls,net_prio with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/hugetlb with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpuset with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/freezer with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/misc with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpu,cpuacct with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/pids with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/memory with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/perf_event with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/blkio with fstype cgroup
+device 127.0.0.1:/ mounted on /bench/efs with fstype nfs4 statvers=1.1
+device 127.0.0.1:/ mounted on /bench/efs-plain with fstype nfs4 statvers=1.1
+device /dev/nvme1n1 mounted on /etc/hosts with fstype ext4
+device /dev/nvme1n1 mounted on /etc/resolv.conf with fstype ext4
+device /dev/nvme1n1 mounted on /etc/hostname with fstype ext4
+device proc mounted on /proc/bus with fstype proc
+device proc mounted on /proc/fs with fstype proc
+device proc mounted on /proc/irq with fstype proc
+device proc mounted on /proc/sys with fstype proc
+device proc mounted on /proc/sysrq-trigger with fstype proc
+device tmpfs mounted on /proc/acpi with fstype tmpfs
+device tmpfs mounted on /proc/kcore with fstype tmpfs
+device tmpfs mounted on /proc/keys with fstype tmpfs
+device tmpfs mounted on /proc/latency_stats with fstype tmpfs
+device tmpfs mounted on /proc/timer_list with fstype tmpfs
+device tmpfs mounted on /sys/firmware with fstype tmpfs
+device tmpfs mounted on /proc/scsi with fstype tmpfs

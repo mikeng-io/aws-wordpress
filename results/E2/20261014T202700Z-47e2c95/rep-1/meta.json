@@ -1,0 +1,23 @@
+{
+  "experiment": "E2",
+  "run_id": "20261014T202700Z-47e2c95",
+  "replication": 1,
+  "utc": "2026-10-14T21:01:18Z",
+  "region": "ap-southeast-1",
+  "availability_zone": "ap-southeast-1a",
+  "instance_type": "c7gd.large",
+  "instance_id": "i-05c9dd63e0dcdd7a3",
+  "ami_id": "ami-0b078df2ed1bdc99b",
+  "stack": "E2-StorageMatrix-dev",
+  "git_sha": "47e2c95093e211139b0be9568c84bfc5ddbf2d16",
+  "git_dirty": false,
+  "ec2_task": "87604fe7602247d3879df81e45eedaf1",
+  "fargate_task": "b1d3291f0c124bfdbe55102676e926d6",
+  "ec2_image_digest": "sha256:698f56f7f6a8e10ea3a733134281cdafc1d2add89832e9c511816bb6b96f58ae",
+  "fargate_image_digest": "sha256:698f56f7f6a8e10ea3a733134281cdafc1d2add89832e9c511816bb6b96f58ae",
+  "fsx_source_ids": "fs-048b6649e2b2e4bd0 fs-0621adfddeca6d5bf fs-0dd6b007256f19958 fsvol-07c1a1e1b46ff6105",
+  "cdk_cli_version": "2.1138.0 (build a4c0282)",
+  "aws_cdk_lib_version": "2.266.0",
+  "aws_cli_version": "aws-cli/2.35.19 Python/3.14.6 Linux/6.12.72-linuxkit exe/aarch64.debian.12",
+  "pricing_snapshot": "20261014T193102Z-7bc4328"
+}

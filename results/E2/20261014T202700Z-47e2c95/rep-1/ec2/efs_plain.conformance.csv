@@ -1,0 +1,13 @@
+rename,PASS
+in_place_write,PASS
+append,PASS
+truncate,PASS
+fsync,PASS
+hardlink,PASS
+symlink,PASS
+dir_rename,PASS
+flock_excludes,PASS
+root_not_squashed,PASS
+mtime_advances,PASS
+TOTAL_FAILURES,0
+TOTAL_ERRORS,0
