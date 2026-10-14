@@ -576,8 +576,20 @@ measurements.** Deploy 19:35 → teardown verified 20:16 UTC, ~41 min, ~$0.65.
   `fsx-provenance.json`, so a replication that overlaps one can be identified
   afterwards rather than explained away.
 
-This run directory is kept as the record of a failed attempt and is never graded:
-its `rep-1` has no `meta.json`, so it cannot be resumed or analysed as a run.
+**Attempt 2, `20261014T202040Z-064a6e7`: failed at deploy, nothing written.**
+20:20 → teardown verified 20:25 UTC. FSx for Lustre was rejected at creation:
+"security groups do not permit Lustre LNET network traffic on port 988".
+- **The rules were in the template.** The stack events show the security group's
+  own ingress rules were still being created at 20:21:33–36, after Lustre was
+  rejected at 20:21:32. Nothing made a file system wait for its group's rules.
+  Attempt 1 and the September deploys won that race; this one lost.
+- **Fix:** every FSx file system now depends on the whole security group subtree.
+  The synthesized template shows each one waiting on all 10 group resources.
+- **Records:** the run directory was empty and is not kept; this entry is the
+  record. The rollback created no FSx backups, and the scoped sweep confirmed none.
+
+Attempt 1's run directory is kept as the record of a failed attempt and is never
+graded: its `rep-1` has no `meta.json`, so it cannot be resumed or analysed as a run.
 Collection restarts as a new run, because the apparatus changed.
 
 ### Run order

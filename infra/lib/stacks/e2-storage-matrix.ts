@@ -412,6 +412,17 @@ export class E2StorageMatrixStack extends ExperimentStack {
       );
 
       ontapVolume.node.addDependency(svm);
+      // Every FSx file system waits for the WHOLE security group, rules included.
+      // The rules are separate AWS::EC2::SecurityGroupIngress/Egress resources, and
+      // nothing made a file system wait for them. FSx for Lustre validates its
+      // security group at creation, and on 2026-10-14 it was rejected ("do not
+      // permit Lustre LNET network traffic on port 988") at 20:21:32, while the
+      // group's own self-referencing ingress was still being created (cancelled at
+      // 20:21:36). Earlier deploys won that race; a dependency must not be luck.
+      // A construct-level dependency covers every resource in the group's subtree.
+      for (const fs of [openzfs, lustre, ontap]) {
+        fs.node.addDependency(fsxSecurityGroup);
+      }
       new CfnOutput(this, 'FsxOpenZfsDns', { value: openzfs.attrDnsName });
       new CfnOutput(this, 'FsxLustreDns', { value: lustre.dnsName });
       new CfnOutput(this, 'FsxOntapSvmId', { value: svm.attrStorageVirtualMachineId });
