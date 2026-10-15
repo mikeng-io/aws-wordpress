@@ -8,6 +8,10 @@
 # The name becomes the CSV block label that the collector greps for.
 set -euo pipefail
 
+# E5 runs its own sequence against a seeded tree (experiments/E5-attribute-cache).
+# E2 and E3 never set BENCH_MODE, so nothing below changes for them.
+if [ "${BENCH_MODE:-}" = "e5" ]; then exec /usr/local/bin/e5-run; fi
+
 : "${BENCH_MOUNTS:?BENCH_MOUNTS must be set, e.g. 'local=/local-bench efs=/efs-bench'}"
 
 # --- fail closed on the failure mode that would look like a result ------------

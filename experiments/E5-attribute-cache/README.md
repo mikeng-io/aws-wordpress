@@ -1,7 +1,8 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `SPECCED`, written 2026-10-15. Nothing is built or deployed. A deploy needs
-an explicit go-ahead, recorded here.
+**Status:** `BUILT, NOT DEPLOYED`. Specified 2026-10-15; apparatus built and checked
+locally on 2026-10-16 (see [Build record](#build-record-2026-10-16)). No AWS resource has
+been created. A deploy needs an explicit go-ahead, recorded here.
 
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md), specifically its per-op
 cost factor. See the 2026-10-15 evidence note there. Also
@@ -359,6 +360,105 @@ named.
    is run on synthetic runs that reach SUPPORTED, REFUTED, INCONCLUSIVE and `ERROR`
    (a failed signature, a late cell, a counter/latency disagreement) for every
    prediction.
+
+## Build record, 2026-10-16
+
+Built against the list above. Nothing was deployed; every check below ran locally.
+
+| Item | Where | Checked how |
+|---|---|---|
+| `agebench` | `infra/lib/stacks/bench/agebench.c`, built in the shared image with `-Werror` | Ran in the image, against a block layout and a local kernel NFS server (below) |
+| E5 task sequence | `infra/lib/stacks/bench/e5-run.sh`, reached from E2's `entrypoint.sh` by one line (`BENCH_MODE=e5` → `exec e5-run`) | Ran end to end in the image, both layouts |
+| Host seeder, Lustre counter service | `infra/lib/stacks/e5-host/seed.py`, `hostctl.sh`, shipped gzipped in user data | Seeder ran in the local check; `hostctl.sh` has not run (no Lustre locally) |
+| Stack `E5-AttributeCache-dev` | `infra/lib/stacks/e5-attribute-cache.ts`, registered in `infra/bin/apparatus.ts` | `tsc --noEmit` and `cdk synth` under Node 22.17.0 (`node:22.17.0-slim`, fresh `npm ci`); rendered user data 7.8 KB of EC2's 16 KB limit; `bash -n` clean |
+| E2 and E3 unchanged | — | Their synthesized templates were diffed against commit `6bb2e8f`: the **only** difference is the bench image asset hash, because the shared image gained `agebench` and `e5-run` |
+| Collection | `experiments/E5-attribute-cache/scripts/collect.sh` | `bash -n`; `collect_arm` run against real task output with `aws` stubbed: complete output passes, a missing B file or snapshot exits 1 naming it |
+| Grading | `analysis/e5_stats.py` | `analysis/test_e5_stats.py`: synthetic runs (`analysis/e5_synthetic.py`) reach SUPPORTED, REFUTED, INCONCLUSIVE and NOT EVALUABLE on all ten predictions, and each ERROR path blocks exactly the predictions that rest on it: a failed signature, a late cell, a counter/latency disagreement, an overrun, missing Lustre counters. 11/11 pass |
+| Make targets | `make e5`, `make e5-container`, `make e5-local`, `make e5-stats` | `make help` |
+
+### What the local NFS check showed
+
+`scripts/local-nfs-check.sh` runs the real image and the real seeder against a
+loopback NFSv4.1 server on the Docker VM's kernel (6.12), with the stack's mount
+discipline. Its latencies mean nothing; its RPC counts are evidence for the gates. In
+the fast mode (2 s waits), per-cohort `mountstats` deltas on the NFS tier:
+
+| Cohort | RPCs | Gate |
+|---|---|---|
+| A1 cold `stat` | LOOKUP 1,040, ACCESS 40 | PASS: one LOOKUP per file, plus 40 directories |
+| A2 cold `ENOENT` | LOOKUP 1,000 | PASS |
+| A3 after **2 s** | none | **FAIL**, correctly: inside the 3 s window it is a hit, and the gate refused to report it as a miss. With the real 75 s wait it should be GETATTRs; that run is outstanding (below) |
+| A5 hit | none | PASS |
+| A6 cold read | OPEN 1,000, READ 1,000, CLOSE 1,000 | PASS: one READ per file. This is the `open_read` fix working |
+| A8 forced | GETATTR 10,000, **LOOKUP 1,040** | PASS, and see amendment 2 |
+
+`e5_stats.py` read this output without error. Every prediction graded NOT EVALUABLE,
+which is right for one replication with a failed A3.
+
+**Not yet done: the full-timing local run** (75 s waits, 150 s/240 s B windows). It
+was blocked by the local harness itself. The first fast run let its container exit
+with NFS mounts still up while the in-container server stopped, and a delegation
+return is now stuck in the Docker VM's kernel. Every later `sync` blocks on it. The
+harness now unmounts before stopping the server. Clearing the VM needs a Docker
+Desktop restart. Run `make e5-local` once after that, and before the pilot.
+
+### Amendments to the method, made while building, before any E5 data
+
+The original text above is left as written. These rules are what `e5_stats.py`
+implements.
+
+1. **A3's gate is GETATTR + LOOKUP ≥ 0.95 N,** not "GETATTR ≥ 0.95 N and LOOKUP ≤
+   0.05 N". Whether the kernel revalidates an expired cached dentry with a GETATTR or a
+   LOOKUP is a kernel detail, not the property being measured. The property is one
+   server round trip per `stat`. The composition is recorded per cohort.
+2. **A8 drops its first pass.** The forced mount is cold too, so pass 1 is a first
+   touch: LOOKUP + GETATTR, seen locally. The A8 median uses passes 2–10, n = 9,000.
+   P4 compares that with A3.
+3. **A late B request is skipped, not run late.** `agebench` skips any deadline it
+   has missed by more than Δ/2, rather than issuing catch-up requests that would only
+   inflate the hit count. The rule "more than 5 % of requests start later than Δ/2"
+   becomes "more than 5 % of deadlines skipped". It is the same intent, measured
+   directly. Any request still running at a counter snapshot is also ERROR.
+4. **Raw B lines are sampled for size:** every op at Δ = 10 s, every 10th request at
+   1 s, every 100th at 0.1 s. All files are gzipped. The histograms (exact counts)
+   are kept for every request. The spec's "1 in 10 at 0.1 s" would have committed
+   ~0.5 GB per replication.
+5. **B's latency hit/miss split uses a threshold from the same replication's
+   cohort A:** the geometric midpoint of the tier's A5 (hit) median and its miss median
+   (A3, or A1 on Lustre). The protocol's k-means is still run and reported, but it
+   cannot be the classifier here. At Δ = 0.1 s the expected miss share (~0.2 %) is
+   below its 2 % cluster-share gate by design. If A5 or the miss cohort is not PASS,
+   the cell is ERROR.
+6. **The counter/latency agreement tolerance is max(20 % relative, 0.002
+   absolute).** At a 0.2 % miss fraction, 20 % relative is 0.04 percentage points,
+   which a handful of directory GETATTRs exceeds. The counter fraction's numerator
+   includes ENOENT and directory RPCs, so it is an upper bound on positive-`stat`
+   misses, and it is what a production `stat` pays. Its denominator is positive `stat`s.
+7. **P8's refutation allows 0.001 absolute,** so that two near-zero shares are not
+   graded on noise: REFUTES if the ENOENT share > 2 × positive share + 0.001.
+8. **Lustre counters come from a host-side service** (`hostctl.sh`, the same
+   request-file protocol as E2's `request-drop`), not from `/proc` inside the
+   container. This settles blocker 5 without making anything privileged. The grader
+   uses MDC RPCs net of pings, `req_waittime − obd_ping`, for A1, and `ost_read` for A6.
+   The counter names are still `UNVERIFIED` until the pilot.
+9. **The task is polled to a 90 min deadline,** not `aws ecs wait tasks-stopped`. That
+   waiter gives up after 10 minutes, and the task runs ~40. Under E2's script, the
+   waiter's failure would have fired the destroy trap mid-measurement.
+10. **The ASG signal timeout is 25 min, not E2's 10,** because seeding ~30,000 files
+    happens before the signal. `UNVERIFIED`: the pilot measures it.
+
+### Pilot-only unknowns
+
+These cannot be checked without AWS. Each one fails closed, either at boot with
+diagnostics kept in the retained bucket, or in the task's mount check.
+
+- Whether the EFS mount helper passes `nosharecache` and `acregmin`/`acregmax`
+  through on TLS mounts. The task requires them in the negotiated options of the
+  `forced` cohort.
+- Whether an ECS host volume's bind is recursive, so that the ~20 NFS mounts under
+  `/mnt/e5` appear inside the task. If not, every cohort fails the `st_dev` check.
+- Lustre's counter names in `mdc.*.stats` and `osc.*.stats` on 2.15.
+- Whether seeding fits inside the 25 min signal.
 
 ## Cost
 

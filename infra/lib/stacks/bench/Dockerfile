@@ -18,12 +18,17 @@ RUN dnf install -y gcc awscli-2 util-linux-core nfs-utils && dnf clean all
 COPY bench.c /src/bench.c
 RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c
 # Installed as `throughput`, not `tput`: ncurses already owns that name.
+# E5's instrument. A separate binary so bench.c - E2 and E3's instrument - stays
+# byte-identical. See experiments/E5-attribute-cache.
+COPY agebench.c /src/agebench.c
+RUN gcc -O2 -Wall -Werror -o /usr/local/bin/agebench /src/agebench.c -lm
 COPY tput.c /src/tput.c
 RUN gcc -O2 -Wall -Werror -pthread -o /usr/local/bin/throughput /src/tput.c
 
 COPY request-drop cache-dropper /usr/local/bin/
 COPY conformance.sh /usr/local/bin/conformance
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh \
+COPY e5-run.sh /usr/local/bin/e5-run
+RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh /usr/local/bin/e5-run \
     /usr/local/bin/request-drop /usr/local/bin/cache-dropper
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

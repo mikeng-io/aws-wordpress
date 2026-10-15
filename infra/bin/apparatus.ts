@@ -11,6 +11,7 @@ import { App, Tags } from 'aws-cdk-lib';
 import { E1MountTopologyStack } from '../lib/stacks/e1-mount-topology.js';
 import { E2StorageMatrixStack } from '../lib/stacks/e2-storage-matrix.js';
 import { E3FargateEphemeralLatencyStack } from '../lib/stacks/e3-fargate-ephemeral-latency.js';
+import { E5AttributeCacheStack } from '../lib/stacks/e5-attribute-cache.js';
 import { NatStrategy, natPlanningHourlyUsd } from '../lib/nat-strategy.js';
 
 const app = new App();
@@ -87,6 +88,20 @@ new E2StorageMatrixStack(app, 'E2-StorageMatrix-dev', {
 
 // E4 - cache adapter. Specced and deliberately unbuilt: gated on E2, since there is
 // no point building a cache tier if an off-the-shelf one already delivers it.
+
+// E5 - what an NFS stat costs on a tree this client did not just create: miss cost
+// (first touch, revalidation) and steady-state hit rate. E2's FSx arms, unchanged,
+// on E2's instance type, with no Fargate arm. See experiments/E5-attribute-cache.
+new E5AttributeCacheStack(app, 'E5-AttributeCache-dev', {
+  env,
+  experimentId: 'E5',
+  topology: 'dev',
+  // 1 c7gd.large (0.1058) + 12 interface endpoints x 1 AZ (0.156) + OpenZFS
+  // (0.0608) + Lustre Scratch 1200 GiB (0.2762) + ONTAP gen-1 (0.3559) = ~0.955,
+  // from results/pricing/20260918T080950Z-c94ac10. Same arms as E2.
+  estimatedHourlyUsd: 0.96,
+  description: 'E5 - NFS stat cost on files the client did not create: miss cost and steady-state hit rate',
+});
 
 Tags.of(app).add('Study', 'aws-wordpress');
 
