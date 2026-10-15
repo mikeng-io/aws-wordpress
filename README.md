@@ -118,6 +118,7 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.29/hr, torn down | **block-backed group complete: the device does not matter, the protocol boundary does** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete: ~271× faster than EFS for `stat`** |
 | [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
+| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | specced, not deployed |
 
 E0–E3 were ordered by kill-power per dollar; between them they either support the
 central claim or destroy it, cheaply and early. E2 is where the study's actual

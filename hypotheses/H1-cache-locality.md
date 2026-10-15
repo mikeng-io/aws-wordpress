@@ -54,7 +54,8 @@ neither is folded into the verdict yet:
    older than the window) has not been measured.
 
 A verdict change needs the cold-cache measurement. That is the next experiment
-this result calls for.
+this result calls for. It is specified, not yet run, as
+[E5](../experiments/E5-attribute-cache/), whose prediction 9 grades this reframing.
 
 ## Kill condition, restated
 
