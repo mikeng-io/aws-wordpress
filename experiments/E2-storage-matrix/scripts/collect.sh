@@ -43,8 +43,26 @@ if [ -n "${RESUME_RUN_ID:-}" ]; then
     # and this experiment's README may change between replications (committing
     # rep-1 and noting what it showed); nothing that measures or collects may.
     RUN_SHA=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["git_sha"])' "$OUT_ROOT/rep-1/meta.json")
+    # RESUME_ALLOW_CHANGED names files that may differ from the run's commit - for a
+    # fix to COLLECTION plumbing found mid-run. It is deliberately narrow: only
+    # paths under this experiment's scripts/ directory are accepted, never the
+    # benchmark, the probe, the entrypoint or the stack, which define what is
+    # measured. Whatever it allows is written into every later meta.json, with
+    # the diff, so the exception is visible in the result itself.
+    RESUME_EXCLUDES=()
+    for f in ${RESUME_ALLOW_CHANGED:-}; do
+        case "$f" in
+            experiments/E2-storage-matrix/scripts/*) RESUME_EXCLUDES+=(":!$f") ;;
+            *) echo "FATAL: RESUME_ALLOW_CHANGED may only name collection scripts, not $f" >&2; exit 1 ;;
+        esac
+    done
+    RESUME_ALLOWED_DIFF=""
+    if [ -n "${RESUME_ALLOW_CHANGED:-}" ]; then
+        # shellcheck disable=SC2086
+        RESUME_ALLOWED_DIFF=$(git -C "$REPO" diff --stat "$RUN_SHA" HEAD -- $RESUME_ALLOW_CHANGED | tail -1)
+    fi
     if ! git -C "$REPO" diff --quiet "$RUN_SHA" HEAD -- . ':!results' ':!docs' \
-            ':!experiments/E2-storage-matrix/README.md'; then
+            ':!experiments/E2-storage-matrix/README.md' "${RESUME_EXCLUDES[@]}"; then
         echo "FATAL: apparatus changed since $RUN_ID started at $RUN_SHA - that is a new run, not a resume" >&2
         git -C "$REPO" diff --stat "$RUN_SHA" HEAD -- . ':!results' ':!docs' \
             ':!experiments/E2-storage-matrix/README.md' >&2
@@ -318,6 +336,11 @@ for rep in $(seq "$START_REP" "$REPS"); do
     REP_DIR="$OUT_ROOT/rep-$rep"
     mkdir -p "$REP_DIR"
 
+    # Per replication, not per process. This was a global that accumulated, so
+    # replication 3 of 20261015T000959Z-85382cc asked describe-file-systems about
+    # replication 2's deleted file systems and aborted. Tested only one replication
+    # per process until then; the sweep tolerated stale IDs, the provenance call did not.
+    FSX_SOURCE_IDS=""
     trap destroy EXIT
     log "deploying $STACK"
     (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never)
@@ -408,6 +431,9 @@ for rep in $(seq "$START_REP" "$REPS"); do
   "cdk_cli_version": "$(cd "$REPO/infra" && ./node_modules/.bin/cdk --version 2>/dev/null | head -1)",
   "aws_cdk_lib_version": "$(node -p "require('$REPO/infra/node_modules/aws-cdk-lib/package.json').version")",
   "aws_cli_version": "$(aws --version 2>&1 | head -1)",
+  "resumed_from_sha": "${RUN_SHA:-}",
+  "resume_allowed_changes": "${RESUME_ALLOW_CHANGED:-}",
+  "resume_allowed_diff": "${RESUME_ALLOWED_DIFF:-}",
   "pricing_snapshot": "$(basename "$(ls -d "$REPO"/results/pricing/*/ | tail -1)")"
 }
 META
