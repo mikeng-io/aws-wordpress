@@ -496,6 +496,26 @@ Pre-flight:
   (matched by id and tag), and the diagnostics bucket was copied and deleted.
 - **Cost:** ~1.3 h × $0.955 ≈ **$1.25**, against the $10 ceiling.
 
+**Attempt 2, run `20261015T183102Z-6272b44` (aborted during deploy, no data).**
+- Launched 18:31Z from `6272b44`, with the upload fix.
+- At about 18:40Z the workstation's Docker daemon stopped while CloudFormation was
+  still creating the stack. That killed the runner container, so `collect.sh`'s
+  destroy trap never ran. The stack was orphaned in `CREATE_IN_PROGRESS`, with
+  OpenZFS and Lustre available and ONTAP still creating.
+- **Torn down by hand** without Docker: `aws cloudformation delete-stack` at 18:42Z,
+  and the stack was gone by 18:49Z. The scoped sweep found one OpenZFS final backup
+  (`backup-0ba7475c959692c00`, matched by source id and `Experiment=E5`), which was
+  deleted. The retained diagnostics bucket was empty, since the host never booted far
+  enough to write to it, and was deleted.
+- **Verified 18:50Z, directly rather than through the lagging tag index:** no stack,
+  FSx file system, SVM, backup, VPC, endpoint, volume, ECS cluster or log group from
+  E5. The only E5 instance is attempt 1's, terminated.
+- **Lesson:** the destroy trap lives inside the runner container, so anything that
+  kills Docker defeats it. Before attempt 3, the run needs an out-of-container
+  watchdog that deletes the stack if the runner dies.
+- **Cost:** ~20 min of standing FSx + endpoints ≈ **$0.30**. Running total for E5:
+  ~$1.55 of $10.
+
 ## Teardown, and how it is verified
 
 The same discipline as E2, because it is the same FSx trap. At ~$0.955/hr a stack
