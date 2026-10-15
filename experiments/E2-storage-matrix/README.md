@@ -1,8 +1,9 @@
 # E2 — the storage matrix
 
-**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` — FSx arms and the
-prediction-1 throughput probe are built and locally tested, not yet run (see
-[Run plan for the FSx arms](#run-plan-for-the-fsx-arms)).
+**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` · `FSx GROUP COMPLETE`.
+Prediction 1 is NOT EVALUABLE, prediction 3 is REFUTED with a construct caveat,
+and prediction 5 is PARTIALLY SUPPORTED. See
+[docs/findings/E2-server-backed.md](../../docs/findings/E2-server-backed.md).
 
 > **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md)
 > · [figures](../../docs/charts/e2-storage-matrix.html).
@@ -628,6 +629,35 @@ measurements.** Deploy 19:35 → teardown verified 20:16 UTC, ~41 min, ~$0.65.
   client page cache. On NFS tiers, `open_read` measures open/close-to-open
   revalidation plus a cached read. The September runs had the same design, and any
   write-up has to say so.
+
+**Graded run, `20261015T000959Z-85382cc`: complete, 3 replications.**
+- **Timeline:**
+  - rep-1: 00:10–01:03 UTC.
+  - rep-2: 01:33–02:27.
+  - rep-3 aborted at 02:47, after deploy and before any measurement.
+    `FSX_SOURCE_IDS` accumulated across replications, and the provenance call
+    asked about rep-2's deleted file systems. It is kept as `aborted-rep-3`.
+  - rep-3 reran 03:07–04:01.
+- **The resume exception:** the ID-reset fix changed `collect.sh`, so the resume
+  guard refused, correctly. rep-3 was resumed under the narrow
+  `RESUME_ALLOW_CHANGED` override, recorded in its `meta.json`. All three
+  replications ran the identical bench image digest.
+- **Command for the rep-3 resume.** `make e2-container` does not pass
+  `RESUME_ALLOW_CHANGED`, and changing the Makefile would itself have been an
+  apparatus change:
+  ```
+  docker run -d --name e2-run -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD":/repo -v aws-wordpress-node-modules:/repo/infra/node_modules \
+    -e RESUME_RUN_ID=20261015T000959Z-85382cc \
+    -e RESUME_ALLOW_CHANGED=experiments/E2-storage-matrix/scripts/collect.sh \
+    aws-wordpress-runner bash -c 'cd infra && npm ci && cd .. && make doctor && make e2 REPS=3'
+  ```
+- **Lustre's client cache was never emptied,** not even by `drop_caches`: read
+  phases started 8.0%, 17.6% and 26.4% resident.
+- **Cost of the whole FSx effort:** about $4.50, against a $12 ceiling. Four
+  deployments produced data: the pilot and three graded replications, ~$0.86
+  each. Three did not: attempt 1 (~$0.65), attempt 2 (~$0.05) and the aborted rep-3
+  (~$0.35).
 
 Attempt 1's run directory is kept as the record of a failed attempt and is never
 graded: its `rep-1` has no `meta.json`, so it cannot be resumed or analysed as a run.

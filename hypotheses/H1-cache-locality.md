@@ -34,6 +34,28 @@ E2's matrix need FUSE, which needs `CAP_SYS_ADMIN`, which Fargate does not grant
 That is the claim's sharpest form: choosing Fargate removes most of the storage
 matrix, silently, as a capability constraint rather than a performance one.
 
+## Evidence from E2's FSx group (2026-10-15): verdict unchanged, review due
+
+From [the E2 server-backed finding](../docs/findings/E2-server-backed.md),
+`results/E2/20261015T000959Z-85382cc`. Two results bear on the restated claim, and
+neither is folded into the verdict yet:
+
+1. **Filesystem choice *within* the reachable server-backed tiers moves cost
+   substantially.** On EC2, FSx OpenZFS, ONTAP and Lustre beat EFS by 4–11× on
+   `create`/`unlink`. On a `stat` cache miss it is 98 µs (OpenZFS) and 149 µs
+   (Lustre) against 827 µs (EFS). That is in tension with "not by which filesystem
+   you choose among the tiers it permits". It does not meet the kill condition: the
+   block group is still 30–600× from every server-backed tier where caches cannot
+   intervene.
+2. **The per-op `stat` cost behind "a tier property" was confounded.** The E3 and
+   E2 NFS `stat` latencies were measured on files created seconds earlier, inside
+   the NFS client's ~3 s attribute-cache window. The fast/slow split is file age,
+   not the server. The production-relevant cost (misses × miss rate, on files
+   older than the window) has not been measured.
+
+A verdict change needs the cold-cache measurement. That is the next experiment
+this result calls for.
+
 ## Kill condition, restated
 
 Refuted if E2's matrix shows tiers landing within ~2× of each other on

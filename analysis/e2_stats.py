@@ -378,6 +378,68 @@ def grade_prediction_1(run_dir: Path) -> dict:
     }
 
 
+def explore_prediction_1_bound(run_dir: Path) -> dict:
+    """EXPLORATORY, never a verdict. Rule drafted 2026-10-15 while replications 2-3
+    of 20261015T000959Z-85382cc were running, before their data was seen.
+
+    A phase that started r% resident delivered (1 - r) of its bytes from storage in
+    the measured time, so its storage throughput lies between measured x (1 - r) and
+    measured. Spearman rho is computed at both ends, with the graded rule's
+    thresholds. "robust" means the reading is identical at both bounds in every
+    replication. Only the residency guard is relaxed here; every other ERROR
+    (missing data, a failed probe) still makes a replication unusable.
+    """
+    reps_out = []
+    for rep in sorted(run_dir.glob("rep-*")):
+        stat_p50: dict[str, float] = {}
+        upper: dict[str, float] = {}
+        lower: dict[str, float] = {}
+        resident: dict[str, float] = {}
+        problems = []
+        for tier in P1_TIERS:
+            arm, name = tier.split("/")
+            lat = rep / arm / f"{name}.csv"
+            t = load_tput(rep / arm / f"{name}.tput.csv")
+            read = t.get(f"read_{P1_STREAMS}")
+            stats_ = load_csv(lat).get("stat") if lat.is_file() else None
+            if not stats_:
+                problems.append(f"{tier}: no stat data")
+                continue
+            if "error" in t or read is None:
+                problems.append(f"{tier}: {t.get('error', 'no 4-stream read')}")
+                continue
+            stat_p50[tier] = statistics.median(stats_)
+            r = max(read["resident_pct"], 0.0)
+            resident[tier] = r
+            upper[tier] = read["mb_per_s"]
+            lower[tier] = read["mb_per_s"] * (1 - r / 100)
+        if problems:
+            reps_out.append({"rep": rep.name, "usable": False, "problems": problems})
+            continue
+        sr = average_ranks(stat_p50, descending=False)
+        out = {"rep": rep.name, "usable": True,
+               "resident_pct": {k: v for k, v in resident.items() if v > 0}}
+        for label, tp in (("upper", upper), ("lower", lower)):
+            tr = average_ranks(tp, descending=True)
+            rho = spearman(sr, tr)
+            out[label] = {
+                "rho": round(rho, 3),
+                "reading": ("AGREE" if rho >= P1_AGREE_MIN_RHO
+                            else "DIFFER" if rho <= P1_DIFFER_MAX_RHO else "INCONCLUSIVE"),
+                "lustre_throughput_rank": tr["ec2/fsx_lustre"],
+                "lustre_rank_gap": sr["ec2/fsx_lustre"] - tr["ec2/fsx_lustre"],
+            }
+        out["robust"] = out["upper"]["reading"] == out["lower"]["reading"]
+        reps_out.append(out)
+    usable = [r for r in reps_out if r["usable"]]
+    return {
+        "status": "EXPLORATORY - NOT A VERDICT",
+        "robust_in_every_replication": bool(usable) and all(r["robust"] for r in usable),
+        "readings": sorted({r["upper"]["reading"] for r in usable} | {r["lower"]["reading"] for r in usable}),
+        "replications": reps_out,
+    }
+
+
 def noise_floor(agreement: dict) -> dict:
     """Between-replication spread per tier/op - the floor any claim must clear.
 
@@ -469,6 +531,15 @@ def render_p1_p3(pred1: dict, pred3: dict) -> list[str]:
                          f"Lustre stat rank − throughput rank = {r['lustre_rank_gap']}")
         else:
             lines.append(f"- `{r['rep']}`: not evaluable — " + "; ".join(r["problems"]))
+    lines += ["", "#### Prediction 1, exploratory residency bound (not a verdict)", ""]
+    for r in pred1.get("_explore", {}).get("replications", []):
+        if r["usable"]:
+            lines.append(f"- `{r['rep']}`: ρ {r['upper']['rho']} ({r['upper']['reading']}) at measured, "
+                         f"{r['lower']['rho']} ({r['lower']['reading']}) at the residency floor; "
+                         f"Lustre throughput rank {r['upper']['lustre_throughput_rank']} / "
+                         f"{r['lower']['lustre_throughput_rank']}; robust: {r['robust']}")
+        else:
+            lines.append(f"- `{r['rep']}`: unusable — " + "; ".join(r["problems"]))
     lines += ["", "### Prediction 3 (graded mechanically)", "", f"**{pred3['status']}**"]
     if "bar_ns" in pred3:
         lines += [f"", f"Block-group stat p50 {fmt_ns(int(pred3['block_group_stat_p50_ns']))}; "
@@ -547,6 +618,7 @@ def main(run_dir: Path) -> int:
     pred5 = grade_prediction_5(stats)
     pred3 = grade_prediction_3(stats)
     pred1 = grade_prediction_1(run_dir)
+    pred1_explore = explore_prediction_1_bound(run_dir)
     floors = noise_floor(agreement)
     comps = comparisons(stats, floors)
     clus = clusters(run_dir, pooled)
@@ -563,9 +635,11 @@ def main(run_dir: Path) -> int:
         "prediction_5": pred5,
         "prediction_3": pred3,
         "prediction_1": pred1,
+        "prediction_1_exploratory_bound": pred1_explore,
     }
     (run_dir / "summary.json").write_text(json.dumps(out, indent=2) + "\n")
-    table = render(stats, agreement, pred5, comps, clus) + "\n" + "\n".join(render_p1_p3(pred1, pred3))
+    table = (render(stats, agreement, pred5, comps, clus) + "\n"
+             + "\n".join(render_p1_p3({**pred1, "_explore": pred1_explore}, pred3)))
     (run_dir / "summary.md").write_text(table + "\n")
     print(table)
     return 0
