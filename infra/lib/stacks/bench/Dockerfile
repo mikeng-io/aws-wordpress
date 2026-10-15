@@ -21,7 +21,9 @@ RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c
 COPY tput.c /src/tput.c
 RUN gcc -O2 -Wall -Werror -pthread -o /usr/local/bin/throughput /src/tput.c
 
+COPY request-drop cache-dropper /usr/local/bin/
 COPY conformance.sh /usr/local/bin/conformance
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh \
+    /usr/local/bin/request-drop /usr/local/bin/cache-dropper
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

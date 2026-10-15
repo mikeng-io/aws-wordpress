@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Asks the privileged cache-dropper sidecar to drop the host page cache, and waits
+# for its answer. Used as tput's TPUT_EVICT_HOOK. Exit 0 only if the sidecar reports
+# that the drop itself succeeded; a timeout or a failed drop is a non-zero exit,
+# which tput turns into a probe failure, which grades as ERROR - never as a speed.
+#
+# Requests are files rather than signals because the two containers share nothing
+# but a task volume. Each request is written under a temporary name and renamed, so
+# the sidecar can never pick up a half-written one.
+set -euo pipefail
+d="${CACHE_CTL_DIR:-/bench/cache-ctl}"
+id="$(date +%s%N)-$$"
+: > "$d/req-$id.tmp"
+mv "$d/req-$id.tmp" "$d/req-$id"
+for _ in $(seq 1 600); do
+    if [ -e "$d/done-$id" ]; then
+        status=$(cat "$d/done-$id"); rm -f "$d/done-$id"
+        [ "$status" = "ok" ] && exit 0
+        echo "request-drop: sidecar reported: $status" >&2; exit 1
+    fi
+    sleep 0.1
+done
+rm -f "$d/req-$id"
+echo "request-drop: no answer from cache-dropper in 60 s" >&2
+exit 1

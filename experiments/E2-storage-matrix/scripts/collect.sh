@@ -232,8 +232,11 @@ run_task() {
     aws ecs wait tasks-stopped --region "$REGION" --cluster "$CLUSTER" --tasks "$task_arn"
 
     local exit_code reason
+    # By container NAME. The EC2 task has two containers since the cache-drop
+    # sidecar was added, and containers[0] is not guaranteed to be the benchmark:
+    # reading the sidecar's exit code would let a failed benchmark pass as exit 0.
     exit_code=$(aws ecs describe-tasks --region "$REGION" --cluster "$CLUSTER" --tasks "$task_arn" \
-        --query 'tasks[0].containers[0].exitCode' --output text)
+        --query "tasks[0].containers[?name=='bench'] | [0].exitCode" --output text)
     reason=$(aws ecs describe-tasks --region "$REGION" --cluster "$CLUSTER" --tasks "$task_arn" \
         --query 'tasks[0].stoppedReason' --output text)
     log "  $arm exit=$exit_code ($reason)"
@@ -370,7 +373,7 @@ for rep in $(seq "$START_REP" "$REPS"); do
         "--capacity-provider-strategy capacityProvider=$CAPACITY_PROVIDER,weight=1" "e2-ec2")
     require_task_id "$EC2_TASK" ec2
     EC2_DIGEST=$(aws ecs describe-tasks --region "$REGION" --cluster "$CLUSTER" --tasks "$EC2_TASK" \
-        --query 'tasks[0].containers[0].imageDigest' --output text)
+        --query "tasks[0].containers[?name=='bench'] | [0].imageDigest" --output text)
     collect_arm ec2 "$REP_DIR/ec2"
 
     # --- Fargate arm ---------------------------------------------------------
@@ -378,7 +381,7 @@ for rep in $(seq "$START_REP" "$REPS"); do
     FARGATE_TASK=$(run_task fargate "$FARGATE_TD" "--launch-type FARGATE" "e2-fargate")
     require_task_id "$FARGATE_TASK" fargate
     FARGATE_DIGEST=$(aws ecs describe-tasks --region "$REGION" --cluster "$CLUSTER" --tasks "$FARGATE_TASK" \
-        --query 'tasks[0].containers[0].imageDigest' --output text)
+        --query "tasks[0].containers[?name=='bench'] | [0].imageDigest" --output text)
     # The two arms' EFS readings stay in separate directories: same filesystem,
     # different client, and collapsing them would hide exactly that difference.
     collect_arm fargate "$REP_DIR/fargate"

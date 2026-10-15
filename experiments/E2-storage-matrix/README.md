@@ -284,6 +284,27 @@ benchmark, in the same task and the same shuffled order:
    measured RAM, not the tier, and an `ERROR` is never ranked.
 4. The files are deleted.
 
+**Amended 2026-10-14, after the pilot replication, before any graded data.** In the
+pilot (`20261014T202700Z-47e2c95`, rep-1), FSx Lustre read phases started 9.2% and
+7.5% resident after `POSIX_FADV_DONTNEED`, against the 1% guard. Every other tier
+started at 0.000%.
+- **The change:** on EC2, step 3 now adds a second eviction step. A privileged
+  sidecar in the same task drops the host page cache (`drop_caches=1`), on request,
+  after the fadvise and before `mincore`.
+- **What did not change:** the guard, its 1% threshold, and every grading rule.
+  `mincore` still decides, and a tier still resident is still `ERROR`.
+- **Why a sidecar:** the benchmark container itself stays unprivileged, because
+  privileged would also remove its seccomp filter and change the per-syscall cost
+  `stat` is measured at.
+- **Fargate is unchanged:** it cannot run privileged, and its tier read 0.000% on
+  fadvise alone.
+- **Tested locally:** with fadvise skipped, the hook alone took residency from
+  100% to 0%. A missing sidecar, or an unprivileged one, fails the task before any
+  timing.
+- **Disclosed:** the pilot's throughput numbers for every tier were seen before
+  this amendment. The amendment changes only how Lustre's cache is emptied, not
+  what any tier is compared against.
+
 Throughput is bytes divided by wall time, from the release of a start barrier to
 the last thread finishing. **The graded metric is 4-stream read MB/s.** 1-stream
 read and 4-stream write are reported but not graded.
@@ -587,6 +608,26 @@ measurements.** Deploy 19:35 → teardown verified 20:16 UTC, ~41 min, ~$0.65.
   The synthesized template shows each one waiting on all 10 group resources.
 - **Records:** the run directory was empty and is not kept; this entry is the
   record. The rollback created no FSx backups, and the scoped sweep confirmed none.
+
+**Pilot, `20261014T202700Z-47e2c95` (rep-1 only): complete, ungraded.** 20:27 →
+21:21 UTC, 54 min, ~$0.86.
+- **Passed:** all 12 tiers passed all 11 conformance checks with zero ERROR.
+- **Final backups inherit tags:** both matched the sweep by id+tag, which settles
+  the `CopyTagsToBackups` question.
+- **ONTAP negotiated 64 KiB `rsize`/`wsize`** against the 1 MiB requested. This
+  cannot bind on the latency benchmark (files are ≤ 50 KB), but it bounds ONTAP's
+  throughput.
+- **Not graded,** because of two gaps that each needed an apparatus change, so this
+  run cannot be resumed:
+  1. Lustre's read phases started 7.5–9.2% resident (see the amendment above).
+  2. `delegreturn` went 0 → 1,002, so some NFS tier granted delegations. The
+     capture was aggregate, and the per-mount part was truncated, so the granting
+     tier is unknown. `mountstats` is now captured whole.
+- **Also found:** across ~6,000 NFS `open_read` ops the client sent 7 READ RPCs. The
+  benchmark reads each file straight after writing it, so its bytes come from the
+  client page cache. On NFS tiers, `open_read` measures open/close-to-open
+  revalidation plus a cached read. The September runs had the same design, and any
+  write-up has to say so.
 
 Attempt 1's run directory is kept as the record of a failed attempt and is never
 graded: its `rep-1` has no `meta.json`, so it cannot be resumed or analysed as a run.

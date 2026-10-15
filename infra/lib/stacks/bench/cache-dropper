@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Sidecar, run PRIVILEGED next to the unprivileged benchmark container. Its only job
+# is `echo 1 > /proc/sys/vm/drop_caches` when asked: clean page cache, host-wide,
+# which reaches pages a filesystem keeps despite POSIX_FADV_DONTNEED (Lustre did).
+# /proc/sys is read-only in an unprivileged container, which is why this is separate:
+# running the benchmark itself privileged would also switch off its seccomp filter
+# and change the per-syscall cost being measured.
+#
+# Runs until the task stops; it is non-essential, so the benchmark exiting ends it.
+set -uo pipefail
+d="${CACHE_CTL_DIR:-/bench/cache-ctl}"
+mkdir -p "$d"
+echo ready > "$d/ready"
+while :; do
+    for r in "$d"/req-*; do
+        [ -e "$r" ] || continue
+        case "$r" in *.tmp) continue ;; esac
+        id="${r##*/req-}"
+        rm -f "$r"
+        if sync && echo 1 > /proc/sys/vm/drop_caches 2>/dev/null; then status=ok
+        else status="drop_caches write failed"; fi
+        echo "$status" > "$d/done-$id.tmp" && mv "$d/done-$id.tmp" "$d/done-$id"
+    done
+    sleep 0.1
+done

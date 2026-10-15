@@ -87,6 +87,16 @@ for pair in $BENCH_MOUNTS; do
     echo "  $name -> $path (st_dev=$(stat -c %d "$path"), fs=$(stat -f -c %T "$path"))"
 done
 
+# If an eviction hook is configured, prove it works once, now, before any timing.
+# A hook that cannot drop the cache would make every EC2 throughput phase an ERROR;
+# better to fail the task here than to spend a replication finding that out.
+if [ -n "${BENCH_THROUGHPUT:-}" ] && [ -n "${TPUT_EVICT_HOOK:-}" ]; then
+    if ! "$TPUT_EVICT_HOOK"; then
+        echo "FATAL: eviction hook $TPUT_EVICT_HOOK does not work - refusing to run throughput" >&2
+        exit 1
+    fi
+    echo "eviction hook $TPUT_EVICT_HOOK: verified"
+fi
 # --- conformance gate, before any timing -------------------------------------
 #
 # H6: a tier that cannot hold POSIX semantics is not eligible for a latency
@@ -157,7 +167,12 @@ done
 snapshot_nfs_counters() {
     { echo "=== nfs counters ($1) ==="
       nfsstat -c 2>/dev/null || echo "(nfsstat unavailable)"
-      grep -E "^device|deleg" /proc/self/mountstats 2>/dev/null | head -80
+      # The whole file, per mount. The first FSx replication recorded DELEGRETURN
+      # 0 -> 1002 in nfsstat's aggregate but could not say which tier granted the
+      # delegations: this line used to grep "deleg" case-sensitively (the per-op
+      # rows say DELEGRETURN) and cut the output at 80 lines. Per-mount op counts
+      # are the attribution, so nothing is filtered here; analysis filters.
+      cat /proc/self/mountstats 2>/dev/null
     } >> /tmp/nfs-counters.txt 2>&1 || true
 }
 snapshot_nfs_counters before

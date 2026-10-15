@@ -638,6 +638,10 @@ export class E2StorageMatrixStack extends ExperimentStack {
           'instance_store', 'ebs', 'efs_host_plain',
           ...(props.includeFsx ? ['fsx_openzfs', 'fsx_lustre', 'fsx_ontap'] : []),
         ].join(' '),
+        // Second eviction step for the throughput probe: ask the privileged sidecar
+        // below to drop the host page cache. Fargate has no equivalent and needs
+        // none - its tier read 0.000% resident on DONTNEED alone.
+        TPUT_EVICT_HOOK: '/usr/local/bin/request-drop',
         BENCH_S3_BUCKET: resultsBucket.bucketName,
         BENCH_ARM: 'ec2',
       },
@@ -655,6 +659,29 @@ export class E2StorageMatrixStack extends ExperimentStack {
     }
     ec2Container.addMountPoints({
       containerPath: '/bench/host-facts', sourceVolume: 'host-facts', readOnly: true,
+    });
+
+    // The cache-drop sidecar. PRIVILEGED, so it can write /proc/sys/vm/drop_caches,
+    // which the benchmark container cannot. The benchmark is deliberately NOT made
+    // privileged instead: that would also remove its seccomp filter and change the
+    // per-syscall cost stat() is measured at. Lustre kept 7.5-9.2% of its files
+    // resident after POSIX_FADV_DONTNEED in the first FSx replication, failing the
+    // probe's 1% guard; this is the second eviction step. mincore still decides.
+    // Non-essential: it runs until the benchmark (essential) exits and the task stops.
+    ec2TaskDefinition.addVolume({ name: 'cache-ctl' });
+    const cacheDropper = ec2TaskDefinition.addContainer('cache-dropper', {
+      image: benchImage,
+      entryPoint: ['/usr/local/bin/cache-dropper'],
+      privileged: true,
+      essential: false,
+      memoryReservationMiB: 32,
+      logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'e2-dropper', logGroup }),
+    });
+    for (const c of [ec2Container, cacheDropper]) {
+      c.addMountPoints({ containerPath: '/bench/cache-ctl', sourceVolume: 'cache-ctl', readOnly: false });
+    }
+    ec2Container.addContainerDependencies({
+      container: cacheDropper, condition: ecs.ContainerDependencyCondition.START,
     });
     if (props.includeFsx) {
       for (const [containerPath, sourceVolume] of [

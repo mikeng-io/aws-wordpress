@@ -9,7 +9,8 @@
  *   1. STREAMS threads each write one FILE_BYTES file in CHUNK writes, fsync, close.
  *   2. Two read phases, 1-stream and STREAMS-stream, in the order given on argv[2].
  *   3. Before each read phase every file is dropped from the client page cache with
- *      POSIX_FADV_DONTNEED, and residency is then MEASURED with mincore(2). Eviction
+ *      POSIX_FADV_DONTNEED (plus TPUT_EVICT_HOOK, if set), and residency is then
+ *      MEASURED with mincore(2). Eviction
  *      is verified rather than assumed, because a read served from RAM looks exactly
  *      like a fast tier once it is a number in a CSV.
  *
@@ -116,22 +117,45 @@ static long long run_phase(int streams, int write) {
     return t1 - t0;
 }
 
-/* Drop every file from the client page cache, then measure what is still resident.
- * Returns the resident percentage across all files. */
+/* Optional second eviction step, run after POSIX_FADV_DONTNEED on every file and
+ * before residency is measured. Lustre does not fully honour DONTNEED: the first
+ * FSx replication (results/E2/20261014T202700Z-47e2c95) measured 9.2% and 7.5% of
+ * its files still resident afterwards. On EC2 the hook asks a privileged sidecar
+ * to drop the host page cache. The benchmark container itself stays unprivileged,
+ * because privileged also disables the seccomp filter, which costs every syscall
+ * a little - a confound at stat()'s microsecond scale. The hook's success is not
+ * the verdict: mincore below still is. A hook that fails is a probe failure. */
+static const char *evict_hook;
+
+/* Evict every file, then measure what is still resident. Returns resident %. */
 static double evict_and_measure(void) {
     long page = sysconf(_SC_PAGESIZE);
     long long resident = 0, total = 0;
-    for (int f = 0; f < STREAMS; f++) {
+    /* TPUT_SKIP_EVICT exists only to prove the residency check can fire: with
+     * eviction skipped, a just-written file must read back as resident. A guard that
+     * has never been seen to trip is not known to work. Never set in a task def. */
+    int skip = getenv("TPUT_SKIP_EVICT") != NULL;
+    /* TPUT_SKIP_DONTNEED, also test-only, skips just the fadvise so a test can show
+     * the hook ALONE evicts - otherwise a hook that does nothing would pass unseen
+     * behind a DONTNEED that already worked. */
+    int skip_dontneed = skip || getenv("TPUT_SKIP_DONTNEED") != NULL;
+    for (int f = 0; f < STREAMS && !skip_dontneed; f++) {
         int fd = open(paths[f], O_RDONLY);
         if (fd < 0) die("open for evict", paths[f]);
-        /* TPUT_SKIP_EVICT exists only to prove the residency check can fire: with
-         * eviction skipped, a just-written file must read back as resident. A guard
-         * that has never been seen to trip is not known to work. Never set in a task
-         * definition. */
-        if (!getenv("TPUT_SKIP_EVICT")) {
-            int rc = posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED);
-            if (rc != 0) { errno = rc; die("posix_fadvise", paths[f]); }
+        int rc = posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED);
+        if (rc != 0) { errno = rc; die("posix_fadvise", paths[f]); }
+        close(fd);
+    }
+    if (!skip && evict_hook) {
+        int rc = system(evict_hook);
+        if (rc != 0) {
+            fprintf(stderr, "tput: eviction hook %s failed (status %d)\n", evict_hook, rc);
+            exit(1);
         }
+    }
+    for (int f = 0; f < STREAMS; f++) {
+        int fd = open(paths[f], O_RDONLY);
+        if (fd < 0) die("open for mincore", paths[f]);
         void *map = mmap(NULL, (size_t)file_bytes, PROT_READ, MAP_SHARED, fd, 0);
         if (map == MAP_FAILED) die("mmap", paths[f]);
         size_t pages = (size_t)((file_bytes + page - 1) / page);
@@ -161,10 +185,16 @@ int main(int argc, char **argv) {
     const char *mib = getenv("TPUT_FILE_MIB");
     if (mib && *mib) file_bytes = atoll(mib) * CHUNK;
     if (file_bytes < CHUNK) { fprintf(stderr, "tput: file size below 1 MiB\n"); return 64; }
+    evict_hook = getenv("TPUT_EVICT_HOOK");
+    if (evict_hook && !*evict_hook) evict_hook = NULL;
 
     if (mkdir(root, 0755) != 0 && errno != EEXIST) die("mkdir", root);
     for (int f = 0; f < STREAMS; f++)
         snprintf(paths[f], MAX_PATH, "%s/tput-%d.bin", root, f);
+
+    /* Two fields, so the grader's five-field parser skips it; it is provenance for
+     * how every read phase in this file was evicted. */
+    printf("evict,%s\n", evict_hook ? "dontneed+hook" : "dontneed");
 
     long long bytes = file_bytes * STREAMS;
     long long ns = run_phase(STREAMS, 1);
