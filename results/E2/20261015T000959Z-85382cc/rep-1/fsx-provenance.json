@@ -1,0 +1,203 @@
+{
+    "FileSystems": [
+        {
+            "OwnerId": "163703054402",
+            "CreationTime": "2026-10-15T00:10:56.898000+00:00",
+            "FileSystemId": "fs-00ef972bc8f11d5a0",
+            "FileSystemType": "ONTAP",
+            "Lifecycle": "AVAILABLE",
+            "StorageCapacity": 1024,
+            "StorageType": "SSD",
+            "VpcId": "vpc-039bb770c00210675",
+            "SubnetIds": [
+                "subnet-0a033c97077ed9d83"
+            ],
+            "NetworkInterfaceIds": [
+                "eni-023aa314f99dd0177",
+                "eni-0fcfbde826b7d9496"
+            ],
+            "KmsKeyId": "arn:aws:kms:ap-southeast-1:163703054402:key/f5174814-01e5-4633-a078-050656304a07",
+            "ResourceARN": "arn:aws:fsx:ap-southeast-1:163703054402:file-system/fs-00ef972bc8f11d5a0",
+            "Tags": [
+                {
+                    "Key": "Study",
+                    "Value": "aws-wordpress"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "E2-StorageMatrix-dev"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E2-StorageMatrix-dev/cbe78520-c82c-11f1-b8a1-06fff788ee83"
+                },
+                {
+                    "Key": "Experiment",
+                    "Value": "E2"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "FsxOntap"
+                },
+                {
+                    "Key": "EstimatedHourlyUsd",
+                    "Value": "0.96"
+                },
+                {
+                    "Key": "Topology",
+                    "Value": "dev"
+                }
+            ],
+            "OntapConfiguration": {
+                "DeploymentType": "SINGLE_AZ_1",
+                "Endpoints": {
+                    "Intercluster": {
+                        "DNSName": "intercluster.fs-00ef972bc8f11d5a0.fsx.ap-southeast-1.amazonaws.com",
+                        "IpAddresses": [
+                            "10.44.0.144",
+                            "10.44.0.253"
+                        ]
+                    },
+                    "Management": {
+                        "DNSName": "management.fs-00ef972bc8f11d5a0.fsx.ap-southeast-1.amazonaws.com",
+                        "IpAddresses": [
+                            "10.44.0.33"
+                        ]
+                    }
+                },
+                "DiskIopsConfiguration": {
+                    "Mode": "AUTOMATIC",
+                    "Iops": 3072
+                },
+                "PreferredSubnetId": "subnet-0a033c97077ed9d83",
+                "ThroughputCapacity": 128,
+                "WeeklyMaintenanceStartTime": "7:16:30",
+                "HAPairs": 1,
+                "ThroughputCapacityPerHAPair": 128
+            },
+            "NetworkType": "IPV4"
+        },
+        {
+            "OwnerId": "163703054402",
+            "CreationTime": "2026-10-15T00:10:57.649000+00:00",
+            "FileSystemId": "fs-068d68d8f9f5cccf1",
+            "FileSystemType": "LUSTRE",
+            "Lifecycle": "AVAILABLE",
+            "StorageCapacity": 1200,
+            "StorageType": "SSD",
+            "VpcId": "vpc-039bb770c00210675",
+            "SubnetIds": [
+                "subnet-0a033c97077ed9d83"
+            ],
+            "NetworkInterfaceIds": [
+                "eni-0760990f1fb076001",
+                "eni-0455a938fac5f65ef"
+            ],
+            "DNSName": "fs-068d68d8f9f5cccf1.fsx.ap-southeast-1.amazonaws.com",
+            "ResourceARN": "arn:aws:fsx:ap-southeast-1:163703054402:file-system/fs-068d68d8f9f5cccf1",
+            "Tags": [
+                {
+                    "Key": "Study",
+                    "Value": "aws-wordpress"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "E2-StorageMatrix-dev"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E2-StorageMatrix-dev/cbe78520-c82c-11f1-b8a1-06fff788ee83"
+                },
+                {
+                    "Key": "Experiment",
+                    "Value": "E2"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "FsxLustreEBC8CCA6"
+                },
+                {
+                    "Key": "EstimatedHourlyUsd",
+                    "Value": "0.96"
+                },
+                {
+                    "Key": "Topology",
+                    "Value": "dev"
+                }
+            ],
+            "LustreConfiguration": {
+                "WeeklyMaintenanceStartTime": "7:21:00",
+                "DeploymentType": "SCRATCH_2",
+                "MountName": "weqobbev",
+                "CopyTagsToBackups": false,
+                "DataCompressionType": "NONE",
+                "LogConfiguration": {
+                    "Level": "DISABLED"
+                }
+            },
+            "FileSystemTypeVersion": "2.15"
+        },
+        {
+            "OwnerId": "163703054402",
+            "CreationTime": "2026-10-15T00:10:57.784000+00:00",
+            "FileSystemId": "fs-0f5ddd0b82c00468e",
+            "FileSystemType": "OPENZFS",
+            "Lifecycle": "AVAILABLE",
+            "StorageCapacity": 64,
+            "StorageType": "SSD",
+            "VpcId": "vpc-039bb770c00210675",
+            "SubnetIds": [
+                "subnet-0a033c97077ed9d83"
+            ],
+            "NetworkInterfaceIds": [
+                "eni-0082d431837a7fcf3"
+            ],
+            "DNSName": "fs-0f5ddd0b82c00468e.fsx.ap-southeast-1.amazonaws.com",
+            "KmsKeyId": "arn:aws:kms:ap-southeast-1:163703054402:key/f5174814-01e5-4633-a078-050656304a07",
+            "ResourceARN": "arn:aws:fsx:ap-southeast-1:163703054402:file-system/fs-0f5ddd0b82c00468e",
+            "Tags": [
+                {
+                    "Key": "Study",
+                    "Value": "aws-wordpress"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "E2-StorageMatrix-dev"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E2-StorageMatrix-dev/cbe78520-c82c-11f1-b8a1-06fff788ee83"
+                },
+                {
+                    "Key": "Experiment",
+                    "Value": "E2"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "FsxOpenZfs"
+                },
+                {
+                    "Key": "EstimatedHourlyUsd",
+                    "Value": "0.96"
+                },
+                {
+                    "Key": "Topology",
+                    "Value": "dev"
+                }
+            ],
+            "OpenZFSConfiguration": {
+                "CopyTagsToBackups": true,
+                "CopyTagsToVolumes": false,
+                "DeploymentType": "SINGLE_AZ_1",
+                "ThroughputCapacity": 128,
+                "WeeklyMaintenanceStartTime": "5:18:30",
+                "DiskIopsConfiguration": {
+                    "Mode": "AUTOMATIC",
+                    "Iops": 192
+                },
+                "RootVolumeId": "fsvol-08aa75dd50190c591"
+            },
+            "NetworkType": "IPV4"
+        }
+    ]
+}
