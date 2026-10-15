@@ -457,6 +457,22 @@ refreshed with `make pricing` on the day.
 | Three replications | ~4.5–5 h × $0.955 ≈ **$4.50–5** |
 | **Hard ceiling** | **$10**, including failed attempts. Past it: stop and diagnose, do not retry. |
 
+### Go-ahead (2026-10-16, local; 2026-10-15T17:06Z)
+
+Deploy approved by the study owner for the pilot replication only:
+`STOP_AFTER_REP=1 make e5-container REPS=3`, stopping after replication 1 for the
+step-2 checks. Replications 2 and 3 need a second go-ahead.
+
+Pre-flight:
+- **Baseline clean**, all regions, `Study=aws-wordpress`: no stacks, file systems,
+  backups, SVMs or instances. The tag index still lists deleted E2 clusters, SVMs and
+  one backup (`describe-backups` confirms `BackupNotFound`); the only live items are
+  E2's seven retained diagnostics buckets.
+- **Pricing re-read:** `results/pricing/20261015T170607Z-73e880e/`. Every line used
+  above is identical to the 2026-09-18 snapshot (c7gd.large $0.1058, OpenZFS $0.0608,
+  Lustre Scratch $0.2762, ONTAP $0.3559, PrivateLink endpoint $0.013), so the
+  standing total stays **~$0.955/hr**.
+
 ## Teardown, and how it is verified
 
 The same discipline as E2, because it is the same FSx trap. At ~$0.955/hr a stack
