@@ -1,7 +1,8 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `SPECCED`, written 2026-10-15. Nothing is built or deployed. A deploy needs
-an explicit go-ahead, recorded here.
+**Status:** `APPARATUS BUILT, NOT DEPLOYED` (2026-10-16). Specced 2026-10-15. The
+apparatus is in "Apparatus as built" below, with what was and was not verified before
+deploy. A deploy needs an explicit go-ahead, recorded here.
 
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md), specifically its per-op
 cost factor. See the 2026-10-15 evidence note there. Also
@@ -359,6 +360,83 @@ named.
    is run on synthetic runs that reach SUPPORTED, REFUTED, INCONCLUSIVE and `ERROR`
    (a failed signature, a late cell, a counter/latency disagreement) for every
    prediction.
+
+## Apparatus as built (2026-10-16)
+
+Built after the predictions above and before any E5 data exists. Nothing has been
+deployed.
+
+| Item in the list above | File | State |
+|---|---|---|
+| 1. `agebench` | `infra/lib/stacks/bench/agebench.c` | Built into the shared image. `bench.c`, `tput.c` and `conformance.sh` are untouched. |
+| 2. Stack `E5-AttributeCache-dev` | `infra/lib/stacks/e5-attribute-cache.ts`, registered in `infra/bin/apparatus.ts` | **Copied** from `e2-storage-matrix.ts`, not factored: a copy cannot move E2's template, and E2 is complete. The header comment says what was carried over and what differs. Synthesizes in the pinned runner (Node 22.17.0). |
+| 3. Host user data | same file | Seeds through `seed` mounts, then unmounts them; clears Lustre DLM locks; drops caches; mounts 5 × 4 NFS measurement mounts; writes `seed-utc`. The seeder is `infra/lib/stacks/bench/e5-seed.py`, embedded into the user data at synth. |
+| 4. Entrypoint E5 mode | `entrypoint.sh` execs `e5-run.sh` when `BENCH_MODE=e5`, after its unchanged st_dev check and mount-facts capture | E2 and E3 never set `BENCH_MODE`; their path is unchanged. |
+| 5. Lustre counters | `cache-dropper` gains an `lreq-*` request; client `request-lustre-stats` | Read by the privileged sidecar from the start, rather than trying the unprivileged container first. |
+| 6. `collect.sh` | `experiments/E5-attribute-cache/scripts/collect.sh` | Derived from E2's; differences listed in its header. |
+| 7. `make e5`, `make e5-container` | `Makefile` | Also `make e5-stats` and `make e5-selftest`. |
+| 8. `analysis/e5_stats.py` | plus `analysis/e5_selftest.py` | Self-test: **59 of 59 cases** reach their intended grade. That covers every prediction at SUPPORTED, REFUTED, INCONCLUSIVE (mixed and, where a band exists, per replication) and NOT EVALUABLE, plus the named ERROR paths: a failed signature, a late cell, a counter/latency disagreement, an unknown Lustre counter name, and a debugfs duplicate that must not double-count. |
+
+**Interface endpoints:** E2's twelve, unchanged. None was there only for Fargate.
+
+**Host layout.** Each NFS measurement mount mounts the export **root** with
+`nosharecache`, and the task bind-mounts that mount's own subtree
+(`/mnt/e5/<tier>/<family>/e5/<tier>/<subtree>`). The spec said "pointing at its own
+subtree"; the caching is identical, because each mount only ever walks into its own
+subtree, and it reuses E2's exact, already-working mount commands instead of
+introducing subdirectory mounts. The two EFS tiers share one file system, with
+separate subtrees and separate mounts.
+
+### Verified before deploy, and not
+
+| Verified | How |
+|---|---|
+| `agebench` builds `-Werror`, runs both modes, and verifies every size against `bench.c`'s formula | Local image build; a smoke run of `e5-run.sh` in E5 mode on a bind mount and an ext4 volume with short timings |
+| The ERROR path for an instrument or counter failure | The same smoke run, with Lustre counters unreachable: `A1,error` recorded, the tier's later A cohorts skipped, B still run |
+| The grader parses real `agebench`/`e5-run.sh` output | `e5_stats.py` over the smoke run's files |
+| The grading rules reach every grade | `make e5-selftest`, 59/59 |
+| The stack synthesizes; user data is valid shell and ~12 KB of the 16 KB limit | `cdk synth` in the runner; `bash -n` on the rendered user data |
+
+**Not verifiable before a deploy.** The pilot replication (run order, step 2) is where
+each of these is checked:
+- that `nosharecache` and `acregmin=0,acregmax=0` pass through the EFS mount helper
+  (`mount -t efs -o tls,...`). `e5-run.sh` refuses to start if they did not take.
+- every NFS signature on real mounts, including the A1-A8 RPC shapes.
+- Lustre's counter location and names (`LUSTRE_MISS_COUNTERS` in `e5_stats.py`).
+- seeding time against the 25-minute boot signal.
+- the 24-volume task definition on a real ECS agent.
+
+### Amendments to the method, 2026-10-16, before any data
+
+Each was found while building, not by looking at results; none changes a prediction
+or a threshold in "Predictions".
+
+1. **A8 gets an unscored first pass, `A8w`.** The `forced` mount has never looked
+   the files up, so its first pass is a first touch (`LOOKUP`), not a revalidation.
+   The spec's A8 signature (`GETATTR` ≥ 0.95 × 10 N) would have failed by one pass
+   on every tier. `A8w` is recorded; the 10 graded passes follow it.
+2. **Raw per-op sampling is thinner than specified:** every request at Δ = 10 s, one in
+   10 at 1 s, one in 100 at 0.1 s. The spec's rate would commit ~100 MB of raw data
+   per run, against a repository of ~10 MB. Every op of every request is still in the
+   per-request histograms, which are what the grader reads, so no graded figure
+   depends on the raw sample.
+3. **The counter/latency cross-check tolerance is max(20 % relative, 0.2 percentage
+   points).** A purely relative rule makes a cell at a 0.17 % miss fraction (the
+   expected Δ = 0.1 s value) an ERROR over a handful of directory revalidations, which
+   the counter includes by design and the latency of file `stat`s does not.
+4. **The slow-cluster split is a weighted k-means on the histogram, initialised at the
+   extremes,** with E3's 0.5-decade separation gate and **without** E3's 2 % share
+   gate. Misses at ~1.7 % are the quantity being measured, so a 2 % floor would erase
+   them. Without a slow cluster at least 0.5 decades above the fast one, the slow
+   share is 0.
+5. **Prediction 9 sums positive `stat`s only,** as its own model estimate does
+   (1,000 × …). `ENOENT` time is reported alongside it.
+6. **The task is polled, not waited on.** `aws ecs wait tasks-stopped` gives up after
+   10 minutes; this task runs ~35.
+7. **The retained diagnostics bucket is copied into the replication and deleted** after
+   teardown. E2 never deleted its own: seven `e2-storagematrix-dev-diagnosticsbucket*`
+   buckets (2026-10-14 and 15) are still in the account, near-zero cost, outside any
+   stack.
 
 ## Cost
 

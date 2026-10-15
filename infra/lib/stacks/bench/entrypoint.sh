@@ -179,6 +179,14 @@ snapshot_nfs_counters before
 
 echo "negotiated mount facts:"; cat /tmp/mount-facts.csv
 
+# E5 reuses everything above - the st_dev check, which is what proves each
+# nosharecache mount is its own superblock, and the negotiated-mount record - and
+# replaces everything below. E2 and E3 never set BENCH_MODE, so their path is unchanged.
+if [ "${BENCH_MODE:-}" = "e5" ]; then
+    export BENCH_MOUNTS
+    exec /usr/local/bin/e5-run
+fi
+
 for pair in $BENCH_MOUNTS; do
     name="${pair%%=*}"; path="${pair#*=}"
     echo "conformance: $name"

@@ -6,12 +6,38 @@
 # running the benchmark itself privileged would also switch off its seccomp filter
 # and change the per-syscall cost being measured.
 #
+# E5 also asks it for Lustre counter snapshots; see lustre_counters below.
+#
 # Runs until the task stops; it is non-essential, so the benchmark exiting ends it.
 set -uo pipefail
 d="${CACHE_CTL_DIR:-/bench/cache-ctl}"
 mkdir -p "$d"
 echo ready > "$d/ready"
+# E5: a snapshot of the Lustre client's counters, on request (request-lustre-stats).
+# Every root the client might use is tried, because where 2.15 puts md_stats and the
+# per-device RPC stats is UNVERIFIED until a pilot replication reads it. debugfs is
+# mounted if it is not, which a privileged container may do.
+lustre_counters() {
+    [ -d /sys/kernel/debug/lustre ] || mount -t debugfs debugfs /sys/kernel/debug 2>/dev/null || true
+    local found=0 root f
+    for root in /proc/fs/lustre /sys/fs/lustre /sys/kernel/debug/lustre; do
+        for f in "$root"/mdc/*/md_stats "$root"/mdc/*/stats "$root"/llite/*/stats \
+                 "$root"/ldlm/namespaces/*/lock_count; do
+            [ -r "$f" ] || continue
+            echo "=== $f"; cat "$f" 2>/dev/null && found=1
+        done
+    done
+    [ "$found" = 1 ] || echo "ERROR: no Lustre counters readable"
+}
 while :; do
+    for r in "$d"/lreq-*; do
+        [ -e "$r" ] || continue
+        case "$r" in *.tmp) continue ;; esac
+        id="${r##*/lreq-}"
+        rm -f "$r"
+        lustre_counters > "$d/ldone-$id.tmp" 2>&1
+        mv "$d/ldone-$id.tmp" "$d/ldone-$id"
+    done
     for r in "$d"/req-*; do
         [ -e "$r" ] || continue
         case "$r" in *.tmp) continue ;; esac

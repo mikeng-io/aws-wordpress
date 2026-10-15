@@ -11,6 +11,7 @@ import { App, Tags } from 'aws-cdk-lib';
 import { E1MountTopologyStack } from '../lib/stacks/e1-mount-topology.js';
 import { E2StorageMatrixStack } from '../lib/stacks/e2-storage-matrix.js';
 import { E3FargateEphemeralLatencyStack } from '../lib/stacks/e3-fargate-ephemeral-latency.js';
+import { E5AttributeCacheStack } from '../lib/stacks/e5-attribute-cache.js';
 import { NatStrategy, natPlanningHourlyUsd } from '../lib/nat-strategy.js';
 
 const app = new App();
@@ -83,6 +84,19 @@ new E2StorageMatrixStack(app, 'E2-StorageMatrix-dev', {
   // every replication, including on failure, and sweeps FSx's final backups.
   estimatedHourlyUsd: 0.96,
   description: 'E2 - what does each storage tier charge per metadata op?',
+});
+
+// E5 - what an NFS stat() costs once the file is old. E2's FSx arms and EFS, unchanged,
+// on E2's instance; no Fargate arm, no instance store. Same cost lines as E2 minus
+// Fargate (near zero): 1 c7gd.large (0.1058) + 12 interface endpoints (0.156) + the
+// three FSx arms (0.6929) = ~0.955, from results/pricing/20260918T080950Z-c94ac10.
+// The same teardown risk as E2, handled the same way by its collect.sh.
+new E5AttributeCacheStack(app, 'E5-AttributeCache-dev', {
+  env,
+  experimentId: 'E5',
+  topology: 'dev',
+  estimatedHourlyUsd: 0.96,
+  description: 'E5 - what does an NFS stat cost on files the client did not just create?',
 });
 
 // E4 - cache adapter. Specced and deliberately unbuilt: gated on E2, since there is

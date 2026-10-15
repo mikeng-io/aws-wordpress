@@ -71,6 +71,28 @@ e2-container: runner ## E2 from the runner container, detached. Same cost and te
 	  aws-wordpress-runner \
 	  bash -c 'cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e2 REPS=$(or $(REPS),3)'
 
+.PHONY: e5
+e5: ## E5 attribute cache - deploys, runs cohorts A and B, collects, DESTROYS. ~$0.96/hr while up
+	@set -a; . ./.env; set +a; ./experiments/E5-attribute-cache/scripts/collect.sh $(REPS)
+
+.PHONY: e5-container
+e5-container: runner ## E5 from the runner container, detached (`docker logs -f e5-run`). Same cost and teardown as `make e5`
+	docker run -d --name e5-run \
+	  -v /var/run/docker.sock:/var/run/docker.sock \
+	  -v "$$PWD":/repo -v aws-wordpress-node-modules:/repo/infra/node_modules \
+	  -e STOP_AFTER_REP="$(STOP_AFTER_REP)" -e RESUME_RUN_ID="$(RESUME_RUN_ID)" \
+	  -e RESUME_ALLOW_CHANGED="$(RESUME_ALLOW_CHANGED)" \
+	  aws-wordpress-runner \
+	  bash -c 'cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e5 REPS=$(or $(REPS),3)'
+
+.PHONY: e5-stats
+e5-stats: ## Grade E5 from the latest committed run (or RUN=results/E5/<run-id>)
+	@python3 analysis/e5_stats.py $(or $(RUN),$$(ls -d results/E5/*/ | tail -1))
+
+.PHONY: e5-selftest
+e5-selftest: ## Run E5's grader against synthetic runs that must reach every grade
+	@python3 analysis/e5_selftest.py
+
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results
 	@python3 analysis/e2_chart.py $$(ls -d results/E2/*/ | tail -1)

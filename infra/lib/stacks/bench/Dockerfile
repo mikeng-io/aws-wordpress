@@ -1,4 +1,4 @@
-# Shared benchmark image for the storage experiments (E2, E3). One instrument,
+# Shared benchmark image for the storage experiments (E2, E3, E5). One instrument,
 # built once: every tier's numbers have to be comparable to every other tier's,
 # and a per-experiment copy of bench.c is how that quietly stops being true.
 #
@@ -21,9 +21,15 @@ RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c
 COPY tput.c /src/tput.c
 RUN gcc -O2 -Wall -Werror -pthread -o /usr/local/bin/throughput /src/tput.c
 
-COPY request-drop cache-dropper /usr/local/bin/
+# E5's instrument. bench.c above is untouched, so E2/E3 measure exactly as before.
+COPY agebench.c /src/agebench.c
+RUN gcc -O2 -Wall -Werror -o /usr/local/bin/agebench /src/agebench.c -lm
+
+COPY request-drop cache-dropper request-lustre-stats /usr/local/bin/
+COPY e5-run.sh /usr/local/bin/e5-run
 COPY conformance.sh /usr/local/bin/conformance
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh \
-    /usr/local/bin/request-drop /usr/local/bin/cache-dropper
+    /usr/local/bin/request-drop /usr/local/bin/cache-dropper \
+    /usr/local/bin/request-lustre-stats /usr/local/bin/e5-run
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

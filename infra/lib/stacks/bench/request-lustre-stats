@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Asks the privileged cache-dropper sidecar for a snapshot of the Lustre client's
+# counters and prints it. E5 uses it around every Lustre cohort, because Lustre has
+# no /proc/self/mountstats and its own counters (/proc/fs/lustre, debugfs) are not
+# assumed readable from an unprivileged container. Same file handshake as
+# request-drop. Exit 0 only for a snapshot that actually contains counters.
+set -euo pipefail
+d="${CACHE_CTL_DIR:-/bench/cache-ctl}"
+id="$(date +%s%N)-$$"
+: > "$d/lreq-$id.tmp"
+mv "$d/lreq-$id.tmp" "$d/lreq-$id"
+for _ in $(seq 1 300); do
+    if [ -e "$d/ldone-$id" ]; then
+        out=$(cat "$d/ldone-$id"); rm -f "$d/ldone-$id"
+        printf '%s\n' "$out"
+        case "$out" in ERROR*|"") exit 1 ;; esac
+        exit 0
+    fi
+    sleep 0.1
+done
+rm -f "$d/lreq-$id"
+echo "request-lustre-stats: no answer from the sidecar in 30 s" >&2
+exit 1
