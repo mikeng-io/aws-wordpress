@@ -201,7 +201,11 @@ done
 # --- upload --------------------------------------------------------------------
 if [ -n "${BENCH_S3_BUCKET:-}" ]; then
     arm="${BENCH_ARM:-ec2}"
-    aws s3 sync "$OUT/" "s3://$BENCH_S3_BUCKET/$arm/" --only-show-errors
+    # cp --recursive, not sync: sync lists the destination first, and the task role
+    # is granted write only (as in E2). The first E5 pilot,
+    # results/E5/20261015T170718Z-8f2db3b, ran every cohort and then lost all of it
+    # here to s3:ListBucket AccessDenied. A local upload needs only PutObject.
+    aws s3 cp "$OUT/" "s3://$BENCH_S3_BUCKET/$arm/" --recursive --only-show-errors
     aws s3 cp "$FACTS" "s3://$BENCH_S3_BUCKET/$arm/mount-facts.csv" --only-show-errors
     # Last: the collector treats the manifest's presence as "upload finished".
     printf '%s\n' $E5_TIERS | aws s3 cp - "s3://$BENCH_S3_BUCKET/$arm/manifest.txt" --only-show-errors

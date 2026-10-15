@@ -473,6 +473,29 @@ Pre-flight:
   Lustre Scratch $0.2762, ONTAP $0.3559, PrivateLink endpoint $0.013), so the
   standing total stays **~$0.955/hr**.
 
+### Attempt log
+
+**Attempt 1, `results/E5/20261015T170718Z-8f2db3b/` (failed, not graded).**
+- Deploy: 23 min. The host's boot steps all succeeded: every mount, seeding, Lustre
+  lock clear, and cfn-signal.
+- The task's gates passed: all 22 mounts distinct by st_dev; `nosharecache` on all 20
+  NFS mounts and `acregmin=0,acregmax=0` only on `forced`. The EFS mount helper
+  passes both through, which was one of the open questions. Seed age was 121 s and
+  conformance passed on all 6 tiers.
+- Cohort A ran on every tier with no ERROR line. That includes Lustre's counter
+  requests, which returned something non-empty; the names are still unconfirmed.
+  Cohort B ran its full 15 minutes.
+- **The upload failed** after 33 min: `s3:ListBucket` AccessDenied. `e5-run.sh`
+  uploaded with `aws s3 sync`, which lists the destination, and the task role is
+  granted write only, as in E2. The task exited 1, and the stack, bucket included,
+  was destroyed with the data in it.
+- **Not caught locally** because the smoke run had no bucket. Fixed by uploading with
+  `aws s3 cp --recursive`, which needs only PutObject.
+- **Kept:** the task log, host and FSx provenance, and the boot diagnostics.
+- **Teardown verified:** the stack is gone, the two FSx final backups were swept
+  (matched by id and tag), and the diagnostics bucket was copied and deleted.
+- **Cost:** ~1.3 h × $0.955 ≈ **$1.25**, against the $10 ceiling.
+
 ## Teardown, and how it is verified
 
 The same discipline as E2, because it is the same FSx trap. At ~$0.955/hr a stack
