@@ -1,0 +1,898 @@
+{
+ "run": "full",
+ "replications": {
+  "rep-1": {
+   "conformance_failures": {
+    "ebs": 0,
+    "efs_host_plain": 0
+   },
+   "cohort_a": {
+    "ebs": {
+     "A1": {
+      "signature": {
+       "status": "PASS",
+       "basis": "no counters for a block tier; latency is the reference"
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 3125,
+       "median_ci95_ns": [
+        3042,
+        3291
+       ],
+       "p10_ns": 2292,
+       "p25_ns": 2584,
+       "p75_ns": 4833,
+       "p90_ns": 7250,
+       "p99_ns": 247459,
+       "max_ns": 728542,
+       "geomean_ns": 4271.0,
+       "iqr_over_median": 0.72,
+       "p99_over_p50": 79.19,
+       "bimodality": {
+        "verdict": "bimodal",
+        "centroids_ns": [
+         3488,
+         129772
+        ],
+        "log10_separation": 1.571,
+        "minor_share": 0.056
+       }
+      }
+     },
+     "A2": {
+      "signature": {
+       "status": "PASS",
+       "basis": "no counters for a block tier; latency is the reference"
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 1459,
+       "median_ci95_ns": [
+        1416,
+        1542
+       ],
+       "p10_ns": 1208,
+       "p25_ns": 1250,
+       "p75_ns": 2042,
+       "p90_ns": 2458,
+       "p99_ns": 14417,
+       "max_ns": 600334,
+       "geomean_ns": 1710.3,
+       "iqr_over_median": 0.543,
+       "p99_over_p50": 9.88,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         1312,
+         2532
+        ],
+        "log10_separation": 0.285,
+        "minor_share": 0.403
+       }
+      }
+     },
+     "A3": {
+      "signature": {
+       "status": "PASS",
+       "basis": "no counters for a block tier; latency is the reference"
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 1041,
+       "median_ci95_ns": [
+        1000,
+        1042
+       ],
+       "p10_ns": 792,
+       "p25_ns": 875,
+       "p75_ns": 1208,
+       "p90_ns": 1375,
+       "p99_ns": 2000,
+       "max_ns": 16166,
+       "geomean_ns": 1043.4,
+       "iqr_over_median": 0.32,
+       "p99_over_p50": 1.92,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         887,
+         1284
+        ],
+        "log10_separation": 0.161,
+        "minor_share": 0.44
+       }
+      }
+     },
+     "A4": {
+      "signature": {
+       "status": "PASS",
+       "basis": "no counters for a block tier; latency is the reference"
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 584,
+       "median_ci95_ns": [
+        584,
+        625
+       ],
+       "p10_ns": 541,
+       "p25_ns": 542,
+       "p75_ns": 708,
+       "p90_ns": 916,
+       "p99_ns": 9292,
+       "max_ns": 48167,
+       "geomean_ns": 674.2,
+       "iqr_over_median": 0.284,
+       "p99_over_p50": 15.91,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         642,
+         13329
+        ],
+        "log10_separation": 1.317,
+        "minor_share": 0.016
+       }
+      }
+     },
+     "A5": {
+      "signature": {
+       "status": "PASS",
+       "basis": "no counters for a block tier; latency is the reference"
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 1083,
+       "median_ci95_ns": [
+        1083,
+        1084
+       ],
+       "p10_ns": 833,
+       "p25_ns": 958,
+       "p75_ns": 1250,
+       "p90_ns": 1458,
+       "p99_ns": 18459,
+       "max_ns": 88375,
+       "geomean_ns": 1167.4,
+       "iqr_over_median": 0.27,
+       "p99_over_p50": 17.04,
+       "bimodality": {
+        "verdict": "bimodal",
+        "centroids_ns": [
+         1082,
+         15027
+        ],
+        "log10_separation": 1.143,
+        "minor_share": 0.029
+       }
+      }
+     },
+     "A6": {
+      "signature": {
+       "status": "PASS",
+       "basis": "no counters for a block tier; latency is the reference"
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 80584,
+       "median_ci95_ns": [
+        77125,
+        83041
+       ],
+       "p10_ns": 44541,
+       "p25_ns": 57083,
+       "p75_ns": 118292,
+       "p90_ns": 171166,
+       "p99_ns": 470209,
+       "max_ns": 1831417,
+       "geomean_ns": 85872.8,
+       "iqr_over_median": 0.76,
+       "p99_over_p50": 5.84,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         63797,
+         169562
+        ],
+        "log10_separation": 0.425,
+        "minor_share": 0.304
+       }
+      }
+     },
+     "A7": {
+      "signature": {
+       "status": "PASS",
+       "basis": "no counters for a block tier; latency is the reference"
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 6083,
+       "median_ci95_ns": [
+        5750,
+        6375
+       ],
+       "p10_ns": 2917,
+       "p25_ns": 4125,
+       "p75_ns": 8792,
+       "p90_ns": 12958,
+       "p99_ns": 26709,
+       "max_ns": 86958,
+       "geomean_ns": 6208.0,
+       "iqr_over_median": 0.767,
+       "p99_over_p50": 4.39,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         3954,
+         10139
+        ],
+        "log10_separation": 0.409,
+        "minor_share": 0.479
+       }
+      }
+     }
+    },
+    "efs_host_plain": {
+     "A1": {
+      "signature": {
+       "status": "PASS",
+       "rule": "LOOKUP >= 0.95N",
+       "deltas": {
+        "ACCESS": 40,
+        "GETATTR": 1,
+        "LOOKUP": 1040
+       }
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 46208,
+       "median_ci95_ns": [
+        44625,
+        47708
+       ],
+       "p10_ns": 31416,
+       "p25_ns": 37209,
+       "p75_ns": 59167,
+       "p90_ns": 75750,
+       "p99_ns": 215667,
+       "max_ns": 442417,
+       "geomean_ns": 48375.8,
+       "iqr_over_median": 0.475,
+       "p99_over_p50": 4.67,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         37739,
+         69777
+        ],
+        "log10_separation": 0.267,
+        "minor_share": 0.404
+       }
+      }
+     },
+     "A2": {
+      "signature": {
+       "status": "PASS",
+       "rule": "LOOKUP >= 0.95N",
+       "deltas": {
+        "LOOKUP": 1000
+       }
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 34958,
+       "median_ci95_ns": [
+        34167,
+        35875
+       ],
+       "p10_ns": 22750,
+       "p25_ns": 27250,
+       "p75_ns": 48209,
+       "p90_ns": 60042,
+       "p99_ns": 104708,
+       "max_ns": 152333,
+       "geomean_ns": 36225.3,
+       "iqr_over_median": 0.6,
+       "p99_over_p50": 3.0,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         27803,
+         53436
+        ],
+        "log10_separation": 0.284,
+        "minor_share": 0.405
+       }
+      }
+     },
+     "A3": {
+      "signature": {
+       "status": "PASS",
+       "rule": "GETATTR+LOOKUP >= 0.95N",
+       "deltas": {
+        "GETATTR": 1041
+       }
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 32250,
+       "median_ci95_ns": [
+        31750,
+        32750
+       ],
+       "p10_ns": 23708,
+       "p25_ns": 27958,
+       "p75_ns": 37000,
+       "p90_ns": 51333,
+       "p99_ns": 97625,
+       "max_ns": 285542,
+       "geomean_ns": 33446.7,
+       "iqr_over_median": 0.28,
+       "p99_over_p50": 3.03,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         29852,
+         60224
+        ],
+        "log10_separation": 0.305,
+        "minor_share": 0.162
+       }
+      }
+     },
+     "A4": {
+      "signature": {
+       "status": "PASS",
+       "rule": "recorded only",
+       "deltas": {}
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 625,
+       "median_ci95_ns": [
+        625,
+        625
+       ],
+       "p10_ns": 500,
+       "p25_ns": 542,
+       "p75_ns": 667,
+       "p90_ns": 792,
+       "p99_ns": 1750,
+       "max_ns": 4459,
+       "geomean_ns": 629.8,
+       "iqr_over_median": 0.2,
+       "p99_over_p50": 2.8,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         560,
+         779
+        ],
+        "log10_separation": 0.144,
+        "minor_share": 0.355
+       }
+      }
+     },
+     "A5": {
+      "signature": {
+       "status": "PASS",
+       "rule": "GETATTR+LOOKUP+ACCESS <= 0.05N",
+       "deltas": {}
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 625,
+       "median_ci95_ns": [
+        625,
+        625
+       ],
+       "p10_ns": 542,
+       "p25_ns": 583,
+       "p75_ns": 708,
+       "p90_ns": 834,
+       "p99_ns": 1084,
+       "max_ns": 5125,
+       "geomean_ns": 654.9,
+       "iqr_over_median": 0.2,
+       "p99_over_p50": 1.73,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         595,
+         809
+        ],
+        "log10_separation": 0.133,
+        "minor_share": 0.311
+       }
+      }
+     },
+     "A6": {
+      "signature": {
+       "status": "PASS",
+       "rule": "READ >= 0.95N",
+       "deltas": {
+        "READ": 1000,
+        "OPEN_NOATTR": 1000,
+        "CLOSE": 1000
+       }
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 207458,
+       "median_ci95_ns": [
+        204333,
+        209250
+       ],
+       "p10_ns": 113834,
+       "p25_ns": 131875,
+       "p75_ns": 223834,
+       "p90_ns": 259791,
+       "p99_ns": 327750,
+       "max_ns": 952166,
+       "geomean_ns": 182128.6,
+       "iqr_over_median": 0.443,
+       "p99_over_p50": 1.58,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         123881,
+         227729
+        ],
+        "log10_separation": 0.264,
+        "minor_share": 0.367
+       }
+      }
+     },
+     "A7": {
+      "signature": {
+       "status": "PASS",
+       "rule": "recorded only",
+       "deltas": {
+        "OPEN_NOATTR": 1000,
+        "CLOSE": 1000,
+        "GETATTR": 41
+       }
+      },
+      "latency": {
+       "n": 1000,
+       "p50_ns": 139833,
+       "median_ci95_ns": [
+        138834,
+        140708
+       ],
+       "p10_ns": 125750,
+       "p25_ns": 131250,
+       "p75_ns": 151292,
+       "p90_ns": 174125,
+       "p99_ns": 286625,
+       "max_ns": 885500,
+       "geomean_ns": 144606.1,
+       "iqr_over_median": 0.143,
+       "p99_over_p50": 2.05,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         137777,
+         243419
+        ],
+        "log10_separation": 0.247,
+        "minor_share": 0.085
+       }
+      }
+     },
+     "A8": {
+      "signature": {
+       "status": "PASS",
+       "rule": "GETATTR >= 0.95 x 10N",
+       "deltas": {
+        "ACCESS": 41,
+        "GETATTR": 10000,
+        "LOOKUP": 1040
+       }
+      },
+      "latency": {
+       "n": 9000,
+       "p50_ns": 50000,
+       "median_ci95_ns": [
+        49917,
+        50125
+       ],
+       "p10_ns": 31209,
+       "p25_ns": 45625,
+       "p75_ns": 52542,
+       "p90_ns": 55208,
+       "p99_ns": 73792,
+       "max_ns": 2710417,
+       "geomean_ns": 46325.3,
+       "iqr_over_median": 0.138,
+       "p99_over_p50": 1.48,
+       "bimodality": {
+        "verdict": "unimodal",
+        "centroids_ns": [
+         31678,
+         51770
+        ],
+        "log10_separation": 0.213,
+        "minor_share": 0.2262
+       }
+      }
+     }
+    }
+   },
+   "cohort_b": {
+    "ebs": {
+     "0.1": {
+      "requests": 2360,
+      "skipped": 0,
+      "skip_fraction": 0.0,
+      "stats_issued": 2360000,
+      "enoent_issued": 2360000,
+      "per_request_stat_ns": {
+       "amortised": 2335783,
+       "median": 1878196,
+       "p99": 7210380,
+       "max": 13080590
+      },
+      "per_request_enoent_ns": {
+       "amortised": 1316889,
+       "median": 1148903,
+       "p99": 3452501
+      },
+      "miss_threshold_ns": null,
+      "stat_bimodality": {
+       "verdict": "unimodal",
+       "centroids_ns": [
+        1157,
+        2824
+       ],
+       "log10_separation": 0.388,
+       "minor_share": 0.4238
+      },
+      "miss_fraction": null,
+      "status": "OK"
+     },
+     "1": {
+      "requests": 236,
+      "skipped": 0,
+      "skip_fraction": 0.0,
+      "stats_issued": 236000,
+      "enoent_issued": 236000,
+      "per_request_stat_ns": {
+       "amortised": 3329517,
+       "median": 2384754,
+       "p99": 14041245,
+       "max": 15036587
+      },
+      "per_request_enoent_ns": {
+       "amortised": 1588546,
+       "median": 1338241,
+       "p99": 4898414
+      },
+      "miss_threshold_ns": null,
+      "stat_bimodality": {
+       "verdict": "unimodal",
+       "centroids_ns": [
+        1237,
+        2738
+       ],
+       "log10_separation": 0.345,
+       "minor_share": 0.4453
+      },
+      "miss_fraction": null,
+      "status": "OK"
+     },
+     "10": {
+      "requests": 23,
+      "skipped": 0,
+      "skip_fraction": 0.0,
+      "stats_issued": 23000,
+      "enoent_issued": 23000,
+      "per_request_stat_ns": {
+       "amortised": 3542257,
+       "median": 2598500,
+       "p99": 9581043,
+       "max": 9581043
+      },
+      "per_request_enoent_ns": {
+       "amortised": 2010780,
+       "median": 1393260,
+       "p99": 6299961
+      },
+      "miss_threshold_ns": null,
+      "stat_bimodality": {
+       "verdict": "unimodal",
+       "centroids_ns": [
+        1244,
+        2766
+       ],
+       "log10_separation": 0.347,
+       "minor_share": 0.4479
+      },
+      "miss_fraction": null,
+      "status": "OK"
+     }
+    },
+    "efs_host_plain": {
+     "0.1": {
+      "requests": 2360,
+      "skipped": 0,
+      "skip_fraction": 0.0,
+      "stats_issued": 2360000,
+      "enoent_issued": 2360000,
+      "per_request_stat_ns": {
+       "amortised": 2675431,
+       "median": 2221960,
+       "p99": 8424714,
+       "max": 14742113
+      },
+      "per_request_enoent_ns": {
+       "amortised": 1399868,
+       "median": 1235380,
+       "p99": 3548303
+      },
+      "miss_threshold_ns": 4490,
+      "stat_bimodality": {
+       "verdict": "unimodal",
+       "centroids_ns": [
+        1283,
+        3210
+       ],
+       "log10_separation": 0.398,
+       "minor_share": 0.4465
+      },
+      "latency_miss_fraction": 0.05752,
+      "latency_enoent_miss_fraction": 0.00706,
+      "top5pct_requests_miss_share": 0.3092,
+      "window_rpcs": {
+       "GETATTR": 164,
+       "LOOKUP": 0,
+       "ACCESS": 0,
+       "DELEGRETURN": 0,
+       "OPEN": 0
+      },
+      "counter_miss_fraction": 7e-05,
+      "miss_fraction": 7e-05,
+      "status": "ERROR",
+      "errors": [
+       "counter miss fraction 0.0001 vs latency 0.0575 disagree (> 0.0020)"
+      ]
+     },
+     "1": {
+      "requests": 236,
+      "skipped": 0,
+      "skip_fraction": 0.0,
+      "stats_issued": 236000,
+      "enoent_issued": 236000,
+      "per_request_stat_ns": {
+       "amortised": 3902877,
+       "median": 2726134,
+       "p99": 12477023,
+       "max": 14632463
+      },
+      "per_request_enoent_ns": {
+       "amortised": 1654880,
+       "median": 1395950,
+       "p99": 5876209
+      },
+      "miss_threshold_ns": 4490,
+      "stat_bimodality": {
+       "verdict": "unimodal",
+       "centroids_ns": [
+        1321,
+        3106
+       ],
+       "log10_separation": 0.371,
+       "minor_share": 0.4336
+      },
+      "latency_miss_fraction": 0.03988,
+      "latency_enoent_miss_fraction": 0.00614,
+      "top5pct_requests_miss_share": 0.2673,
+      "window_rpcs": {
+       "GETATTR": 164,
+       "LOOKUP": 0,
+       "ACCESS": 0,
+       "DELEGRETURN": 0,
+       "OPEN": 0
+      },
+      "counter_miss_fraction": 0.00069,
+      "miss_fraction": 0.00069,
+      "status": "ERROR",
+      "errors": [
+       "counter miss fraction 0.0007 vs latency 0.0399 disagree (> 0.0020)"
+      ]
+     },
+     "10": {
+      "requests": 23,
+      "skipped": 0,
+      "skip_fraction": 0.0,
+      "stats_issued": 23000,
+      "enoent_issued": 23000,
+      "per_request_stat_ns": {
+       "amortised": 5376343,
+       "median": 4324578,
+       "p99": 13259646,
+       "max": 13259646
+      },
+      "per_request_enoent_ns": {
+       "amortised": 1372272,
+       "median": 1386427,
+       "p99": 2672367
+      },
+      "miss_threshold_ns": 4490,
+      "stat_bimodality": {
+       "verdict": "unimodal",
+       "centroids_ns": [
+        1244,
+        2615
+       ],
+       "log10_separation": 0.323,
+       "minor_share": 0.4511
+      },
+      "latency_miss_fraction": 0.025,
+      "latency_enoent_miss_fraction": 0.0047,
+      "top5pct_requests_miss_share": 0.4557,
+      "window_rpcs": {
+       "GETATTR": 124,
+       "LOOKUP": 0,
+       "ACCESS": 0,
+       "DELEGRETURN": 0,
+       "OPEN": 0
+      },
+      "counter_miss_fraction": 0.00539,
+      "miss_fraction": 0.00539,
+      "status": "ERROR",
+      "errors": [
+       "counter miss fraction 0.0054 vs latency 0.0250 disagree (> 0.0020)"
+      ]
+     }
+    }
+   },
+   "grades": {
+    "P1": {
+     "grade": "NOT EVALUABLE",
+     "inputs": {
+      "efs_host_plain": 32250,
+      "fsx_openzfs": null,
+      "fsx_lustre": null
+     }
+    },
+    "P2": {
+     "grade": "NOT EVALUABLE"
+    },
+    "P3": {
+     "grade": "NOT EVALUABLE",
+     "ratios": {
+      "efs_host_plain": 1.433,
+      "efs_host_tls": null,
+      "fsx_openzfs": null,
+      "fsx_ontap": null
+     }
+    },
+    "P4": {
+     "grade": "NOT EVALUABLE",
+     "ratios": {
+      "efs_host_plain": 1.55,
+      "efs_host_tls": null,
+      "fsx_openzfs": null,
+      "fsx_ontap": null
+     }
+    },
+    "P5": {
+     "grade": "NOT EVALUABLE",
+     "miss_fraction": {
+      "efs_host_plain": {
+       "0.1": null,
+       "1": null,
+       "10": null
+      },
+      "efs_host_tls": {
+       "0.1": null,
+       "1": null,
+       "10": null
+      },
+      "fsx_ontap": {
+       "0.1": null,
+       "1": null,
+       "10": null
+      }
+     }
+    },
+    "P6": {
+     "grade": "NOT EVALUABLE",
+     "miss_fraction": {
+      "0.1": null,
+      "1": null,
+      "10": null
+     }
+    },
+    "P7": {
+     "grade": "NOT EVALUABLE",
+     "slow_share": {
+      "0.1": null,
+      "1": null,
+      "10": null
+     }
+    },
+    "P8": {
+     "grade": "NOT EVALUABLE",
+     "enoent_vs_positive": {
+      "efs_host_plain": null,
+      "efs_host_tls": null,
+      "fsx_openzfs": null,
+      "fsx_ontap": null
+     }
+    },
+    "P9": {
+     "grade": "NOT EVALUABLE"
+    },
+    "P10": {
+     "grade": "NOT EVALUABLE"
+    }
+   }
+  }
+ },
+ "rules": "experiments/E5-attribute-cache/README.md",
+ "predictions": {
+  "P1": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P2": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P3": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P4": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P5": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P6": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P7": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P8": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P9": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  },
+  "P10": {
+   "verdict": "NOT EVALUABLE",
+   "per_replication": [
+    "NOT EVALUABLE"
+   ]
+  }
+ }
+}

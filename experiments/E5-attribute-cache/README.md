@@ -1,7 +1,7 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `BUILT, NOT DEPLOYED`. Specified 2026-10-15; apparatus built and checked
-locally on 2026-10-16 (see [Build record](#build-record-2026-10-16)). No AWS resource has
+**Status:** `BUILT, NOT DEPLOYED` (this branch). Specified 2026-10-15; apparatus built and checked
+locally on 2026-10-16, full-timing local check run the same day (see [Build record](#build-record-2026-10-16)). No AWS resource has
 been created. A deploy needs an explicit go-ahead, recorded here.
 
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md), specifically its per-op
@@ -395,12 +395,77 @@ the fast mode (2 s waits), per-cohort `mountstats` deltas on the NFS tier:
 `e5_stats.py` read this output without error. Every prediction graded NOT EVALUABLE,
 which is right for one replication with a failed A3.
 
-**Not yet done: the full-timing local run** (75 s waits, 150 s/240 s B windows). It
-was blocked by the local harness itself. The first fast run let its container exit
-with NFS mounts still up while the in-container server stopped, and a delegation
-return is now stuck in the Docker VM's kernel. Every later `sync` blocks on it. The
-harness now unmounts before stopping the server. Clearing the VM needs a Docker
-Desktop restart. Run `make e5-local` once after that, and before the pilot.
+### The full-timing local run, 2026-10-15 18:46 UTC
+
+**Output:** [`local-check/20261015T184617Z-6e7ec1f/`](local-check/20261015T184617Z-6e7ec1f/).
+The raw task output is there, and `summary.json`/`summary.md` come from
+`analysis/e5_stats.py`.
+
+- **Settings:** commit `6e7ec1f`, `make e5-local` with the defaults, real 75 s waits, B
+  warm-up 150 s and measurement 240 s (both shortened from 300 s and 600 s).
+- **Client and server:** kernel 6.12.72 (linuxkit), loopback NFSv4.1 to Linux knfsd on a
+  tmpfs export. Tiers `ebs` and one NFS tier.
+- **What it is:** an apparatus check, not a result. It sits outside `results/` because
+  nothing in it describes AWS. It is filed here because the README cites it.
+
+**What it scopes to.** It tests **this branch's** apparatus. Master carries a separate
+E5 implementation (`73e880e`, built in parallel from the same spec), and that one is
+what the 2026-10-15 pilot attempts deployed. What carries over to both is the
+behaviour of the Linux NFS client. That behaviour is what the gates and predictions
+rest on.
+
+**Cohort A: every signature matched, with the real waits.**
+
+| Cohort | `mountstats` delta | Gate |
+|---|---|---|
+| A1 cold `stat` | LOOKUP 1,040, ACCESS 40, GETATTR 1 | PASS |
+| A2 cold `ENOENT` | LOOKUP 1,000 | PASS |
+| A3 after 75 s | **GETATTR 1,041**, LOOKUP 0 | PASS. A real revalidation: one GETATTR per file, plus a directory. The mechanism section's reading of `fs/nfs/inode.c` holds on this kernel |
+| A4 `ENOENT` after 75 s | none | recorded. Negative dentries survived on unchanged directories |
+| A5 immediately after A3 | none | PASS |
+| A6 cold read | OPEN 1,000, READ 1,000, CLOSE 1,000 | PASS: the `open_read` fix |
+| A7 warm read after 75 s | OPEN 1,000, CLOSE 1,000, GETATTR 41, **READ 0** | recorded. Close-to-open revalidation went to the server; the data came from the page cache |
+| A8 forced, 10 passes | GETATTR 10,000, LOOKUP 1,040 | PASS. Pass 1 is a first touch (amendment 2) |
+
+**Cohort B: the server granted delegations, and the latency cross-check failed
+closed.**
+
+| Interval | Stats in window | RPCs in window | Counter miss fraction | Latency miss fraction | Cell |
+|---|--:|--:|--:|--:|---|
+| 0.1 s | 2,360,000 | GETATTR 164 | 0.007 % | 5.75 % | ERROR |
+| 1 s | 236,000 | GETATTR 164 | 0.069 % | 3.99 % | ERROR |
+| 10 s | 23,000 | GETATTR 124 | 0.54 % | 2.50 % | ERROR |
+
+Two things happened:
+
+1. **The file attribute timers never expired.** P5's no-delegation model predicts about
+   N × window / `acregmax` = 4,000 file GETATTRs at Δ = 0.1 s. There were 164, about the
+   same at every interval, roughly the 40 directories revalidating every 60 s.
+   - Linux knfsd grants read delegations, and the compile step opened every file.
+   - Attributing this to delegations is an **inference**: the delegations were not
+     counted directly.
+   - On this point the local server behaves like FSx OpenZFS (P6's mechanism), not
+     like EFS or ONTAP. So **P5's model was not tested here.**
+2. **The latency classifier disagreed with the counters, and the grader marked every
+   NFS cell ERROR.**
+   - The hit/miss threshold (amendment 5) came out at 4.5 µs: the geometric midpoint of
+     a 0.6 µs hit (A5) and a 32 µs loopback miss (A3).
+   - With 18 serve processes on the VM's CPUs, ordinary hits drifted past 4.5 µs. EBS's
+     B hits averaged 2–3.5 µs a `stat` against 1.1 µs in A5.
+   - The protocol's k-means read every cell as unimodal, which agrees with the counters.
+   - This is the fail-closed rule working, not a defect in it. But it is a live risk for
+     the pilot.
+
+**What this means for AWS.** The margin between hit and miss is wider there: a ~2 µs hit
+against misses of 98–827 µs puts the threshold at roughly 14–40 µs. Concurrency noise
+crossing that is less likely, but it is not ruled out. If the pilot's B cells come back
+ERROR for this reason, the counter fraction stands as the measurement. Deciding whether
+to grade on counters alone is then a change to the pre-registration, and has to be
+recorded as one. This check does not make that change.
+
+**Not tested locally:** EFS, FSx and Lustre themselves, TLS mounts, the host user data,
+the Lustre counter service, and P5's no-delegation regime. Knfsd can be run with leases
+off (`fs.leases-enable=0`) to cover the last one.
 
 ### Amendments to the method, made while building, before any E5 data
 
