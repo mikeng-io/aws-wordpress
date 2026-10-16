@@ -516,6 +516,114 @@ Pre-flight:
 - **Cost:** ~20 min of standing FSx + endpoints ≈ **$0.30**. Running total for E5:
   ~$1.55 of $10.
 
+## Local NFS apparatus checks (2026-10-16 UTC)
+
+**These are apparatus checks, not results.** They sit in `local-check/`, outside
+`results/`, because nothing in them describes AWS. The client is Linux 6.12.72
+(linuxkit, Docker Desktop's VM). The server is loopback NFSv4.1 to Linux knfsd on a
+tmpfs export. Only the RPC counts are evidence. The latencies describe a loopback,
+not EFS or FSx.
+
+**Harness:** `scripts/local-nfs-check.sh`, `make e5-local [MODE="fast leases-off"]`.
+It was ported from the parallel build on `claude/e5-attribute-cache-spec` (`6e7ec1f`,
+`5c98c8a`) and adapted to this apparatus. It runs this repository's bench image
+unchanged (`entrypoint.sh` → `e5-run.sh` → `agebench`) and `e5-seed.py`, and it
+reproduces the stack's layout:
+- seeding goes through a mount that is then unmounted, followed by `drop_caches` and
+  `seed-utc`;
+- each family mounts the export root with `nosharecache`, and each subtree is
+  bind-mounted at `/bench/<tier>.<family>`;
+- `ebs` is a plain directory on the container root, and `root-dev` is written so the
+  "ebs must be on the root" check is live.
+
+The harness also samples `/proc/fs/nfsd/clients/*/states` every 15 s to count the
+delegations the server holds. A client cannot see that number, and on AWS nobody can.
+Teardown unmounts every client mount before it stops nfsd: a client holding
+delegations against a server that has gone away wedges the Docker VM.
+
+Both runs used commit `725266b` with the pre-registered timing: 120 s seed age, 75 s
+waits, 300 s warm-up and 600 s measured. The tiers were `ebs` and `efs_host_plain`.
+`git_dirty` in `local-meta.csv` counts the grader edit below and the first run's
+output directory. The image and harness were unchanged between the runs. Both
+`summary.*` files were regenerated with the grader as committed here.
+
+| | [`…181153Z-725266b-leases-on`](local-check/20261016T181153Z-725266b-leases-on/) | [`…183547Z-725266b-leases-off`](local-check/20261016T183547Z-725266b-leases-off/) |
+|---|---|---|
+| `fs.leases-enable` | 1 (default) | 0 (restored to 1 on exit) |
+| Delegations the server held during B | 3,000–4,000 | **0** in every sample |
+| A1 / A2 | LOOKUP 1,040 / 1,000: PASS | same |
+| A3 after 75 s | GETATTR 1,041, LOOKUP 0: PASS | same |
+| A5 | 0 RPCs: PASS | same |
+| A6 / A7 | READ 1,000 / READ 0, GETATTR 41 | same |
+| **A8w** (unscored) | LOOKUP 1,040 + GETATTR 1,000 + ACCESS 41 | same |
+| A8 (10 passes) | GETATTR 10,000, LOOKUP 0: PASS | same |
+| B counter miss fraction, Δ = 0.1 / 1 / 10 s | 0.007 % / 0.07 % / 0.62 % | **0.17 % / 1.74 % / 15.6 %** |
+| B-1 RPCs in the 600 s window | GETATTR 410 | GETATTR 10,410 |
+| B latency slow share, Δ = 0.1 / 1 / 10 s | 0.89 % / 0.97 % / 1.10 % | 1.05 % / 2.36 % / 10.5 % |
+| B cells (`efs_host_plain`) | all ERROR (cross-check) | all ERROR (cross-check) |
+| `ebs` B slow share (no NFS, so all noise) | 0.83–1.10 % | 0.77–0.92 % |
+
+What these runs show about the apparatus:
+1. **Every cohort A signature holds on this kernel,** with the real waits, under
+   master's own `e5-run.sh`.
+2. **No-delegation steady state matches P5's model.** With leases off, the counter
+   fractions fall inside all three P5 bands (≤ 0.5 %, 1–3 %, 10–25 %). B-1's 10,410
+   GETATTRs are 1,000 files × 600 s / 60 s `acregmax` plus 410 directory
+   revalidations. This is one loopback replication of one tier, so it is not a P5
+   verdict. It does show that the timer model and the counter arithmetic the grader
+   uses agree on a real Linux client.
+3. **Delegations stop the clock, now measured directly.** With leases on, the server
+   held a delegation on every compile-opened file, and file GETATTRs dropped to about
+   zero. The branch's check had inferred this. Here the server counts it.
+4. **The latency cross-check cannot pass here, and may not pass on AWS** (grader
+   difference 2 below).
+
+### Grader differences from the parallel build, and their status
+
+The parallel build's local check raised three points about grading. Master's grader
+(`analysis/e5_stats.py`) was checked against each one, and the port found a fourth.
+**No grading rule was changed.**
+
+1. **The forced mount's first pass is a cold first touch.** *Already handled.*
+   Amendment 1 (2026-10-16) records it as `A8w`, and the grader reads only `A8`.
+   Confirmed above: A8w is LOOKUP + GETATTR, and A8 is pure GETATTR.
+2. **The latency classifier disagrees with the counters under 18-way concurrency.**
+   *Flagged, not fixed: fixing it is a change to the pre-registration.* Master
+   classifies by per-cell k-means; the branch used a threshold taken from cohort A.
+   Both fail the same way:
+   - On `ebs`, which has no misses at all, k-means finds a "slow cluster" at ~25–30 µs
+     holding 0.8–1.1 % of stats. That is scheduler noise, and it is a floor under every
+     cell's slow share.
+   - The cross-check's tolerance is max(20 %, 0.2 pp). Against that floor, a
+     no-delegation cell at Δ = 0.1 s (expected ≤ 0.5 %) cannot pass. A cell at Δ = 1 s
+     (1–3 %) passes only if the noise happens to be small.
+   - Locally, the misses (30–110 µs) also overlap that noise, which is a loopback
+     artefact. On AWS the split sits near 30–40 µs, and whether 18 processes on 2 vCPUs
+     put ≥ 0.2 % of hits above it is unknown until the pilot.
+   - **Risk:** P5, P6 and P9–P10 can grade ERROR on every replication with correct
+     counters.
+   - A remedy needs a dated amendment, recorded before the pilot is graded. Two
+     candidates: grade B's miss fraction on counters alone and report the
+     cross-check; or subtract the same-Δ `ebs` slow share as a measured noise floor.
+   - To diagnose, the grader now reports each cell's k-means centroids and split as
+     `stat_split`. It is reported only and changes no grade.
+3. **A delegating server keeps attributes valid indefinitely.** *Flagged.* P5's model
+   assumes no delegations. The grader cannot see delegations on AWS: the client has
+   no counter for delegations it holds, and `DELEGRETURN` only counts returns.
+   - EFS cannot grant delegations, so P5's EFS tiers are safe. P6 covers OpenZFS by
+     design.
+   - **ONTAP is the exposure.** If it grants delegations, its counter fraction falls
+     to ~0 (above: 0.07 % at Δ = 1 s). P5 then grades INCONCLUSIVE, which reads as "the
+     timer model is wrong" when the cause is a capability.
+   - A cheap discriminator, not added because it changes the deployed run: after B,
+     wait 75 s and `stat` each `ss-*` mount once. GETATTR ≈ N means no delegation;
+     ≈ 0 means a delegation is held.
+4. **`e5_stats.py` crashed on every real run.** *Fixed in `725266b`; not a rule
+   change.* `main()` serialized `constants`, which picked up `PREDICTIONS`, a dict of
+   functions, so `json.dumps` raised before `summary.json` was written. The self-test
+   called `analyse()` only. It now serializes and renders as well, and still reaches
+   every intended grade.
+
 ## Teardown, and how it is verified
 
 The same discipline as E2, because it is the same FSx trap. At ~$0.955/hr a stack

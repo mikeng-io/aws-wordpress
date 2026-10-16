@@ -1,0 +1,791 @@
+{
+  "run_dir": "experiments/E5-attribute-cache/local-check/20261016T181153Z-725266b-leases-on",
+  "replications": [
+    "rep-1"
+  ],
+  "predictions": {
+    "1": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "fsx_openzfs A3: instrument status absent; fsx_lustre A1: instrument status absent"
+        }
+      }
+    },
+    "2": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "fsx_ontap A3: instrument status absent; fsx_openzfs A3: instrument status absent"
+        }
+      }
+    },
+    "3": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_tls A1: instrument status absent; efs_host_tls A3: instrument status absent"
+        }
+      }
+    },
+    "4": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_tls A8: instrument status absent; efs_host_tls A3: instrument status absent"
+        }
+      }
+    },
+    "5": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_plain B-0.1: counter miss fraction 0.0001 vs latency slow share 0.0089 (tolerance 0.0020)"
+        }
+      }
+    },
+    "6": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "fsx_openzfs B-0.1: instrument status absent"
+        }
+      }
+    },
+    "7": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "fsx_lustre B-0.1: instrument status absent"
+        }
+      }
+    },
+    "8": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_plain B-1: counter miss fraction 0.0007 vs latency slow share 0.0097 (tolerance 0.0020)"
+        }
+      }
+    },
+    "9": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_plain B-1: counter miss fraction 0.0007 vs latency slow share 0.0097 (tolerance 0.0020)"
+        }
+      }
+    },
+    "10": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_plain B-1: counter miss fraction 0.0007 vs latency slow share 0.0097 (tolerance 0.0020)"
+        }
+      }
+    }
+  },
+  "cohorts": {
+    "rep-1": {
+      "a": {
+        "ebs": {
+          "A1": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1875,
+            "p90_ns": 2875,
+            "p99_ns": 7125,
+            "median_ci95_ns": [
+              1833,
+              1875
+            ],
+            "geomean_ns": 2024.4,
+            "geomean_over_median": 1.08,
+            "tail_p99_over_p50": 3.8,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1000,
+            "p90_ns": 1333,
+            "p99_ns": 5834,
+            "median_ci95_ns": [
+              1000,
+              1000
+            ],
+            "geomean_ns": 1112.4,
+            "geomean_over_median": 1.112,
+            "tail_p99_over_p50": 5.83,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 2750,
+            "p90_ns": 3542,
+            "p99_ns": 10583,
+            "median_ci95_ns": [
+              2708,
+              2792
+            ],
+            "geomean_ns": 2788.3,
+            "geomean_over_median": 1.014,
+            "tail_p99_over_p50": 3.85,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 875,
+            "p90_ns": 1417,
+            "p99_ns": 2959,
+            "median_ci95_ns": [
+              833,
+              916
+            ],
+            "geomean_ns": 956.6,
+            "geomean_over_median": 1.093,
+            "tail_p99_over_p50": 3.38,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1333,
+            "p90_ns": 1834,
+            "p99_ns": 2417,
+            "median_ci95_ns": [
+              1292,
+              1375
+            ],
+            "geomean_ns": 1348.5,
+            "geomean_over_median": 1.012,
+            "tail_p99_over_p50": 1.81,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 55833,
+            "p90_ns": 74708,
+            "p99_ns": 108458,
+            "median_ci95_ns": [
+              54958,
+              57000
+            ],
+            "geomean_ns": 56960.7,
+            "geomean_over_median": 1.02,
+            "tail_p99_over_p50": 1.94,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 9167,
+            "p90_ns": 17083,
+            "p99_ns": 29167,
+            "median_ci95_ns": [
+              8791,
+              9500
+            ],
+            "geomean_ns": 9029.1,
+            "geomean_over_median": 0.985,
+            "tail_p99_over_p50": 3.18,
+            "status": "OK"
+          }
+        },
+        "efs_host_plain": {
+          "A1": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1 LOOKUP \u0394=1040 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 62542,
+            "p90_ns": 105792,
+            "p99_ns": 316541,
+            "median_ci95_ns": [
+              61000,
+              64208
+            ],
+            "geomean_ns": 67622.5,
+            "geomean_over_median": 1.081,
+            "tail_p99_over_p50": 5.06,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1000 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 59166,
+            "p90_ns": 86584,
+            "p99_ns": 146084,
+            "median_ci95_ns": [
+              57875,
+              60458
+            ],
+            "geomean_ns": 63222.7,
+            "geomean_over_median": 1.069,
+            "tail_p99_over_p50": 2.47,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1041 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 44875,
+            "p90_ns": 121041,
+            "p99_ns": 397125,
+            "median_ci95_ns": [
+              41834,
+              46875
+            ],
+            "geomean_ns": 47503.7,
+            "geomean_over_median": 1.059,
+            "tail_p99_over_p50": 8.85,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 625,
+            "p90_ns": 875,
+            "p99_ns": 1875,
+            "median_ci95_ns": [
+              625,
+              625
+            ],
+            "geomean_ns": 638.3,
+            "geomean_over_median": 1.021,
+            "tail_p99_over_p50": 3.0,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 709,
+            "p90_ns": 1083,
+            "p99_ns": 2625,
+            "median_ci95_ns": [
+              708,
+              750
+            ],
+            "geomean_ns": 784.0,
+            "geomean_over_median": 1.106,
+            "tail_p99_over_p50": 3.7,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=1000 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 44209,
+            "p90_ns": 199292,
+            "p99_ns": 700292,
+            "median_ci95_ns": [
+              43583,
+              44958
+            ],
+            "geomean_ns": 61854.5,
+            "geomean_over_median": 1.399,
+            "tail_p99_over_p50": 15.84,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=41 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 152083,
+            "p90_ns": 210750,
+            "p99_ns": 313958,
+            "median_ci95_ns": [
+              148875,
+              155292
+            ],
+            "geomean_ns": 148966.2,
+            "geomean_over_median": 0.98,
+            "tail_p99_over_p50": 2.06,
+            "status": "OK"
+          },
+          "A8": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=10000 LOOKUP \u0394=0 READ \u0394=0 for 10000 ops",
+            "n": 10000,
+            "p50_ns": 48750,
+            "p90_ns": 75792,
+            "p99_ns": 125667,
+            "median_ci95_ns": [
+              48333,
+              49250
+            ],
+            "geomean_ns": 48072.8,
+            "geomean_over_median": 0.986,
+            "tail_p99_over_p50": 2.58,
+            "status": "OK"
+          }
+        },
+        "efs_host_tls": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A8": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_openzfs": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A8": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_ontap": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A8": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_lustre": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        }
+      },
+      "b": {
+        "ebs": {
+          "0.1": {
+            "status": "OK",
+            "measured_requests": 6000,
+            "late_share": 0.0,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.008254,
+            "slow_share_enoent": 0.005536,
+            "stat_sum_per_request_ns": {
+              "amortised": 2501046.2,
+              "median": 1821423,
+              "p99": 10839038,
+              "max": 91240458
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1337,
+              "slow_centroid_ns": 29369,
+              "threshold_ns": 6266
+            }
+          },
+          "1": {
+            "status": "OK",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.008448,
+            "slow_share_enoent": 0.00575,
+            "stat_sum_per_request_ns": {
+              "amortised": 2635764.0,
+              "median": 1819194,
+              "p99": 10371197,
+              "max": 21370367
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1354,
+              "slow_centroid_ns": 29563,
+              "threshold_ns": 6327
+            }
+          },
+          "10": {
+            "status": "OK",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.010983,
+            "slow_share_enoent": 0.007867,
+            "stat_sum_per_request_ns": {
+              "amortised": 3111328.3,
+              "median": 1821590,
+              "p99": 14744101,
+              "max": 20946257
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1317,
+              "slow_centroid_ns": 30894,
+              "threshold_ns": 6378
+            }
+          }
+        },
+        "efs_host_plain": {
+          "0.1": {
+            "status": "ERROR",
+            "measured_requests": 6000,
+            "late_share": 0.0,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.008918,
+            "slow_share_enoent": 0.006256,
+            "stat_sum_per_request_ns": {
+              "amortised": 2723338.4,
+              "median": 1969240,
+              "p99": 12174978,
+              "max": 49755580
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1407,
+              "slow_centroid_ns": 32307,
+              "threshold_ns": 6741
+            },
+            "counter_rpcs": 410,
+            "miss_fraction": 6.8e-05,
+            "miss_fraction_ci95": [
+              6.2e-05,
+              7.5e-05
+            ],
+            "xcheck": {
+              "counter": 6.8e-05,
+              "latency": 0.008918,
+              "tolerance": 0.002
+            },
+            "reason": "counter miss fraction 0.0001 vs latency slow share 0.0089 (tolerance 0.0020)"
+          },
+          "1": {
+            "status": "ERROR",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.009698,
+            "slow_share_enoent": 0.006727,
+            "stat_sum_per_request_ns": {
+              "amortised": 3127219.9,
+              "median": 2145205,
+              "p99": 15114749,
+              "max": 35298329
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1405,
+              "slow_centroid_ns": 36912,
+              "threshold_ns": 7201
+            },
+            "counter_rpcs": 410,
+            "miss_fraction": 0.000683,
+            "miss_fraction_ci95": [
+              0.00062,
+              0.000753
+            ],
+            "xcheck": {
+              "counter": 0.000683,
+              "latency": 0.009698,
+              "tolerance": 0.002
+            },
+            "reason": "counter miss fraction 0.0007 vs latency slow share 0.0097 (tolerance 0.0020)"
+          },
+          "10": {
+            "status": "ERROR",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.011033,
+            "slow_share_enoent": 0.008217,
+            "stat_sum_per_request_ns": {
+              "amortised": 5000121.2,
+              "median": 2333546,
+              "p99": 31422166,
+              "max": 38346635
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1372,
+              "slow_centroid_ns": 55111,
+              "threshold_ns": 8697
+            },
+            "counter_rpcs": 371,
+            "miss_fraction": 0.006183,
+            "miss_fraction_ci95": [
+              0.005587,
+              0.006843
+            ],
+            "xcheck": {
+              "counter": 0.006183,
+              "latency": 0.011033,
+              "tolerance": 0.002
+            },
+            "reason": "counter miss fraction 0.0062 vs latency slow share 0.0110 (tolerance 0.0020)"
+          }
+        },
+        "efs_host_tls": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_openzfs": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_ontap": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_lustre": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        }
+      }
+    }
+  },
+  "constants": {
+    "NFS_TIERS": [
+      "efs_host_plain",
+      "efs_host_tls",
+      "fsx_openzfs",
+      "fsx_ontap"
+    ],
+    "TIERS": [
+      "ebs",
+      "efs_host_plain",
+      "efs_host_tls",
+      "fsx_openzfs",
+      "fsx_ontap",
+      "fsx_lustre"
+    ],
+    "DELTAS": [
+      "0.1",
+      "1",
+      "10"
+    ],
+    "A_COHORTS": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "A6",
+      "A7"
+    ],
+    "SIG_MIN": 0.95,
+    "SIG_MAX": 0.05,
+    "LUSTRE_MISS_COUNTERS": [
+      "ldlm_enqueue",
+      "mds_getattr",
+      "mds_getattr_name"
+    ],
+    "LATE_MAX_SHARE": 0.05,
+    "XCHECK_REL": 0.2,
+    "XCHECK_ABS": 0.002,
+    "MIN_LOG10_SEPARATION": 0.5,
+    "BINS_PER_DECADE": 20,
+    "BIN0_NS": 100,
+    "E2_MISS_NS": {
+      "efs_host_plain": 827000,
+      "fsx_openzfs": 98000,
+      "fsx_lustre": 149000
+    },
+    "P1_BAND": [
+      0.5,
+      2.0
+    ],
+    "P2_BAND": [
+      0.5,
+      2.0
+    ],
+    "P2_EFS_MAX": 0.25,
+    "P3_SUPPORT": [
+      1.0,
+      3.0
+    ],
+    "P3_KILL": [
+      0.9,
+      3.0
+    ],
+    "P4_TOL": 0.25,
+    "P5_TIERS": [
+      "efs_host_plain",
+      "efs_host_tls",
+      "fsx_ontap"
+    ],
+    "P5_BANDS": {
+      "0.1": [
+        0.0,
+        0.005
+      ],
+      "1": [
+        0.01,
+        0.03
+      ],
+      "10": [
+        0.1,
+        0.25
+      ]
+    },
+    "P5_KILL": {
+      "0.1": 0.02,
+      "1": 0.05
+    },
+    "P6_SUPPORT_MAX": 0.02,
+    "P6_KILL_D10": 0.05,
+    "P7_SUPPORT_MAX": 0.01,
+    "P7_KILL": 0.05,
+    "P8_KILL_RATIO": 2.0,
+    "P9_SUPPORT_MAX": 50.0,
+    "P9_KILL_MIN": 200.0,
+    "P10_TOP": 0.05,
+    "P10_SUPPORT_MIN": 0.5,
+    "P10_KILL_MAX": 0.2
+  }
+}

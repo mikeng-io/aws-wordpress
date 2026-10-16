@@ -325,6 +325,15 @@ def cohort_b_cell(tier: str, d: str, tdir: Path) -> dict:
         },
         "misses_per_request": [slow_count(r["sb"], thr_s) for r in meas],
     }
+    # Reported, not graded: where the classifier put its split. Without it, a
+    # counter/latency ERROR cannot say whether hits drifted over the line
+    # (concurrency) or the slow cluster was never found (separation gate).
+    km = kmeans2_weighted(hs)
+    cell["stat_split"] = {
+        "fast_centroid_ns": round(10 ** km[0]) if km else None,
+        "slow_centroid_ns": round(10 ** km[1]) if km else None,
+        "threshold_ns": round(10 ** thr_s) if thr_s is not None else None,
+    }
     reasons = []
     if n_stat != N * len(meas):
         reasons.append(f"{n_stat} stat ops in {len(meas)} requests, expected {N} each")

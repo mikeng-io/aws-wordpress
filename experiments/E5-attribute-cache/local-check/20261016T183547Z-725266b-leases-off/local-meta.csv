@@ -1,0 +1,9 @@
+git_commit,725266b
+git_dirty,2
+started_utc,2026-10-16T18:35:47Z
+image_id,sha256:95edcb6e74e4d4f1c294ff20c3d844f17a52011f39aea983d93e178fee7203a9
+docker_kernel,6.12.72-linuxkit
+mode,full
+timing,pre-registered defaults
+leases_enable,0
+finished_utc,2026-10-16T18:59:43Z
