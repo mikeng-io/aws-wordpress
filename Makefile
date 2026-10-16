@@ -85,6 +85,10 @@ e5-container: runner ## E5 from the runner container, detached (`docker logs -f 
 	  aws-wordpress-runner \
 	  bash -c 'cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e5 REPS=$(or $(REPS),3)'
 
+.PHONY: e5-local
+e5-local: ## E5 apparatus check against a local kernel NFS server - no AWS, no cost. MODE="fast" and/or "leases-off"
+	./experiments/E5-attribute-cache/scripts/local-nfs-check.sh $(or $(OUT),/tmp/e5-local) $(MODE)
+
 .PHONY: e5-stats
 e5-stats: ## Grade E5 from the latest committed run (or RUN=results/E5/<run-id>)
 	@python3 analysis/e5_stats.py $(or $(RUN),$$(ls -d results/E5/*/ | tail -1))

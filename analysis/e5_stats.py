@@ -546,8 +546,12 @@ def analyse(run_dir: Path) -> dict:
                 cell.pop("misses_per_request", None)
     return {"run_dir": str(run_dir), "replications": list(per_rep), "predictions": verdicts,
             "cohorts": {r: {"a": v["a"], "b": v["b"]} for r, v in per_rep.items()},
+            # PREDICTIONS is uppercase but maps to functions, so it is not a constant;
+            # including it made json.dumps raise on every real run (found by the local
+            # NFS check, 2026-10-17; the self-test calls analyse(), never main()).
             "constants": {k: v for k, v in globals().items()
-                          if k.isupper() and len(k) > 1 and isinstance(v, (int, float, tuple, list, dict))}}
+                          if k.isupper() and len(k) > 1 and k != "PREDICTIONS"
+                          and isinstance(v, (int, float, tuple, list, dict))}}
 
 
 def fmt_ns(ns) -> str:

@@ -160,7 +160,11 @@ def grade(worlds: list[dict]) -> dict:
         run = Path(tmp) / "run"
         for i, w in enumerate(worlds, 1):
             write_rep(run / f"rep-{i}", w)
-        return g.analyse(run)
+        res = g.analyse(run)
+        # main() also serializes and renders; a crash there loses a real run's grade.
+        g.json.dumps(res, default=list)
+        g.render(res)
+        return res
 
 
 # --- mutations: each returns a world that pushes ONE prediction to a grade ------------
