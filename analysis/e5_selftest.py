@@ -4,8 +4,8 @@
 Required by experiments/E5-attribute-cache/README.md ("Apparatus to build", item 8)
 before the first deploy: for every prediction, a synthetic run reaching SUPPORTED,
 REFUTED, INCONCLUSIVE and NOT EVALUABLE (an ERROR replication), plus the specific
-ERROR paths the README names - a failed signature, a late cell, and a counter/latency
-disagreement. A grader that has only ever seen real data has only ever been checked
+ERROR paths the README names - a failed signature, a late cell, and broken phase attribution. Counter/latency
+disagreement is diagnostic under the 2026-10-26 amendment. A grader that has only ever seen real data has only ever been checked
 against the answer it gave.
 
 The synthetic files have the shape agebench, e5-run.sh and the kernel produce:
@@ -16,6 +16,8 @@ Usage:  python3 analysis/e5_selftest.py        (exit 0 only if every case passes
 """
 from __future__ import annotations
 
+import contextlib
+import io
 import copy
 import gzip
 import math
@@ -47,7 +49,7 @@ def base_world() -> dict:
         "ebs": {c: 1_400 for c in g.A_COHORTS},
     }
     status = {t: {c: "ok" for c in (g.A_COHORTS + (["A8w", "A8"] if t in g.NFS_TIERS else []))
-                  + [f"B-{d}" for d in g.DELTAS]} for t in g.TIERS}
+                  + [f"B-{d}" for d in g.DELTAS] + [f"D-{d}" for d in g.DELTAS]} for t in g.TIERS}
     # Signature RPC deltas per cohort, as the kernel would produce them.
     sig = {t: {"A1": {"LOOKUP": N + 40}, "A2": {"LOOKUP": N}, "A3": {"GETATTR": N + 41},
                "A4": {"GETATTR": 41}, "A5": {}, "A6": {"READ": N, "OPEN": N}, "A7": {"GETATTR": N},
@@ -124,8 +126,10 @@ def write_rep(rep_dir: Path, w: dict) -> None:
             ms = spread(round(p["miss"] * n * N), n, p["cluster"])
             me = spread(round(p["enoent_miss"] * n * N), n, p["cluster"])
             late_n = round(p["late"] * n)
+            rpc_ms = spread(round(p["counter"] * n * N), n, p["cluster"])
             rows = [f"# cohort=B-{d} delta_ns={dn} warm_requests={WARM} measured_requests={n} raw_every=1 "
-                    f"bins_per_decade=20 bin0_ns=100", "k,phase,lateness_ns,stat_sum_ns,enoent_sum_ns,stat_bins,enoent_bins"]
+                    f"bins_per_decade=20 bin0_ns=100 method=rpc-phases-v2 rpc_mount=/bench/{t}.ss-{d}",
+                    "k,phase,lateness_ns,stat_sum_ns,enoent_sum_ns,stat_bins,enoent_bins,stat_rpc,enoent_rpc,counter_ns"]
             for k in range(WARM + n):
                 phase = "w" if k < WARM else "m"
                 j = k - WARM
@@ -143,16 +147,28 @@ def write_rep(rep_dir: Path, w: dict) -> None:
                 late = dn if (phase == "m" and j < late_n) else 1000
                 ssum = (N - s_miss) * p["hit_ns"] + s_miss * p["miss_ns"]
                 esum = (N - e_miss) * p["enoent_hit_ns"] + e_miss * p["miss_ns"]
-                rows.append(f"{k},{phase},{late},{ssum},{esum},{fmt(sb)},{fmt(ebins)}")
+                # Counters are independent of latency; disagreement is a valid test world.
+                sr = f"{rpc_ms[j] if phase == 'm' else 0}:0:0" if t in g.NFS_TIERS else "-"
+                er = f"{e_miss}:0:0" if t in g.NFS_TIERS else "-"
+                rows.append(f"{k},{phase},{late},{ssum},{esum},{fmt(sb)},{fmt(ebins)},{sr},{er},10000")
             if w["status"][t].get(f"B-{d}") == "ok":
                 with gzip.open(td / f"B-{d}.req.csv.gz", "wt") as f:
                     f.write("\n".join(rows) + "\n")
                 if t in g.NFS_TIERS:
                     mp = f"/bench/{t}.ss-{d}"
                     base = {"GETATTR": 900, "LOOKUP": 1100, "ACCESS": 40}
-                    rpcs = round(p["counter"] * n * N)
+                    rpcs = round(p["counter"] * n * N) + sum(me)
                     (td / f"B-{d}.mountstats.warm").write_text(mountstats(base, mp))
                     (td / f"B-{d}.mountstats.end").write_text(mountstats({**base, "GETATTR": base["GETATTR"] + rpcs}, mp))
+                    if p.get("bad_counter"):
+                        (td / f"B-{d}.mountstats.end").write_text(mountstats({**base, "GETATTR": 0}, mp))
+                    probe = f"D-{d}"
+                    (td / f"{probe}.idle-seconds").write_text("75.01\n")
+                    (td / f"{probe}.csv").write_text("".join(f"{probe},stat,{i},2000\n" for i in range(N)))
+                    (td / f"{probe}.pre.mountstats").write_text(mountstats(base, mp))
+                    probe_ops = 0 if t == "fsx_openzfs" else N
+                    (td / f"{probe}.post.mountstats").write_text(mountstats({**base, "GETATTR": base["GETATTR"] + probe_ops}, mp))
+
 
 
 def grade(worlds: list[dict]) -> dict:
@@ -162,8 +178,11 @@ def grade(worlds: list[dict]) -> dict:
             write_rep(run / f"rep-{i}", w)
         res = g.analyse(run)
         # main() also serializes and renders; a crash there loses a real run's grade.
-        g.json.dumps(res, default=list)
-        g.render(res)
+        with contextlib.redirect_stdout(io.StringIO()):
+            g.main(run)
+        serialized = g.json.loads((run / "summary.json").read_text())
+        assert serialized["predictions"] == g.json.loads(g.json.dumps(res["predictions"]))
+        assert "phase-attributed" in (run / "summary.md").read_text()
         return res
 
 
@@ -209,7 +228,7 @@ CASES = {
           "ERROR": setb("efs_host_tls", "1", late=0.10)},                                   # late cell
     "6": {"REFUTED": setb("fsx_openzfs", "10", miss=0.10, counter=0.10, enoent_miss=0.05),
           "INCONCLUSIVE": setb("fsx_openzfs", "1", miss=0.03, counter=0.03, enoent_miss=0.01),
-          "ERROR": setb("fsx_openzfs", "10", counter=0.05)},                                # counter vs latency
+          "ERROR": setb("fsx_openzfs", "10", bad_counter=True)},                                # broken counters
     "7": {"REFUTED": setb("fsx_lustre", "1", miss=0.10),
           "INCONCLUSIVE": setb("fsx_lustre", "0.1", miss=0.02),
           "ERROR": setstatus("fsx_lustre", "B-1", "error")},

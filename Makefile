@@ -86,7 +86,7 @@ e5-container: runner ## E5 from the runner container, detached (`docker logs -f 
 	  bash -c 'cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e5 REPS=$(or $(REPS),3)'
 
 .PHONY: e5-local
-e5-local: ## E5 apparatus check against a local kernel NFS server - no AWS, no cost. MODE="fast" and/or "leases-off"
+e5-local: ## E5 apparatus check against a local kernel NFS server - no AWS, no cost. MODE="fast", "fast-probe" and/or "leases-off"
 	./experiments/E5-attribute-cache/scripts/local-nfs-check.sh $(or $(OUT),/tmp/e5-local) $(MODE)
 
 .PHONY: e5-stats
@@ -95,7 +95,8 @@ e5-stats: ## Grade E5 from the latest committed run (or RUN=results/E5/<run-id>)
 
 .PHONY: e5-selftest
 e5-selftest: ## Run E5's grader against synthetic runs that must reach every grade
-	@python3 analysis/e5_selftest.py
+	@PYTHONDONTWRITEBYTECODE=1 python3 analysis/e5_selftest.py
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_attribution.py
 
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results

@@ -17,10 +17,11 @@
  *       op = stat | enoent | open_read. One timed pass (or `passes` of them) over
  *       the tree in fixed order. One line per op: "cohort,op,seq,ns".
  *
- *   agebench serve <dir> <delta_s> <warmup_s> <measure_s> <cohort> <outprefix> <raw_every>
+ *   agebench serve <dir> <delta_s> <warmup_s> <measure_s> <cohort> <outprefix> <raw_every> [nfs_mount]
  *       A web tier after a deploy: open_read every file once (opcache's compile),
  *       then one request every delta_s on absolute deadlines, each stat()ing all
- *       1,000 files and all 1,000 missing names. Writes:
+ *       1,000 files, then all 1,000 missing names. Optional nfs_mount enables
+ *       per-request, per-phase RPC attribution outside syscall timing. Writes:
  *         <outprefix>.req.csv      one line per request: per-op sparse histograms
  *         <outprefix>.raw.csv      every op of every raw_every-th request
  *         <outprefix>.compile.csv  the compile step, one line per open_read
@@ -168,6 +169,47 @@ static void add_ns(struct timespec *t, long ns) {
     if (t->tv_nsec >= 1000000000L) { t->tv_sec++; t->tv_nsec -= 1000000000L; }
 }
 
+/* A mount-scoped operation count, not COMPOUND RPCs or file-miss events. */
+struct rpc_counts { long op[3]; };
+static const char *rpc_names[3] = {"GETATTR", "LOOKUP", "ACCESS"};
+
+static int read_rpc_counts(const char *mountpoint, struct rpc_counts *counts) {
+    FILE *f = fopen("/proc/self/mountstats", "r");
+    if (!f) return -1;
+    char line[2048], mp[MAX_PATH], fs[32], op[64];
+    int active = 0, sections = 0, seen = 0;
+    long value;
+    while (fgets(line, sizeof line, f)) {
+        if (!strncmp(line, "device ", 7)) {
+            active = sscanf(line, "device %*s mounted on %511s with fstype %31s", mp, fs) == 2
+                && !strcmp(mp, mountpoint) && (!strcmp(fs, "nfs") || !strcmp(fs, "nfs4"));
+            if (active) sections++;
+        } else if (active && sscanf(line, " %63[^:]: %ld", op, &value) == 2) {
+            for (int i = 0; i < 3; i++) if (!strcmp(op, rpc_names[i])) {
+                if (value < 0 || (seen & (1 << i))) { fclose(f); return -1; }
+                counts->op[i] = value; seen |= 1 << i;
+            }
+        }
+    }
+    int failed = ferror(f);
+    fclose(f);
+    if (failed || sections != 1 || seen != 7) return -1;
+    return 0;
+}
+
+static int rpc_delta(struct rpc_counts *out, const struct rpc_counts *a, const struct rpc_counts *b) {
+    for (int i = 0; i < 3; i++) {
+        if (b->op[i] < a->op[i]) return -1;
+        out->op[i] = b->op[i] - a->op[i];
+    }
+    return 0;
+}
+
+static void write_rpc(FILE *out, const struct rpc_counts *counts, int enabled) {
+    if (enabled) fprintf(out, "%ld:%ld:%ld", counts->op[0], counts->op[1], counts->op[2]);
+    else fputc('-', out);
+}
+
 static int cmd_serve(int argc, char **argv) {
     if (argc < 9) {
         fprintf(stderr, "usage: agebench serve <dir> <delta_s> <warmup_s> <measure_s> <cohort> <outprefix> <raw_every>\n");
@@ -176,12 +218,15 @@ static int cmd_serve(int argc, char **argv) {
     double delta = atof(argv[3]), warmup = atof(argv[4]), measure = atof(argv[5]);
     const char *cohort = argv[6], *prefix = argv[7];
     int raw_every = atoi(argv[8]);
-    if (delta <= 0 || warmup < 0 || measure <= 0 || raw_every < 1) {
+    const char *rpc_mount = argc > 9 ? argv[9] : NULL;
+    if (!isfinite(delta) || !isfinite(warmup) || !isfinite(measure) ||
+        delta < 0.000001 || warmup < 0 || measure <= 0 || raw_every < 1) {
         fprintf(stderr, "agebench: bad serve arguments\n");
         return 64;
     }
     long delta_ns = (long)llround(delta * 1e9);
     long n_warm = lround(warmup / delta), n_meas = lround(measure / delta);
+    if (n_meas < 1) return 64;
     build_paths(argv[2]);
 
     char path[MAX_PATH];
@@ -199,9 +244,9 @@ static int cmd_serve(int argc, char **argv) {
     for (int i = 0; i < N; i++) fprintf(comp, "%s,open_read,%d,%ld\n", cohort, i, timed_open_read(i));
     fclose(comp);
 
-    fprintf(req, "# cohort=%s delta_ns=%ld warm_requests=%ld measured_requests=%ld raw_every=%d bins_per_decade=%d bin0_ns=100\n",
-            cohort, delta_ns, n_warm, n_meas, raw_every, BINS_PER_DECADE);
-    fprintf(req, "k,phase,lateness_ns,stat_sum_ns,enoent_sum_ns,stat_bins,enoent_bins\n");
+    fprintf(req, "# cohort=%s delta_ns=%ld warm_requests=%ld measured_requests=%ld raw_every=%d bins_per_decade=%d bin0_ns=100 method=rpc-phases-v2 rpc_mount=%s\n",
+            cohort, delta_ns, n_warm, n_meas, raw_every, BINS_PER_DECADE, rpc_mount ? rpc_mount : "-");
+    fprintf(req, "k,phase,lateness_ns,stat_sum_ns,enoent_sum_ns,stat_bins,enoent_bins,stat_rpc,enoent_rpc,counter_ns\n");
 
     struct timespec deadline, start;
     clock_gettime(CLOCK_MONOTONIC, &deadline);
@@ -219,25 +264,48 @@ static int cmd_serve(int argc, char **argv) {
         memset(he, 0, sizeof he);
         long sum_s = 0, sum_e = 0;
         int keep_raw = (k % raw_every) == 0;
+        struct rpc_counts r0 = {{0}}, r1 = {{0}}, r2 = {{0}}, rs = {{0}}, re = {{0}};
+        struct timespec c0, c1;
+        long counter_ns = 0;
+        clock_gettime(CLOCK_MONOTONIC, &c0);
+        if (rpc_mount && read_rpc_counts(rpc_mount, &r0)) goto bad_counters;
+        clock_gettime(CLOCK_MONOTONIC, &c1); counter_ns += ns_between(&c0, &c1);
         for (int i = 0; i < N; i++) {
-            long a = timed_stat(i), b = timed_enoent(i);
-            sum_s += a; sum_e += b;
-            hs[bin_of(a) - BIN_MIN]++;
-            he[bin_of(b) - BIN_MIN]++;
-            if (keep_raw) fprintf(raw, "%ld,stat,%d,%ld\n%ld,enoent,%d,%ld\n", k, i, a, k, i, b);
+            long a = timed_stat(i);
+            sum_s += a; hs[bin_of(a) - BIN_MIN]++;
+            if (keep_raw) fprintf(raw, "%ld,stat,%d,%ld\n", k, i, a);
         }
+        clock_gettime(CLOCK_MONOTONIC, &c0);
+        if (rpc_mount && read_rpc_counts(rpc_mount, &r1)) goto bad_counters;
+        clock_gettime(CLOCK_MONOTONIC, &c1); counter_ns += ns_between(&c0, &c1);
+        for (int i = 0; i < N; i++) {
+            long b = timed_enoent(i);
+            sum_e += b; he[bin_of(b) - BIN_MIN]++;
+            if (keep_raw) fprintf(raw, "%ld,enoent,%d,%ld\n", k, i, b);
+        }
+        clock_gettime(CLOCK_MONOTONIC, &c0);
+        if (rpc_mount && (read_rpc_counts(rpc_mount, &r2) ||
+                         rpc_delta(&rs, &r0, &r1) || rpc_delta(&re, &r1, &r2))) goto bad_counters;
+        clock_gettime(CLOCK_MONOTONIC, &c1); counter_ns += ns_between(&c0, &c1);
         fprintf(req, "%ld,%c,%ld,%ld,%ld,", k, k < n_warm ? 'w' : 'm', late, sum_s, sum_e);
         write_bins(req, hs);
         fputc(',', req);
         write_bins(req, he);
+        fputc(',', req); write_rpc(req, &rs, rpc_mount != NULL);
+        fputc(',', req); write_rpc(req, &re, rpc_mount != NULL);
+        fprintf(req, ",%ld", counter_ns);
         fputc('\n', req);
         add_ns(&deadline, delta_ns);
     }
     snprintf(path, sizeof path, "%s.mountstats.end", prefix);
     if (copy_file("/proc/self/mountstats", path) != 0) { perror("agebench: mountstats"); return 1; }
-    fclose(req);
-    fclose(raw);
-    return 0;
+    if (ferror(req) || ferror(raw)) { fclose(req); fclose(raw); return 1; }
+    int req_rc = fclose(req), raw_rc = fclose(raw);
+    return req_rc || raw_rc ? 1 : 0;
+bad_counters:
+    fprintf(stderr, "agebench: missing, duplicate or reset phase counters for %s\n", rpc_mount);
+    fclose(req); fclose(raw);
+    return 2;
 }
 
 int main(int argc, char **argv) {

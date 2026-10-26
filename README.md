@@ -141,8 +141,10 @@ E5's estimate uses `results/pricing/20261015T170607Z-73e880e/`.
 **Next: finish E5 apparatus validation before another AWS pilot.** Local NFS
 checks and the grader serialization fix from `claude/e5-local-check-port`
 (`725266b`, `6c654c5`) are integrated. They do not change grading thresholds or
-supply an AWS result. Open blockers are the cohort B counter/latency noise
-cross-check, delegation discrimination, and a teardown watchdog outside Docker.
+supply an AWS result. The 2026-10-26 E5 amendment separates positive/negative RPC counts, makes the
+latency cross-check diagnostic and adds conservative expiry probes. The remaining
+deploy blocker is a teardown watchdog outside Docker; AWS-specific instrumentation
+and 18-process overhead still need the pilot checks.
 See [E5's current status](experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-26).
 
 E4 remains specced. E2 narrowed its substrate question for the tested workload;

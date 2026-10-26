@@ -4,7 +4,7 @@
 Reads results/E5/<run-id>/rep-*/ec2/<tier>/ and writes summary.json and summary.md
 into the run directory. Every rule below is transcribed from
 experiments/E5-attribute-cache/README.md ("Method", "Predictions", and the
-2026-10-16 amendment), written before any E5 data existed. The constants are those
+2026-10-16 and 2026-10-26 amendments). Historical local checks predate the latter. The constants are those
 rules, not tuned to data.
 
 Fail-closed throughout. A cohort is graded only if:
@@ -14,8 +14,8 @@ Fail-closed throughout. A cohort is graded only if:
     counters read by the sidecar). This is the gate E2 lacked: "this measured the
     cache, not the server" becomes an ERROR here rather than a later discovery.
 A cohort-B cell is graded only if it is `ok`, no more than 5% of its measured
-requests started later than delta/2, and (NFS) its counter miss fraction and its
-latency slow-cluster share agree.
+requests started later than delta/2, and (NFS) its per-phase counters are complete
+and reconcile with independent window snapshots. Latency disagreement is diagnostic.
 
 Any prediction that reads an ERROR cohort or cell is ERROR for that replication.
 Across replications: SUPPORTED if every evaluable replication supports it, REFUTED if
@@ -103,15 +103,20 @@ def mountstats_ops(path: Path) -> dict[str, int] | None:
         return None
     ops: dict[str, int] = {}
     in_ops = False
+    devices = 0
     for line in path.read_text().splitlines():
+        if line.startswith("device "):
+            devices += 1
         if "per-op statistics" in line:
             in_ops = True
             continue
         if in_ops:
             m = re.match(r"^\s+([A-Z_0-9]+):\s+(\d+)", line)
             if m:
+                if m.group(1) in ops:
+                    return None
                 ops[m.group(1)] = int(m.group(2))
-    return ops if in_ops else None
+    return ops if in_ops and devices == 1 else None
 
 
 def lustre_counters(path: Path) -> dict[str, int] | None:
@@ -229,7 +234,13 @@ def bin_center_log10(b: int) -> float:
 def parse_bins(field: str) -> dict[int, int]:
     if not field:
         return {}
-    return {int(b): int(c) for b, c in (kv.split(":") for kv in field.split("|"))}
+    out = {}
+    for item in field.split("|"):
+        b, c = (int(v) for v in item.split(":"))
+        if b in out:
+            raise ValueError("duplicate histogram bin")
+        out[b] = c
+    return out
 
 
 def kmeans2_weighted(hist: dict[int, int]) -> tuple[float, float] | None:
@@ -279,95 +290,157 @@ def load_req(path: Path) -> tuple[dict, list[dict]]:
                 continue
             if line.startswith("k,"):
                 continue
-            k, phase, late, ssum, esum, sb, eb = line.split(",")
-            rows.append({"k": int(k), "phase": phase, "late": int(late), "stat_sum": int(ssum),
-                         "enoent_sum": int(esum), "sb": parse_bins(sb), "eb": parse_bins(eb)})
+            parts = line.split(",")
+            if len(parts) not in (7, 10):
+                raise ValueError("bad per-request column count")
+            k, phase, late, ssum, esum, sb, eb = parts[:7]
+            row = {"k": int(k), "phase": phase, "late": int(late), "stat_sum": int(ssum),
+                   "enoent_sum": int(esum), "sb": parse_bins(sb), "eb": parse_bins(eb)}
+            if len(parts) == 10:
+                def rpc(text):
+                    if text == "-":
+                        return None
+                    counts = [int(x) for x in text.split(":")]
+                    if len(counts) != 3 or min(counts) < 0:
+                        raise ValueError("bad phase RPC counts")
+                    return dict(zip(("GETATTR", "LOOKUP", "ACCESS"), counts))
+                row.update(sr=rpc(parts[7]), er=rpc(parts[8]), counter_ns=int(parts[9]))
+            rows.append(row)
     return header, rows
 
 
+def expiry_probe(tdir: Path, d: str, mountpoint: str) -> dict:
+    """Observable revalidation behaviour, never direct proof of delegation state."""
+    try:
+        c = f"D-{d}"
+        idle = float((tdir / f"{c}.idle-seconds").read_text())
+        if not math.isfinite(idle) or idle <= 60:
+            raise ValueError("idle interval must exceed 60 seconds")
+        if status_of(tdir).get(c) != "ok":
+            raise ValueError("probe instrument did not report ok")
+        lines = (tdir / f"{c}.csv").read_text().splitlines()
+        vals = []
+        for i, line in enumerate(lines):
+            label, op, seq, value = line.split(",")
+            if label != c or op != "stat" or int(seq) != i:
+                raise ValueError("probe operation/sequence does not match cohort")
+            vals.append(int(value))
+        if len(vals) != N or any(v < 0 for v in vals):
+            raise ValueError("probe must contain N valid stats")
+        paths = [tdir / f"{c}.{when}.mountstats" for when in ("pre", "post")]
+        for path in paths:
+            devices = [line for line in path.read_text().splitlines() if line.startswith("device ")]
+            if len(devices) != 1 or f" mounted on {mountpoint} with fstype nfs" not in devices[0]:
+                raise ValueError("probe mountstats do not match measurement mount")
+        pre, post = (mountstats_ops(path) for path in paths)
+        counts = validated_delta(pre, post)
+        if counts["GETATTR"] >= SIG_MIN * N and counts["LOOKUP"] <= SIG_MAX * N:
+            state = "REVALIDATION_OBSERVED"
+        elif sum(counts.values()) <= SIG_MAX * N:
+            state = "REVALIDATION_SUPPRESSED"
+        else:
+            state = "UNKNOWN"
+        return {"state": state, "idle_seconds": idle, "rpc_ops": counts,
+                "note": "suppression is consistent with delegations; does not prove held state"}
+    except (OSError, ValueError, TypeError) as exc:
+        return {"state": "UNKNOWN", "reason": str(exc)}
+
+
+def validated_delta(pre: dict | None, post: dict | None) -> dict:
+    names = ("GETATTR", "LOOKUP", "ACCESS")
+    if pre is None or post is None or any(k not in pre or k not in post for k in names):
+        raise ValueError("missing required mountstats counters")
+    out = {k: post[k] - pre[k] for k in names}
+    if min(out.values()) < 0:
+        raise ValueError("mountstats counters reset")
+    return out
+
+
 def cohort_b_cell(tier: str, d: str, tdir: Path) -> dict:
+    try:
+        return _cohort_b_cell(tier, d, tdir)
+    except (OSError, ValueError, TypeError, KeyError, ZeroDivisionError, OverflowError) as exc:
+        return {"status": "ERROR", "reason": str(exc)}
+
+
+def _cohort_b_cell(tier: str, d: str, tdir: Path) -> dict:
     st = status_of(tdir).get(f"B-{d}")
     if st != "ok":
         return {"status": "ERROR", "reason": f"instrument status {st or 'absent'}"}
-    req = tdir / f"B-{d}.req.csv.gz"
-    if not req.is_file():
-        return {"status": "ERROR", "reason": "no per-request data"}
-    header, rows = load_req(req)
-    meas = [r for r in rows if r["phase"] == "m"]
-    if not meas:
-        return {"status": "ERROR", "reason": "no measured requests"}
-    delta_ns = int(header.get("delta_ns", float(d) * 1e9))
-    late = sum(1 for r in meas if r["late"] > delta_ns / 2)
-    hs: dict[int, int] = {}
-    he: dict[int, int] = {}
+    header, rows = load_req(tdir / f"B-{d}.req.csv.gz")
+    if header.get("method") != "rpc-phases-v2":
+        raise ValueError("legacy/unattributed B data; ineligible for rpc-phases-v2")
+    n_warm, n_meas = int(header["warm_requests"]), int(header["measured_requests"])
+    if n_warm < 0 or n_meas <= 0 or len(rows) != n_warm + n_meas:
+        raise ValueError("request count differs from declared window")
+    delta_ns = int(header["delta_ns"])
+    if delta_ns != round(float(d) * 1e9) or header.get("cohort") != f"B-{d}":
+        raise ValueError("interval/cohort header does not match cell")
+    if header.get("bins_per_decade") != str(BINS_PER_DECADE) or header.get("bin0_ns") != str(BIN0_NS):
+        raise ValueError("unsupported histogram schema")
+    for k, r in enumerate(rows):
+        if r["k"] != k or r["phase"] != ("w" if k < n_warm else "m"):
+            raise ValueError("request sequence or warm-up boundary invalid")
+        if any(r[v] < 0 for v in ("late", "stat_sum", "enoent_sum", "counter_ns")):
+            raise ValueError("negative request timing")
+        for h in (r["sb"], r["eb"]):
+            if sum(h.values()) != N or any(c < 0 or b < -1 or b > 140 for b, c in h.items()):
+                raise ValueError("each phase must contain N valid histogram operations")
+        if tier in NFS_TIERS and (r.get("sr") is None or r.get("er") is None):
+            raise ValueError("missing phase-attributed RPC counters")
+    meas = rows[n_warm:]
+    late = sum(r["late"] > delta_ns / 2 for r in meas)
+    hs, he = {}, {}
     for r in meas:
-        for b, c in r["sb"].items():
-            hs[b] = hs.get(b, 0) + c
-        for b, c in r["eb"].items():
-            he[b] = he.get(b, 0) + c
+        for target, source in ((hs, r["sb"]), (he, r["eb"])):
+            for b, c in source.items():
+                target[b] = target.get(b, 0) + c
     n_stat, n_enoent = sum(hs.values()), sum(he.values())
     thr_s, thr_e = slow_threshold(hs), slow_threshold(he)
-    slow_s = slow_count(hs, thr_s) / n_stat if n_stat else 0.0
-    slow_e = slow_count(he, thr_e) / n_enoent if n_enoent else 0.0
+    slow_s, slow_e = slow_count(hs, thr_s) / n_stat, slow_count(he, thr_e) / n_enoent
     sums = sorted(r["stat_sum"] for r in meas)
-    cell = {
-        "status": "OK",
-        "measured_requests": len(meas),
-        "late_share": round(late / len(meas), 4),
-        "stat_ops": n_stat,
-        "slow_share_stat": round(slow_s, 6),
-        "slow_share_enoent": round(slow_e, 6),
-        "stat_sum_per_request_ns": {
-            "amortised": round(statistics.fmean(sums), 1),
-            "median": sums[len(sums) // 2],
-            "p99": sums[min(int(round(0.99 * (len(sums) - 1))), len(sums) - 1)],
-            "max": sums[-1],
-        },
-        "misses_per_request": [slow_count(r["sb"], thr_s) for r in meas],
-    }
-    # Reported, not graded: where the classifier put its split. Without it, a
-    # counter/latency ERROR cannot say whether hits drifted over the line
-    # (concurrency) or the slow cluster was never found (separation gate).
     km = kmeans2_weighted(hs)
-    cell["stat_split"] = {
-        "fast_centroid_ns": round(10 ** km[0]) if km else None,
-        "slow_centroid_ns": round(10 ** km[1]) if km else None,
-        "threshold_ns": round(10 ** thr_s) if thr_s is not None else None,
+    cell = {
+        "status": "OK", "method": "rpc-phases-v2", "measured_requests": len(meas),
+        "late_share": late / len(meas), "stat_ops": n_stat,
+        "slow_share_stat": round(slow_s, 6), "slow_share_enoent": round(slow_e, 6),
+        "counter_snapshot_ns_per_request": round(statistics.fmean(r["counter_ns"] for r in meas)),
+        "stat_sum_per_request_ns": {
+            "amortised": round(statistics.fmean(sums), 1), "median": sums[len(sums) // 2],
+            "p99": sums[min(int(round(0.99 * (len(sums) - 1))), len(sums) - 1)], "max": sums[-1]},
+        "stat_split": {"fast_centroid_ns": round(10 ** km[0]) if km else None,
+                       "slow_centroid_ns": round(10 ** km[1]) if km else None,
+                       "threshold_ns": round(10 ** thr_s) if thr_s is not None else None},
     }
     reasons = []
-    if n_stat != N * len(meas):
-        reasons.append(f"{n_stat} stat ops in {len(meas)} requests, expected {N} each")
     if cell["late_share"] > LATE_MAX_SHARE:
         reasons.append(f"{cell['late_share']:.1%} of requests later than delta/2")
     if tier in NFS_TIERS:
-        warm = mountstats_ops(tdir / f"B-{d}.mountstats.warm")
-        end = mountstats_ops(tdir / f"B-{d}.mountstats.end")
-        if warm is None or end is None:
-            reasons.append("mountstats snapshot missing")
-        else:
-            rpcs = delta(warm, end, "GETATTR", "LOOKUP", "ACCESS")
-            frac = rpcs / n_stat if n_stat else 0.0
-            cell["counter_rpcs"] = rpcs
-            cell["miss_fraction"] = round(frac, 6)
-            cell["miss_fraction_ci95"] = wilson(rpcs, n_stat)
-            tol = max(XCHECK_REL * frac, XCHECK_ABS)
-            cell["xcheck"] = {"counter": round(frac, 6), "latency": round(slow_s, 6), "tolerance": round(tol, 6)}
-            if abs(slow_s - frac) > tol:
-                reasons.append(f"counter miss fraction {frac:.4f} vs latency slow share {slow_s:.4f} (tolerance {tol:.4f})")
+        mp = header.get("rpc_mount", "-")
+        if mp == "-":
+            raise ValueError("missing RPC measurement mount")
+        paths = [tdir / f"B-{d}.mountstats.{when}" for when in ("warm", "end")]
+        for path in paths:
+            devices = [line for line in path.read_text().splitlines() if line.startswith("device ")]
+            if len(devices) != 1 or f" mounted on {mp} with fstype nfs" not in devices[0]:
+                raise ValueError("mountstats section does not match RPC measurement mount")
+        window = validated_delta(*(mountstats_ops(path) for path in paths))
+        positive = {op: sum(r["sr"][op] for r in meas) for op in window}
+        negative = {op: sum(r["er"][op] for r in meas) for op in window}
+        if any(positive[k] + negative[k] != window[k] for k in window):
+            raise ValueError("phase RPC totals disagree with independent window counters")
+        frac = sum(positive.values()) / n_stat
+        cell.update(counter_rpc_ops={"positive": positive, "negative": negative, "window": window},
+                    rpc_ops_per_stat=frac, rpc_ops_per_enoent=sum(negative.values()) / n_enoent,
+                    rpc_ops_per_request=[sum(r["sr"].values()) for r in meas],
+                    expiry_probe=expiry_probe(tdir, d, mp))
+        tol = max(XCHECK_REL * frac, XCHECK_ABS)
+        cell["xcheck"] = {"counter": frac, "latency": round(slow_s, 6), "tolerance": tol,
+                          "status": "AGREE" if abs(slow_s - frac) <= tol else "DISAGREE",
+                          "role": "diagnostic only; RPC operations are not file-miss events"}
     if reasons:
-        cell["status"] = "ERROR"
-        cell["reason"] = "; ".join(reasons)
+        cell.update(status="ERROR", reason="; ".join(reasons))
     return cell
-
-
-def wilson(k: int, n: int) -> list[float]:
-    if n == 0:
-        return [0.0, 0.0]
-    p, z = min(max(k / n, 0.0), 1.0), 1.96
-    den = 1 + z * z / n
-    mid = (p + z * z / (2 * n)) / den
-    half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / den
-    return [round(max(0.0, mid - half), 6), round(min(1.0, mid + half), 6)]
 
 
 def cohort_b(rep_dir: Path) -> dict:
@@ -452,14 +525,16 @@ def p5(a, b):
             c = b_ok(b, t, d)
             if c is None:
                 return err(why_b(b, t, d))
-            fr[f"{t}@{d}"] = c["miss_fraction"]
+            if c["expiry_probe"]["state"] != "REVALIDATION_OBSERVED":
+                return err(f"{t}@{d}: timer-model precondition unproven: {c['expiry_probe']}")
+            fr[f"{t}@{d}"] = c["rpc_ops_per_stat"]
     if any(fr[f"{t}@{d}"] > lim for t in P5_TIERS for d, lim in P5_KILL.items()):
         g = R
     elif all(P5_BANDS[d][0] <= fr[f"{t}@{d}"] <= P5_BANDS[d][1] for t in P5_TIERS for d in DELTAS):
         g = S
     else:
         g = I
-    return {"grade": g, "miss_fraction": fr}
+    return {"grade": g, "rpc_ops_per_stat": fr}
 
 
 def p6(a, b):
@@ -468,9 +543,11 @@ def p6(a, b):
         c = b_ok(b, "fsx_openzfs", d)
         if c is None:
             return err(why_b(b, "fsx_openzfs", d))
-        fr[d] = c["miss_fraction"]
+        fr[d] = c["rpc_ops_per_stat"]
     g = R if fr["10"] >= P6_KILL_D10 else S if all(v <= P6_SUPPORT_MAX for v in fr.values()) else I
-    return {"grade": g, "miss_fraction": fr}
+    return {"grade": g, "rpc_ops_per_stat": fr,
+            "expiry_probes": {d: b["fsx_openzfs"][d]["expiry_probe"] for d in DELTAS},
+            "note": "amended rate test; no causal delegation verdict"}
 
 
 def p7(a, b):
@@ -479,9 +556,19 @@ def p7(a, b):
         c = b_ok(b, "fsx_lustre", d)
         if c is None:
             return err(why_b(b, "fsx_lustre", d))
+        control = b_ok(b, "ebs", d)
+        if control is None:
+            return err(why_b(b, "ebs", d))
+        boundary = c["stat_split"]["threshold_ns"]
+        noise = control["stat_split"]["slow_centroid_ns"]
+        if control["slow_share_stat"] > P7_SUPPORT_MAX or (
+            boundary is not None and noise is not None and noise >= boundary
+            and control["slow_share_stat"] > 0
+        ):
+            return err(f"EBS noise makes Lustre slow-cluster attribution ambiguous at {d}s")
         sh[d] = c["slow_share_stat"]
     g = R if any(v > P7_KILL for v in sh.values()) else S if all(v <= P7_SUPPORT_MAX for v in sh.values()) else I
-    return {"grade": g, "slow_share": sh}
+    return {"grade": g, "slow_share": sh, "note": "latency-only test; does not prove DLM lock state"}
 
 
 def p8(a, b):
@@ -490,14 +577,14 @@ def p8(a, b):
         c = b_ok(b, t, "1")
         if c is None:
             return err(why_b(b, t, "1"))
-        out[t] = {"enoent": c["slow_share_enoent"], "stat": c["slow_share_stat"]}
+        out[t] = {"enoent": c["rpc_ops_per_enoent"], "stat": c["rpc_ops_per_stat"]}
     if any(v["enoent"] > P8_KILL_RATIO * v["stat"] for v in out.values()):
         g = R
     elif all(v["enoent"] <= v["stat"] for v in out.values()):
         g = S
     else:
         g = I
-    return {"grade": g, "slow_share_at_1s": out, "note": "graded on latency clusters alone; counters cannot separate ENOENT"}
+    return {"grade": g, "rpc_ops_per_call_at_1s": out, "note": "amended phase-attributed rate test; positive phase precedes ENOENT"}
 
 
 def p9(a, b):
@@ -514,14 +601,14 @@ def p10(a, b):
     c = b_ok(b, "efs_host_plain", "1")
     if c is None:
         return err(why_b(b, "efs_host_plain", "1"))
-    m = sorted(c["misses_per_request"], reverse=True)
+    m = sorted(c["rpc_ops_per_request"], reverse=True)
     total = sum(m)
     if total == 0:
-        return {"grade": I, "why": "no misses observed in the measured window"}
+        return {"grade": I, "why": "no positive-phase RPC operations observed in the measured window"}
     top = max(1, math.ceil(P10_TOP * len(m)))
     share = sum(m[:top]) / total
     g = S if share >= P10_SUPPORT_MIN else R if share < P10_KILL_MAX else I
-    return {"grade": g, "top5pct_share_of_misses": round(share, 4), "requests": len(m), "misses": total}
+    return {"grade": g, "top5pct_share_of_rpc_ops": round(share, 4), "requests": len(m), "rpc_ops": total}
 
 
 PREDICTIONS = {"1": p1, "2": p2, "3": p3, "4": p4, "5": p5, "6": p6, "7": p7, "8": p8, "9": p9, "10": p10}
@@ -548,12 +635,12 @@ def analyse(run_dir: Path) -> dict:
     verdicts = {k: {"status": combine([per_rep[r]["grades"][k] for r in per_rep]),
                     "per_replication": {r: per_rep[r]["grades"][k] for r in per_rep}}
                 for k in PREDICTIONS}
-    # misses_per_request is kept for P10 but is long; drop it from the serialized cells.
+    # rpc_ops_per_request is kept for P10 but is long; drop it from the serialized cells.
     for r in per_rep.values():
         for tier in r["b"].values():
             for cell in tier.values():
-                cell.pop("misses_per_request", None)
-    return {"run_dir": str(run_dir), "replications": list(per_rep), "predictions": verdicts,
+                cell.pop("rpc_ops_per_request", None)
+    return {"method": "rpc-phases-v2", "run_dir": str(run_dir), "replications": list(per_rep), "predictions": verdicts,
             "cohorts": {r: {"a": v["a"], "b": v["b"]} for r, v in per_rep.items()},
             # PREDICTIONS is uppercase but maps to functions, so it is not a constant;
             # including it made json.dumps raise on every real run (found by the local
@@ -582,8 +669,8 @@ def render(res: dict) -> str:
             row = [fmt_ns(c["a"].get(tier, {}).get(x, {}).get("p50_ns")) if x in c["a"].get(tier, {}) else "—"
                    for x in A_COHORTS + ["A8"]]
             lines.append(f"| {rep}/{tier} | " + " | ".join(row) + " |")
-    lines += ["", "## Cohort B (miss fraction from counters; slow share from latency)", "",
-              "| Cell | Status | Miss fraction | Slow share stat | Slow share ENOENT | Amortised stat ns/request | Late |",
+    lines += ["", "## Cohort B (phase-attributed RPC operations per stat; latency is diagnostic)", "",
+              "| Cell | Status | RPC ops/stat | Slow share stat | Slow share ENOENT | Amortised stat ns/request | Late |",
               "|---|---|--:|--:|--:|--:|--:|"]
     for rep, c in res["cohorts"].items():
         for tier in TIERS:
@@ -592,8 +679,22 @@ def render(res: dict) -> str:
                 if x["status"] != "OK":
                     lines.append(f"| {rep}/{tier}@{d}s | ERROR: {x.get('reason', '')} | | | | | |")
                     continue
-                lines.append(f"| {rep}/{tier}@{d}s | OK | {x.get('miss_fraction', '—')} | {x['slow_share_stat']} | "
+                lines.append(f"| {rep}/{tier}@{d}s | OK | {x.get('rpc_ops_per_stat', '—')} | {x['slow_share_stat']} | "
                              f"{x['slow_share_enoent']} | {x['stat_sum_per_request_ns']['amortised']:.0f} | {x['late_share']} |")
+    lines += ["", "## NFS attribution diagnostics", "",
+              "RPC-operation rates are not file-miss probabilities. Phase order: positive, then negative.", "",
+              "| Cell | RPC ops/ENOENT | Latency cross-check | Expiry probe | Counter-read ns/request |",
+              "|---|--:|---|---|--:|"]
+    for rep, c in res["cohorts"].items():
+        for tier in NFS_TIERS:
+            for d in DELTAS:
+                x = c["b"][tier][d]
+                if "xcheck" in x:
+                    lines.append(f"| {rep}/{tier}@{d}s | {x['rpc_ops_per_enoent']:.6f} | "
+                                 f"{x['xcheck']['status']} (diagnostic) | {x['expiry_probe']['state']} | "
+                                 f"{x['counter_snapshot_ns_per_request']} |")
+    lines += ["", "Per-replication prediction details (including ineligibility reasons):", "", "```json",
+              json.dumps({k: v["per_replication"] for k, v in res["predictions"].items()}, indent=2), "```"]
     errors = [(rep, t, k, e.get("reason")) for rep, c in res["cohorts"].items()
               for t, cs in c["a"].items() for k, e in cs.items() if e["status"] == "ERROR"]
     if errors:

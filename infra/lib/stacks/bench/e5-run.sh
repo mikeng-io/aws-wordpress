@@ -19,6 +19,7 @@ set -euo pipefail
 
 : "${E5_TIERS:?}" "${E5_NFS_TIERS?}"
 WAIT_S="${E5_WAIT_S:-75}"
+PROBE_WAIT_S="${E5_PROBE_WAIT_S:-75}"
 WARMUP_S="${E5_WARMUP_S:-300}"
 MEASURE_S="${E5_MEASURE_S:-600}"
 AGE_MIN_S="${E5_AGE_MIN_S:-120}"
@@ -168,8 +169,10 @@ for tier in $E5_TIERS; do
     for d in $DELTAS; do
         raw=1
         for r in $RAW_EVERY; do [ "${r%%:*}" = "$d" ] && raw="${r#*:}"; done
+        rpc_args=()
+        if is_nfs "$tier"; then rpc_args=("$(tier_dir "$tier" "ss-$d")"); fi
         agebench serve "$(tier_dir "$tier" "ss-$d")" "$d" "$WARMUP_S" "$MEASURE_S" "B-$d" \
-            "$OUT/$tier/B-$d" "$raw" 2> "$OUT/$tier/B-$d.err" &
+            "$OUT/$tier/B-$d" "$raw" "${rpc_args[@]}" 2> "$OUT/$tier/B-$d.err" &
         pids+=($!); labels+=("$tier B-$d")
     done
 done
@@ -195,6 +198,19 @@ for tier in $E5_TIERS; do
             fi
         done
         for k in req raw; do [ -f "$OUT/$tier/B-$d.$k.csv" ] && gzip -9 "$OUT/$tier/B-$d.$k.csv"; done
+    done
+done
+
+# --- expiry probe: all B readers are stopped; do not touch ss mounts while idle ---
+# /proc/uptime is monotonic and does not access any measurement mount.
+log "expiry probes: idle ${PROBE_WAIT_S}s after all B readers stop"
+idle_start=$(awk '{print $1}' /proc/uptime)
+sleep "$PROBE_WAIT_S"
+idle_s=$(awk -v start="$idle_start" '{printf "%.2f", $1-start}' /proc/uptime)
+for tier in $E5_NFS_TIERS; do
+    for d in $DELTAS; do
+        echo "$idle_s" > "$OUT/$tier/D-$d.idle-seconds"
+        cohort "$tier" "D-$d" stat "ss-$d" || log "  $tier D-$d: probe unavailable"
     done
 done
 

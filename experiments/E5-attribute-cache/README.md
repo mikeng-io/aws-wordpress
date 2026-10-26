@@ -2,7 +2,8 @@
 
 **Status:** `APPARATUS BUILT; NO GRADABLE AWS RUN` (reconciled 2026-10-26).
 Two AWS attempts failed; local kernel-NFS checks and the grader serialization fix
-are integrated. The next AWS pilot remains blocked on apparatus issues below.
+are integrated. The phase-attributed method amendment below now governs cohort B. The next AWS
+pilot remains blocked on the Docker-external watchdog and AWS-specific checks.
 Specced 2026-10-15; original build status was "not deployed" on 2026-10-16 before
 the attempts recorded here. Historical pilot approval is preserved in "Go-ahead";
 this reconciliation does not launch or extend it.
@@ -16,17 +17,24 @@ The evidence is retained byte-for-byte. It is apparatus validation on loopback
 NFS, not EFS/FSx latency evidence or an E5 prediction verdict. The alternative
 apparatus on `claude/e5-attribute-cache-spec` is not merged.
 
+**Measurement changes implemented (2026-10-26):**
+
+- Positive and negative stats now have separately attributed per-request RPC
+  counts. Counter integrity gates remain hard failures; latency disagreement is
+  diagnostic. The amended operational tests are recorded below.
+- Post-B expiry probes conservatively classify revalidation behaviour. P5 excludes
+  suppressed/unknown probes rather than claiming the timer model was refuted.
+- Synthetic cases exercise complete JSON/Markdown output and malformed data.
+  Local validation evidence is recorded below; it is not an AWS result.
+
 **Still open before another pilot:**
 
-- Cohort B's latency/counter cross-check can reject scheduler noise as misses.
-  Resolve the measurement rule with a dated method amendment before grading;
-  this integration changes no threshold or prediction.
-- Distinguish held delegations from timer-driven cache hits, particularly for
-  ONTAP; a low RPC count alone does not establish the timer model.
 - Add a teardown watchdog outside Docker. The attempt-2 failure demonstrated
   that the runner's EXIT trap cannot cover Docker daemon loss.
-- At the AWS pilot, confirm Lustre counter names and the remaining service-specific
-  checks in "Verified before deploy, and not". Local NFS does not close these.
+- Confirm Lustre counter names, instrumentation overhead with all 18 B processes,
+  and the service-specific checks in "Verified before deploy, and not". Local NFS
+  does not close these. The phased positive/negative order and added snapshot work
+  are explicit validity limits, not assumed negligible.
 
 Attempt 1 lost benchmark data at upload; attempt 2 aborted during deployment.
 Neither counts as a replication. No third AWS attempt is recorded in this handoff.
@@ -305,7 +313,71 @@ Per §3.1 of the protocol:
 All of it lives in `analysis/e5_stats.py`. The script is written and run against
 synthetic runs reaching every grade before the first deploy (see blockers).
 
+## Method amendment — phase-attributed RPCs (2026-10-26)
+
+Recorded before implementing this amendment or running the amended instrument.
+The original method and predictions below remain the historical pre-registration.
+This is a changed operationalisation, not a regrade of the existing local checks.
+It follows the noise failures in `local-check/20261016T181153Z-725266b-leases-on/`
+and `local-check/20261016T183547Z-725266b-leases-off/`.
+
+1. **Separate attribution inside each request.** `serve` performs all positive
+   stats, then all negative stats, rather than interleaving them. On NFS it reads
+   GETATTR/LOOKUP/ACCESS counts for the exact measurement mount before the positive
+   phase, between phases, and after the negative phase. Each request records both
+   deltas. These snapshots and output formatting are outside syscall timing;
+   their scheduler/CPU overhead still exists and is subject to the lateness gate.
+   Compile, request count, intervals and warm-up/measurement windows are unchanged.
+   Phase order is fixed, so shared-directory revalidation is paid first by the
+   positive phase; the negative comparison is conditional on that order.
+2. **Counters measure RPC-operation intensity, not a Bernoulli miss probability.**
+   GETATTR + LOOKUP + ACCESS per stat includes directory work and can exceed one.
+   Report the operations separately, the per-phase rate and between-replication
+   spread; do not attach binomial confidence intervals to this rate. Validate
+   counter presence, monotonicity, per-request attribution and agreement with the
+   independent warm/end snapshots. Missing, reset or inconsistent counters fail
+   the affected cell. Old files without phase attribution are ineligible for this
+   amended method, not silently upgraded.
+3. **Latency cross-check is diagnostic on NFS.** Preserve the original separation
+   and discrepancy thresholds and report disagreement, including the EBS control's
+   slow share. It is not a veto of valid phase-attributed counters or summed time.
+   No noise-floor subtraction is applied. P5/P6 retain their numerical bands but
+   apply to positive-phase RPC intensity; P8 retains its ratio thresholds but now
+   compares negative/positive RPC intensity at 1 s. P10 retains its concentration
+   thresholds but uses positive-phase RPC operations per request. Report these as
+   amended operational tests, not literal file-miss fractions or delegation proof.
+   P7 still has latency evidence only; it is NOT EVALUABLE when the EBS control
+   has a slow share above the original 1% support limit, or its slow population
+   overlaps Lustre's classifier boundary. A latency-only grade never proves locks.
+4. **Post-B expiry probe on each NFS steady-state mount.** After all B processes
+   exit, leave the mounts idle for at least 75 s, then snapshot counters around one
+   positive stat pass. Record elapsed monotonic idle time and verify N operations.
+   GETATTR >= 0.95 N and LOOKUP <= 0.05 N means REVALIDATION_OBSERVED; GETATTR +
+   LOOKUP + ACCESS <= 0.05 N means REVALIDATION_SUPPRESSED; otherwise UNKNOWN.
+   Missing/bad evidence or <=60 s idle is UNKNOWN. Suppression is consistent with
+   held delegations, not proof of them. P5 requires REVALIDATION_OBSERVED on each
+   contributing mount; suppression/unknown makes that replication NOT EVALUABLE,
+   not a refutation of the timer model. P6 reports the probe alongside its rate
+   grade and makes no causal delegation verdict.
+5. **Limits and cost.** The probe adds at least 75 s of task time, plus passes;
+   additional counter reads add unmeasured overhead. No new AWS service is added.
+   The historical standing estimate and $10 ceiling remain; actual runtime and
+   remaining budget must be checked before a pilot. This amendment authorises no
+   deployment. The Docker-external teardown watchdog remains a separate blocker.
+
+The 60 s bound is the default regular-file maximum in
+[nfs(5)](https://man7.org/linux/man-pages/man5/nfs.5.html); existing mount-option
+checks must still establish the intended configuration. Delegation caching
+semantics are specified in [RFC 8881](https://www.rfc-editor.org/rfc/rfc8881.html).
+The probe classifications are this study's conservative inference, not a direct
+observation of NFS delegation state. Direct server-side state in a local check
+can independently test that inference, but is not assumed available on AWS.
+
 ## Predictions
+
+The table retains the original predictions. For new runs, apply the dated
+phase-attribution amendment above to P5–P8 and P10; numerical thresholds remain
+unchanged. In particular, amended RPC rates are not literal miss probabilities.
 
 Pre-registered 2026-10-15, before any E5 apparatus exists. The E2 figures quoted are
 from `results/E2/20261015T000959Z-85382cc/`. Each is graded per replication. A

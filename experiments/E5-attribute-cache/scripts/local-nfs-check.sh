@@ -17,10 +17,12 @@
 # kernel, not EFS or FSx: its latencies mean nothing, only its RPC counts are
 # evidence. Output is an apparatus check, never a result; it does not go in results/.
 #
-# Usage: local-nfs-check.sh <out-dir> [fast] [leases-off]
+# Usage: local-nfs-check.sh <out-dir> [fast|fast-probe] [leases-off]
 #   fast        shortened waits and windows, for exercising the plumbing only. The
 #               default is the pre-registered timing (75 s waits, 120 s seed age,
 #               300 s warm-up, 600 s measured), so the attribute timers are crossed.
+#   fast-probe  shortened A/B windows but a real 75 s idle probe; apparatus check
+#               only, never a steady-state prediction verdict.
 #   leases-off  run knfsd with fs.leases-enable=0, so it grants no delegations: the
 #               regime P5 models (EFS cannot grant them). The sysctl is VM-wide; it is
 #               restored on exit.
@@ -28,10 +30,11 @@ set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 OUT="${1:?usage: local-nfs-check.sh <out-dir> [fast] [leases-off]}"
 shift
-FAST=0; LEASES=1
+FAST=0; LEASES=1; PROBE_IDLE=75
 for a in "$@"; do
     case "$a" in
-        fast) FAST=1 ;;
+        fast) FAST=1; PROBE_IDLE=2 ;;
+        fast-probe) FAST=1; PROBE_IDLE=75 ;;
         leases-off) LEASES=0 ;;
         *) echo "unknown option: $a" >&2; exit 2 ;;
     esac
@@ -39,7 +42,7 @@ done
 mkdir -p "$OUT"
 OUT="$(cd "$OUT" && pwd)"
 if [ "$FAST" = 1 ]; then
-    TIMING="E5_WAIT_S=2 E5_WARMUP_S=6 E5_MEASURE_S=10 E5_AGE_MIN_S=0"
+    TIMING="E5_WAIT_S=2 E5_PROBE_WAIT_S=$PROBE_IDLE E5_WARMUP_S=6 E5_MEASURE_S=10 E5_AGE_MIN_S=0"
 else
     TIMING=""   # e5-run.sh's defaults are the pre-registered values
 fi
