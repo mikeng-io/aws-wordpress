@@ -241,7 +241,7 @@ destroy() {
     # cdk's exit code is logged, not trusted: the verdict is whether the stack still
     # exists afterwards. A deploy that died before the stack was created leaves
     # nothing to destroy, and that is a clean teardown, not a failed one.
-    (cd "$REPO/infra" && ./node_modules/.bin/cdk destroy "$STACK" --force) \
+    (cd "$REPO/infra" && ./node_modules/.bin/cdk destroy "$STACK" --force --output "$CDK_OUT") \
         || log "  cdk destroy exited non-zero; checking what is actually left"
     log "sweeping FSx final backups (not CloudFormation resources)"
     sweep_fsx_backups
@@ -385,10 +385,11 @@ for rep in $(seq "$START_REP" "$REPS"); do
     # replication 2's deleted file systems and aborted. Tested only one replication
     # per process until then; the sweep tolerated stale IDs, the provenance call did not.
     FSX_SOURCE_IDS=""
+    CDK_OUT=$(mktemp -d "/tmp/e5-cdk-${RUN_ID}-rep-${rep}.XXXXXX")
     require_watchdog
     trap destroy EXIT
     log "deploying $STACK"
-    (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never --method direct)
+    (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never --method direct --output "$CDK_OUT")
     capture_fsx_ids
 
     CLUSTER=$(stack_output ClusterName)

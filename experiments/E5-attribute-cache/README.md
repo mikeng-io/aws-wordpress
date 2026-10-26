@@ -621,6 +621,15 @@ The deployment method changes collection plumbing, not the measurement design.
 Sources: [CreateChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html)
 and [CDK deployment methods](https://docs.aws.amazon.com/cdk/v2/guide/ref-cli-cmd-deploy.html).
 
+### Isolated CDK output correction (2026-10-26)
+
+`results/E5/20261026T152700Z-bf451df/` failed before deployment because the killed container left a PID lock
+in shared `infra/cdk.out`; a new container reused that PID namespace. The original
+collector teardown and the host watchdog both verified no stack or FSx backups.
+No benchmark resources or data were created. Each replication now allocates a
+unique `/tmp` CDK output directory, used by both deploy and destroy; the existing
+shared output directory is left untouched. This is collection isolation only.
+
 ### Attempt log
 
 **Attempt 1, `results/E5/20261015T170718Z-8f2db3b/` (failed, not graded).**

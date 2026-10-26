@@ -1,0 +1,12 @@
+{
+  "experiment": "E5",
+  "run_id": "20261026T152700Z-bf451df",
+  "git_sha": "bf451df",
+  "region": "ap-southeast-1",
+  "status": "ABORTED_BEFORE_DEPLOYMENT",
+  "reason": "Stale shared CDK output PID lock after killed container",
+  "counts_as_replication": false,
+  "benchmark_data_collected": false,
+  "watchdog_cleanup_verified": true,
+  "standing_experiment_resources_created": false
+}
