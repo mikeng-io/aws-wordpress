@@ -100,18 +100,19 @@ if [ -z "$AWS_BIN" ]; then
 fi
 aws() { "$AWS_BIN" "$@"; }
 
+# Every billable E5 collection runs under the detached host watchdog. This file
+# is a read-only bind mount: a daemon-restored old runner sees the cleanup fence.
+require_watchdog() {
+    E5_WATCHDOG_AWS_BIN="$AWS_BIN" python3 "$REPO/experiments/E5-attribute-cache/scripts/watchdog.py" preflight
+}
+[ "$REGION" = ap-southeast-1 ] || { echo "FATAL: E5 region is pinned to ap-southeast-1" >&2; exit 1; }
+require_watchdog
+
 # A dirty tree means meta.json's git_sha does not describe what ran. The protocol
 # requires the run be reconstructible from a commit, so this refuses rather than
 # recording git_dirty:true and hoping someone reads it.
 if [ -z "${ALLOW_DIRTY:-}" ] && ! git -C "$REPO" diff --quiet HEAD --; then
     echo "FATAL: working tree is dirty - commit first (ALLOW_DIRTY=1 to override for a non-result run)" >&2
-    exit 1
-fi
-
-# A stack that already exists was left by something this run does not know about.
-# Deploying over it would measure an unknown state and destroy someone's evidence.
-if aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" >/dev/null 2>&1; then
-    echo "FATAL: $STACK already exists - inspect and destroy it by hand before a run" >&2
     exit 1
 fi
 
@@ -189,11 +190,12 @@ for b in json.load(sys.stdin)["Backups"]:
         continue
     src = {b.get("FileSystem", {}).get("FileSystemId"), b.get("Volume", {}).get("VolumeId")}
     tags = {t["Key"]: t["Value"] for t in b.get("Tags", [])}
-    tagged = tags.get("Study") == "aws-wordpress" and tags.get("Experiment") == "E5"
+    tagged = (tags.get("Study") == "aws-wordpress" and tags.get("Experiment") == "E5"
+              and tags.get("E5WatchdogRun") == sys.argv[2])
     if (src & ids) or tagged:
         match = "+".join(m for m, hit in (("id", bool(src & ids)), ("tag", tagged)) if hit)
         print(b["BackupId"], b["Lifecycle"], match)
-' "$FSX_SOURCE_IDS"
+' "$FSX_SOURCE_IDS" "$E5_WATCHDOG_TOKEN"
 }
 
 # Delete our backups and keep looking until none remain. "None remain" must be seen
@@ -383,6 +385,7 @@ for rep in $(seq "$START_REP" "$REPS"); do
     # replication 2's deleted file systems and aborted. Tested only one replication
     # per process until then; the sweep tolerated stale IDs, the provenance call did not.
     FSX_SOURCE_IDS=""
+    require_watchdog
     trap destroy EXIT
     log "deploying $STACK"
     (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never)

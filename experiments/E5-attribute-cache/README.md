@@ -3,7 +3,8 @@
 **Status:** `APPARATUS BUILT; NO GRADABLE AWS RUN` (reconciled 2026-10-26).
 Two AWS attempts failed; local kernel-NFS checks and the grader serialization fix
 are integrated. The phase-attributed method amendment below now governs cohort B. The next AWS
-pilot remains blocked on the Docker-external watchdog and AWS-specific checks.
+pilot uses the implemented host watchdog; its live AWS behaviour and the
+AWS-specific measurement checks remain unverified.
 Specced 2026-10-15; original build status was "not deployed" on 2026-10-16 before
 the attempts recorded here. Historical pilot approval is preserved in "Go-ahead";
 this reconciliation does not launch or extend it.
@@ -29,8 +30,9 @@ apparatus on `claude/e5-attribute-cache-spec` is not merged.
 
 **Still open before another pilot:**
 
-- Add a teardown watchdog outside Docker. The attempt-2 failure demonstrated
-  that the runner's EXIT trap cannot cover Docker daemon loss.
+- The [host watchdog](../../docs/e5-watchdog.md) is implemented and locally tested.
+  Verify host credentials, required cleanup permissions and the clean baseline
+  before the pilot; actual AWS deletion behaviour is not yet measured.
 - Confirm Lustre counter names, instrumentation overhead with all 18 B processes,
   and the service-specific checks in "Verified before deploy, and not". Local NFS
   does not close these. The phased positive/negative order and added snapshot work
@@ -760,6 +762,19 @@ outside any stack.
   - Node 22.17.0, or the runner image;
   - `caffeinate -i`;
   - a launch that survives the terminal closing.
+
+## Host backstop (2026-10-26)
+
+`make e5-container` now starts a detached host watchdog before the runner. Every
+replication requires its fresh lease and stack-absence preflight. Watchdog cleanup
+uses per-launch tags and captured Stack ARNs/source IDs, including rollback events
+and final backups. The existing collector trap remains, with token-scoped backup
+selection. Direct `make e5` requires that host lease.
+
+See [operation, recovery and limits](../../docs/e5-watchdog.md). This closes the
+implementation gap noted after attempt 2; it is not live AWS teardown proof or a
+new pilot approval. Pricing, remaining budget and the baseline must be reconciled
+on the pilot day. Replications 2 and 3 retain their recorded second-go-ahead gate.
 
 ## Run order
 

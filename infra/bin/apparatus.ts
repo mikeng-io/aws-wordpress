@@ -91,13 +91,20 @@ new E2StorageMatrixStack(app, 'E2-StorageMatrix-dev', {
 // Fargate (near zero): 1 c7gd.large (0.1058) + 12 interface endpoints (0.156) + the
 // three FSx arms (0.6929) = ~0.955, from results/pricing/20260918T080950Z-c94ac10.
 // The same teardown risk as E2, handled the same way by its collect.sh.
-new E5AttributeCacheStack(app, 'E5-AttributeCache-dev', {
+const e5 = new E5AttributeCacheStack(app, 'E5-AttributeCache-dev', {
   env,
   experimentId: 'E5',
   topology: 'dev',
   estimatedHourlyUsd: 0.96,
   description: 'E5 - what does an NFS stat cost on files the client did not just create?',
 });
+
+// Per-launch ownership tag: host watchdog cleanup never matches Experiment alone.
+const watchdogToken = process.env.E5_WATCHDOG_TOKEN;
+if (watchdogToken) {
+  if (!/^[0-9a-f]{32}$/.test(watchdogToken)) throw new Error('Invalid E5 watchdog token');
+  Tags.of(e5).add('E5WatchdogRun', watchdogToken);
+}
 
 // E4 - cache adapter. Specced and deliberately unbuilt: gated on E2, since there is
 // no point building a cache tier if an off-the-shelf one already delivers it.

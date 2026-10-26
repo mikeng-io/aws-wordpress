@@ -72,18 +72,26 @@ e2-container: runner ## E2 from the runner container, detached. Same cost and te
 	  bash -c 'cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e2 REPS=$(or $(REPS),3)'
 
 .PHONY: e5
-e5: ## E5 attribute cache - deploys, runs cohorts A and B, collects, DESTROYS. ~$0.96/hr while up
+e5: ## Internal guarded-runner entrypoint; use e5-container from the host
 	@set -a; . ./.env; set +a; ./experiments/E5-attribute-cache/scripts/collect.sh $(REPS)
 
 .PHONY: e5-container
-e5-container: runner ## E5 from the runner container, detached (`docker logs -f e5-run`). Same cost and teardown as `make e5`
-	docker run -d --name e5-run \
-	  -v /var/run/docker.sock:/var/run/docker.sock \
-	  -v "$$PWD":/repo -v aws-wordpress-node-modules:/repo/infra/node_modules \
-	  -e STOP_AFTER_REP="$(STOP_AFTER_REP)" -e RESUME_RUN_ID="$(RESUME_RUN_ID)" \
-	  -e RESUME_ALLOW_CHANGED="$(RESUME_ALLOW_CHANGED)" \
-	  aws-wordpress-runner \
-	  bash -c 'cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e5 REPS=$(or $(REPS),3)'
+e5-container: runner ## Launch E5 with a detached HOST watchdog; status: make e5-watchdog-status
+	@set -a; . ./.env; set +a; STOP_AFTER_REP="$(STOP_AFTER_REP)" RESUME_RUN_ID="$(RESUME_RUN_ID)" RESUME_ALLOW_CHANGED="$(RESUME_ALLOW_CHANGED)" python3 experiments/E5-attribute-cache/scripts/watchdog.py launch --reps $(or $(REPS),3)
+
+.PHONY: e5-watchdog-status e5-watchdog-recover e5-watchdog-selftest
+e5-watchdog-status: ## Read the latest local watchdog state (no AWS calls)
+	@python3 experiments/E5-attribute-cache/scripts/watchdog.py status
+
+e5-watchdog-recover: ## Retry the latest run's scoped cleanup using host AWS CLI; does not deploy
+	@set -a; . ./.env; set +a; python3 experiments/E5-attribute-cache/scripts/watchdog.py recover
+
+e5-watchdog-selftest: ## Fault-injection tests with fake AWS/Docker; no live calls
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_watchdog.py -v
+
+.PHONY: e5-watchdog-synth-check
+e5-watchdog-synth-check: runner ## Offline CDK ownership-tag checks with dummy account/AZ context
+	./experiments/E5-attribute-cache/scripts/watchdog-synth-check.sh
 
 .PHONY: e5-local
 e5-local: ## E5 apparatus check against a local kernel NFS server - no AWS, no cost. MODE="fast", "fast-probe" and/or "leases-off"

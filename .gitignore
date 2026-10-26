@@ -14,3 +14,6 @@ experiments/*/out/
 # never commit credentials or account-specific config
 .env
 *.pem
+
+# Private host watchdog state and boot evidence
+.e5-watchdog/

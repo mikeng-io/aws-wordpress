@@ -138,13 +138,15 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 The cost entries are historical apparatus estimates, not a current price quote;
 E5's estimate uses `results/pricing/20261015T170607Z-73e880e/`.
 
-**Next: finish E5 apparatus validation before another AWS pilot.** Local NFS
+**Next: pilot preflight, then one guarded AWS replication.** Local NFS
 checks and the grader serialization fix from `claude/e5-local-check-port`
 (`725266b`, `6c654c5`) are integrated. They do not change grading thresholds or
-supply an AWS result. The 2026-10-26 E5 amendment separates positive/negative RPC counts, makes the
-latency cross-check diagnostic and adds conservative expiry probes. The remaining
-deploy blocker is a teardown watchdog outside Docker; AWS-specific instrumentation
-and 18-process overhead still need the pilot checks.
+supply an AWS result. The 2026-10-26 E5 amendment separates positive/negative RPC
+counts, makes the latency cross-check diagnostic and adds conservative expiry
+probes. A [host teardown watchdog](docs/e5-watchdog.md) now guards the container launcher,
+with scoped ownership, failure-injection tests and offline tag checks. Real AWS
+cleanup permissions/timing, AWS-specific instrumentation and 18-process overhead
+still need the pilot checks; no new AWS run has been made.
 See [E5's current status](experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-26).
 
 E4 remains specced. E2 narrowed its substrate question for the tested workload;
