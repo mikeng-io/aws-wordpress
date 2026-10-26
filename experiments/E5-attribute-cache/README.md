@@ -576,6 +576,19 @@ Pre-flight:
   Lustre Scratch $0.2762, ONTAP $0.3559, PrivateLink endpoint $0.013), so the
   standing total stays **~$0.955/hr**.
 
+### Pilot go-ahead (2026-10-26)
+
+The study owner said "go" after reviewing the 2026-10-26 conditional preflight.
+Approved scope: **replication 1 only**, via
+`STOP_AFTER_REP=1 make e5-container REPS=3`; collect and inspect the result and
+verify teardown, then stop. Replications 2 and 3 are not authorised by this step.
+
+The preflight's planning basis is retained: historical spend estimated at $1.55,
+a $2 pilot target plus $1 reserve, and the unchanged $10 total ceiling. Actual
+historical billing attribution remains unverified because allocation tags are
+inactive. No billing/IAM settings are changed for this run. The host watchdog
+and in-run gates remain active; a failed pilot is diagnosed before any retry.
+
 ### Attempt log
 
 **Attempt 1, `results/E5/20261015T170718Z-8f2db3b/` (failed, not graded).**
