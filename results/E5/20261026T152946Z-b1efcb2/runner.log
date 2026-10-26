@@ -1,0 +1,460 @@
+
+added 12 packages in 7s
+node required : 22.17.0
+node active   : v22.17.0
+  node OK
+aws cli       : aws-cli/2.35.19 Python/3.14.6 Linux/6.12.72-linuxkit exe/aarch64.debian.12 (/usr/local/bin/aws)
+docker        : Docker version 29.2.1, build a5c7197
+cdk           : 2.1138.0 (build a4c0282)
+arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E5-AttributeCache-dev/1f43b350-d152-11f1-be4c-02ffc1e0235f
+npm notice
+npm notice New major version of npm available! 10.9.2 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+[15:29:52] === replication 1/3 ===
+[15:29:53] deploying E5-AttributeCache-dev
+
+✨  Synthesis time: 8.7s
+
+E5-AttributeCache-dev: start: Building E5-AttributeCache-dev Template
+E5-AttributeCache-dev: success: Built E5-AttributeCache-dev Template
+E5-AttributeCache-dev: start: Publishing E5-AttributeCache-dev Template (163703054402-ap-southeast-1-e487345e)
+E5-AttributeCache-dev: success: Published E5-AttributeCache-dev Template (163703054402-ap-southeast-1-e487345e)
+E5-AttributeCache-dev: deploying... [1/1]
+E5-AttributeCache-dev: creating stack...
+E5-AttributeCache-dev |   0 | 3:30:06 PM | CREATE_IN_PROGRESS      | AWS::CloudFormation::Stack                    | E5-AttributeCache-dev User Initiated
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) 
+E5-AttributeCache-dev |   0 | 3:30:15 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) Resource creation Initiated
+E5-AttributeCache-dev |   0 | 3:30:16 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) Resource creation Initiated
+E5-AttributeCache-dev |   0 | 3:30:16 PM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) Resource creation Initiated
+E5-AttributeCache-dev |   0 | 3:30:16 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) Resource creation Initiated
+E5-AttributeCache-dev |   0 | 3:30:16 PM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) Resource creation Initiated
+E5-AttributeCache-dev |   0 | 3:30:16 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 3:30:16 PM | CREATE_COMPLETE         | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   1 | 3:30:16 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 3:30:16 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) Eventual consistency check initiated
+E5-AttributeCache-dev |   1 | 3:30:17 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 3:30:17 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 3:30:17 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) Resource creation Initiated
+E5-AttributeCache-dev |   2 | 3:30:19 PM | CREATE_COMPLETE         | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |   3 | 3:30:20 PM | CREATE_COMPLETE         | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |   3 | 3:30:24 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) Eventual consistency check initiated
+E5-AttributeCache-dev |   4 | 3:30:24 PM | CREATE_COMPLETE         | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |   5 | 3:30:28 PM | CREATE_COMPLETE         | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) 
+E5-AttributeCache-dev |   5 | 3:30:28 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) 
+E5-AttributeCache-dev |   5 | 3:30:28 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |   5 | 3:30:28 PM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E5-AttributeCache-dev |   5 | 3:30:28 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) 
+E5-AttributeCache-dev |   5 | 3:30:28 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |   5 | 3:30:29 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |   5 | 3:30:29 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |   5 | 3:30:29 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Resource creation Initiated
+E5-AttributeCache-dev |   5 | 3:30:29 PM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) Resource creation Initiated
+E5-AttributeCache-dev |   6 | 3:30:29 PM | CREATE_COMPLETE         | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |   6 | 3:30:29 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Eventual consistency check initiated
+E5-AttributeCache-dev |   6 | 3:30:30 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |   6 | 3:30:30 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) Resource creation Initiated
+E5-AttributeCache-dev |   6 | 3:30:30 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) Resource creation Initiated
+E5-AttributeCache-dev |   6 | 3:30:30 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) Resource creation Initiated
+E5-AttributeCache-dev |   6 | 3:30:30 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) Resource creation Initiated
+E5-AttributeCache-dev |   6 | 3:30:31 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) Resource creation Initiated
+E5-AttributeCache-dev |   6 | 3:30:31 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) Eventual consistency check initiated
+E5-AttributeCache-dev |   7 | 3:30:31 PM | CREATE_COMPLETE         | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) 
+E5-AttributeCache-dev |   8 | 3:30:32 PM | CREATE_COMPLETE         | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E5-AttributeCache-dev |   8 | 3:30:32 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |   8 | 3:30:32 PM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |   9 | 3:30:33 PM | CREATE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |   9 | 3:30:33 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) Resource creation Initiated
+E5-AttributeCache-dev |   9 | 3:30:33 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |   9 | 3:30:33 PM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) Resource creation Initiated
+E5-AttributeCache-dev |  10 | 3:30:34 PM | CREATE_COMPLETE         | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |  11 | 3:30:34 PM | CREATE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |  12 | 3:30:34 PM | CREATE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |  13 | 3:30:34 PM | CREATE_COMPLETE         | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |  13 | 3:30:35 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |  13 | 3:30:35 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) Resource creation Initiated
+E5-AttributeCache-dev |  13 | 3:30:35 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  13 | 3:30:35 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) Resource creation Initiated
+E5-AttributeCache-dev |  14 | 3:30:36 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |  14 | 3:30:36 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |  14 | 3:30:36 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) Resource creation Initiated
+E5-AttributeCache-dev |  15 | 3:30:36 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) 
+E5-AttributeCache-dev |  15 | 3:30:36 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  15 | 3:30:37 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) Resource creation Initiated
+E5-AttributeCache-dev |  16 | 3:30:37 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) 
+E5-AttributeCache-dev |  17 | 3:30:37 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |  17 | 3:30:37 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) 
+E5-AttributeCache-dev |  17 | 3:30:37 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) 
+E5-AttributeCache-dev |  17 | 3:30:37 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) 
+E5-AttributeCache-dev |  17 | 3:30:37 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) Resource creation Initiated
+E5-AttributeCache-dev |  17 | 3:30:37 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) Resource creation Initiated
+E5-AttributeCache-dev |  17 | 3:30:37 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) Eventual consistency check initiated
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |  17 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) 
+E5-AttributeCache-dev |  18 | 3:30:38 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |  18 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) Resource creation Initiated
+E5-AttributeCache-dev |  19 | 3:30:38 PM | CREATE_COMPLETE         | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |  20 | 3:30:38 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |  20 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |  20 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |  20 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |  21 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) 
+E5-AttributeCache-dev |  21 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) Resource creation Initiated
+E5-AttributeCache-dev |  22 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) 
+E5-AttributeCache-dev |  22 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) Resource creation Initiated
+E5-AttributeCache-dev |  23 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) 
+E5-AttributeCache-dev |  23 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) Resource creation Initiated
+E5-AttributeCache-dev |  24 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |  25 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) 
+E5-AttributeCache-dev |  26 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) 
+E5-AttributeCache-dev |  27 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |  28 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) 
+E5-AttributeCache-dev |  29 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) 
+E5-AttributeCache-dev |  29 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Resource creation Initiated
+E5-AttributeCache-dev |  30 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |  31 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) 
+E5-AttributeCache-dev |  32 | 3:30:39 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) 
+E5-AttributeCache-dev |  32 | 3:30:39 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) Resource creation Initiated
+E5-AttributeCache-dev |  32 | 3:30:40 PM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOntap 
+E5-AttributeCache-dev |  32 | 3:30:40 PM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  33 | 3:30:40 PM | CREATE_COMPLETE         | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |  33 | 3:30:40 PM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOpenZfs 
+E5-AttributeCache-dev |  33 | 3:30:40 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Eventual consistency check initiated
+E5-AttributeCache-dev |  34 | 3:30:40 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |  34 | 3:30:40 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:41 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:42 PM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOntap Resource creation Initiated
+E5-AttributeCache-dev |  34 | 3:30:42 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) Resource creation Initiated
+E5-AttributeCache-dev |  35 | 3:30:43 PM | CREATE_COMPLETE         | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  35 | 3:30:43 PM | CREATE_IN_PROGRESS      | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |  35 | 3:30:45 PM | CREATE_IN_PROGRESS      | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) Resource creation Initiated
+E5-AttributeCache-dev |  36 | 3:30:45 PM | CREATE_COMPLETE         | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |  37 | 3:30:47 PM | CREATE_COMPLETE         | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |  37 | 3:30:49 PM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOpenZfs Resource creation Initiated
+E5-AttributeCache-dev |  37 | 3:30:49 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  37 | 3:30:50 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Resource creation Initiated
+E5-AttributeCache-dev |  38 | 3:30:51 PM | CREATE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |  38 | 3:30:51 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Eventual consistency check initiated
+E5-AttributeCache-dev |  39 | 3:30:52 PM | CREATE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |  40 | 3:30:56 PM | CREATE_COMPLETE         | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  40 | 3:30:57 PM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |  40 | 3:31:08 PM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) Resource creation Initiated
+E5-AttributeCache-dev |  40 | 3:31:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) Resource creation Initiated
+E5-AttributeCache-dev |  41 | 3:31:08 PM | CREATE_COMPLETE         | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |  42 | 3:31:35 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |  43 | 3:31:35 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E5-AttributeCache-dev |  44 | 3:31:35 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |  45 | 3:31:36 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E5-AttributeCache-dev |  46 | 3:31:36 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |  47 | 3:31:36 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |  48 | 3:31:45 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |  49 | 3:31:46 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |  50 | 3:31:46 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |  51 | 3:31:53 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |  52 | 3:31:55 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |  53 | 3:31:56 PM | CREATE_COMPLETE         | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  54 | 3:31:56 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |  54 | 3:31:56 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  54 | 3:31:56 PM | CREATE_IN_PROGRESS      | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  54 | 3:31:56 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  54 | 3:31:56 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  54 | 3:31:57 PM | CREATE_IN_PROGRESS      | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) Resource creation Initiated
+E5-AttributeCache-dev |  54 | 3:31:57 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) Resource creation Initiated
+E5-AttributeCache-dev |  54 | 3:31:57 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) Resource creation Initiated
+E5-AttributeCache-dev |  55 | 3:31:57 PM | CREATE_COMPLETE         | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  55 | 3:31:57 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) Resource creation Initiated
+E5-AttributeCache-dev |  56 | 3:32:14 PM | CREATE_COMPLETE         | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  57 | 3:32:14 PM | CREATE_COMPLETE         | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  58 | 3:32:14 PM | CREATE_COMPLETE         | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  58 | 3:32:14 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  58 | 3:32:15 PM | CREATE_IN_PROGRESS      | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  58 | 3:32:15 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  58 | 3:32:16 PM | CREATE_IN_PROGRESS      | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) Resource creation Initiated
+E5-AttributeCache-dev |  58 | 3:32:16 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) Resource creation Initiated
+E5-AttributeCache-dev |  58 | 3:32:17 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) Resource creation Initiated
+E5-AttributeCache-dev |  59 | 3:32:32 PM | CREATE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  60 | 3:32:32 PM | CREATE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  61 | 3:34:27 PM | CREATE_COMPLETE         | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  62 | 3:34:50 PM | CREATE_COMPLETE         | AWS::FSx::FileSystem                          | FsxOpenZfs 
+E5-AttributeCache-dev |  63 | 3:38:43 PM | CREATE_COMPLETE         | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  64 | 3:47:45 PM | CREATE_COMPLETE         | AWS::FSx::FileSystem                          | FsxOntap 
+E5-AttributeCache-dev |  64 | 3:47:45 PM | CREATE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  64 | 3:47:46 PM | CREATE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm Resource creation Initiated
+E5-AttributeCache-dev |  64 | 3:48:11 PM | CREATE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm Eventual consistency check initiated
+E5-AttributeCache-dev |  65 | 3:48:51 PM | CREATE_COMPLETE         | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  65 | 3:48:52 PM | CREATE_IN_PROGRESS      | AWS::FSx::Volume                              | FsxOntapVolume 
+E5-AttributeCache-dev |  65 | 3:48:52 PM | CREATE_IN_PROGRESS      | AWS::FSx::Volume                              | FsxOntapVolume Resource creation Initiated
+E5-AttributeCache-dev |  65 | 3:48:53 PM | CREATE_IN_PROGRESS      | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  65 | 3:48:54 PM | CREATE_IN_PROGRESS      | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) Resource creation Initiated
+E5-AttributeCache-dev |  66 | 3:48:55 PM | CREATE_COMPLETE         | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  66 | 3:48:55 PM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  66 | 3:48:56 PM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) Resource creation Initiated
+E5-AttributeCache-dev |  66 | 3:49:05 PM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) Eventual consistency check initiated
+E5-AttributeCache-dev |  66 | 3:49:06 PM | CREATE_IN_PROGRESS      | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  66 | 3:49:07 PM | CREATE_IN_PROGRESS      | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) Resource creation Initiated
+E5-AttributeCache-dev |  67 | 3:49:07 PM | CREATE_COMPLETE         | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  67 | 3:49:17 PM | CREATE_IN_PROGRESS      | AWS::FSx::Volume                              | FsxOntapVolume Eventual consistency check initiated
+E5-AttributeCache-dev |  68 | 3:49:53 PM | CREATE_COMPLETE         | AWS::FSx::Volume                              | FsxOntapVolume 
+E5-AttributeCache-dev |  68 | 3:51:21 PM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) Received SUCCESS signal with UniqueId i-027112186365449d7
+E5-AttributeCache-dev |  69 | 3:51:22 PM | CREATE_COMPLETE         | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  69 | 3:51:22 PM | CREATE_IN_PROGRESS      | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |  69 | 3:51:22 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  69 | 3:51:23 PM | CREATE_IN_PROGRESS      | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) Resource creation Initiated
+E5-AttributeCache-dev |  69 | 3:51:23 PM | CREATE_IN_PROGRESS      | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |  69 | 3:51:23 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) Resource creation Initiated
+E5-AttributeCache-dev |  69 | 3:51:24 PM | CREATE_IN_PROGRESS      | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) Resource creation Initiated
+E5-AttributeCache-dev |  70 | 3:51:25 PM | CREATE_COMPLETE         | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |  71 | 3:51:38 PM | CREATE_COMPLETE         | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |  72 | 3:51:39 PM | CREATE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  72 | 3:51:41 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  72 | 3:51:42 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) Resource creation Initiated
+E5-AttributeCache-dev |  72 | 3:51:43 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) Eventual consistency check initiated
+E5-AttributeCache-dev |  73 | 3:51:48 PM | CREATE_COMPLETE         | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  73 | 3:51:48 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) 
+E5-AttributeCache-dev |  73 | 3:51:48 PM | CREATE_IN_PROGRESS      | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |  73 | 3:51:49 PM | CREATE_IN_PROGRESS      | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) Resource creation Initiated
+E5-AttributeCache-dev |  73 | 3:51:49 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) Resource creation Initiated
+E5-AttributeCache-dev |  74 | 3:51:49 PM | CREATE_COMPLETE         | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |  75 | 3:51:50 PM | CREATE_COMPLETE         | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) 
+E5-AttributeCache-dev |  76 | 3:51:51 PM | CREATE_COMPLETE         | AWS::CloudFormation::Stack                    | E5-AttributeCache-dev 
+
+✅  E5-AttributeCache-dev
+
+✨  Deployment time: 1310.46s
+
+Outputs:
+E5-AttributeCache-dev.AsgName = E5-AttributeCache-dev-HostAsgASG1C89540F-3iu85qjOtTA4
+E5-AttributeCache-dev.CapacityProviderName = E5-AttributeCache-dev-HostCapacityProvider60EEB9E8-81zniT2FC2nu
+E5-AttributeCache-dev.ClusterName = E5-AttributeCache-dev-ClusterEB0386A7-4ynI2XUah3xd
+E5-AttributeCache-dev.DiagnosticsBucketName = e5-attributecache-dev-diagnosticsbucket7ca30129-svgjq8lpjvvi
+E5-AttributeCache-dev.FileSystemId = fs-0922456edfcba8f8a
+E5-AttributeCache-dev.FsxLustreDns = fs-0832163dc46a3fd1e.fsx.ap-southeast-1.amazonaws.com
+E5-AttributeCache-dev.FsxOntapSvmId = svm-01b8403c9740ae68a
+E5-AttributeCache-dev.FsxOpenZfsDns = fs-01da0fad2432ea922.fsx.ap-southeast-1.amazonaws.com
+E5-AttributeCache-dev.InstanceType = c7gd.large
+E5-AttributeCache-dev.LogGroupName = E5-AttributeCache-dev-LogGroupF5B46931-LW8D6Mluefdb
+E5-AttributeCache-dev.ResultsBucketName = e5-attributecache-dev-resultsbucketa95a2103-zbfjjoxwwifv
+E5-AttributeCache-dev.SecurityGroupId = sg-053c379e99c02ab47
+E5-AttributeCache-dev.SubnetId = subnet-092bc6dc8c00350dc
+E5-AttributeCache-dev.TaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E5AttributeCachedevTaskDefinition8FD4C977:3
+Stack ARN:
+
+✨  Total time: 1321.6s
+
+[15:52:04]   FSx provenance captured for: fs-01da0fad2432ea922 fs-0832163dc46a3fd1e fs-08f71e096ad876977 
+[15:52:06]   instance i-027112186365449d7 (c7gd.large) in ap-southeast-1a
+[15:52:15]   host provenance captured
+[15:52:15] running the E5 task (cohort A, then cohort B; ~35 min)
+[15:52:16]   ec2 task started, waiting
+[16:26:30]   ec2 exit=0 (Essential container in task exited)
+[16:26:35]   ebs: 10 ok, 0 error, conformance failures: 0
+[16:26:35]   efs_host_plain: 15 ok, 0 error, conformance failures: 0
+[16:26:35]   efs_host_tls: 15 ok, 0 error, conformance failures: 0
+[16:26:36]   fsx_openzfs: 15 ok, 0 error, conformance failures: 0
+[16:26:36]   fsx_ontap: 15 ok, 0 error, conformance failures: 0
+[16:26:36]   fsx_lustre: 10 ok, 0 error, conformance failures: 0
+[16:26:36] destroying E5-AttributeCache-dev
+E5-AttributeCache-dev: destroying... [1/1]
+E5-AttributeCache-dev |   0 | 4:26:42 PM | DELETE_IN_PROGRESS      | AWS::CloudFormation::Stack                    | E5-AttributeCache-dev User Initiated
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |   0 | 4:26:43 PM | DELETE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |   1 | 4:26:44 PM | DELETE_COMPLETE         | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   2 | 4:26:44 PM | DELETE_COMPLETE         | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) 
+E5-AttributeCache-dev |   3 | 4:26:44 PM | DELETE_COMPLETE         | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |   4 | 4:26:44 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |   5 | 4:26:44 PM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |   6 | 4:26:44 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |   7 | 4:26:44 PM | DELETE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |   8 | 4:26:44 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |   9 | 4:26:44 PM | DELETE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |  10 | 4:26:44 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |  11 | 4:26:44 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |  12 | 4:26:44 PM | DELETE_COMPLETE         | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |  13 | 4:26:44 PM | DELETE_COMPLETE         | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |  13 | 4:26:45 PM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  13 | 4:26:45 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |  13 | 4:26:45 PM | DELETE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |  13 | 4:26:45 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |  13 | 4:26:45 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  14 | 4:26:46 PM | DELETE_COMPLETE         | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |  15 | 4:26:46 PM | DELETE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  15 | 4:26:46 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  15 | 4:26:46 PM | DELETE_IN_PROGRESS      | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  16 | 4:26:48 PM | DELETE_COMPLETE         | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  16 | 4:26:48 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  17 | 4:26:48 PM | DELETE_COMPLETE         | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |  17 | 4:26:49 PM | DELETE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  17 | 4:26:49 PM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  18 | 4:26:49 PM | DELETE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  18 | 4:26:50 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  19 | 4:26:50 PM | DELETE_COMPLETE         | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  20 | 4:26:52 PM | DELETE_COMPLETE         | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  20 | 4:26:52 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |  20 | 4:26:52 PM | DELETE_IN_PROGRESS      | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |  21 | 4:26:54 PM | DELETE_COMPLETE         | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |  22 | 4:26:55 PM | DELETE_COMPLETE         | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |  22 | 4:26:55 PM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  23 | 4:26:58 PM | DELETE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |  24 | 4:26:58 PM | DELETE_COMPLETE         | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  24 | 4:26:59 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |  25 | 4:27:00 PM | DELETE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |  25 | 4:27:00 PM | DELETE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |  26 | 4:27:01 PM | DELETE_COMPLETE         | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  27 | 4:27:01 PM | DELETE_COMPLETE         | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |  28 | 4:27:02 PM | DELETE_COMPLETE         | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  29 | 4:27:03 PM | DELETE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |  30 | 4:27:03 PM | DELETE_COMPLETE         | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |  30 | 4:27:04 PM | DELETE_IN_PROGRESS      | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  31 | 4:27:11 PM | DELETE_COMPLETE         | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |  32 | 4:27:13 PM | DELETE_COMPLETE         | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |  33 | 4:27:15 PM | DELETE_COMPLETE         | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  33 | 4:27:15 PM | DELETE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  34 | 4:27:32 PM | DELETE_COMPLETE         | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  35 | 4:28:45 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |  36 | 4:28:45 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |  37 | 4:28:45 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |  38 | 4:28:45 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E5-AttributeCache-dev |  39 | 4:29:18 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |  40 | 4:29:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |  41 | 4:29:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |  42 | 4:29:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |  43 | 4:29:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |  44 | 4:29:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |  45 | 4:29:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E5-AttributeCache-dev |  46 | 4:29:53 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |  46 | 4:29:53 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |  47 | 4:29:54 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |  48 | 4:30:11 PM | DELETE_COMPLETE         | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  48 | 4:30:12 PM | DELETE_IN_PROGRESS      | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  49 | 4:30:13 PM | DELETE_COMPLETE         | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  49 | 4:30:14 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  49 | 4:30:14 PM | DELETE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOpenZfs 
+E5-AttributeCache-dev |  49 | 4:30:14 PM | DELETE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  49 | 4:30:14 PM | DELETE_IN_PROGRESS      | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  50 | 4:30:15 PM | DELETE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  51 | 4:30:15 PM | DELETE_COMPLETE         | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  51 | 4:30:15 PM | DELETE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |  51 | 4:30:15 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  51 | 4:30:15 PM | DELETE_SKIPPED          | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) 
+E5-AttributeCache-dev |  52 | 4:30:26 PM | DELETE_COMPLETE         | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |  53 | 4:30:31 PM | DELETE_COMPLETE         | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  53 | 4:30:31 PM | DELETE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  54 | 4:30:47 PM | DELETE_COMPLETE         | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  54 | 4:30:47 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |  54 | 4:30:47 PM | DELETE_IN_PROGRESS      | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |  55 | 4:30:48 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |  56 | 4:30:52 PM | DELETE_COMPLETE         | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |  57 | 4:31:50 PM | DELETE_COMPLETE         | AWS::FSx::Volume                              | FsxOntapVolume 
+E5-AttributeCache-dev |  57 | 4:31:51 PM | DELETE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  58 | 4:33:52 PM | DELETE_COMPLETE         | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  58 | 4:33:53 PM | DELETE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOntap 
+E5-AttributeCache-dev |  59 | 4:34:34 PM | DELETE_COMPLETE         | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  60 | 4:35:53 PM | DELETE_COMPLETE         | AWS::FSx::FileSystem                          | FsxOpenZfs 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_COMPLETE         | AWS::FSx::FileSystem                          | FsxOntap 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) 
+E5-AttributeCache-dev |  61 | 4:44:21 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) 
+E5-AttributeCache-dev |  62 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) 
+E5-AttributeCache-dev |  63 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) 
+E5-AttributeCache-dev |  64 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) 
+E5-AttributeCache-dev |  65 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) 
+E5-AttributeCache-dev |  66 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) 
+E5-AttributeCache-dev |  67 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) 
+E5-AttributeCache-dev |  68 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) 
+E5-AttributeCache-dev |  69 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) 
+E5-AttributeCache-dev |  70 | 4:44:22 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) 
+E5-AttributeCache-dev |  70 | 4:44:23 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) 
+E5-AttributeCache-dev |  71 | 4:44:23 PM | DELETE_COMPLETE         | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E5-AttributeCache-dev |  71 | 4:44:23 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) 
+E5-AttributeCache-dev |  72 | 4:44:24 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) 
+E5-AttributeCache-dev |  73 | 4:44:24 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) 
+E5-AttributeCache-dev |  73 | 4:44:24 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) 
+E5-AttributeCache-dev |  74 | 4:44:26 PM | DELETE_COMPLETE         | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) 
+E5-AttributeCache-dev |  75 | 4:44:26 PM | DELETE_COMPLETE         | AWS::CloudFormation::Stack                    | E5-AttributeCache-dev 
+✅  E5-AttributeCache-dev: destroyed
+[16:44:27] sweeping FSx final backups (not CloudFormation resources)
+[16:44:27]   sweeping FSx backups from: fs-01da0fad2432ea922 fs-0832163dc46a3fd1e fs-08f71e096ad876977 fsvol-014de25ed8bd70cbd  (and tag Experiment=E5)
+[16:44:28]   deleting FSx backup backup-07682183eae4a01a7 (AVAILABLE, matched by id+tag)
+[16:44:28]   deleting FSx backup backup-0dfdf15055a58443f (AVAILABLE, matched by id+tag)
+[16:46:30]   no FSx backups from this stack remain
+[16:46:33]   diagnostics bucket e5-attributecache-dev-diagnosticsbucket7ca30129-svgjq8lpjvvi copied and deleted
+[16:46:33] teardown verified: stack gone, no FSx backups from it remain
+[16:46:33] replication 1 complete -> results/E5/20261026T152946Z-b1efcb2/rep-1
+[16:46:33] STOPPED after replication 1 as asked. Stack destroyed, nothing billing.
+[16:46:33] resume with: RESUME_RUN_ID=20261026T152946Z-b1efcb2 ./experiments/E5-attribute-cache/scripts/collect.sh 3

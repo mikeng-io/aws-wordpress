@@ -80,8 +80,9 @@ that would falsify it, recorded before any experiment runs.
 ## Status
 
 E0, E1 and E3 have completed runs; E2 has completed block-backed, EFS mount and
-FSx groups, with the FUSE-backed arms still open. E5 has no gradable AWS run.
-Status reconciled on 2026-10-26; historical findings remain available with their
+FSx groups, with the FUSE-backed arms still open. E5 has one collected AWS pilot
+with measurement blockers; its aggregate predictions remain NOT EVALUABLE.
+Status reconciled on 2026-10-27 HKT; historical findings remain available with their
 original measurements.
 
 [E0 at n=10](docs/findings/E0-n10.md): syscall counts are deterministic; a warm
@@ -133,21 +134,19 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx groups complete; FUSE arms open; NFS cache confound identified** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete; fresh-file cache mix, not production steady state** |
 | [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
-| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | two failed AWS attempts; local NFS checks integrated; no gradable AWS run; blockers below |
+| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | single AWS pilot collected; 14/18 B cells valid; measurement blockers; n=1, no aggregate verdict |
 
 The cost entries are historical apparatus estimates, not a current price quote;
-E5's estimate uses `results/pricing/20261015T170607Z-73e880e/`.
+E5's refreshed standing subtotal is $0.95475/hr from `results/pricing/20261026T144948Z-71ece42/`; ancillary usage/minimum billing excluded.
 
-**Next: pilot preflight, then one guarded AWS replication.** Local NFS
-checks and the grader serialization fix from `claude/e5-local-check-port`
-(`725266b`, `6c654c5`) are integrated. They do not change grading thresholds or
-supply an AWS result. The 2026-10-26 E5 amendment separates positive/negative RPC
-counts, makes the latency cross-check diagnostic and adds conservative expiry
-probes. A [host teardown watchdog](docs/e5-watchdog.md) now guards the container launcher,
-with scoped ownership, failure-injection tests and offline tag checks. Real AWS
-cleanup permissions/timing, AWS-specific instrumentation and 18-process overhead
-still need the pilot checks; no new AWS run has been made.
-See [E5's current status](experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-26).
+**Next: diagnose the E5 pilot's measurement gates before another paid run.**
+The [single-pilot review](results/E5/20261026T152946Z-b1efcb2/pilot-review.md)
+records EFS TLS RPC attribution errors, Lustre counter-name confirmation and
+Lustre 0.1s schedule lateness. The unchanged grader has 14/18 valid B cells;
+all ten aggregate predictions remain NOT EVALUABLE at n=1. AWS teardown is
+verified by the host guard and fresh inventories across all 18 enabled regions.
+Replications 2/3 remain behind the separate go-ahead. The filesystem research
+objective and H1 verdict are unchanged.
 
 E4 remains specced. E2 narrowed its substrate question for the tested workload;
 E5 must establish the remaining cache cost before deciding whether to build an

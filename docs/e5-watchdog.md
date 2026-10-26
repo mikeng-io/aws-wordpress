@@ -3,7 +3,8 @@
 Implemented 2026-10-26 after the Docker-loss failure recorded in the E5 attempt
 log. The supported billable entrypoint is `make e5-container`; direct `make e5`
 is now an internal runner command and refuses without a live host lease.
-No AWS pilot or live deletion was performed to validate this change.
+The later [single-pilot receipt](../results/E5/20261026T152946Z-b1efcb2/pilot-review.md)
+records normal live collection/teardown. It does not validate every failure path.
 
 ## Launch and observe
 
@@ -104,5 +105,5 @@ context, typechecking, tagged and untagged syntheses,
 resource-tag assertions and invalid-token rejection. These verify implementation
 behaviour, not IAM permissions or real CloudFormation/FSx deletion timing.
 The dated [validation receipt](../experiments/E5-attribute-cache/watchdog-validation/20261026/README.md)
-records the checks. Real AWS cleanup and the pilot-specific measurement checks
-remain unverified until a scoped live run.
+records the checks. The later pilot verified normal AWS cleanup; its measurement blockers remain
+open, as recorded in the linked pilot review.

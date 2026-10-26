@@ -1,0 +1,74 @@
+=== /proc/fs/lustre/mdc/uxq6fbev-MDT0000-mdc-ffff0003c8419000/md_stats
+snapshot_time             1793030160.357453234 secs.nsecs
+start_time                1793029791.950199257 secs.nsecs
+elapsed_time              368.407253977 secs.nsecs
+close                     4026 samples [reqs]
+create                    4186 samples [reqs]
+enqueue                   6 samples [reqs]
+getattr                   2 samples [reqs]
+intent_lock               14810 samples [reqs]
+link                      1 samples [reqs]
+rename                    2 samples [reqs]
+setattr                   3 samples [reqs]
+fsync                     1 samples [reqs]
+read_page                 9 samples [reqs]
+unlink                    14 samples [reqs]
+getxattr                  2 samples [reqs]
+intent_getattr_async      1 samples [reqs]
+revalidate_lock           99 samples [reqs]
+=== /sys/fs/lustre/ldlm/namespaces/MGC10.45.0.54@tcp/lock_count
+4
+=== /sys/fs/lustre/ldlm/namespaces/uxq6fbev-MDT0000-mdc-ffff0003c8419000/lock_count
+1044
+=== /sys/fs/lustre/ldlm/namespaces/uxq6fbev-OST0000-osc-ffff0003c8419000/lock_count
+1000
+=== /sys/kernel/debug/lustre/mdc/uxq6fbev-MDT0000-mdc-ffff0003c8419000/stats
+snapshot_time             1793030160.362370163 secs.nsecs
+start_time                1793029791.950203702 secs.nsecs
+elapsed_time              368.412166461 secs.nsecs
+req_waittime              13711 samples [usec] 111 8751 2487179 608973583
+req_active                13711 samples [reqs] 1 2 13721 13741
+ldlm_glimpse_enqueue      1 samples [reqs] 1 1 1 1
+ldlm_flock_enqueue        6 samples [reqs] 1 1 6 6
+ldlm_ibits_enqueue        9445 samples [reqs] 1 1 9445 9445
+mds_getattr               2 samples [usec] 126 183 309 49365
+mds_close                 4026 samples [usec] 118 8751 643395 179518453
+mds_readpage              4 samples [usec] 257 345 1157 339631
+mds_connect               1 samples [usec] 275 275 275 75625
+mds_get_root              1 samples [usec] 167 167 167 27889
+mds_statfs                4 samples [usec] 289 319 1214 369188
+mds_sync                  1 samples [usec] 129 129 129 16641
+mds_getxattr              2 samples [usec] 141 173 314 49810
+ldlm_cancel               8 samples [usec] 125 942 3638 2405446
+obd_ping                  13 samples [usec] 254 336 3875 1163465
+seq_query                 1 samples [usec] 188 188 188 35344
+=== /sys/kernel/debug/lustre/llite/uxq6fbev-ffff0003c8419000/stats
+snapshot_time             1793030160.363505707 secs.nsecs
+start_time                1793029791.945277856 secs.nsecs
+elapsed_time              368.418227851 secs.nsecs
+read_bytes                4 samples [bytes] 3 6 19 97
+write_bytes               4012 samples [bytes] 1 51133 106460056 3639455571286
+read                      4 samples [usec] 4 13 35 349
+write                     4016 samples [usec] 0 5939 1930163 1147924741
+ioctl                     4001 samples [reqs]
+open                      4028 samples [usec] 1 482 9278 846026
+close                     4028 samples [usec] 1 8782 714601 233571837
+seek                      4001 samples [usec] 0 9 72 428
+fsync                     1 samples [usec] 501 501 501 251001
+readdir                   8 samples [usec] 0 417 1052 371994
+setattr                   1 samples [usec] 234 234 234 54756
+truncate                  2 samples [usec] 405 624 1029 553401
+flock                     5 samples [usec] 148 217 876 158058
+getattr                   5114 samples [usec] 1 36014 1535572 1858509644
+link                      1 samples [usec] 258 258 258 66564
+unlink                    11 samples [usec] 199 436 2904 837634
+symlink                   1 samples [usec] 289 289 289 83521
+mkdir                     174 samples [usec] 191 612 43352 11186968
+rmdir                     3 samples [usec] 218 350 906 284268
+mknod                     4010 samples [usec] 216 1327 1077636 294628680
+rename                    2 samples [usec] 190 313 503 134069
+statfs                    2 samples [usec] 2 325 327 105629
+getxattr                  2 samples [usec] 146 185 331 55541
+inode_permission          37942 samples [usec] 0 398 21723 314031
+opencount                 4028 samples [reqs] 1 4 4049 4105
+openclosetime             15 samples [usec] 138 1128738 2258099 2492004853377

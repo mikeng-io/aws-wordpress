@@ -1,0 +1,58 @@
+{
+  "tls_rpc_reconciliation": {
+    "0.1": {
+      "requests": 6000,
+      "phase_totals": {
+        "GETATTR": 10410,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      },
+      "window_totals": {
+        "GETATTR": 10420,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      },
+      "unattributed": {
+        "GETATTR": 10,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      }
+    },
+    "1": {
+      "requests": 600,
+      "phase_totals": {
+        "GETATTR": 10410,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      },
+      "window_totals": {
+        "GETATTR": 10420,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      },
+      "unattributed": {
+        "GETATTR": 10,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      }
+    },
+    "10": {
+      "requests": 60,
+      "phase_totals": {
+        "GETATTR": 9607,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      },
+      "window_totals": {
+        "GETATTR": 9617,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      },
+      "unattributed": {
+        "GETATTR": 10,
+        "LOOKUP": 0,
+        "ACCESS": 0
+      }
+    }
+  }
+}

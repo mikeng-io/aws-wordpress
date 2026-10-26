@@ -1,47 +1,33 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `APPARATUS BUILT; NO GRADABLE AWS RUN` (reconciled 2026-10-26).
-Two AWS attempts failed; local kernel-NFS checks and the grader serialization fix
-are integrated. The phase-attributed method amendment below now governs cohort B. The next AWS
-pilot uses the implemented host watchdog; its live AWS behaviour and the
-AWS-specific measurement checks remain unverified.
-Specced 2026-10-15; original build status was "not deployed" on 2026-10-16 before
-the attempts recorded here. Historical pilot approval is preserved in "Go-ahead";
-this reconciliation does not launch or extend it.
+**Status:** `PILOT COLLECTED; NOT READY FOR REPLICATIONS 2/3` (2026-10-27 HKT).
+The single authorised AWS pilot collected six tiers and both cohorts. Four of
+18 B cells fail validity gates, and Lustre A1 needs counter-name confirmation.
+All aggregate predictions remain NOT EVALUABLE at n=1. No hypothesis verdict changes.
 
 ## Current status and handoff (2026-10-26)
 
-Integrated from `claude/e5-local-check-port` (`725266b`, `6c654c5`): the local NFS
-harness, both existing full-timing check directories under `local-check/`, the
-serialization fix and its self-test coverage, and diagnostic `stat_split` output.
-The evidence is retained byte-for-byte. It is apparatus validation on loopback
-NFS, not EFS/FSx latency evidence or an E5 prediction verdict. The alternative
-apparatus on `claude/e5-attribute-cache-spec` is not merged.
+See the [pilot review](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
+[unchanged-method grading](../../results/E5/20261026T152946Z-b1efcb2/summary.md) and
+[final teardown evidence](../../results/E5/20261026T152946Z-b1efcb2/teardown.json).
+Source was clean at `b1efcb2`. Host watchdog and direct-service inventories verify
+cleanup; this validates the normal live path, not every injected failure path.
 
-**Measurement changes implemented (2026-10-26):**
+**Next work, before another paid run:**
 
-- Positive and negative stats now have separately attributed per-request RPC
-  counts. Counter integrity gates remain hard failures; latency disagreement is
-  diagnostic. The amended operational tests are recorded below.
-- Post-B expiry probes conservatively classify revalidation behaviour. P5 excludes
-  suppressed/unknown probes rather than claiming the timer model was refuted.
-- Synthetic cases exercise complete JSON/Markdown output and malformed data.
-  Local validation evidence is recorded below; it is not an AWS result.
+- Attribute the ten GETATTR operations outside request phases in each EFS TLS B
+  window; preserve exact reconciliation rather than subtracting background noise.
+- Confirm the deployed Lustre `ldlm_ibits_enqueue` counter semantics and add a raw
+  fixture regression. Keep this pilot's original grading when reanalysing.
+- Diagnose Lustre's 25.7% late-request share at 0.1s and concurrent instrumentation
+  overhead. Do not relax the predeclared 5% gate to fit this observation.
+- Record any apparatus/method amendment, refresh budget/baseline, and obtain the
+  separate go-ahead for another run. Replications 2/3 have not been launched.
 
-**Still open before another pilot:**
-
-- The [host watchdog](../../docs/e5-watchdog.md) is implemented and locally tested.
-  Verify host credentials, required cleanup permissions and the clean baseline
-  before the pilot; actual AWS deletion behaviour is not yet measured.
-- Confirm Lustre counter names, instrumentation overhead with all 18 B processes,
-  and the service-specific checks in "Verified before deploy, and not". Local NFS
-  does not close these. The phased positive/negative order and added snapshot work
-  are explicit validity limits, not assumed negligible.
-
-Attempt 1 lost benchmark data at upload; attempt 2 aborted during deployment.
-Neither counts as a replication. No third AWS attempt is recorded in this handoff.
-The next work is apparatus validation, then one pilot; replications 2 and 3 remain
-subject to the recorded second go-ahead.
+The local NFS checks, phase-attributed RPC amendment, conservative expiry probes
+and host watchdog remain integrated. Historical attempts and protocol decisions
+below are retained as dated evidence. WordPress is the motivating workload;
+filesystem cost/cache behaviour remains the research acceptance target.
 
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md), specifically its per-op
 cost factor. See the 2026-10-15 evidence note there. Also
@@ -629,6 +615,16 @@ collector teardown and the host watchdog both verified no stack or FSx backups.
 No benchmark resources or data were created. Each replication now allocates a
 unique `/tmp` CDK output directory, used by both deploy and destroy; the existing
 shared output directory is left untouched. This is collection isolation only.
+
+### Guarded pilot collected (2026-10-26 UTC)
+
+Run [`20261026T152946Z-b1efcb2`](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md)
+completed collection and normal teardown under the host watchdog. B: 14 OK,
+three EFS TLS phase/window mismatch errors, one Lustre 0.1s lateness error.
+Lustre A1 also fails the current counter signature. The unchanged grader reports
+all aggregate predictions NOT EVALUABLE (one replication). Raw data, logs,
+provenance, grading and direct-service teardown inventories are frozen in that run.
+No retry or replications 2/3 are authorised by this receipt.
 
 ### Attempt log
 
