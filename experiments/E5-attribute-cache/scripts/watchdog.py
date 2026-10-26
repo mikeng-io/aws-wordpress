@@ -12,7 +12,6 @@ import json
 import os
 from pathlib import Path
 import re
-import shutil
 import subprocess
 import sys
 import time
@@ -38,11 +37,30 @@ class CommandFailure(Failure):
 def command(argv, timeout=45):
     try:
         p = subprocess.run(argv, capture_output=True, text=True, timeout=timeout)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise Failure(f"{Path(argv[0]).name} command unavailable/timed out") from exc
+    except subprocess.TimeoutExpired as exc:
+        raise Failure(f"{Path(argv[0]).name} command timed out") from exc
+    except OSError as exc:
+        raise Failure(f"{Path(argv[0]).name} could not execute (OS errno {exc.errno})") from exc
     if p.returncode:
         raise CommandFailure(p.stderr.strip() or f"{Path(argv[0]).name} exited {p.returncode}")
     return p.stdout
+
+
+def find_aws_v2():
+    # shutil.which returns the first executable bit, even for a wrong-architecture
+    # Mach-O. Mirror collect.sh: test every PATH candidate for a working CLI v2.
+    seen = set()
+    for directory in os.get_exec_path():
+        candidate = str((Path(directory) / "aws").absolute())
+        if candidate in seen or not Path(candidate).is_file() or not os.access(candidate, os.X_OK):
+            continue
+        seen.add(candidate)
+        try:
+            if command([candidate, "--version"], timeout=10).startswith("aws-cli/2"):
+                return candidate
+        except Failure:
+            continue
+    raise Failure("host requires a working AWS CLI v2 on PATH")
 
 
 def atomic(path, data):
@@ -289,9 +307,7 @@ def launch(reps):
             old = json.loads((previous / "state.json").read_text())
             if old.get("phase") != "complete" or not old.get("cleanup_verified"):
                 raise Failure("previous run is unresolved; run e5-watchdog-recover first")
-        aws_bin = shutil.which("aws")
-        if not aws_bin or not command([aws_bin, "--version"]).startswith("aws-cli/2"):
-            raise Failure("host requires AWS CLI v2")
+        aws_bin = find_aws_v2()
         command(["docker", "info", "--format", "{{.ServerVersion}}"], timeout=15)
         # Never persist environment variables or command output containing credentials.
         account = json.loads(command([aws_bin, "sts", "get-caller-identity", "--region", REGION,
@@ -343,7 +359,7 @@ def preflight():
     check_lease()
     path = Path(os.environ["E5_WATCHDOG_STATE"])
     state = json.loads(path.read_text())
-    state["aws_bin"] = os.environ.get("E5_WATCHDOG_AWS_BIN") or shutil.which("aws") or "aws"
+    state["aws_bin"] = os.environ.get("E5_WATCHDOG_AWS_BIN") or find_aws_v2()
     guard = Guard(path.parent, state)
     guard.identity()
     if guard.describe(STACK) is not None:
@@ -378,9 +394,7 @@ def main():
         Guard(directory, state).supervise()
     else:
         with lock_root():
-            state["aws_bin"] = shutil.which("aws") or "aws"
-            if not command([state["aws_bin"], "--version"]).startswith("aws-cli/2"):
-                raise Failure("recovery requires AWS CLI v2")
+            state["aws_bin"] = find_aws_v2()
             Guard(directory, state).cleanup()
 
 

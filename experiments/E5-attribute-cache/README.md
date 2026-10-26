@@ -589,6 +589,17 @@ historical billing attribution remains unverified because allocation tags are
 inactive. No billing/IAM settings are changed for this run. The host watchdog
 and in-run gates remain active; a failed pilot is diagnosed before any retry.
 
+### Pre-launch toolchain correction (2026-10-26)
+
+Two launcher invocations stopped before creating a runner or CloudFormation stack:
+`shutil.which("aws")` selected the first executable bit on PATH, an unusable x86
+binary (OS errno 86), while PATH-based subprocess execution found a later working
+v2. The generic error had also conflated execution failure with timeout. The host
+launcher/recovery now validate every PATH candidate for a working AWS CLI v2, as
+the collector already does, and report execution errors separately. Regression
+checks cover wrong-architecture/v1 candidates and timeout diagnostics. These were
+pre-deployment failures, not AWS replications; the single-pilot approval remains.
+
 ### Attempt log
 
 **Attempt 1, `results/E5/20261015T170718Z-8f2db3b/` (failed, not graded).**

@@ -18,6 +18,7 @@ spec = importlib.util.spec_from_file_location("e5_watchdog", Path(__file__).reso
     "experiments/E5-attribute-cache/scripts/watchdog.py")
 w = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(w)
+REAL_COMMAND = w.command
 TOKEN = "a" * 32
 ACCOUNT = "123456789012"
 ARN = f"arn:aws:cloudformation:ap-southeast-1:{ACCOUNT}:stack/{w.STACK}/owned-id"
@@ -241,7 +242,7 @@ class WatchdogTests(unittest.TestCase):
     def test_fresh_lease_passes_and_cleanup_phase_blocks_next_deploy(self):
         self.guard.save("running")
         env = {"E5_WATCHDOG_STATE": str(self.directory / "state.json"),
-               "E5_WATCHDOG_TOKEN": TOKEN, "E5_WATCHDOG_ACCOUNT": ACCOUNT}
+               "E5_WATCHDOG_TOKEN": TOKEN, "E5_WATCHDOG_ACCOUNT": ACCOUNT, "E5_WATCHDOG_AWS_BIN": "aws"}
         with patch.dict(os.environ, env), patch.object(w.time, "time", self.clock.time):
             w.check_lease()
             self.guard.save("cleaning")
@@ -250,7 +251,7 @@ class WatchdogTests(unittest.TestCase):
     def test_stale_future_wrong_account_or_wrong_token_lease_fails(self):
         self.guard.save("running")
         env = {"E5_WATCHDOG_STATE": str(self.directory / "state.json"),
-               "E5_WATCHDOG_TOKEN": TOKEN, "E5_WATCHDOG_ACCOUNT": ACCOUNT}
+               "E5_WATCHDOG_TOKEN": TOKEN, "E5_WATCHDOG_ACCOUNT": ACCOUNT, "E5_WATCHDOG_AWS_BIN": "aws"}
         with patch.dict(os.environ, env), patch.object(w.time, "time", self.clock.time):
             for changes in ({"heartbeat": 939}, {"heartbeat": 1001}, {"token": "b"*32}, {"account": "999999999999"}):
                 candidate = dict(self.state, **changes)
@@ -287,7 +288,7 @@ class WatchdogTests(unittest.TestCase):
             self.assertEqual(state["phase"], "armed")
             self.assertEqual(state["container_id"], "c"*64)
         env = {"AWS_DEFAULT_REGION": w.REGION, "AWS_REGION": w.REGION}
-        with patch.object(w, "ROOT", self.directory), patch.object(w.shutil, "which", return_value="aws"), \
+        with patch.object(w, "ROOT", self.directory), patch.object(w, "find_aws_v2", return_value="aws"), \
              patch.object(w, "command", fake_command), patch.object(w.subprocess, "Popen", side_effect=spawn), \
              patch.dict(os.environ, env):
             with contextlib.redirect_stdout(io.StringIO()): w.launch(1)
@@ -376,7 +377,7 @@ time.sleep(30)
     def test_runner_preflight_requires_absence_not_permission_failure(self):
         self.guard.save("running")
         env = {"E5_WATCHDOG_STATE": str(self.directory / "state.json"),
-               "E5_WATCHDOG_TOKEN": TOKEN, "E5_WATCHDOG_ACCOUNT": ACCOUNT}
+               "E5_WATCHDOG_TOKEN": TOKEN, "E5_WATCHDOG_ACCOUNT": ACCOUNT, "E5_WATCHDOG_AWS_BIN": "aws"}
         with patch.dict(os.environ, env), patch.object(w.time, "time", self.clock.time), \
              patch.object(w.Guard, "aws", side_effect=self.backend.aws):
             with self.assertRaises(w.Failure): w.preflight()  # existing owned stack is still a refusal
@@ -390,6 +391,27 @@ time.sleep(30)
         with patch.object(w, "command") as cmd:
             with self.assertRaises(w.Failure): w.Guard.aws(self.guard, "fsx", "describe-backups")
             cmd.assert_not_called()
+
+    def test_aws_selection_skips_wrong_architecture_and_v1_candidates(self):
+        def cli(argv, timeout=45):
+            if argv[0] == "/old/aws": raise w.Failure("could not execute (OS errno 86)")
+            return "aws-cli/1.0" if argv[0] == "/v1/aws" else "aws-cli/2.35.19"
+        with patch.object(w.os, "get_exec_path", return_value=["/old", "/v1", "/good"]), \
+             patch.object(w.Path, "is_file", return_value=True), patch.object(w.os, "access", return_value=True), \
+             patch.object(w, "command", side_effect=cli):
+            self.assertEqual(w.find_aws_v2(), "/good/aws")
+
+    def test_aws_selection_refuses_when_no_working_v2_exists(self):
+        with patch.object(w.os, "get_exec_path", return_value=["/old"]), \
+             patch.object(w.Path, "is_file", return_value=True), patch.object(w.os, "access", return_value=True), \
+             patch.object(w, "command", side_effect=w.Failure("wrong architecture")):
+            with self.assertRaises(w.Failure): w.find_aws_v2()
+
+    def test_command_distinguishes_execution_failure_from_timeout(self):
+        with patch.object(w.subprocess, "run", side_effect=OSError(86,"Bad CPU type")):
+            with self.assertRaisesRegex(w.Failure, "OS errno 86"): REAL_COMMAND(["aws","--version"])
+        with patch.object(w.subprocess, "run", side_effect=subprocess.TimeoutExpired(["aws"],1)):
+            with self.assertRaisesRegex(w.Failure, "timed out"): REAL_COMMAND(["aws","--version"])
 
     def test_lock_rejects_second_host_supervisor(self):
         with patch.object(w, "ROOT", self.directory):
