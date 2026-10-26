@@ -617,6 +617,17 @@ Pre-flight:
 - **Cost:** ~20 min of standing FSx + endpoints ≈ **$0.30**. Running total for E5:
   ~$1.55 of $10.
 
+## Phase-attribution validation (2026-10-26)
+
+[Validation receipt](local-check/20261026-phase-attribution.md): 59 synthetic
+grading cases, 25 regression checks and two sequential kernel-NFS `fast-probe`
+runs with real 75 s idle probes. With leases enabled the probes report
+REVALIDATION_SUPPRESSED; with leases disabled they report REVALIDATION_OBSERVED,
+matching independently sampled local server state. Both runs produce complete
+JSON/Markdown with phase/window counters reconciled. Short A/B timing, one NFS
+family and six serve processes limit this to apparatus validation; AWS behaviour,
+steady-state bands and 18-process overhead remain unverified.
+
 ## Local NFS apparatus checks (2026-10-16 UTC)
 
 **These are apparatus checks, not results.** They sit in `local-check/`, outside

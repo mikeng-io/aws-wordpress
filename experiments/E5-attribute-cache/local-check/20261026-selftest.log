@@ -1,0 +1,66 @@
+PASS  P1   all supported                -> SUPPORTED
+PASS  P1   all refuted                  -> REFUTED
+PASS  P1   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P1   one ERROR replication        -> NOT EVALUABLE
+PASS  P1   two replications only        -> NOT EVALUABLE
+PASS  P2   all supported                -> SUPPORTED
+PASS  P2   all refuted                  -> REFUTED
+PASS  P2   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P2   one ERROR replication        -> NOT EVALUABLE
+PASS  P2   two replications only        -> NOT EVALUABLE
+PASS  P3   all supported                -> SUPPORTED
+PASS  P3   all refuted                  -> REFUTED
+PASS  P3   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P3   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P3   one ERROR replication        -> NOT EVALUABLE
+PASS  P3   two replications only        -> NOT EVALUABLE
+PASS  P4   all supported                -> SUPPORTED
+PASS  P4   all refuted                  -> REFUTED
+PASS  P4   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P4   one ERROR replication        -> NOT EVALUABLE
+PASS  P4   two replications only        -> NOT EVALUABLE
+PASS  P5   all supported                -> SUPPORTED
+PASS  P5   all refuted                  -> REFUTED
+PASS  P5   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P5   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P5   one ERROR replication        -> NOT EVALUABLE
+PASS  P5   two replications only        -> NOT EVALUABLE
+PASS  P6   all supported                -> SUPPORTED
+PASS  P6   all refuted                  -> REFUTED
+PASS  P6   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P6   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P6   one ERROR replication        -> NOT EVALUABLE
+PASS  P6   two replications only        -> NOT EVALUABLE
+PASS  P7   all supported                -> SUPPORTED
+PASS  P7   all refuted                  -> REFUTED
+PASS  P7   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P7   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P7   one ERROR replication        -> NOT EVALUABLE
+PASS  P7   two replications only        -> NOT EVALUABLE
+PASS  P8   all supported                -> SUPPORTED
+PASS  P8   all refuted                  -> REFUTED
+PASS  P8   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P8   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P8   one ERROR replication        -> NOT EVALUABLE
+PASS  P8   two replications only        -> NOT EVALUABLE
+PASS  P9   all supported                -> SUPPORTED
+PASS  P9   all refuted                  -> REFUTED
+PASS  P9   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P9   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P9   one ERROR replication        -> NOT EVALUABLE
+PASS  P9   two replications only        -> NOT EVALUABLE
+PASS  P10  all supported                -> SUPPORTED
+PASS  P10  all refuted                  -> REFUTED
+PASS  P10  mixed S/R/S                  -> INCONCLUSIVE
+PASS  P10  per-rep inconclusive         -> INCONCLUSIVE
+PASS  P10  one ERROR replication        -> NOT EVALUABLE
+PASS  P10  two replications only        -> NOT EVALUABLE
+PASS  P1   unknown Lustre counter       -> NOT EVALUABLE
+PASS  P1   Lustre half the RPCs         -> NOT EVALUABLE
+
+all cases reached their intended grade
+.........................
+----------------------------------------------------------------------
+Ran 25 tests in 1.631s
+
+OK

@@ -1,0 +1,9 @@
+git_commit,bdd224f
+git_dirty,0
+started_utc,2026-10-26T14:04:55Z
+image_id,sha256:3429ed3b179446f7b575813e5067bcd5f94696d49f9c9e7cf7c34ecda0466475
+docker_kernel,6.12.72-linuxkit
+mode,fast
+timing,E5_WAIT_S=2 E5_PROBE_WAIT_S=75 E5_WARMUP_S=6 E5_MEASURE_S=10 E5_AGE_MIN_S=0
+leases_enable,1
+finished_utc,2026-10-26T14:08:25Z

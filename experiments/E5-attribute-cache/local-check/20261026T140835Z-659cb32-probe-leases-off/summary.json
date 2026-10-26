@@ -1,0 +1,891 @@
+{
+  "method": "rpc-phases-v2",
+  "run_dir": "/tmp/aws-wordpress-e5-phases-v2-probe-off",
+  "replications": [
+    "rep-1"
+  ],
+  "predictions": {
+    "1": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_plain A3: signature FAIL: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops; fsx_openzfs A3: instrument status absent; fsx_lustre A1: instrument status absent"
+        }
+      }
+    },
+    "2": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "fsx_ontap A3: instrument status absent; fsx_openzfs A3: instrument status absent; efs_host_plain A3: signature FAIL: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops"
+        }
+      }
+    },
+    "3": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_plain A3: signature FAIL: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops"
+        }
+      }
+    },
+    "4": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_plain A3: signature FAIL: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops"
+        }
+      }
+    },
+    "5": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_tls B-0.1: instrument status absent"
+        }
+      }
+    },
+    "6": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "fsx_openzfs B-0.1: instrument status absent"
+        }
+      }
+    },
+    "7": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "fsx_lustre B-0.1: instrument status absent"
+        }
+      }
+    },
+    "8": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "ERROR",
+          "why": "efs_host_tls B-1: instrument status absent"
+        }
+      }
+    },
+    "9": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "SUPPORTED",
+          "efs_over_ebs": 5.47,
+          "efs_per_request_ns": {
+            "amortised": 11182459.4,
+            "median": 1160128,
+            "p99": 96418795,
+            "max": 96418795
+          },
+          "ebs_per_request_ns": {
+            "amortised": 2046007.5,
+            "median": 2173787,
+            "p99": 2941617,
+            "max": 2941617
+          }
+        }
+      }
+    },
+    "10": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "rep-1": {
+          "grade": "SUPPORTED",
+          "top5pct_share_of_rpc_ops": 0.939,
+          "requests": 10,
+          "rpc_ops": 1000
+        }
+      }
+    }
+  },
+  "cohorts": {
+    "rep-1": {
+      "a": {
+        "ebs": {
+          "A1": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1750,
+            "p90_ns": 2459,
+            "p99_ns": 6125,
+            "median_ci95_ns": [
+              1708,
+              1750
+            ],
+            "geomean_ns": 1880.6,
+            "geomean_over_median": 1.075,
+            "tail_p99_over_p50": 3.5,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1000,
+            "p90_ns": 1333,
+            "p99_ns": 2333,
+            "median_ci95_ns": [
+              1000,
+              1000
+            ],
+            "geomean_ns": 1077.2,
+            "geomean_over_median": 1.077,
+            "tail_p99_over_p50": 2.33,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1584,
+            "p90_ns": 1917,
+            "p99_ns": 2916,
+            "median_ci95_ns": [
+              1583,
+              1625
+            ],
+            "geomean_ns": 1630.1,
+            "geomean_over_median": 1.029,
+            "tail_p99_over_p50": 1.84,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 875,
+            "p90_ns": 1125,
+            "p99_ns": 2000,
+            "median_ci95_ns": [
+              875,
+              875
+            ],
+            "geomean_ns": 807.8,
+            "geomean_over_median": 0.923,
+            "tail_p99_over_p50": 2.29,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 667,
+            "p90_ns": 875,
+            "p99_ns": 3625,
+            "median_ci95_ns": [
+              666,
+              667
+            ],
+            "geomean_ns": 689.6,
+            "geomean_over_median": 1.034,
+            "tail_p99_over_p50": 5.43,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 45208,
+            "p90_ns": 55500,
+            "p99_ns": 107084,
+            "median_ci95_ns": [
+              44667,
+              45750
+            ],
+            "geomean_ns": 44961.4,
+            "geomean_over_median": 0.995,
+            "tail_p99_over_p50": 2.37,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 7042,
+            "p90_ns": 10917,
+            "p99_ns": 16875,
+            "median_ci95_ns": [
+              6916,
+              7334
+            ],
+            "geomean_ns": 6939.5,
+            "geomean_over_median": 0.985,
+            "tail_p99_over_p50": 2.4,
+            "status": "OK"
+          }
+        },
+        "efs_host_plain": {
+          "A1": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1040 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 58750,
+            "p90_ns": 83208,
+            "p99_ns": 306167,
+            "median_ci95_ns": [
+              57458,
+              60000
+            ],
+            "geomean_ns": 63565.1,
+            "geomean_over_median": 1.082,
+            "tail_p99_over_p50": 5.21,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1000 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 63333,
+            "p90_ns": 83625,
+            "p99_ns": 120583,
+            "median_ci95_ns": [
+              61542,
+              65167
+            ],
+            "geomean_ns": 63791.7,
+            "geomean_over_median": 1.007,
+            "tail_p99_over_p50": 1.9,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "FAIL",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1250,
+            "p90_ns": 1625,
+            "p99_ns": 3500,
+            "median_ci95_ns": [
+              1250,
+              1250
+            ],
+            "geomean_ns": 1290.5,
+            "geomean_over_median": 1.032,
+            "tail_p99_over_p50": 2.8,
+            "status": "ERROR",
+            "reason": "signature FAIL: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 500,
+            "p90_ns": 625,
+            "p99_ns": 1208,
+            "median_ci95_ns": [
+              500,
+              500
+            ],
+            "geomean_ns": 533.2,
+            "geomean_over_median": 1.066,
+            "tail_p99_over_p50": 2.42,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 583,
+            "p90_ns": 834,
+            "p99_ns": 1208,
+            "median_ci95_ns": [
+              583,
+              583
+            ],
+            "geomean_ns": 623.1,
+            "geomean_over_median": 1.069,
+            "tail_p99_over_p50": 2.07,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=1000 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 245708,
+            "p90_ns": 337917,
+            "p99_ns": 505166,
+            "median_ci95_ns": [
+              242583,
+              248375
+            ],
+            "geomean_ns": 256710.1,
+            "geomean_over_median": 1.045,
+            "tail_p99_over_p50": 2.06,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 168125,
+            "p90_ns": 231500,
+            "p99_ns": 303166,
+            "median_ci95_ns": [
+              165208,
+              170958
+            ],
+            "geomean_ns": 174267.4,
+            "geomean_over_median": 1.037,
+            "tail_p99_over_p50": 1.8,
+            "status": "OK"
+          },
+          "A8": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=10000 LOOKUP \u0394=0 READ \u0394=0 for 10000 ops",
+            "n": 10000,
+            "p50_ns": 54625,
+            "p90_ns": 79042,
+            "p99_ns": 135416,
+            "median_ci95_ns": [
+              54250,
+              55000
+            ],
+            "geomean_ns": 58994.7,
+            "geomean_over_median": 1.08,
+            "tail_p99_over_p50": 2.48,
+            "status": "OK"
+          }
+        },
+        "efs_host_tls": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A8": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_openzfs": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A8": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_ontap": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A8": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_lustre": {
+          "A1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A2": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A3": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A4": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A5": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A6": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "A7": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        }
+      },
+      "b": {
+        "ebs": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 100,
+            "late_share": 0.0,
+            "stat_ops": 100000,
+            "slow_share_stat": 0.01181,
+            "slow_share_enoent": 0.00828,
+            "counter_snapshot_ns_per_request": 200,
+            "stat_sum_per_request_ns": {
+              "amortised": 1921593.9,
+              "median": 1972984,
+              "p99": 3724017,
+              "max": 4218795
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1627,
+              "slow_centroid_ns": 11281,
+              "threshold_ns": 4284
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 10,
+            "late_share": 0.0,
+            "stat_ops": 10000,
+            "slow_share_stat": 0.0065,
+            "slow_share_enoent": 0.0035,
+            "counter_snapshot_ns_per_request": 179,
+            "stat_sum_per_request_ns": {
+              "amortised": 2046007.5,
+              "median": 2173787,
+              "p99": 2941617,
+              "max": 2941617
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1820,
+              "slow_centroid_ns": 13101,
+              "threshold_ns": 4884
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 1,
+            "late_share": 0.0,
+            "stat_ops": 1000,
+            "slow_share_stat": 0.006,
+            "slow_share_enoent": 0.008,
+            "counter_snapshot_ns_per_request": 124,
+            "stat_sum_per_request_ns": {
+              "amortised": 1768119.0,
+              "median": 1768119,
+              "p99": 1768119,
+              "max": 1768119
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1686,
+              "slow_centroid_ns": 10194,
+              "threshold_ns": 4146
+            }
+          }
+        },
+        "efs_host_plain": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 100,
+            "late_share": 0.0,
+            "stat_ops": 100000,
+            "slow_share_stat": 0.01883,
+            "slow_share_enoent": 0.01045,
+            "counter_snapshot_ns_per_request": 2151184,
+            "stat_sum_per_request_ns": {
+              "amortised": 3204329.0,
+              "median": 2249820,
+              "p99": 24261593,
+              "max": 42799012
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1842,
+              "slow_centroid_ns": 42314,
+              "threshold_ns": 8828
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 1003,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 0,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 1003,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.01003,
+            "rpc_ops_per_enoent": 0.0,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.01003,
+              "latency": 0.01883,
+              "tolerance": 0.0020060000000000004,
+              "status": "DISAGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 10,
+            "late_share": 0.0,
+            "stat_ops": 10000,
+            "slow_share_stat": 0.1013,
+            "slow_share_enoent": 0.0,
+            "counter_snapshot_ns_per_request": 1099971,
+            "stat_sum_per_request_ns": {
+              "amortised": 11182459.4,
+              "median": 1160128,
+              "p99": 96418795,
+              "max": 96418795
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1055,
+              "slow_centroid_ns": 93297,
+              "threshold_ns": 9921
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 1000,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 0,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 1000,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.1,
+            "rpc_ops_per_enoent": 0.0,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.1,
+              "latency": 0.1013,
+              "tolerance": 0.020000000000000004,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 1,
+            "late_share": 0.0,
+            "stat_ops": 1000,
+            "slow_share_stat": 0.0,
+            "slow_share_enoent": 0.0,
+            "counter_snapshot_ns_per_request": 1160291,
+            "stat_sum_per_request_ns": {
+              "amortised": 101405997.0,
+              "median": 101405997,
+              "p99": 101405997,
+              "max": 101405997
+            },
+            "stat_split": {
+              "fast_centroid_ns": 81505,
+              "slow_centroid_ns": 138699,
+              "threshold_ns": null
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 1000,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 0,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 1000,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 1.0,
+            "rpc_ops_per_enoent": 0.0,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 1.0,
+              "latency": 0.0,
+              "tolerance": 0.2,
+              "status": "DISAGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          }
+        },
+        "efs_host_tls": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_openzfs": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_ontap": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        },
+        "fsx_lustre": {
+          "0.1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "1": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          },
+          "10": {
+            "status": "ERROR",
+            "reason": "instrument status absent"
+          }
+        }
+      }
+    }
+  },
+  "constants": {
+    "NFS_TIERS": [
+      "efs_host_plain",
+      "efs_host_tls",
+      "fsx_openzfs",
+      "fsx_ontap"
+    ],
+    "TIERS": [
+      "ebs",
+      "efs_host_plain",
+      "efs_host_tls",
+      "fsx_openzfs",
+      "fsx_ontap",
+      "fsx_lustre"
+    ],
+    "DELTAS": [
+      "0.1",
+      "1",
+      "10"
+    ],
+    "A_COHORTS": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "A6",
+      "A7"
+    ],
+    "SIG_MIN": 0.95,
+    "SIG_MAX": 0.05,
+    "LUSTRE_MISS_COUNTERS": [
+      "ldlm_enqueue",
+      "mds_getattr",
+      "mds_getattr_name"
+    ],
+    "LATE_MAX_SHARE": 0.05,
+    "XCHECK_REL": 0.2,
+    "XCHECK_ABS": 0.002,
+    "MIN_LOG10_SEPARATION": 0.5,
+    "BINS_PER_DECADE": 20,
+    "BIN0_NS": 100,
+    "E2_MISS_NS": {
+      "efs_host_plain": 827000,
+      "fsx_openzfs": 98000,
+      "fsx_lustre": 149000
+    },
+    "P1_BAND": [
+      0.5,
+      2.0
+    ],
+    "P2_BAND": [
+      0.5,
+      2.0
+    ],
+    "P2_EFS_MAX": 0.25,
+    "P3_SUPPORT": [
+      1.0,
+      3.0
+    ],
+    "P3_KILL": [
+      0.9,
+      3.0
+    ],
+    "P4_TOL": 0.25,
+    "P5_TIERS": [
+      "efs_host_plain",
+      "efs_host_tls",
+      "fsx_ontap"
+    ],
+    "P5_BANDS": {
+      "0.1": [
+        0.0,
+        0.005
+      ],
+      "1": [
+        0.01,
+        0.03
+      ],
+      "10": [
+        0.1,
+        0.25
+      ]
+    },
+    "P5_KILL": {
+      "0.1": 0.02,
+      "1": 0.05
+    },
+    "P6_SUPPORT_MAX": 0.02,
+    "P6_KILL_D10": 0.05,
+    "P7_SUPPORT_MAX": 0.01,
+    "P7_KILL": 0.05,
+    "P8_KILL_RATIO": 2.0,
+    "P9_SUPPORT_MAX": 50.0,
+    "P9_KILL_MIN": 200.0,
+    "P10_TOP": 0.05,
+    "P10_SUPPORT_MIN": 0.5,
+    "P10_KILL_MAX": 0.2
+  }
+}

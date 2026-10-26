@@ -1,0 +1,49 @@
+host root device (from host): 83
+mount check passed:
+  ebs -> /bench/ebs (st_dev=83, fs=overlayfs)
+  efs_host_plain.default -> /bench/efs_host_plain.default (st_dev=64, fs=nfs)
+  efs_host_plain.forced -> /bench/efs_host_plain.forced (st_dev=65, fs=nfs)
+  efs_host_plain.ss-0.1 -> /bench/efs_host_plain.ss-0.1 (st_dev=66, fs=nfs)
+  efs_host_plain.ss-1 -> /bench/efs_host_plain.ss-1 (st_dev=67, fs=nfs)
+  efs_host_plain.ss-10 -> /bench/efs_host_plain.ss-10 (st_dev=68, fs=nfs)
+run order: ebs=/bench/ebs efs_host_plain.default=/bench/efs_host_plain.default efs_host_plain.forced=/bench/efs_host_plain.forced efs_host_plain.ss-0.1=/bench/efs_host_plain.ss-0.1 efs_host_plain.ss-1=/bench/efs_host_plain.ss-1 efs_host_plain.ss-10=/bench/efs_host_plain.ss-10 
+negotiated mount facts:
+order,ebs,1
+order,efs_host_plain.default,2
+order,efs_host_plain.forced,3
+order,efs_host_plain.ss-0.1,4
+order,efs_host_plain.ss-1,5
+order,efs_host_plain.ss-10,6
+kernel,6.12.72-linuxkit
+mtu,erspan0,1450
+mtu,eth0,65535
+mtu,gre0,1476
+mtu,gretap0,1462
+mtu,ip6_vti0,1428
+mtu,ip6gre0,1448
+mtu,ip6tnl0,1452
+mtu,ip_vti0,1480
+mtu,lo,65536
+mtu,sit0,1480
+mtu,tunl0,1480
+mount,ebs,overlayfs,overlay,rw,relatime,lowerdir=/var/lib/docker/overlay2/l/XN3LBXLRJ6LF6CS6XL24VDMB5B:/var/lib/docker/overlay2/l/OQFTHG5ZKJIEZB6G734PEMH6ZB:/var/lib/docker/overlay2/l/SFELCY4IVZS43V3PNXW7F2DMSZ:/var/lib/docker/overlay2/l/X3DMURUUV62EB462VUFGR2KEOC:/var/lib/docker/overlay2/l/5WLXJMYL6NOZZNKKTIFSR43TTR:/var/lib/docker/overlay2/l/IZOXKAM46JLNSNLQ55KUCPYDOD:/var/lib/docker/overlay2/l/Z325RBVTQQYPY3UEEB4A27HBLE:/var/lib/docker/overlay2/l/6LFEFAA4YPEADH6CHANUZQNHLA:/var/lib/docker/overlay2/l/XUU2K7D2MS54QSSG4WN3VU43GT:/var/lib/docker/overlay2/l/SUBVWMCXSOJ2T2WBOYLVATT4Y7:/var/lib/docker/overlay2/l/MRPRWJ24CKCQJIA34N7MA27KC7:/var/lib/docker/overlay2/l/MTM5EYM4CIR3ZUPKVRD6HX2VU4:/var/lib/docker/overlay2/l/24VKP2A5O3KQ3Q2VQ5IZCYEWG5:/var/lib/docker/overlay2/l/URQJCMU33ZQYNBW4BYK4KAIESD,upperdir=/var/lib/docker/overlay2/04a8f34ad7df129323748ceb6a765b445d83001f26e5f82f00f4ea785be7ee82/diff,workdir=/var/lib/docker/overlay2/04a8f34ad7df129323748ceb6a765b445d83001f26e5f82f00f4ea785be7ee82/work
+mount,efs_host_plain.default,nfs,127.0.0.1:/e5/efs_host_plain/a,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+mount,efs_host_plain.forced,nfs,127.0.0.1:/e5/efs_host_plain/forced,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+mount,efs_host_plain.ss-0.1,nfs,127.0.0.1:/e5/efs_host_plain/ss-0.1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+mount,efs_host_plain.ss-1,nfs,127.0.0.1:/e5/efs_host_plain/ss-1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+mount,efs_host_plain.ss-10,nfs,127.0.0.1:/e5/efs_host_plain/ss-10,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+[14:06:41] E5 mount options verified: nosharecache everywhere, acregmin=acregmax=0 only on forced
+[14:06:41] seed age gate passed: 0 s since seeding
+[14:06:42] ebs: POSIX conformance PASSED
+[14:06:43] efs_host_plain: POSIX conformance PASSED
+[14:06:43] cohort A tier order: ebs efs_host_plain 
+[14:06:43] cohort A: ebs
+[14:06:43]   ebs: waiting 2s for attributes to expire
+[14:06:45]   ebs: waiting 2s
+[14:06:47] cohort A: efs_host_plain
+[14:06:48]   efs_host_plain: waiting 2s for attributes to expire
+[14:06:50]   efs_host_plain: waiting 2s
+[14:06:53] cohort B: 2 tiers x intervals {0.1 1 10}, warm-up 6s, measured 10s
+[14:07:09] expiry probes: idle 75s after all B readers stop
+[14:08:24] BENCH_S3_BUCKET unset - results left in /tmp/e5
+task exit: 0

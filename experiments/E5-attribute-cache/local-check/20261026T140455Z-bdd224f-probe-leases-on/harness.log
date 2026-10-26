@@ -1,0 +1,4 @@
+./experiments/E5-attribute-cache/scripts/local-nfs-check.sh /tmp/aws-wordpress-e5-phases-v2-probe-on fast-probe
+task exit: 0
+teardown: leases-enable restored to 1
+local check output: /tmp/aws-wordpress-e5-phases-v2-probe-on (summary.md)
