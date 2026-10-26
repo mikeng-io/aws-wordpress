@@ -181,7 +181,8 @@ class WatchdogTests(unittest.TestCase):
     def test_foreign_nonce_stack_and_backup_are_ignored(self):
         self.backend.stack = stack("b"*32)
         self.backend.backups = [self.backend.backups[-1]]
-        self.guard.cleanup()
+        with self.assertRaises(w.Failure): self.guard.cleanup()
+        self.assertFalse(self.state["cleanup_verified"])
         self.assertFalse(self.deletes())
         self.assertFalse(any(c[:2] == ("fsx", "delete-backup") for c in self.backend.calls))
 
@@ -412,6 +413,13 @@ time.sleep(30)
             with self.assertRaisesRegex(w.Failure, "OS errno 86"): REAL_COMMAND(["aws","--version"])
         with patch.object(w.subprocess, "run", side_effect=subprocess.TimeoutExpired(["aws"],1)):
             with self.assertRaisesRegex(w.Failure, "timed out"): REAL_COMMAND(["aws","--version"])
+
+    def test_untagged_review_placeholder_never_passes_cleanup_verification(self):
+        self.backend.stack["StackStatus"] = "REVIEW_IN_PROGRESS"
+        self.backend.stack["Tags"] = []
+        with self.assertRaises(w.Failure): self.guard.supervise()
+        self.assertFalse(self.state["cleanup_verified"])
+        self.assertFalse(self.deletes())
 
     def test_lock_rejects_second_host_supervisor(self):
         with patch.object(w, "ROOT", self.directory):

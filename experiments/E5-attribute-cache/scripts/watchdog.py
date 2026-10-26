@@ -235,6 +235,9 @@ class Guard:
                         self.aws("fsx", "delete-backup", "--backup-id", backup["BackupId"])
                 if not active and not remaining:
                     if empty_since is not None and self.timer() - empty_since >= 60 and runner_stopped:
+                        current = self.describe(STACK)
+                        if current is not None and not self.own(current):
+                            raise Failure("same-name stack ownership unproven; manual inspection required")
                         self.diagnostics()
                         self.save("complete", cleanup_verified=True, runner_stopped=True)
                         return

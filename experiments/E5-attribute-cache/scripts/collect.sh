@@ -388,7 +388,7 @@ for rep in $(seq "$START_REP" "$REPS"); do
     require_watchdog
     trap destroy EXIT
     log "deploying $STACK"
-    (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never)
+    (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never --method direct)
     capture_fsx_ids
 
     CLUSTER=$(stack_output ClusterName)

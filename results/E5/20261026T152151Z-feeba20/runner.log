@@ -1,0 +1,110 @@
+
+added 12 packages in 3s
+node required : 22.17.0
+node active   : v22.17.0
+  node OK
+aws cli       : aws-cli/2.35.19 Python/3.14.6 Linux/6.12.72-linuxkit exe/aarch64.debian.12 (/usr/local/bin/aws)
+docker        : Docker version 29.2.1, build a5c7197
+cdk           : 2.1138.0 (build a4c0282)
+Sending build context to Docker daemon  76.29kB
+
+Step 1/14 : FROM public.ecr.aws/amazonlinux/amazonlinux:2023
+ ---> 2b549889a846
+Step 2/14 : RUN dnf install -y gcc awscli-2 util-linux-core nfs-utils && dnf clean all
+ ---> Using cache
+ ---> 86c61d935ce7
+Step 3/14 : COPY bench.c /src/bench.c
+ ---> Using cache
+ ---> 65fc081e0845
+Step 4/14 : RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c
+ ---> Using cache
+ ---> a255f6033fd5
+Step 5/14 : COPY tput.c /src/tput.c
+ ---> Using cache
+ ---> 4ec68582eb13
+Step 6/14 : RUN gcc -O2 -Wall -Werror -pthread -o /usr/local/bin/throughput /src/tput.c
+ ---> Using cache
+ ---> 27179cc0cbf5
+Step 7/14 : COPY agebench.c /src/agebench.c
+ ---> 1d9a6969ed09
+Step 8/14 : RUN gcc -O2 -Wall -Werror -o /usr/local/bin/agebench /src/agebench.c -lm
+ ---> Running in d7141c53ef23
+ ---> Removed intermediate container d7141c53ef23
+ ---> 1acaa642c44e
+Step 9/14 : COPY request-drop cache-dropper request-lustre-stats /usr/local/bin/
+ ---> 6f31316915ad
+Step 10/14 : COPY e5-run.sh /usr/local/bin/e5-run
+ ---> 3818b3208e54
+Step 11/14 : COPY conformance.sh /usr/local/bin/conformance
+ ---> f6d73bd87ace
+Step 12/14 : COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+ ---> 25599c3e2aac
+Step 13/14 : RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh     /usr/local/bin/request-drop /usr/local/bin/cache-dropper     /usr/local/bin/request-lustre-stats /usr/local/bin/e5-run
+ ---> Running in ab648b937c76
+ ---> Removed intermediate container ab648b937c76
+ ---> d96de98d30e5
+Step 14/14 : ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ ---> Running in 1e867a3c5ace
+ ---> Removed intermediate container 1e867a3c5ace
+ ---> b0ed8b050b8b
+Successfully built b0ed8b050b8b
+Successfully tagged cdkasset-8b1e493279fe25d8fe916edcece656f125e7389369c734af76a1b4102f003d64:latest
+The push refers to repository [163703054402.dkr.ecr.ap-southeast-1.amazonaws.com/cdk-hnb659fds-container-assets-163703054402-ap-southeast-1]
+f6d0b7f922b9: Preparing
+21bd0878cb23: Preparing
+2aa2bfce4251: Preparing
+d0ed4a00ed06: Preparing
+f5fc3d7118be: Preparing
+ca08de8bd6ad: Preparing
+10528d38c3ab: Preparing
+0425f0afeae7: Preparing
+67d17280bcc3: Preparing
+a57528915691: Preparing
+8fea3851fa8d: Preparing
+c09583e5a845: Preparing
+f8a888527492: Preparing
+0425f0afeae7: Waiting
+67d17280bcc3: Waiting
+a57528915691: Waiting
+8fea3851fa8d: Waiting
+c09583e5a845: Waiting
+f8a888527492: Waiting
+ca08de8bd6ad: Waiting
+10528d38c3ab: Waiting
+21bd0878cb23: Pushed
+f5fc3d7118be: Pushed
+f6d0b7f922b9: Pushed
+d0ed4a00ed06: Pushed
+2aa2bfce4251: Pushed
+0425f0afeae7: Layer already exists
+a57528915691: Layer already exists
+67d17280bcc3: Layer already exists
+8fea3851fa8d: Layer already exists
+f8a888527492: Layer already exists
+c09583e5a845: Layer already exists
+ca08de8bd6ad: Pushed
+10528d38c3ab: Pushed
+8b1e493279fe25d8fe916edcece656f125e7389369c734af76a1b4102f003d64: digest: sha256:05c94ec18b39d8dc92db64df538f8719ba08fc8a9ea1d97be62254a2117b30ca size: 3031
+npm notice
+npm notice New major version of npm available! 10.9.2 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+[15:21:56] === replication 1/3 ===
+[15:21:57] deploying E5-AttributeCache-dev
+
+✨  Synthesis time: 2.34s
+
+E5-AttributeCache-dev: start: Building E5-AttributeCache-dev Template
+E5-AttributeCache-dev: success: Built E5-AttributeCache-dev Template
+E5-AttributeCache-dev: start: Building TaskDefinition/bench/AssetImage
+E5-AttributeCache-dev: start: Publishing E5-AttributeCache-dev Template (163703054402-ap-southeast-1-56b32be9)
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+E5-AttributeCache-dev: success: Published E5-AttributeCache-dev Template (163703054402-ap-southeast-1-56b32be9)
+E5-AttributeCache-dev: success: Built TaskDefinition/bench/AssetImage
+E5-AttributeCache-dev: start: Publishing TaskDefinition/bench/AssetImage (163703054402-ap-southeast-1-eb5cb738)
+E5-AttributeCache-dev: success: Published TaskDefinition/bench/AssetImage (163703054402-ap-southeast-1-eb5cb738)
+E5-AttributeCache-dev: creating CloudFormation changeset...

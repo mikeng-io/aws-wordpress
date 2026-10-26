@@ -32,6 +32,10 @@ means cleanup was verified, **not** that the experiment succeeded. Check
 
 ## Failure handling and ownership
 
+- E5 deploys with `--method direct`: default change sets create an untagged
+  REVIEW_IN_PROGRESS placeholder before execution. The guard never assumes
+  ownership of such a placeholder, and an unowned same-name stack prevents a
+  successful cleanup verdict.
 - The E5-only `E5WatchdogRun` tag binds each launch to its CloudFormation stack,
   FSx resources and buckets. The guard verifies account, region and tags, then
   deletes by unique Stack ARN, not a reusable stack name. Unrelated E5 tags alone

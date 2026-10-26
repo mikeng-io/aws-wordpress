@@ -600,6 +600,27 @@ the collector already does, and report execution errors separately. Regression
 checks cover wrong-architecture/v1 candidates and timeout diagnostics. These were
 pre-deployment failures, not AWS replications; the single-pilot approval remains.
 
+### Unexecuted change-set attempt (2026-10-26)
+
+`results/E5/20261026T152151Z-feeba20/` stopped before benchmark resources were created. CDK's default
+change-set deployment creates a `REVIEW_IN_PROGRESS` placeholder with no root
+stack tags. The strict host watchdog rejected that placeholder and killed the
+runner before its AVAILABLE change set was executed. Asset publication had
+completed; any asset storage/request cost is unmeasured.
+
+Ownership was independently verified from the change set's exact Stack ARN and
+matching run/study/experiment tags. The unexecuted placeholder was deleted by
+that exact ARN; direct checks confirmed no stack, FSx filesystem or backup.
+`failure.json` records that the old watchdog's empty-owned-scope success was
+insufficient. No benchmark data exists and this does not count as replication 1.
+
+The collector now uses `cdk deploy --method direct` to avoid that untagged
+intermediate state. Ownership validation remains strict, and a same-name unowned
+stack now prevents cleanup success. Regression coverage includes that case.
+The deployment method changes collection plumbing, not the measurement design.
+Sources: [CreateChangeSet](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateChangeSet.html)
+and [CDK deployment methods](https://docs.aws.amazon.com/cdk/v2/guide/ref-cli-cmd-deploy.html).
+
 ### Attempt log
 
 **Attempt 1, `results/E5/20261015T170718Z-8f2db3b/` (failed, not graded).**

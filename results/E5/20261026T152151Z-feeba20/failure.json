@@ -1,0 +1,16 @@
+{
+  "experiment": "E5",
+  "run_id": "20261026T152151Z-feeba20",
+  "git_sha": "feeba20",
+  "region": "ap-southeast-1",
+  "status": "ABORTED_BEFORE_CHANGESET_EXECUTION",
+  "benchmark_data_collected": false,
+  "counts_as_replication": false,
+  "reason": "Host watchdog saw untagged REVIEW_IN_PROGRESS placeholder; ownership mismatch",
+  "changeset_ownership_verified": true,
+  "placeholder_deleted_by_exact_arn": true,
+  "fsx_filesystems_and_backups_absent": true,
+  "old_watchdog_empty_scope_verdict_was_insufficient": true,
+  "standing_experiment_resources_created": false,
+  "asset_storage_charges_not_measured": true
+}
