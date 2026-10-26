@@ -167,6 +167,14 @@ class AttributionTests(unittest.TestCase):
         fixture.write_rep(self.rep, world)
         self.assertEqual(g.p7({}, g.cohort_b(self.rep))["grade"], g.E)
 
+    def test_physically_truncated_gzip_is_reported_as_cell_error(self):
+        data = self.req.read_bytes()
+        self.req.write_bytes(data[:-8])
+        with contextlib.redirect_stdout(io.StringIO()):
+            g.main(self.run)
+        report = json.loads((self.run / "summary.json").read_text())
+        self.assertEqual(report["cohorts"]["rep-1"]["b"]["efs_host_plain"]["1"]["status"], "ERROR")
+
     def test_malformed_input_still_produces_json_and_markdown(self):
         self.edit_rows(lambda s: s + "broken\n")
         with contextlib.redirect_stdout(io.StringIO()):

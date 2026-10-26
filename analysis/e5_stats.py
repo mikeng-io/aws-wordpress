@@ -32,6 +32,7 @@ import math
 import re
 import statistics
 import sys
+import zlib
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -359,7 +360,8 @@ def validated_delta(pre: dict | None, post: dict | None) -> dict:
 def cohort_b_cell(tier: str, d: str, tdir: Path) -> dict:
     try:
         return _cohort_b_cell(tier, d, tdir)
-    except (OSError, ValueError, TypeError, KeyError, ZeroDivisionError, OverflowError) as exc:
+    except (OSError, EOFError, zlib.error, UnicodeError, ValueError, TypeError,
+            KeyError, ZeroDivisionError, OverflowError) as exc:
         return {"status": "ERROR", "reason": str(exc)}
 
 
