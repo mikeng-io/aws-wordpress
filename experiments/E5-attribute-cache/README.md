@@ -776,6 +776,21 @@ implementation gap noted after attempt 2; it is not live AWS teardown proof or a
 new pilot approval. Pricing, remaining budget and the baseline must be reconciled
 on the pilot day. Replications 2 and 3 retain their recorded second-go-ahead gate.
 
+## Pilot-day preflight (2026-10-26)
+
+[Read-only preflight receipt](preflight/20261026T145822Z-55d483a/README.md): clean E5 baseline
+across 18 enabled regions; 12 watchdog actions allowed in IAM simulation; selected
+standing subtotal unchanged at ~$0.955/hr from
+`results/pricing/20261026T144948Z-71ece42/`. No new AWS experiment ran.
+
+Readiness is **CONDITIONAL_PILOT_READY**: `Study` and `Experiment` billing tags are
+inactive, so actual historical spend and remaining budget cannot be verified from
+the zero tag-filtered Cost Explorer response. Planning retains the historical
+$1.55 estimate and $10 ceiling; one pilot has a $2 target plus $1 reserve. These
+are estimates, not an invoice balance or an automatic spending cap. Recheck the
+transient baseline and credentials at launch; do not count later replications
+without their recorded gate.
+
 ## Run order
 
 1. **`STOP_AFTER_REP=1 make e5-container REPS=3`.** Replication 1 is the pilot. It is

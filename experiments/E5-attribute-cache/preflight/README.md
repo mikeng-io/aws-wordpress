@@ -25,3 +25,5 @@ not evidence of zero cost. Tags were not activated during this read-only step.
 
 References: [IAM simulation limits](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html)
 and [billing tag activation](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html).
+
+Latest observation: [20261026T145822Z-55d483a](20261026T145822Z-55d483a/README.md) — CONDITIONAL_PILOT_READY; billing attribution unverified.

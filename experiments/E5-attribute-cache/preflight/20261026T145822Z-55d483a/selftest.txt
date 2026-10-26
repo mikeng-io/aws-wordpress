@@ -1,0 +1,11 @@
+test_delete_or_tag_activation_cannot_be_queried (test_e5_preflight.PreflightTests.test_delete_or_tag_activation_cannot_be_queried) ... ok
+test_errors_active_resources_missing_region_and_retained_buckets_refuse (test_e5_preflight.PreflightTests.test_errors_active_resources_missing_region_and_retained_buckets_refuse) ... ok
+test_good_read_only_evidence_is_conditional_not_unqualified_ready (test_e5_preflight.PreflightTests.test_good_read_only_evidence_is_conditional_not_unqualified_ready) ... ok
+test_missing_context_is_not_allowed_proof (test_e5_preflight.PreflightTests.test_missing_context_is_not_allowed_proof) ... ok
+test_missing_or_duplicate_permission_actions_refuse (test_e5_preflight.PreflightTests.test_missing_or_duplicate_permission_actions_refuse) ... ok
+test_stale_pricing_missing_tool_unresolved_guard_or_budget_exhaustion_refuse (test_e5_preflight.PreflightTests.test_stale_pricing_missing_tool_unresolved_guard_or_budget_exhaustion_refuse) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK
