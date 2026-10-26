@@ -93,6 +93,14 @@ e5-watchdog-selftest: ## Fault-injection tests with fake AWS/Docker; no live cal
 e5-watchdog-synth-check: runner ## Offline CDK ownership-tag checks with dummy account/AZ context
 	./experiments/E5-attribute-cache/scripts/watchdog-synth-check.sh
 
+.PHONY: e5-preflight
+e5-preflight: pricing ## Read-only live baseline, IAM simulation and budget evidence; never deploys
+	@set -a; . ./.env; set +a; PYTHONDONTWRITEBYTECODE=1 python3 experiments/E5-attribute-cache/scripts/preflight.py
+
+.PHONY: e5-preflight-selftest
+e5-preflight-selftest: ## Verify readiness and read-only guards without AWS calls
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_preflight.py -v
+
 .PHONY: e5-local
 e5-local: ## E5 apparatus check against a local kernel NFS server - no AWS, no cost. MODE="fast", "fast-probe" and/or "leases-off"
 	./experiments/E5-attribute-cache/scripts/local-nfs-check.sh $(or $(OUT),/tmp/e5-local) $(MODE)
