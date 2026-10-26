@@ -5,12 +5,15 @@ A successor to [aws-serverless-wordpress](https://github.com/mikeng-io/aws-serve
 
 This is **not** a reference architecture. It is a study, and nothing in it is
 confirmed until it has been benchmarked and deployed. The output is knowledge about
-which infrastructure choices actually determine WordPress performance and cost on
-AWS — measured, not asserted.
+which filesystem, caching and compute choices determine performance and cost for
+metadata-heavy applications on AWS — measured, not asserted.
 
 ## The premise
 
-WordPress is the **instrument**, not the subject.
+WordPress is the **entry point for readers and the workload instrument**. The
+research subject is filesystem behaviour on AWS. A WordPress deployment is not
+the deliverable, and end-to-end WordPress optimisation does not gate the
+filesystem experiments.
 
 It is here because it is an unusually pure specimen of a much larger class:
 applications written before object storage was normal, which assume a POSIX
@@ -45,7 +48,14 @@ need FUSE, FUSE needs `CAP_SYS_ADMIN`, and Fargate does not grant it — so the
 compute choice deletes most of the storage matrix before any performance
 discussion begins.
 
-E4 then asks the obvious follow-up: if the fast tier is local and the durable
+E5 now asks what that cost becomes after the client cache has warmed: first-touch
+miss cost, revalidation cost and steady-state miss rate. E2 exposed a cache-window
+confound in the earlier NFS measurements, so their ratios are benchmark-specific,
+not production steady-state estimates. See
+[the server-backed finding](docs/findings/E2-server-backed.md), based on
+`results/E2/20261015T000959Z-85382cc/`.
+
+E4 then asks the conditional follow-up: if the fast tier is local and the durable
 tier is remote, can a **cache adapter** sit between them — local ephemeral in
 front of S3/EFS, the way Redis sits in front of Postgres? E3 measured both ends
 of that gap on the same task (3.1 µs vs 0.84 ms), which is what makes the
@@ -69,21 +79,22 @@ that would falsify it, recorded before any experiment runs.
 
 ## Status
 
-Four experiments complete.
+E0, E1 and E3 have completed runs; E2 has completed block-backed, EFS mount and
+FSx groups, with the FUSE-backed arms still open. E5 has no gradable AWS run.
+Status reconciled on 2026-10-26; historical findings remain available with their
+original measurements.
 
 [E0 at n=10](docs/findings/E0-n10.md): syscall counts are deterministic; a warm
 WordPress request issues ~4,300 filesystem syscalls that `php.ini` cannot reduce.
 Counts, not latency — E0 says nothing about EFS timing, only about the multiplier
 that timing gets applied to.
 
-[E3](docs/findings/E3-fargate-ephemeral.md) supplies the other half of that
-multiplication: on the same Fargate task, a `stat()` costs **3.1 µs** on local
-ephemeral storage against **0.84 ms** on EFS — **~271×** once the measured 24.4%
-attribute-cache hit rate is accounted for — with a local-disk-shaped tail
-(p99 4.6 µs). Fargate's ephemeral tier is genuinely fast, so the constraint on
-Fargate is not that it lacks a fast local disk; it is that it cannot *share* one.
-The gap is also metadata-shaped, not throughput-shaped: `open+read` is only ~91×,
-which is the asymmetry this study has argued from E0 onward, now measured directly.
+[E3](docs/findings/E3-fargate-ephemeral.md) measured local ephemeral and EFS on
+the same Fargate task (`results/E3/20260910T113000Z-6016f58/`). It establishes a
+fast block-backed metadata path. Its reported ~271× `stat` gap describes that
+fresh-file benchmark's cache mix; E2 later showed why this is not a steady-state
+production ratio. Its `open_read` comparison also includes client page caching.
+E5 is designed to separate these mechanisms.
 
 [E1](docs/findings/E1-mount-per-task.md): ECS mounts EFS once **per task**, not
 once per host. Two co-located tasks on the identical instance get two fully
@@ -91,17 +102,21 @@ independent NFS4 client mounts and two independent TLS proxy processes — confi
 directly on the host, not inferred. This refutes the shared-cache mechanism the
 study originally proposed: there is no host-level cache to share, so placement is
 not a lever. [H1](hypotheses/H1-cache-locality.md) records what survived that
-refutation — the tier, not the placement, is what sets the per-op cost.
+refutation, and the later E2 evidence that puts its per-op cost model under review.
 
-[E2](docs/findings/E2-block-backed.md) answers the study's central question for the
-block-backed tiers, and refutes its own pre-registered prediction doing it. EC2
-instance store (118 GB attached NVMe), an EBS gp3 root volume, and Fargate's task
-ephemeral storage are **the same tier**: within 1.5× of each other on `stat`,
-`open+read`, `create` and `unlink`, with EBS and instance store matching to 1.00–1.03×
-including tails. Against EFS the same block-backed tiers are **638× faster on
-`stat`**. So the boundary is not fast-disk versus slow-disk — it is whether the
-kernel owns the filesystem or a server does. E3's EFS bimodality also replicated on
-independent hardware (28.6% / 30.7% attribute-cache hits, ~550× separation).
+[E2's block-backed group](docs/findings/E2-block-backed.md) did not show the
+predicted separation between instance store and Fargate on device-touching
+operations, and found EBS close to instance store
+(`results/E2/20260910T163206Z-66dcff8/`). This is agreement for this workload,
+not evidence that the devices are interchangeable for all workloads.
+
+[E2's FSx group](docs/findings/E2-server-backed.md) completed three independent
+deployments (`results/E2/20261015T000959Z-85382cc/`). Its key finding is that the
+NFS `stat` ranking was confounded by the client's attribute cache, and `open_read`
+largely read cached data. Prediction 1 is NOT EVALUABLE, prediction 3 is mechanically
+REFUTED with that construct caveat, and prediction 5 is PARTIALLY SUPPORTED.
+The mutating-operation results remain useful; production steady-state metadata
+cost is still open.
 
 [E0's cart/checkout endpoints](docs/findings/E0-cart-checkout.md): fixed a
 catalog bug that had made every WooCommerce cart/checkout trace measure an empty
@@ -115,19 +130,24 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 |---|---|---|---|
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
-| [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.29/hr, torn down | **block-backed group complete: the device does not matter, the protocol boundary does** |
-| [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete: ~271× faster than EFS for `stat`** |
+| [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx groups complete; FUSE arms open; NFS cache confound identified** |
+| [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete; fresh-file cache mix, not production steady state** |
 | [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
-| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | apparatus built, not deployed |
+| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | two failed AWS attempts; local NFS checks integrated; no gradable AWS run; blockers below |
 
-E0–E3 were ordered by kill-power per dollar; between them they either support the
-central claim or destroy it, cheaply and early. E2 is where the study's actual
-question gets answered. Its block-backed group is done; the server-backed group
-(FSx OpenZFS / Lustre / ONTAP, JuiceFS, SeaweedFS, Mountpoint-S3) is specced and
-costed at ~$0.96/hr for all four FSx arms, and not yet built.
+The cost entries are historical apparatus estimates, not a current price quote;
+E5's estimate uses `results/pricing/20261015T170607Z-73e880e/`.
 
-E4 has already been narrowed by E2 without being built: a cache adapter needs no
-special substrate, because every platform's block-backed tier performs the same.
+**Next: finish E5 apparatus validation before another AWS pilot.** Local NFS
+checks and the grader serialization fix from `claude/e5-local-check-port`
+(`725266b`, `6c654c5`) are integrated. They do not change grading thresholds or
+supply an AWS result. Open blockers are the cohort B counter/latency noise
+cross-check, delegation discrimination, and a teardown watchdog outside Docker.
+See [E5's current status](experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-26).
+
+E4 remains specced. E2 narrowed its substrate question for the tested workload;
+E5 must establish the remaining cache cost before deciding whether to build an
+adapter. JuiceFS, SeaweedFS and Mountpoint-S3 remain unmeasured matrix arms.
 
 See [docs/scope-audit.md](docs/scope-audit.md) for what each experiment and
 hypothesis is currently worth, and why some are parked.

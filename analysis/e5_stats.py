@@ -325,6 +325,15 @@ def cohort_b_cell(tier: str, d: str, tdir: Path) -> dict:
         },
         "misses_per_request": [slow_count(r["sb"], thr_s) for r in meas],
     }
+    # Reported, not graded: where the classifier put its split. Without it, a
+    # counter/latency ERROR cannot say whether hits drifted over the line
+    # (concurrency) or the slow cluster was never found (separation gate).
+    km = kmeans2_weighted(hs)
+    cell["stat_split"] = {
+        "fast_centroid_ns": round(10 ** km[0]) if km else None,
+        "slow_centroid_ns": round(10 ** km[1]) if km else None,
+        "threshold_ns": round(10 ** thr_s) if thr_s is not None else None,
+    }
     reasons = []
     if n_stat != N * len(meas):
         reasons.append(f"{n_stat} stat ops in {len(meas)} requests, expected {N} each")
@@ -546,8 +555,12 @@ def analyse(run_dir: Path) -> dict:
                 cell.pop("misses_per_request", None)
     return {"run_dir": str(run_dir), "replications": list(per_rep), "predictions": verdicts,
             "cohorts": {r: {"a": v["a"], "b": v["b"]} for r, v in per_rep.items()},
+            # PREDICTIONS is uppercase but maps to functions, so it is not a constant;
+            # including it made json.dumps raise on every real run (found by the local
+            # NFS check, 2026-10-17; the self-test calls analyse(), never main()).
             "constants": {k: v for k, v in globals().items()
-                          if k.isupper() and len(k) > 1 and isinstance(v, (int, float, tuple, list, dict))}}
+                          if k.isupper() and len(k) > 1 and k != "PREDICTIONS"
+                          and isinstance(v, (int, float, tuple, list, dict))}}
 
 
 def fmt_ns(ns) -> str:

@@ -2,8 +2,11 @@
 
 ## What this repo is
 
-A **study**, not a product. The output is knowledge: which infrastructure choices
-actually determine WordPress performance on AWS, measured rather than asserted.
+A **study**, not a product. WordPress is the reader entry point and workload
+instrument. The output is knowledge about filesystem behaviour, caching and
+compute constraints for metadata-heavy applications on AWS, measured rather than
+asserted. WordPress-specific end-to-end optimisation is not a prerequisite for
+the next filesystem experiment.
 
 Code here is **apparatus**. It exists to answer a question in `hypotheses/`.
 If a piece of code isn't serving an experiment, it shouldn't be written yet.

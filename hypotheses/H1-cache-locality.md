@@ -2,6 +2,15 @@
 
 **Status:** `MECHANISM REFUTED, CLAIM REFRAMED — SUPPORTED` — see E1, E2, and the rewrite below
 
+**Current qualification (2026-10-26):** the SUPPORTED label above is the retained
+E1/E2-era verdict, not acceptance of a production steady-state cost model. The
+2026-10-15 evidence note below already records the cache confound and contradictory
+within-tier effects. E5 has no gradable AWS run; its integrated local NFS checks
+validate apparatus only. This reconciliation changes no verdict. Read the original
+restatement below as the claim under review, including "the whole story", rather
+than a settled conclusion. Sources: `results/E2/20261015T000959Z-85382cc/` and
+[E5's handoff](../experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-26).
+
 > **Rewritten** after E1 and E3. The original claim was that co-located tasks share
 > a warm NFS cache, so *placement* determines performance. E1 refuted that
 > mechanism outright: ECS mounts EFS per task, with an independent NFS client and
