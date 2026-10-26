@@ -1,0 +1,16 @@
+{
+  "source_commit": "44b7645d6b236fca32c0dfa8f4c76508bb24bac3",
+  "verified_utc": "2026-10-26T14:44:29.157460+00:00",
+  "source_sha256": {
+    "Makefile": "0c87b798e9af4998e5e3d8f63f8cd60f2ad0d6166ee356759a070b8d1a90dbd8",
+    "infra/bin/apparatus.ts": "0435e482e714e620edf28374a6287afdde56c92cf00f1428dcd7452fac73e641",
+    "experiments/E5-attribute-cache/scripts/collect.sh": "6beeeddb3a8b191cd1932d702c69d2d8926ed6463f82f827d74b29bce05dec46",
+    "experiments/E5-attribute-cache/scripts/watchdog.py": "b2a16c02d90bea5f852fede75a08f5ff950d2ee6e84ad77b167646594cbb9f7b",
+    "experiments/E5-attribute-cache/scripts/watchdog-synth-check.sh": "eec6eba2e2920de78c5981e7003167b6d8a079f0a289d31956af4c601aa3dc68",
+    "analysis/test_e5_watchdog.py": "197085b879749c33ac4909f76fcff293f96064ce35dd640a50c47ce6406e7390"
+  },
+  "evidence_sha256": {
+    "tests.txt": "28675325493b942f3939d61e4b61a3c4a454df19cff50cfeb7aec8632cc4422b",
+    "synth.txt": "10216a345cbe6f07147495eb220f713714de68dde6f5ba66d4e19df64c8dde8e"
+  }
+}

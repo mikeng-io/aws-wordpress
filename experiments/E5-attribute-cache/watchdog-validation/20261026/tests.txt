@@ -1,0 +1,33 @@
+test_aws_denied_is_not_treated_as_stack_absence (test_e5_watchdog.WatchdogTests.test_aws_denied_is_not_treated_as_stack_absence) ... ok
+test_copy_failure_preserves_diagnostics (test_e5_watchdog.WatchdogTests.test_copy_failure_preserves_diagnostics) ... ok
+test_creating_backup_is_not_ignored_or_force_deleted (test_e5_watchdog.WatchdogTests.test_creating_backup_is_not_ignored_or_force_deleted) ... ok
+test_deadline_kills_exact_runner_then_deletes_exact_stack_arn (test_e5_watchdog.WatchdogTests.test_deadline_kills_exact_runner_then_deletes_exact_stack_arn) ... ok
+test_diagnostics_copy_precedes_delete (test_e5_watchdog.WatchdogTests.test_diagnostics_copy_precedes_delete) ... ok
+test_docker_loss_does_not_block_aws_cleanup (test_e5_watchdog.WatchdogTests.test_docker_loss_does_not_block_aws_cleanup) ... ok
+test_empty_describe_response_is_not_absence (test_e5_watchdog.WatchdogTests.test_empty_describe_response_is_not_absence) ... ok
+test_expired_operation_budget_prevents_another_api_command (test_e5_watchdog.WatchdogTests.test_expired_operation_budget_prevents_another_api_command) ... ok
+test_fence_is_saved_before_first_stop_or_aws_mutation (test_e5_watchdog.WatchdogTests.test_fence_is_saved_before_first_stop_or_aws_mutation) ... ok
+test_foreign_bucket_tag_preserves_bucket (test_e5_watchdog.WatchdogTests.test_foreign_bucket_tag_preserves_bucket) ... ok
+test_foreign_nonce_stack_and_backup_are_ignored (test_e5_watchdog.WatchdogTests.test_foreign_nonce_stack_and_backup_are_ignored) ... ok
+test_fresh_lease_passes_and_cleanup_phase_blocks_next_deploy (test_e5_watchdog.WatchdogTests.test_fresh_lease_passes_and_cleanup_phase_blocks_next_deploy) ... ok
+test_late_final_backup_resets_two_empty_observations (test_e5_watchdog.WatchdogTests.test_late_final_backup_resets_two_empty_observations) ... ok
+test_launcher_creates_stopped_container_and_detaches_host_supervisor (test_e5_watchdog.WatchdogTests.test_launcher_creates_stopped_container_and_detaches_host_supervisor) ... ok
+test_lock_rejects_second_host_supervisor (test_e5_watchdog.WatchdogTests.test_lock_rejects_second_host_supervisor) ... ok
+test_partial_provenance_survives_event_api_failure (test_e5_watchdog.WatchdogTests.test_partial_provenance_survives_event_api_failure) ... ok
+test_permanent_docker_loss_clears_aws_but_never_claims_runner_quiescence (test_e5_watchdog.WatchdogTests.test_permanent_docker_loss_clears_aws_but_never_claims_runner_quiescence) ... ok
+test_real_detached_process_keeps_lock_and_cleans_after_parent_is_killed (test_e5_watchdog.WatchdogTests.test_real_detached_process_keeps_lock_and_cleans_after_parent_is_killed) ... ok
+test_recovery_reuses_persisted_source_ids_after_stack_disappeared (test_e5_watchdog.WatchdogTests.test_recovery_reuses_persisted_source_ids_after_stack_disappeared) ... ok
+test_roll_back_event_ids_are_captured_for_backup_sweep (test_e5_watchdog.WatchdogTests.test_roll_back_event_ids_are_captured_for_backup_sweep) ... ok
+test_runner_preflight_requires_absence_not_permission_failure (test_e5_watchdog.WatchdogTests.test_runner_preflight_requires_absence_not_permission_failure) ... ok
+test_same_tags_in_wrong_account_arn_do_not_establish_ownership (test_e5_watchdog.WatchdogTests.test_same_tags_in_wrong_account_arn_do_not_establish_ownership) ... ok
+test_stale_future_wrong_account_or_wrong_token_lease_fails (test_e5_watchdog.WatchdogTests.test_stale_future_wrong_account_or_wrong_token_lease_fails) ... ok
+test_token_tags_find_backup_even_when_no_stack_was_observed (test_e5_watchdog.WatchdogTests.test_token_tags_find_backup_even_when_no_stack_was_observed) ... ok
+test_unresolved_previous_run_blocks_new_launch (test_e5_watchdog.WatchdogTests.test_unresolved_previous_run_blocks_new_launch) ... ok
+test_wall_clock_jump_does_not_extend_cleanup_deadline (test_e5_watchdog.WatchdogTests.test_wall_clock_jump_does_not_extend_cleanup_deadline) ... ok
+test_wrong_account_never_mutates_aws (test_e5_watchdog.WatchdogTests.test_wrong_account_never_mutates_aws) ... ok
+test_zero_runner_exit_does_not_skip_leftover_cleanup (test_e5_watchdog.WatchdogTests.test_zero_runner_exit_does_not_skip_leftover_cleanup) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 2.299s
+
+OK
