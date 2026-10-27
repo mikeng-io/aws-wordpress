@@ -141,12 +141,16 @@ E5's refreshed standing subtotal is $0.95475/hr from `results/pricing/20261026T1
 
 **Next: diagnose the E5 pilot's measurement gates before another paid run.**
 The [single-pilot review](results/E5/20261026T152946Z-b1efcb2/pilot-review.md)
-records EFS TLS RPC attribution errors, Lustre counter-name confirmation and
+records EFS TLS RPC attribution errors, the original Lustre counter-name gap and
 Lustre 0.1s schedule lateness. The unchanged grader has 14/18 valid B cells;
 all ten aggregate predictions remain NOT EVALUABLE at n=1. AWS teardown is
 verified by the host guard and fresh inventories across all 18 enabled regions.
 Replications 2/3 remain behind the separate go-ahead. The filesystem research
 objective and H1 verdict are unchanged.
+
+The [offline follow-up](experiments/E5-attribute-cache/pilot-followup/20261027/README.md)
+corrects Lustre A1 counter coverage, retains a versioned A1 reanalysis, and
+quantifies schedule overruns. TLS attribution and Lustre timing remain open.
 
 E4 remains specced. E2 narrowed its substrate question for the tested workload;
 E5 must establish the remaining cache cost before deciding whether to build an

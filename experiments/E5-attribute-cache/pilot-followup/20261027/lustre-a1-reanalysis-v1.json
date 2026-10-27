@@ -1,0 +1,45 @@
+{
+  "baseline_commit": "f8e3390",
+  "grader_sha256": "933e6ef48916a99be433ec6c22656f65d6be7c4231e5bfb7dcc1c771a9076275",
+  "inputs_sha256": {
+    "rep-1/ec2/fsx_lustre/A1.csv": "ecfdd08bb1a6414a3b9de64ec61dd2a185aa0c823f264c3b9c11f02ef33a324b",
+    "rep-1/ec2/fsx_lustre/A1.post.lustre": "bbebc94b93565b985cae000907b16e5a9c498848c059bd2ea4bb4b0d86390188",
+    "rep-1/ec2/fsx_lustre/A1.pre.lustre": "6dfe66295b167cde950aabd03913f4019d7b620288df529440a45b3f2ffbfe51"
+  },
+  "original": {
+    "geomean_ns": 294320.6,
+    "geomean_over_median": 1.037,
+    "median_ci95_ns": [
+      282839,
+      284548
+    ],
+    "n": 1000,
+    "p50_ns": 283748,
+    "p90_ns": 308004,
+    "p99_ns": 633406,
+    "reason": "signature FAIL: mdc miss RPCs \u0394=0 for 1000 ops",
+    "signature": "FAIL",
+    "signature_detail": "mdc miss RPCs \u0394=0 for 1000 ops",
+    "status": "ERROR",
+    "tail_p99_over_p50": 2.23
+  },
+  "reanalysis": {
+    "geomean_ns": 294320.6,
+    "geomean_over_median": 1.037,
+    "median_ci95_ns": [
+      282839,
+      284548
+    ],
+    "n": 1000,
+    "p50_ns": 283748,
+    "p90_ns": 308004,
+    "p99_ns": 633406,
+    "signature": "PASS",
+    "signature_detail": "mdc miss RPCs \u0394=1041 for 1000 ops",
+    "status": "OK",
+    "tail_p99_over_p50": 2.23
+  },
+  "schema": "e5-lustre-counter-reanalysis-v1",
+  "scope": "A1 signature only; no aggregate verdict change",
+  "source_run": "20261026T152946Z-b1efcb2"
+}

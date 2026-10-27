@@ -113,6 +113,7 @@ e5-stats: ## Grade E5 from the latest committed run (or RUN=results/E5/<run-id>)
 e5-selftest: ## Run E5's grader against synthetic runs that must reach every grade
 	@PYTHONDONTWRITEBYTECODE=1 python3 analysis/e5_selftest.py
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_attribution.py
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_pilot_diagnose.py
 
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results

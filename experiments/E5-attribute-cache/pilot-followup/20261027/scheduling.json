@@ -1,0 +1,639 @@
+{
+  "cells": {
+    "rep-1/ec2/ebs/B-0.1.req.csv.gz": {
+      "counter_ns": {
+        "max": 138562,
+        "p50": 157,
+        "p99": 332
+      },
+      "delta_ns": 100000000,
+      "enoent_sum_ns": {
+        "max": 7017227,
+        "p50": 1058178,
+        "p99": 1820051
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 5999,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 3959830,
+        "p50": 61727,
+        "p99": 105493
+      },
+      "lower_bound_violations": 0,
+      "requests": 6000,
+      "stat_sum_ns": {
+        "max": 5147561,
+        "p50": 1688600,
+        "p99": 2788585
+      },
+      "syscall_sum_ns": {
+        "max": 12164788,
+        "p50": 2757158,
+        "p99": 4548025
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/ebs/B-1.req.csv.gz": {
+      "counter_ns": {
+        "max": 1648,
+        "p50": 166,
+        "p99": 406
+      },
+      "delta_ns": 1000000000,
+      "enoent_sum_ns": {
+        "max": 6736531,
+        "p50": 1151399,
+        "p99": 1870451
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 599,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 463575,
+        "p50": 63818,
+        "p99": 117406
+      },
+      "lower_bound_violations": 0,
+      "requests": 600,
+      "stat_sum_ns": {
+        "max": 3367182,
+        "p50": 1898204,
+        "p99": 2688367
+      },
+      "syscall_sum_ns": {
+        "max": 8611290,
+        "p50": 3051965,
+        "p99": 4529044
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/ebs/B-10.req.csv.gz": {
+      "counter_ns": {
+        "max": 299,
+        "p50": 123,
+        "p99": 299
+      },
+      "delta_ns": 10000000000,
+      "enoent_sum_ns": {
+        "max": 1678622,
+        "p50": 1157889,
+        "p99": 1678622
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 59,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 100219,
+        "p50": 62949,
+        "p99": 100219
+      },
+      "lower_bound_violations": 0,
+      "requests": 60,
+      "stat_sum_ns": {
+        "max": 2535331,
+        "p50": 1779341,
+        "p99": 2535331
+      },
+      "syscall_sum_ns": {
+        "max": 4213953,
+        "p50": 2917859,
+        "p99": 4213953
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/efs_host_plain/B-0.1.req.csv.gz": {
+      "counter_ns": {
+        "max": 9005559,
+        "p50": 2233739,
+        "p99": 3745489
+      },
+      "delta_ns": 100000000,
+      "enoent_sum_ns": {
+        "max": 7242442,
+        "p50": 1259767,
+        "p99": 2245111
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 5999,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 25065316,
+        "p50": 60884,
+        "p99": 110594
+      },
+      "lower_bound_violations": 0,
+      "requests": 6000,
+      "stat_sum_ns": {
+        "max": 121091467,
+        "p50": 1975414,
+        "p99": 13066539
+      },
+      "syscall_sum_ns": {
+        "max": 122452676,
+        "p50": 3253339,
+        "p99": 14667805
+      },
+      "syscall_sum_over_interval": 2
+    },
+    "rep-1/ec2/efs_host_plain/B-1.req.csv.gz": {
+      "counter_ns": {
+        "max": 4174123,
+        "p50": 2284588,
+        "p99": 4033664
+      },
+      "delta_ns": 1000000000,
+      "enoent_sum_ns": {
+        "max": 4451650,
+        "p50": 1281032,
+        "p99": 2876332
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 599,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 804127,
+        "p50": 62631,
+        "p99": 99354
+      },
+      "lower_bound_violations": 0,
+      "requests": 600,
+      "stat_sum_ns": {
+        "max": 320923748,
+        "p50": 2077033,
+        "p99": 212808622
+      },
+      "syscall_sum_ns": {
+        "max": 322273911,
+        "p50": 3381354,
+        "p99": 214400982
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/efs_host_plain/B-10.req.csv.gz": {
+      "counter_ns": {
+        "max": 7614179,
+        "p50": 2277315,
+        "p99": 7614179
+      },
+      "delta_ns": 10000000000,
+      "enoent_sum_ns": {
+        "max": 6371325,
+        "p50": 1333961,
+        "p99": 6371325
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 59,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 2216940,
+        "p50": 64609,
+        "p99": 2216940
+      },
+      "lower_bound_violations": 0,
+      "requests": 60,
+      "stat_sum_ns": {
+        "max": 329009467,
+        "p50": 11071820,
+        "p99": 329009467
+      },
+      "syscall_sum_ns": {
+        "max": 330442179,
+        "p50": 12317099,
+        "p99": 330442179
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/efs_host_tls/B-0.1.req.csv.gz": {
+      "counter_ns": {
+        "max": 10931263,
+        "p50": 2252860,
+        "p99": 5495065
+      },
+      "delta_ns": 100000000,
+      "enoent_sum_ns": {
+        "max": 8382330,
+        "p50": 1376081,
+        "p99": 3732241
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 5999,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 38513025,
+        "p50": 60865,
+        "p99": 115713
+      },
+      "lower_bound_violations": 0,
+      "requests": 6000,
+      "stat_sum_ns": {
+        "max": 134557431,
+        "p50": 2036105,
+        "p99": 18807821
+      },
+      "syscall_sum_ns": {
+        "max": 135835908,
+        "p50": 3433460,
+        "p99": 20366310
+      },
+      "syscall_sum_over_interval": 10
+    },
+    "rep-1/ec2/efs_host_tls/B-1.req.csv.gz": {
+      "counter_ns": {
+        "max": 13043957,
+        "p50": 2348227,
+        "p99": 9434247
+      },
+      "delta_ns": 1000000000,
+      "enoent_sum_ns": {
+        "max": 9670369,
+        "p50": 1339535,
+        "p99": 7914934
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 599,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 926302,
+        "p50": 61560,
+        "p99": 274658
+      },
+      "lower_bound_violations": 0,
+      "requests": 600,
+      "stat_sum_ns": {
+        "max": 385660091,
+        "p50": 2138381,
+        "p99": 302795234
+      },
+      "syscall_sum_ns": {
+        "max": 386884085,
+        "p50": 3583042,
+        "p99": 304033635
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/efs_host_tls/B-10.req.csv.gz": {
+      "counter_ns": {
+        "max": 8342003,
+        "p50": 2265408,
+        "p99": 8342003
+      },
+      "delta_ns": 10000000000,
+      "enoent_sum_ns": {
+        "max": 7224251,
+        "p50": 1297127,
+        "p99": 7224251
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 59,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 2016456,
+        "p50": 66945,
+        "p99": 2016456
+      },
+      "lower_bound_violations": 0,
+      "requests": 60,
+      "stat_sum_ns": {
+        "max": 390211234,
+        "p50": 12805438,
+        "p99": 390211234
+      },
+      "syscall_sum_ns": {
+        "max": 391465704,
+        "p50": 14626166,
+        "p99": 391465704
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/fsx_lustre/B-0.1.req.csv.gz": {
+      "counter_ns": {
+        "max": 15562,
+        "p50": 156,
+        "p99": 416
+      },
+      "delta_ns": 100000000,
+      "enoent_sum_ns": {
+        "max": 291384481,
+        "p50": 1886941,
+        "p99": 230116274
+      },
+      "following_late_forced_by_syscall_lower_bound": 1539,
+      "following_requests": 5999,
+      "late_over_half_interval": 1542,
+      "lateness_ns": {
+        "max": 722550248,
+        "p50": 64594,
+        "p99": 631641720
+      },
+      "lower_bound_violations": 0,
+      "requests": 6000,
+      "stat_sum_ns": {
+        "max": 525773947,
+        "p50": 7986556,
+        "p99": 418385807
+      },
+      "syscall_sum_ns": {
+        "max": 688046484,
+        "p50": 9955843,
+        "p99": 522883155
+      },
+      "syscall_sum_over_interval": 984
+    },
+    "rep-1/ec2/fsx_lustre/B-1.req.csv.gz": {
+      "counter_ns": {
+        "max": 564,
+        "p50": 233,
+        "p99": 444
+      },
+      "delta_ns": 1000000000,
+      "enoent_sum_ns": {
+        "max": 306407422,
+        "p50": 189045814,
+        "p99": 268267515
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 599,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 239897,
+        "p50": 59858,
+        "p99": 75736
+      },
+      "lower_bound_violations": 0,
+      "requests": 600,
+      "stat_sum_ns": {
+        "max": 542690550,
+        "p50": 405119100,
+        "p99": 509824582
+      },
+      "syscall_sum_ns": {
+        "max": 747559372,
+        "p50": 596706844,
+        "p99": 733720819
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/fsx_lustre/B-10.req.csv.gz": {
+      "counter_ns": {
+        "max": 286,
+        "p50": 162,
+        "p99": 286
+      },
+      "delta_ns": 10000000000,
+      "enoent_sum_ns": {
+        "max": 304006513,
+        "p50": 230256948,
+        "p99": 304006513
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 59,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 120099,
+        "p50": 64444,
+        "p99": 120099
+      },
+      "lower_bound_violations": 0,
+      "requests": 60,
+      "stat_sum_ns": {
+        "max": 522080347,
+        "p50": 462573411,
+        "p99": 522080347
+      },
+      "syscall_sum_ns": {
+        "max": 747230397,
+        "p50": 695731097,
+        "p99": 747230397
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/fsx_ontap/B-0.1.req.csv.gz": {
+      "counter_ns": {
+        "max": 13150515,
+        "p50": 2205216,
+        "p99": 5081625
+      },
+      "delta_ns": 100000000,
+      "enoent_sum_ns": {
+        "max": 9798644,
+        "p50": 1331074,
+        "p99": 3322670
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 5999,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 26003677,
+        "p50": 61092,
+        "p99": 3943495
+      },
+      "lower_bound_violations": 0,
+      "requests": 6000,
+      "stat_sum_ns": {
+        "max": 120821287,
+        "p50": 1926659,
+        "p99": 6756317
+      },
+      "syscall_sum_ns": {
+        "max": 122508971,
+        "p50": 3269503,
+        "p99": 11141968
+      },
+      "syscall_sum_over_interval": 4
+    },
+    "rep-1/ec2/fsx_ontap/B-1.req.csv.gz": {
+      "counter_ns": {
+        "max": 8648694,
+        "p50": 2179575,
+        "p99": 6420131
+      },
+      "delta_ns": 1000000000,
+      "enoent_sum_ns": {
+        "max": 7287549,
+        "p50": 1301065,
+        "p99": 5116470
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 599,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 5682114,
+        "p50": 64848,
+        "p99": 5259975
+      },
+      "lower_bound_violations": 0,
+      "requests": 600,
+      "stat_sum_ns": {
+        "max": 139550922,
+        "p50": 1953851,
+        "p99": 103851125
+      },
+      "syscall_sum_ns": {
+        "max": 140753841,
+        "p50": 3263313,
+        "p99": 105569099
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/fsx_ontap/B-10.req.csv.gz": {
+      "counter_ns": {
+        "max": 2507917,
+        "p50": 2228656,
+        "p99": 2507917
+      },
+      "delta_ns": 10000000000,
+      "enoent_sum_ns": {
+        "max": 1644105,
+        "p50": 1248089,
+        "p99": 1644105
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 59,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 79112,
+        "p50": 60296,
+        "p99": 79112
+      },
+      "lower_bound_violations": 0,
+      "requests": 60,
+      "stat_sum_ns": {
+        "max": 134819803,
+        "p50": 8091219,
+        "p99": 134819803
+      },
+      "syscall_sum_ns": {
+        "max": 136195742,
+        "p50": 9360589,
+        "p99": 136195742
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/fsx_openzfs/B-0.1.req.csv.gz": {
+      "counter_ns": {
+        "max": 6823204,
+        "p50": 2297646,
+        "p99": 3742265
+      },
+      "delta_ns": 100000000,
+      "enoent_sum_ns": {
+        "max": 6834178,
+        "p50": 1223794,
+        "p99": 2210835
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 5999,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 1102090,
+        "p50": 61028,
+        "p99": 99206
+      },
+      "lower_bound_violations": 0,
+      "requests": 6000,
+      "stat_sum_ns": {
+        "max": 7025890,
+        "p50": 2060380,
+        "p99": 3313771
+      },
+      "syscall_sum_ns": {
+        "max": 8876636,
+        "p50": 3280769,
+        "p99": 5416605
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/fsx_openzfs/B-1.req.csv.gz": {
+      "counter_ns": {
+        "max": 4778724,
+        "p50": 2359349,
+        "p99": 3763310
+      },
+      "delta_ns": 1000000000,
+      "enoent_sum_ns": {
+        "max": 5712713,
+        "p50": 1348498,
+        "p99": 2684706
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 599,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 3514024,
+        "p50": 62873,
+        "p99": 109691
+      },
+      "lower_bound_violations": 0,
+      "requests": 600,
+      "stat_sum_ns": {
+        "max": 7661566,
+        "p50": 2205966,
+        "p99": 5342199
+      },
+      "syscall_sum_ns": {
+        "max": 11635263,
+        "p50": 3556174,
+        "p99": 7815124
+      },
+      "syscall_sum_over_interval": 0
+    },
+    "rep-1/ec2/fsx_openzfs/B-10.req.csv.gz": {
+      "counter_ns": {
+        "max": 6117608,
+        "p50": 2345352,
+        "p99": 6117608
+      },
+      "delta_ns": 10000000000,
+      "enoent_sum_ns": {
+        "max": 2773424,
+        "p50": 1374005,
+        "p99": 2773424
+      },
+      "following_late_forced_by_syscall_lower_bound": 0,
+      "following_requests": 59,
+      "late_over_half_interval": 0,
+      "lateness_ns": {
+        "max": 3176135,
+        "p50": 73480,
+        "p99": 3176135
+      },
+      "lower_bound_violations": 0,
+      "requests": 60,
+      "stat_sum_ns": {
+        "max": 7364743,
+        "p50": 2608260,
+        "p99": 7364743
+      },
+      "syscall_sum_ns": {
+        "max": 10114505,
+        "p50": 4087900,
+        "p99": 10114505
+      },
+      "syscall_sum_over_interval": 0
+    }
+  },
+  "inputs_sha256": {
+    "rep-1/ec2/ebs/B-0.1.req.csv.gz": "dd8a1d201f2cb78f2a5c82c4d4a6ba32175d5fa9dc664c1b684304a3975bac97",
+    "rep-1/ec2/ebs/B-1.req.csv.gz": "ef084b28c67f1b89a72f8be48265950259e1c703d7218bae45fc91688359a417",
+    "rep-1/ec2/ebs/B-10.req.csv.gz": "e84332d6fc3d831d89b661ea06ce26e7d14ce6b49ab958e9277acce0a8f9378c",
+    "rep-1/ec2/efs_host_plain/B-0.1.req.csv.gz": "872f7632d08682e870b4f1cbeb9415c55def063d98b01560a859133c7ae97fe9",
+    "rep-1/ec2/efs_host_plain/B-1.req.csv.gz": "2eb089219f34942752e90bb3884ff746956e3ea07e9929434ff116749ff349cd",
+    "rep-1/ec2/efs_host_plain/B-10.req.csv.gz": "acbad654816b936365c85afa2e900773837ea4bcb7bbfd06b88d1217696b4955",
+    "rep-1/ec2/efs_host_tls/B-0.1.req.csv.gz": "f56aa3f144881db70634fce9c5340a9478b58b81566f8062dc2d3f9835040629",
+    "rep-1/ec2/efs_host_tls/B-1.req.csv.gz": "67af615eee37948ab63dc10d7097a2980533fa8866cc4495b7acd767116f7b9c",
+    "rep-1/ec2/efs_host_tls/B-10.req.csv.gz": "8675f44f63a5707bf93265764001f19a7aac6d8c7af402ecf4719bfc5357d96b",
+    "rep-1/ec2/fsx_lustre/B-0.1.req.csv.gz": "0fbafb8f9871308e2543e3785898a91365a8214aac8064a6b28bf6b7f6c4960a",
+    "rep-1/ec2/fsx_lustre/B-1.req.csv.gz": "24ab78fe6b00b31acb6da07d3cee5a0d4cc181f4715ac0a94d11f8ba085ae567",
+    "rep-1/ec2/fsx_lustre/B-10.req.csv.gz": "17a40d4469d6bcdee85f0386124bd8ae016eba13cfb764c1f14da948499f3b41",
+    "rep-1/ec2/fsx_ontap/B-0.1.req.csv.gz": "576e6db6f7eb873326f87ce0617e09fb6e65bbb167a8860d9afeee0c66725b9a",
+    "rep-1/ec2/fsx_ontap/B-1.req.csv.gz": "dc3888356f89cec66f53ab1b8aa7cc52b9b95b5ce157d0d893a752111781ca60",
+    "rep-1/ec2/fsx_ontap/B-10.req.csv.gz": "db5fb0f9bb32f5be14e5343d3f597f117b9cf616fd71eb21a610b532f1584511",
+    "rep-1/ec2/fsx_openzfs/B-0.1.req.csv.gz": "3918011940f1fcc6787a1b66c27aa3668db80a1404dc80098a9ca08057f4507b",
+    "rep-1/ec2/fsx_openzfs/B-1.req.csv.gz": "7949c1d03fca9f76ed6ef4a732361be0145ee9c7d012592557da44ae2b901fb7",
+    "rep-1/ec2/fsx_openzfs/B-10.req.csv.gz": "5312f59057d95de047b879b20e7dbef52ca25382ea43444555847b168bfcefb8"
+  },
+  "interpretation": "diagnostic only; syscall elapsed time includes descheduling; no regrading",
+  "run": "20261026T152946Z-b1efcb2",
+  "schema": "e5-pilot-scheduling-v1"
+}

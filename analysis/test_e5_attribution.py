@@ -13,6 +13,15 @@ import e5_stats as g
 
 
 class AttributionTests(unittest.TestCase):
+    def test_deployed_lustre_counter_names_from_frozen_pilot(self):
+        td = (Path(__file__).resolve().parents[1] / "results/E5/20261026T152946Z-b1efcb2"
+              / "rep-1/ec2/fsx_lustre")
+        pre = g.lustre_counters(td / "A1.pre.lustre")
+        post = g.lustre_counters(td / "A1.post.lustre")
+        self.assertEqual(g.delta(pre, post, "ldlm_ibits_enqueue"), 1041)
+        self.assertEqual(g.delta(pre, post, "mds_getattr"), 0)
+        self.assertEqual(g.check_signature("fsx_lustre", "A1", td, 1000)[0], "PASS")
+
     @classmethod
     def setUpClass(cls):
         cls.seed = tempfile.TemporaryDirectory()

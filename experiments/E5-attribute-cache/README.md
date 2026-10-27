@@ -2,7 +2,8 @@
 
 **Status:** `PILOT COLLECTED; NOT READY FOR REPLICATIONS 2/3` (2026-10-27 HKT).
 The single authorised AWS pilot collected six tiers and both cohorts. Four of
-18 B cells fail validity gates, and Lustre A1 needs counter-name confirmation.
+18 B cells fail validity gates. Lustre A1 counter-name coverage is corrected in
+the separately versioned offline follow-up; original pilot grading is frozen.
 All aggregate predictions remain NOT EVALUABLE at n=1. No hypothesis verdict changes.
 
 ## Current status and handoff (2026-10-26)
@@ -882,3 +883,10 @@ without their recorded gate.
   it for open-heavy workloads.
 - **The FSx minimum-size distortion, single AZ and single instance size** all carry
   over from E2 unchanged.
+
+## Pilot follow-up (2026-10-27)
+
+The [2026-10-27 offline follow-up](pilot-followup/20261027/README.md) corrects
+Lustre A1 counter-name coverage and records scheduling diagnostics plus a concrete
+TLS helper-interference candidate. Original pilot grading remains frozen;
+TLS attribution and Lustre scheduling still block another paid run.

@@ -47,10 +47,15 @@ A_COHORTS = ["A1", "A2", "A3", "A4", "A5", "A6", "A7"]
 # --- signatures (README, "Cohort A") ----------------------------------------------
 SIG_MIN = 0.95   # "Δ >= 0.95 N"
 SIG_MAX = 0.05   # "Δ <= 0.05 N"
-# Lustre's counter names are UNVERIFIED until the pilot replication reads them
-# (README, "Cohort A"). A miss is an intent-lock enqueue or a getattr RPC on an mdc
+# Lustre's deployed names were checked in the single pilot and the dated follow-up.
+# A miss signature is an intent-lock enqueue or a getattr RPC on an mdc
 # device. If none of these names appears, the cohort is ERROR, never a pass.
-LUSTRE_MISS_COUNTERS = ("ldlm_enqueue", "mds_getattr", "mds_getattr_name")
+# Lustre 2.15.6 records LDLM_ENQUEUE by lock type; the generic opcode counter
+# is deliberately suppressed (ptlrpc_lprocfs_rpc_sent). IBITS enqueues are the
+# metadata lock requests used here. Count samples, never the usec sums. See the
+# dated pilot follow-up for pinned source and preservation of original grading.
+LUSTRE_MISS_COUNTERS = ("ldlm_enqueue", "ldlm_ibits_enqueue", "mds_getattr",
+                        "mds_getattr_name", "mds_getattr_lock")
 
 # --- cohort B cell gates (README, "Cohort B" and the 2026-10-16 amendment) ---------
 LATE_MAX_SHARE = 0.05          # >5% of requests later than delta/2 -> ERROR
