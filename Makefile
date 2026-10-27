@@ -79,6 +79,10 @@ e5: ## Internal guarded-runner entrypoint; use e5-container from the host
 e5-container: runner ## Launch E5 with a detached HOST watchdog; status: make e5-watchdog-status
 	@set -a; . ./.env; set +a; STOP_AFTER_REP="$(STOP_AFTER_REP)" RESUME_RUN_ID="$(RESUME_RUN_ID)" RESUME_ALLOW_CHANGED="$(RESUME_ALLOW_CHANGED)" python3 experiments/E5-attribute-cache/scripts/watchdog.py launch --reps $(or $(REPS),3)
 
+.PHONY: e5-diagnostic
+e5-diagnostic: runner ## One authorised AWS diagnostic; detached host watchdog, 75m run ceiling
+	@set -a; . ./.env; set +a; E5_RUN_KIND=diagnostic STOP_AFTER_REP=1 python3 experiments/E5-attribute-cache/scripts/watchdog.py launch --reps 1
+
 .PHONY: e5-watchdog-status e5-watchdog-recover e5-watchdog-selftest
 e5-watchdog-status: ## Read the latest local watchdog state (no AWS calls)
 	@python3 experiments/E5-attribute-cache/scripts/watchdog.py status

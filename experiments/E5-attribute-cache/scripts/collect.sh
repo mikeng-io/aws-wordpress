@@ -28,6 +28,18 @@
 set -euo pipefail
 
 REPS="${1:-3}"
+RUN_KIND="${E5_RUN_KIND:-study}"
+RESULT_KIND=E5
+CDK_CONTEXT=()
+case "$RUN_KIND" in
+    study) ;;
+    diagnostic)
+        [ "$REPS" = 1 ] && [ -z "${RESUME_RUN_ID:-}" ] || { echo 'diagnostic requires one fresh deployment' >&2; exit 1; }
+        RESULT_KIND=E5-diagnostic
+        CDK_CONTEXT=(-c e5Diagnostic=1)
+        ;;
+    *) echo 'unsupported E5 run kind' >&2; exit 1 ;;
+esac
 STACK="E5-AttributeCache-dev"
 REGION="${AWS_DEFAULT_REGION:-ap-southeast-1}"
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
@@ -36,7 +48,7 @@ START_REP=1
 
 if [ -n "${RESUME_RUN_ID:-}" ]; then
     RUN_ID="$RESUME_RUN_ID"
-    OUT_ROOT="$REPO/results/E5/$RUN_ID"
+    OUT_ROOT="$REPO/results/$RESULT_KIND/$RUN_ID"
     [ -d "$OUT_ROOT" ] || { echo "FATAL: no run $RUN_ID to resume" >&2; exit 1; }
     # Resume after the last COMPLETE replication. A rep directory without meta.json
     # is a replication that died partway; its files are evidence, and writing a new
@@ -78,7 +90,7 @@ if [ -n "${RESUME_RUN_ID:-}" ]; then
     [ "$START_REP" -le "$REPS" ] || { echo "run $RUN_ID already has $REPS replications" >&2; exit 1; }
 else
     RUN_ID="$(date -u +%Y%m%dT%H%M%SZ)-$(git -C "$REPO" rev-parse --short HEAD)"
-    OUT_ROOT="$REPO/results/E5/$RUN_ID"
+    OUT_ROOT="$REPO/results/$RESULT_KIND/$RUN_ID"
     if [ -e "$OUT_ROOT" ]; then
         echo "run $RUN_ID already exists - results are immutable, refusing" >&2
         exit 1
@@ -389,7 +401,7 @@ for rep in $(seq "$START_REP" "$REPS"); do
     require_watchdog
     trap destroy EXIT
     log "deploying $STACK"
-    (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never --method direct --output "$CDK_OUT")
+    (cd "$REPO/infra" && ./node_modules/.bin/cdk deploy "$STACK" --require-approval never --method direct --output "$CDK_OUT" "${CDK_CONTEXT[@]}")
     capture_fsx_ids
 
     CLUSTER=$(stack_output ClusterName)
@@ -433,6 +445,28 @@ for rep in $(seq "$START_REP" "$REPS"); do
             --instance-id "$INSTANCE_ID" --query 'StandardOutputContent' --output text \
             > "$REP_DIR/host-provenance.txt" 2>/dev/null || true
         log "  host provenance captured"
+    fi
+
+    if [ "$RUN_KIND" = diagnostic ]; then
+        log 'running one bounded diagnostic task; not a study replication'
+        TASK_FAILED=0
+        EC2_TASK=$(run_task ec2 "$TASK_DEF" \
+            "--capacity-provider-strategy capacityProvider=$CAPACITY_PROVIDER,weight=1" "e5-ec2") || TASK_FAILED=1
+        mkdir -p "$REP_DIR/diagnostic"
+        aws s3 sync "s3://$BUCKET/diagnostic/" "$REP_DIR/diagnostic/" --only-show-errors || TASK_FAILED=1
+        [ -s "$REP_DIR/diagnostic/diagnostic-complete.json" ] || TASK_FAILED=1
+        python3 - "$REP_DIR/meta.json" "$RUN_ID" "$TASK_FAILED" <<'PY'
+import json,subprocess,sys
+from datetime import datetime,timezone
+json.dump(dict(experiment='E5-diagnostic',study_replication=False,run_id=sys.argv[2],
+    source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+    utc=datetime.now(timezone.utc).isoformat(),task_failed=bool(int(sys.argv[3])),
+    protocol='TLS idle on/off/off/on 120s each; active on/off 60+180s; Lustre ABBA 60+180s per round'),
+    open(sys.argv[1],'w'),indent=2)
+PY
+        destroy
+        log "diagnostic collected and torn down -> $REP_DIR"
+        exit "$TASK_FAILED"
     fi
 
     # --- the task: cohorts A and B -------------------------------------------

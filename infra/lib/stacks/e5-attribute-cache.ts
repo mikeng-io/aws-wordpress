@@ -47,6 +47,7 @@ const SINGLE_MOUNT_SUBTREES = ['a', 'ss-0.1', 'ss-1', 'ss-10'];
 export class E5AttributeCacheStack extends ExperimentStack {
   constructor(scope: Construct, id: string, props: E5AttributeCacheProps) {
     super(scope, id, props);
+    const diagnostic = this.node.tryGetContext('e5Diagnostic') === '1';
 
     const instanceType = props.instanceType ?? ec2.InstanceType.of(
       ec2.InstanceClass.C7GD,
@@ -285,8 +286,18 @@ export class E5AttributeCacheStack extends ExperimentStack {
     const seeder = fs.readFileSync(path.join(__dirname, 'bench', 'e5-seed.py'), 'utf8');
     if (seeder.includes('E5SEED_EOF')) throw new Error('e5-seed.py contains the heredoc terminator');
 
-    const nfsSubtrees = (tier: string, root: string) =>
-      FAMILIES.map((f) => `${root}/e5/${tier}/${SUBTREE[f]}`).join(' ');
+    const diagnosticSubtrees = (base: string, tier: string) => diagnostic ? [
+      ...['2','3'].flatMap((r) => ['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-round-${r}`)),
+      ...(tier === 'fsx_lustre' ? ['1','4'].map((r) => `${base}/ss-0.1/diag-round-${r}`) : []),
+      ...(tier === 'efs_host_tls' ? ['on','off'].flatMap((m) => ['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-tls-${m}`)) : []),
+    ] : [];
+    const nfsSubtrees = (tier: string, root: string) => [
+      ...FAMILIES.map((f) => `${root}/e5/${tier}/${SUBTREE[f]}`),
+      ...diagnosticSubtrees(`${root}/e5/${tier}`, tier),
+    ].join(' ');
+    const singleSubtrees = (base: string, tier: string) => [
+      ...SINGLE_MOUNT_SUBTREES.map((s) => `${base}/${s}`), ...diagnosticSubtrees(base,tier),
+    ].join(' ');
 
     asg.addUserData(
       'set -euxo pipefail',
@@ -299,6 +310,7 @@ export class E5AttributeCacheStack extends ExperimentStack {
       '  } > /tmp/diag.txt 2>&1 || true',
       '  aws s3 cp /var/log/cloud-init-output.log "$DIAG_S3/$stamp-cloud-init.log" --only-show-errors || true',
       '  aws s3 cp /tmp/diag.txt "$DIAG_S3/$stamp-diag.txt" --only-show-errors || true',
+      ...(diagnostic ? ['  aws s3 cp "$(command -v amazon-efs-mount-watchdog)" "$DIAG_S3/$stamp-watchdog-source.py" --only-show-errors || true'] : []),
       '}',
       'trap dump_diagnostics ERR EXIT',
 
@@ -332,8 +344,8 @@ export class E5AttributeCacheStack extends ExperimentStack {
       `  e5-seed ${nfsSubtrees('efs_host_plain', '/mnt/e5-seed/efs')} ${nfsSubtrees('efs_host_tls', '/mnt/e5-seed/efs')} & p1=$!`,
       `  e5-seed ${nfsSubtrees('fsx_openzfs', '/mnt/e5-seed/fsx_openzfs')} & p2=$!`,
       `  e5-seed ${nfsSubtrees('fsx_ontap', '/mnt/e5-seed/fsx_ontap')} & p3=$!`,
-      `  e5-seed ${SINGLE_MOUNT_SUBTREES.map((s) => `/mnt/e5/fsx_lustre/e5/fsx_lustre/${s}`).join(' ')} & p4=$!`,
-      `  e5-seed ${SINGLE_MOUNT_SUBTREES.map((s) => `/mnt/e5-ebs/${s}`).join(' ')}`,
+      `  e5-seed ${singleSubtrees('/mnt/e5/fsx_lustre/e5/fsx_lustre','fsx_lustre')} & p4=$!`,
+      `  e5-seed ${singleSubtrees('/mnt/e5-ebs','ebs')}`,
       '  wait $p1 && wait $p2 && wait $p3 && wait $p4',
       '} > /var/log/e5-seed.log 2>&1',
       'mkdir -p /mnt/e5/fsx_lustre/e5/fsx_lustre/conf /mnt/e5-ebs/conf',
@@ -367,6 +379,7 @@ export class E5AttributeCacheStack extends ExperimentStack {
     // --- the task ----------------------------------------------------------------
     const taskDefinition = new ecs.Ec2TaskDefinition(this, 'TaskDefinition', {
       networkMode: ecs.NetworkMode.AWS_VPC,
+      ...(diagnostic ? { pidMode: ecs.PidMode.HOST } : {}),
     });
     const binds: Array<[name: string, hostPath: string]> = [
       ['ebs', '/mnt/e5-ebs'],
@@ -386,7 +399,7 @@ export class E5AttributeCacheStack extends ExperimentStack {
       memoryReservationMiB: 512,
       cpu: 1024,
       environment: {
-        BENCH_MODE: 'e5',
+        BENCH_MODE: diagnostic ? 'e5-diagnostic' : 'e5',
         // e5-run shuffles at tier level and records it; entrypoint's per-mount
         // shuffle would only scramble the mount-facts list.
         BENCH_SHUFFLE: '0',
@@ -411,9 +424,16 @@ export class E5AttributeCacheStack extends ExperimentStack {
       entryPoint: ['/usr/local/bin/cache-dropper'],
       privileged: true,
       essential: false,
+      ...(diagnostic ? { environment: { E5_DIAGNOSTIC: '1' } } : {}),
       memoryReservationMiB: 32,
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'e5-sidecar', logGroup }),
     });
+    if (diagnostic) {
+      taskDefinition.addVolume({ name: 'helper-config', host: { sourcePath: '/etc/amazon/efs' } });
+      taskDefinition.addVolume({ name: 'tls-roots', host: { sourcePath: '/mnt/e5/efs_host_tls' } });
+      sidecar.addMountPoints({ containerPath: '/host-efs', sourceVolume: 'helper-config', readOnly: false });
+      sidecar.addMountPoints({ containerPath: '/mnt/e5/efs_host_tls', sourceVolume: 'tls-roots', readOnly: true });
+    }
     for (const c of [container, sidecar]) {
       c.addMountPoints({ containerPath: '/bench/cache-ctl', sourceVolume: 'cache-ctl', readOnly: false });
     }

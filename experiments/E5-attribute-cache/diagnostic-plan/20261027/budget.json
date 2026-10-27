@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-27T04:19:32.141171+00:00",
+  "approval": "User ok go to proposed single AWS diagnostic, TLS/Lustre controls and budget check",
+  "region": "ap-southeast-1",
+  "observed_regional_all_account_usd": 5.5382086755,
+  "observed_period": {
+    "start": "2026-10-15",
+    "end_exclusive": "2026-10-28"
+  },
+  "estimated": true,
+  "attribution": "all regional services includes other workloads and E2; E5 tag allocation is not verified",
+  "unposted_accrual_reserve_usd": 1,
+  "ancillary_reserve_usd": 0.5,
+  "standing_usd_per_hour": 0.95475,
+  "host_run_ceiling_seconds": 4500,
+  "cleanup_ceiling_seconds": 5400,
+  "projected_with_reserves_usd": 9.663771175499999,
+  "study_ceiling_usd": 10,
+  "pricing_snapshot": "results/pricing/20261027T041025Z-56295b7",
+  "limitation": "Planning estimate; CE is delayed and deletion completion cannot be guaranteed by a timer. Not actual verified remaining dollars or an enforced AWS payment cap."
+}

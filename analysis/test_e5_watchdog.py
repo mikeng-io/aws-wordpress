@@ -113,6 +113,14 @@ class Fake:
 
 
 class WatchdogTests(unittest.TestCase):
+    def test_diagnostic_refuses_replicates_resume_and_invalid_kind_before_calls(self):
+        with patch.dict(os.environ, {'E5_RUN_KIND':'diagnostic'}, clear=True):
+            with self.assertRaises(w.Failure): w.launch(3)
+        with patch.dict(os.environ, {'E5_RUN_KIND':'diagnostic','RESUME_RUN_ID':'old'}, clear=True):
+            with self.assertRaises(w.Failure): w.launch(1)
+        with patch.dict(os.environ, {'E5_RUN_KIND':'unknown'}, clear=True):
+            with self.assertRaises(w.Failure): w.launch(1)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
@@ -288,6 +296,8 @@ class WatchdogTests(unittest.TestCase):
             state = json.loads((directory/"state.json").read_text())
             self.assertEqual(state["phase"], "armed")
             self.assertEqual(state["container_id"], "c"*64)
+            expected = 4500 if os.environ.get('E5_RUN_KIND') == 'diagnostic' else 21600
+            self.assertEqual(state['max_seconds'],expected)
         env = {"AWS_DEFAULT_REGION": w.REGION, "AWS_REGION": w.REGION}
         with patch.object(w, "ROOT", self.directory), patch.object(w, "find_aws_v2", return_value="aws"), \
              patch.object(w, "command", fake_command), patch.object(w.subprocess, "Popen", side_effect=spawn), \
@@ -295,6 +305,10 @@ class WatchdogTests(unittest.TestCase):
             with contextlib.redirect_stdout(io.StringIO()): w.launch(1)
         self.assertTrue(any(c[1] == "create" for c in calls))
         self.assertFalse(any(c[1] == "start" for c in calls))
+
+    def test_diagnostic_launcher_persists_short_deadline(self):
+        with patch.dict(os.environ, {'E5_RUN_KIND':'diagnostic'}):
+            self.test_launcher_creates_stopped_container_and_detaches_host_supervisor()
 
     def test_unresolved_previous_run_blocks_new_launch(self):
         self.guard.save("failed")

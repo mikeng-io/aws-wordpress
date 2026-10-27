@@ -300,6 +300,11 @@ def lock_root():
 
 
 def launch(reps):
+    kind = os.environ.get('E5_RUN_KIND', 'study')
+    if kind not in ('study','diagnostic'):
+        raise Failure('unsupported E5 run kind')
+    if kind == 'diagnostic' and (reps != 1 or os.environ.get('RESUME_RUN_ID')):
+        raise Failure('diagnostic requires exactly one fresh deployment')
     if not 1 <= reps <= 3:
         raise Failure("replications must be between 1 and 3")
     if os.environ.get("AWS_DEFAULT_REGION", REGION) != REGION or os.environ.get("AWS_REGION", REGION) != REGION:
@@ -319,7 +324,8 @@ def launch(reps):
         directory = ROOT / token
         directory.mkdir(mode=0o700)
         state = {"token": token, "account": account, "region": REGION, "aws_bin": aws_bin,
-                 "started": time.time(), "max_seconds": 21600, "phase": "armed", "stacks": {}}
+                 "started": time.time(), "max_seconds": 4500 if kind == 'diagnostic' else 21600,
+                 "run_kind": kind, "phase": "armed", "stacks": {}}
         guard = Guard(directory, state)
         if guard.describe(STACK) is not None:
             raise Failure("E5 stack already exists; inspect it before launching")
@@ -329,7 +335,7 @@ def launch(reps):
                "-v", "aws-wordpress-node-modules:/repo/infra/node_modules",
                "-v", f"{directory}:/e5-watchdog:ro", "-e", f"E5_WATCHDOG_TOKEN={token}",
                "-e", f"E5_WATCHDOG_ACCOUNT={account}", "-e", "E5_WATCHDOG_STATE=/e5-watchdog/state.json"]
-        for key in ("STOP_AFTER_REP", "RESUME_RUN_ID", "RESUME_ALLOW_CHANGED"):
+        for key in ("STOP_AFTER_REP", "RESUME_RUN_ID", "RESUME_ALLOW_CHANGED", "E5_RUN_KIND"):
             cmd += ["-e", f"{key}={os.environ.get(key, '')}"]
         cmd += ["aws-wordpress-runner", "bash", "-c",
                 "cd infra && npm ci --no-audit --no-fund --loglevel=error && cd .. && make doctor && make e5 REPS=" + str(reps)]

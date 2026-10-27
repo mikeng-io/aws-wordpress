@@ -30,6 +30,7 @@ PY
 export E5_WATCHDOG_TOKEN=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/tagged >/dev/null
 unset E5_WATCHDOG_TOKEN
+./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5Diagnostic=1 --output /tmp/diagnostic >/dev/null
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/bare >/dev/null
 python3 - <<'PY'
 import json
@@ -49,6 +50,23 @@ for mode,expected in [('tagged','a'*32),('bare',None)]:
    checked+=1
  assert checked>=5
 print('PASS: token in E5 stack, FSx and S3 tags only; absent without token')
+t=json.loads(Path('/tmp/diagnostic/E5-AttributeCache-dev.template.json').read_text())
+task=next(r['Properties'] for r in t['Resources'].values() if r['Type']=='AWS::ECS::TaskDefinition')
+assert task['PidMode']=='host'
+containers={c['Name']:c for c in task['ContainerDefinitions']}
+assert {v['Name']:v['Value'] for v in containers['bench']['Environment']}['BENCH_MODE']=='e5-diagnostic'
+assert {v['Name']:v['Value'] for v in containers['cache-dropper']['Environment']}['E5_DIAGNOSTIC']=='1'
+assert not containers['bench'].get('Privileged',False)
+assert containers['cache-dropper']['Privileged']
+assert {'helper-config','tls-roots'} <= {v['Name'] for v in task['Volumes']}
+text=json.dumps(t)
+for suffix in ('diag-round-1','diag-round-2','diag-round-3','diag-round-4','diag-tls-on','diag-tls-off'):
+ assert suffix in text, suffix
+normal=json.loads(Path('/tmp/bare/E5-AttributeCache-dev.template.json').read_text())
+normal_task=next(r['Properties'] for r in normal['Resources'].values() if r['Type']=='AWS::ECS::TaskDefinition')
+assert 'PidMode' not in normal_task
+assert not {'helper-config','tls-roots'} & {v['Name'] for v in normal_task['Volumes']}
+print('PASS: diagnostic-only PID/config mounts, fresh subtrees and unprivileged bench; study stays separate')
 PY
 if E5_WATCHDOG_TOKEN=invalid ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/invalid >/tmp/invalid.log 2>&1; then
     echo 'FAIL: invalid token accepted' >&2; exit 1
