@@ -1,0 +1,711 @@
+{
+  "utc": "2026-10-27T08:48:17.383023+00:00",
+  "launch_source_commit": "647a81139a60fa5564055207d1ca68d8020b8ec2",
+  "study_replication": false,
+  "files": {
+    "analysis-provenance.json": {
+      "sha256": "3f2243da0a1fd65e9248974fcbc41abb374165af2c3299189fe4e5f721ff034a",
+      "bytes": 876
+    },
+    "analysis-v1.json": {
+      "sha256": "25909293583a4085bb6e1c048a224ac74ce436f9ce68ee2a8658af47acdde77b",
+      "bytes": 28952
+    },
+    "cost-review.json": {
+      "sha256": "18d2e1d0505c65643eb9e80d78e77910e25f1eb9b2e23c3460d57bb2f622ae9a",
+      "bytes": 987
+    },
+    "guard-summary.json": {
+      "sha256": "5793b15490bbc91e4452d8058be75c9004cb2aa92833635036f8849196017599",
+      "bytes": 389
+    },
+    "image-provenance.json": {
+      "sha256": "d73f038a7bac07778a9021461f6d1960df9102bb2c9bbd4b3c6aa3a711f6a47c",
+      "bytes": 556
+    },
+    "rep-1/boot-diagnostics/e5-diagnostics/20261027T075930Z-ip-10-45-0-70.ap-southeast-1.compute.internal-cloud-init.log": {
+      "sha256": "5ee30675f2f8a652bdc32c674d6e8d2480a27048dd02383c98eecffa28650860",
+      "bytes": 50989
+    },
+    "rep-1/boot-diagnostics/e5-diagnostics/20261027T075930Z-ip-10-45-0-70.ap-southeast-1.compute.internal-diag.txt": {
+      "sha256": "72d4cad7c012e5014a7c48026008f956812db8b7bf2994e620936d5499583587",
+      "bytes": 13436
+    },
+    "rep-1/boot-diagnostics/e5-diagnostics/20261027T075930Z-ip-10-45-0-70.ap-southeast-1.compute.internal-watchdog-source.py": {
+      "sha256": "9bb291c91546bc252e87b92ed923c8b44d7c4db99c93fa269a3909057b3562c6",
+      "bytes": 98511
+    },
+    "rep-1/diagnostic/conformance-ebs.csv": {
+      "sha256": "70238b0a5b136e8d6f92b59d863a397ddd274a110227ca2c7aa877a7515ab335",
+      "bytes": 207
+    },
+    "rep-1/diagnostic/conformance-efs_host_plain.csv": {
+      "sha256": "70238b0a5b136e8d6f92b59d863a397ddd274a110227ca2c7aa877a7515ab335",
+      "bytes": 207
+    },
+    "rep-1/diagnostic/conformance-efs_host_tls.csv": {
+      "sha256": "70238b0a5b136e8d6f92b59d863a397ddd274a110227ca2c7aa877a7515ab335",
+      "bytes": 207
+    },
+    "rep-1/diagnostic/conformance-fsx_lustre.csv": {
+      "sha256": "70238b0a5b136e8d6f92b59d863a397ddd274a110227ca2c7aa877a7515ab335",
+      "bytes": 207
+    },
+    "rep-1/diagnostic/conformance-fsx_ontap.csv": {
+      "sha256": "70238b0a5b136e8d6f92b59d863a397ddd274a110227ca2c7aa877a7515ab335",
+      "bytes": 207
+    },
+    "rep-1/diagnostic/conformance-fsx_openzfs.csv": {
+      "sha256": "70238b0a5b136e8d6f92b59d863a397ddd274a110227ca2c7aa877a7515ab335",
+      "bytes": 207
+    },
+    "rep-1/diagnostic/diagnostic-complete.json": {
+      "sha256": "5aebf0ba8e3cba7aaff6552d49442bada81ac769ca697775c4dd78bc6d887d99",
+      "bytes": 84
+    },
+    "rep-1/diagnostic/lustre-0.1/diagnostic-run.json": {
+      "sha256": "8a73411763cf5d99d3b59bdc1855ef8b3c4ecaeb9a5d4ebd001f670ca67d14cf",
+      "bytes": 1189
+    },
+    "rep-1/diagnostic/lustre-0.1/ebs-0.1.compile.csv": {
+      "sha256": "ef8cc269f66b04e5cba81f178448ffc21424a735a7be3b61a9a571417430a8b2",
+      "bytes": 26943
+    },
+    "rep-1/diagnostic/lustre-0.1/ebs-0.1.diagnostics.csv": {
+      "sha256": "eab82deee2804bb3f2f5a1390c6c43f4f5154b632efc6af633213cabc9fee62d",
+      "bytes": 111746
+    },
+    "rep-1/diagnostic/lustre-0.1/ebs-0.1.mountstats.end": {
+      "sha256": "95180d4e35ab77e0ac66ae5f19d3b1e51263923cbf8c9f46a954df1ecd947346",
+      "bytes": 68473
+    },
+    "rep-1/diagnostic/lustre-0.1/ebs-0.1.mountstats.warm": {
+      "sha256": "fc8494a08221e94dcf7cce33d352a7a0fabaf4cdc127c0b32d7a8930b38b76a6",
+      "bytes": 68418
+    },
+    "rep-1/diagnostic/lustre-0.1/ebs-0.1.raw.csv": {
+      "sha256": "1a39f363683665e17aa3c270c6e86185f708aba5becceff0778bb4920b9bcfed",
+      "bytes": 925598
+    },
+    "rep-1/diagnostic/lustre-0.1/ebs-0.1.req.csv": {
+      "sha256": "49e9270519522713f9652ce58fa89b61325af1c25a1058ee3ec4e308ac121345",
+      "bytes": 335672
+    },
+    "rep-1/diagnostic/lustre-0.1/ebs-0.1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/lustre-0.1/fsx_lustre-0.1.compile.csv": {
+      "sha256": "9079422bd09f801920a05ff0e0088a9b9fc17b834e14d0ccdfe717567ee502cc",
+      "bytes": 27398
+    },
+    "rep-1/diagnostic/lustre-0.1/fsx_lustre-0.1.diagnostics.csv": {
+      "sha256": "4a63face99fdc9a7ca050a6cadc8365e18d3d18d4849f9c5055abb569cd03026",
+      "bytes": 111749
+    },
+    "rep-1/diagnostic/lustre-0.1/fsx_lustre-0.1.mountstats.end": {
+      "sha256": "06ffd81373f99247a41e760d2d7a4bf9fdfa725cefd85b89119262ec786c1483",
+      "bytes": 68463
+    },
+    "rep-1/diagnostic/lustre-0.1/fsx_lustre-0.1.mountstats.warm": {
+      "sha256": "4e7a37bb5b7f21ad746366abe84b6adac35119034e845efe9e8f58ff47e48886",
+      "bytes": 68418
+    },
+    "rep-1/diagnostic/lustre-0.1/fsx_lustre-0.1.raw.csv": {
+      "sha256": "b4acdf66bc9f234f98166baf1c6003dc79710b5adc187e64795fd7dcdebe7a8e",
+      "bytes": 934832
+    },
+    "rep-1/diagnostic/lustre-0.1/fsx_lustre-0.1.req.csv": {
+      "sha256": "1b1d2c74be315bc2f525bef35f4320d28896e2c8026edc86de6acb5d8de04e8b",
+      "bytes": 288964
+    },
+    "rep-1/diagnostic/lustre-0.1/fsx_lustre-0.1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/lustre-1/diagnostic-run.json": {
+      "sha256": "71361cbf7298e87e354809c769e0fc969c8a637d2ad391fed8c6d502a1e6e323",
+      "bytes": 1155
+    },
+    "rep-1/diagnostic/lustre-1/ebs-1.compile.csv": {
+      "sha256": "9cfb5912b06a30e5622bcd39e735ab61eec1739e9bb2c20346faaa2323b69c01",
+      "bytes": 24933
+    },
+    "rep-1/diagnostic/lustre-1/ebs-1.diagnostics.csv": {
+      "sha256": "c056ace540ae0ce4771ba3330729b0300522afa9c8d046366fc54340856e51a5",
+      "bytes": 10986
+    },
+    "rep-1/diagnostic/lustre-1/ebs-1.mountstats.end": {
+      "sha256": "af6a8b905e24597b18491754fbb7a95957be26b6dd66371a6d3a23d893de0154",
+      "bytes": 68485
+    },
+    "rep-1/diagnostic/lustre-1/ebs-1.mountstats.warm": {
+      "sha256": "ca49b0133f6547e26cb7f2dbd711400ac1122025d66efe4d385efe523328eb52",
+      "bytes": 68473
+    },
+    "rep-1/diagnostic/lustre-1/ebs-1.raw.csv": {
+      "sha256": "4342e3c7e34a43be567836f67bf83f2ee5a65c967d5dd38c9bde6e448d5ceed8",
+      "bytes": 884175
+    },
+    "rep-1/diagnostic/lustre-1/ebs-1.req.csv": {
+      "sha256": "0a651ddbd6f3b9b76963a611485276afdebef41c0a5b6fedd9139a9e18b9f692",
+      "bytes": 35401
+    },
+    "rep-1/diagnostic/lustre-1/ebs-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/lustre-1/fsx_lustre-1.compile.csv": {
+      "sha256": "c9b233563d5d609cbce395ba2d0b234dac8ed7b113a21561b41dcd642cb66e30",
+      "bytes": 25552
+    },
+    "rep-1/diagnostic/lustre-1/fsx_lustre-1.diagnostics.csv": {
+      "sha256": "c2129cda527623045b9867d9a321c1ec4cd360e318db59c467735e7fc9b4babe",
+      "bytes": 11010
+    },
+    "rep-1/diagnostic/lustre-1/fsx_lustre-1.mountstats.end": {
+      "sha256": "07dd0d9dc3c28b22c7580bbf7f0e42920f95559cc5740695896aeef9da0a8987",
+      "bytes": 68485
+    },
+    "rep-1/diagnostic/lustre-1/fsx_lustre-1.mountstats.warm": {
+      "sha256": "c3eb8c7f7ed56ab0438afeedd1af70ae7c6180ccc2825786f3abc483ef9b87ea",
+      "bytes": 68473
+    },
+    "rep-1/diagnostic/lustre-1/fsx_lustre-1.raw.csv": {
+      "sha256": "6d101d3648bb8078d5f4d2cb8ac4c1fa99faa3a8b502177e32ba4ae8c99abc49",
+      "bytes": 888855
+    },
+    "rep-1/diagnostic/lustre-1/fsx_lustre-1.req.csv": {
+      "sha256": "5a8f113826c58780781922adc88546ad8ab5c2c0953072e8fe51f243222d1d5f",
+      "bytes": 31718
+    },
+    "rep-1/diagnostic/lustre-1/fsx_lustre-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/lustre-10/diagnostic-run.json": {
+      "sha256": "79d44b7e7e276d9c5fba206de57590a5b5d9132ca773f118086d60b2d185bc05",
+      "bytes": 1169
+    },
+    "rep-1/diagnostic/lustre-10/ebs-10.compile.csv": {
+      "sha256": "8b9932f494aac66ecea23f1451726f41895f0c21fc995d1c7066b7efa158e366",
+      "bytes": 25921
+    },
+    "rep-1/diagnostic/lustre-10/ebs-10.diagnostics.csv": {
+      "sha256": "0184ead2ee9ad45fdd9fcea67a6f133ea2efa9611b9084c428dbcffb080afd34",
+      "bytes": 1126
+    },
+    "rep-1/diagnostic/lustre-10/ebs-10.mountstats.end": {
+      "sha256": "23110eeaad41756fb80a39896f5f6b137912c281e234865c5beac0d3266c5b54",
+      "bytes": 68506
+    },
+    "rep-1/diagnostic/lustre-10/ebs-10.mountstats.warm": {
+      "sha256": "632b45dc6a5f09ea15efc44e23beab4df74295ee0d1881613f906adbee7b88ce",
+      "bytes": 68481
+    },
+    "rep-1/diagnostic/lustre-10/ebs-10.raw.csv": {
+      "sha256": "5331537edffd352c36606905d09b78899150911603686e3e97b69b417a7dca96",
+      "bytes": 838382
+    },
+    "rep-1/diagnostic/lustre-10/ebs-10.req.csv": {
+      "sha256": "2c18970b3c20f221634245334941e6efa4a71bd82cac07f8924f7213e0e12e22",
+      "bytes": 3749
+    },
+    "rep-1/diagnostic/lustre-10/ebs-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/lustre-10/fsx_lustre-10.compile.csv": {
+      "sha256": "4a9a0f2f98adf4fe4087e848220b073533a9633c9cdf2b309a00170bc6e5ccde",
+      "bytes": 26723
+    },
+    "rep-1/diagnostic/lustre-10/fsx_lustre-10.diagnostics.csv": {
+      "sha256": "d490bf3b50d36bc04dfda45297f331f9976da27a48231a6b6ae26f97153ca030",
+      "bytes": 1150
+    },
+    "rep-1/diagnostic/lustre-10/fsx_lustre-10.mountstats.end": {
+      "sha256": "5ac2b2f6180dc2ed0956d2a3a889f15a98411ae17459c4d37e5198d8b8058f3e",
+      "bytes": 68496
+    },
+    "rep-1/diagnostic/lustre-10/fsx_lustre-10.mountstats.warm": {
+      "sha256": "9e5c21d5252d7ebe93e90063e36ae37fe1b5d1fd0081f1f7229b9a392e326ea9",
+      "bytes": 68481
+    },
+    "rep-1/diagnostic/lustre-10/fsx_lustre-10.raw.csv": {
+      "sha256": "a5ead6ea9f961a878ed722b3ecba706a00b1b85c2173b7613d6393fa78564c31",
+      "bytes": 842867
+    },
+    "rep-1/diagnostic/lustre-10/fsx_lustre-10.req.csv": {
+      "sha256": "f263434c5bb8e34589766906d86504161714d52046d987b189ebd97bb4239add",
+      "bytes": 3561
+    },
+    "rep-1/diagnostic/lustre-10/fsx_lustre-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/mount-facts.csv": {
+      "sha256": "8a486f23ba1f9aa24472d1df3902e27de337430d40c5072bf5fc7b9d122ca8f0",
+      "bytes": 6636
+    },
+    "rep-1/diagnostic/non-lustre/diagnostic-run.json": {
+      "sha256": "4ee64392e6687e73bc358af1bdf2bc58190f055d5eac4b36bb8533fac2321661",
+      "bytes": 8910
+    },
+    "rep-1/diagnostic/non-lustre/ebs-0.1.compile.csv": {
+      "sha256": "36312980cf6cd3fd35e32805c9fafbbccfb44b60dee76c0ddc7d4234ec24d0a0",
+      "bytes": 26949
+    },
+    "rep-1/diagnostic/non-lustre/ebs-0.1.diagnostics.csv": {
+      "sha256": "cf006e21f2f8d2ba3c2e9df4dfc1d8ef557fae35332da93cea152ea9d32cd45b",
+      "bytes": 189669
+    },
+    "rep-1/diagnostic/non-lustre/ebs-0.1.mountstats.end": {
+      "sha256": "8b32da65f12530d4786491f6f7c673a0c28b921ab26e8e6cca0c83f225cab22e",
+      "bytes": 68321
+    },
+    "rep-1/diagnostic/non-lustre/ebs-0.1.mountstats.warm": {
+      "sha256": "80dc386ec9a40afe75f9495a11f066d5b32b32feb60dcd5c95192e3a9c92a589",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/ebs-0.1.raw.csv": {
+      "sha256": "b9601121230436d9ffabe1c748cb4fa905395123a7dbfffcff07fd2f424c5e15",
+      "bytes": 1645266
+    },
+    "rep-1/diagnostic/non-lustre/ebs-0.1.req.csv": {
+      "sha256": "7ef86c9ed767c7865f7d991745eb48956cf55020c47c48abe19dcd375f642d5d",
+      "bytes": 602796
+    },
+    "rep-1/diagnostic/non-lustre/ebs-0.1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/ebs-1.compile.csv": {
+      "sha256": "25306810bf6ad733da82efcdcd84a56770e06a352b386751e82e82ecb8353669",
+      "bytes": 24964
+    },
+    "rep-1/diagnostic/non-lustre/ebs-1.diagnostics.csv": {
+      "sha256": "b4964e0ac6ab57a6bd152dae35ecc73459a975a5fb5cbefb3b69245cc4e2d236",
+      "bytes": 18598
+    },
+    "rep-1/diagnostic/non-lustre/ebs-1.mountstats.end": {
+      "sha256": "c24cd5890170fb4caa2de62f0415ab3003862ddfcdf34f73f9e65c28753d2312",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/ebs-1.mountstats.warm": {
+      "sha256": "a7f87514deada4d3be5a56f590e240c958afd2a3b6aa3cf81d0a2700b6155666",
+      "bytes": 68241
+    },
+    "rep-1/diagnostic/non-lustre/ebs-1.raw.csv": {
+      "sha256": "2c768ce195b524b527de1e7b2c2325907c7d3137cd913651c648767c00b3d7fd",
+      "bytes": 1562543
+    },
+    "rep-1/diagnostic/non-lustre/ebs-1.req.csv": {
+      "sha256": "d6200af3eee6269d4363d72b56e4b5e4c1735decf9128c7c5e255fab0a302523",
+      "bytes": 61698
+    },
+    "rep-1/diagnostic/non-lustre/ebs-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/ebs-10.compile.csv": {
+      "sha256": "4f43c50745e13c5349130f61cb49515027f230340b6808ff177f0e1b47de5435",
+      "bytes": 25979
+    },
+    "rep-1/diagnostic/non-lustre/ebs-10.diagnostics.csv": {
+      "sha256": "ffa5b930290f278f8adf69d37c1d382e3dccfcad86d8e0aa8e6ce1fd30f81381",
+      "bytes": 1868
+    },
+    "rep-1/diagnostic/non-lustre/ebs-10.mountstats.end": {
+      "sha256": "f4e73fb60ed9622b892890548d3d46fc9ea433ea88aafa8fe9f43f6d3c86eddd",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/ebs-10.mountstats.warm": {
+      "sha256": "511c777afdba655cb372c30db43b184d17df4848f62880367dc320af7a9887ad",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/ebs-10.raw.csv": {
+      "sha256": "5f525be971502e711cda54ffdc291dd18c024cfdd8f75ea92d2d3856e9ea9659",
+      "bytes": 1480103
+    },
+    "rep-1/diagnostic/non-lustre/ebs-10.req.csv": {
+      "sha256": "b77da35a6a2966d46dc7ce7c13e5ecdd30fb586c5f0dd00aa97a61405b454b2d",
+      "bytes": 6345
+    },
+    "rep-1/diagnostic/non-lustre/ebs-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-0.1.compile.csv": {
+      "sha256": "dc226e18562782cbd10d300372ab92d65019c6ac0b424caa3e88ebbf42180301",
+      "bytes": 27902
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-0.1.diagnostics.csv": {
+      "sha256": "09983143c54d89c5bf26dd5d033c5898799ea8cc6662e44a5b3db47c785f3c78",
+      "bytes": 282638
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-0.1.mountstats.end": {
+      "sha256": "a85b87935dc6be874c9dba403fe5a8cd6e52b0c07f0222df68d48ab992d3ce2f",
+      "bytes": 68321
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-0.1.mountstats.warm": {
+      "sha256": "f21a968676bc42fc14ebd015c5dc7138695fcf4a071c5732c0db91a695eaef74",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-0.1.raw.csv": {
+      "sha256": "a629552a8982a4805f08d20e874372591055b36ca45329e3f830615f42e5b26f",
+      "bytes": 1650309
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-0.1.req.csv": {
+      "sha256": "391ef8f38fda27614ca18069a0d34729bfb038909c57cd53a03d7fdcaccb0c77",
+      "bytes": 645186
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-0.1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-1.compile.csv": {
+      "sha256": "941bb69234360dfd75179870a38b222239c9160719f17288a13769d55ed71db5",
+      "bytes": 25902
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-1.diagnostics.csv": {
+      "sha256": "9c4dbff492f3a86b0cf51caf70ad50b140c4badf552b3ef944c76727e3b8a77d",
+      "bytes": 27893
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-1.mountstats.end": {
+      "sha256": "d0ad3b57caa27b14de34d2a205b02549c4d27beea4fbd13e8bd40ae01f267abb",
+      "bytes": 68321
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-1.mountstats.warm": {
+      "sha256": "ed6ca7d619d0515285b4e7adebbd52d6cffa7236815e8c6fd98df99d4caaf927",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-1.raw.csv": {
+      "sha256": "7dc5e19632263db03c744570a7420f78fc744a546bc9f5db476e1c2bcd6890d0",
+      "bytes": 1569662
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-1.req.csv": {
+      "sha256": "294e3feb24190d83f89e5a08347dea46212d733a3b66bef514ac0fd294182cc4",
+      "bytes": 70002
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-10.compile.csv": {
+      "sha256": "2bb055441a7255ab1d0bb93de989ac8cb481870a04c838adc328f32677824aed",
+      "bytes": 26902
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-10.diagnostics.csv": {
+      "sha256": "43abfd8e44e39254f435bbebda8684d27c749d3037a23274f73cd1d395ec0813",
+      "bytes": 2801
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-10.mountstats.end": {
+      "sha256": "e4441c2ae0aee60001811bb1f9d5ec4fcdc9d247bffd469baf8e43cb0d365050",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-10.mountstats.warm": {
+      "sha256": "a49bdcf1f0992c10b582688a3877e56fe3ccdbd74e4b72f00225b0cfbede64a1",
+      "bytes": 68241
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-10.raw.csv": {
+      "sha256": "b5bae2945d2d63b9b2813e80050d0b929b155be800a69916baa85600f4074e19",
+      "bytes": 1503682
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-10.req.csv": {
+      "sha256": "743aa5d8686f7eae32963d16b2ab99c5532a4d6bbbeb307941d718b750bc7bd0",
+      "bytes": 8889
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_plain-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-0.1.compile.csv": {
+      "sha256": "c6ffbfb626c44b6c11b9b98c53a1db927f9502a7f3489338ca6359e69893bcd9",
+      "bytes": 27901
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-0.1.diagnostics.csv": {
+      "sha256": "b1da5ba71ed2415d4aa6df1567eed7845bb3739b5652ceb08407b42d13965cc4",
+      "bytes": 282658
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-0.1.mountstats.end": {
+      "sha256": "874aeeb712f1f8f58cf6068895504b68fcae61b2ea0228c1f798ebcd0012ae82",
+      "bytes": 68321
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-0.1.mountstats.warm": {
+      "sha256": "a4d568ffaef0deea5e3df5a0e514c6f0caf4b5a00813de9c061c79a16090e27f",
+      "bytes": 68237
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-0.1.raw.csv": {
+      "sha256": "b0b69f40f89c202a6d094075ff4ea8f24177b254e71031d5507613bd104233d6",
+      "bytes": 1650412
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-0.1.req.csv": {
+      "sha256": "25c426766855b862ab225b40653f59b03d2278a74ee8b2ca633df14ecf3d0291",
+      "bytes": 663253
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-0.1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-1.compile.csv": {
+      "sha256": "92d390a5190b7b0318e61fa7177d544303064513e4b173b97d22ed10a915812a",
+      "bytes": 25899
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-1.diagnostics.csv": {
+      "sha256": "5ceac6cecb137a7656539bdc854df442ae2a4ee1b352a6b7155e1f9255b737e1",
+      "bytes": 27898
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-1.mountstats.end": {
+      "sha256": "eef4a392860e1b6889e65e15afae143322d177235523a81c69fc66094fcc0512",
+      "bytes": 68321
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-1.mountstats.warm": {
+      "sha256": "40f241149735cbb1ab668e3705dd95610f6f970634555e63b3e879d98c837648",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-1.raw.csv": {
+      "sha256": "8b776149d95eaa44b6333386ed0826ed2a2f07073303c26acf3ad5535dd4f2e2",
+      "bytes": 1568911
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-1.req.csv": {
+      "sha256": "ae588233c4d58ff6c5fa29c7061149fb4c73b2393988d6033c8d2cd073888644",
+      "bytes": 73190
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-10.compile.csv": {
+      "sha256": "3eb98efd8eb318194d5f92a02f4c67c188a45b358f72ba3bddec5750da014ea6",
+      "bytes": 26902
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-10.diagnostics.csv": {
+      "sha256": "ba6068f0f1bb9f1e72a296cd1e42627698ea74ce26fc7d1954be5eca990977f5",
+      "bytes": 2803
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-10.mountstats.end": {
+      "sha256": "214b436cdae8156e775c5baba053e6907c08691476255d76e030db4776fbfc7f",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-10.mountstats.warm": {
+      "sha256": "ffaa67ab485f6354e92515dc34a99d42019dbf3909bf76873cf5486ab426b621",
+      "bytes": 68241
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-10.raw.csv": {
+      "sha256": "b55fdaa653d58a1ac0a8293962598e5312ce34934167a74b69153c846e389c72",
+      "bytes": 1503891
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-10.req.csv": {
+      "sha256": "b7c010511915430ebfb43b2ce5cfa465be07a6d94b2c91d1e601247c030129e3",
+      "bytes": 9616
+    },
+    "rep-1/diagnostic/non-lustre/efs_host_tls-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-0.1.compile.csv": {
+      "sha256": "2082a907d6e0231fd5b7a372d5dcb16000c47bb477304703bc439bfe6c93bcdd",
+      "bytes": 27038
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-0.1.diagnostics.csv": {
+      "sha256": "e283d3093cbd9665d9968e618fca55e6cc13496c3cde68c8526e5ca56ed1e912",
+      "bytes": 283809
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-0.1.mountstats.end": {
+      "sha256": "49d57dcb71b4df9be0f479afc7a4e62905aa159a1680dc87101befff864549ec",
+      "bytes": 68321
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-0.1.mountstats.warm": {
+      "sha256": "378e740fb85c318ef1daf3cb273c2ae17ff94ea81fe1454c97e312d04feba33e",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-0.1.raw.csv": {
+      "sha256": "88e249f934dbc0a697bfe2dd01754f6a8b27e52d6dff78e0d5411b9f1da3e983",
+      "bytes": 1650893
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-0.1.req.csv": {
+      "sha256": "6df840d2f6417fd7c7d094d91078cbb48d97d7857d276792b31fb1c6737c8668",
+      "bytes": 639849
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-0.1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-1.compile.csv": {
+      "sha256": "d7603d316dd5cae446d830fa344141cc07eeb8765ea39be25f3995948f158adb",
+      "bytes": 25148
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-1.diagnostics.csv": {
+      "sha256": "f8f981a28e8d399e1afdbf3809da8d29cb38509519e422f8d97579fbd63c1259",
+      "bytes": 28003
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-1.mountstats.end": {
+      "sha256": "8497b8fa4a45c77c02aaa87e5c22b6a9753d3f1595b1804c57231cd25ab20377",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-1.mountstats.warm": {
+      "sha256": "657d0016f9fb13bb9bc688473631dc913785505346c1dd632c75332fe2c81ff3",
+      "bytes": 68241
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-1.raw.csv": {
+      "sha256": "3083684545f32b400b554769b2cd74625ae606b3703c5e01959df33bcc239766",
+      "bytes": 1570956
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-1.req.csv": {
+      "sha256": "4c2b8759a9c2fefd5d6342ca123566f622917ea7e861c4dd5b978e39e2d510f0",
+      "bytes": 71603
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-10.compile.csv": {
+      "sha256": "86036a93f9519cdc10477533153fba7229fc169998edc88a7c77b53758f19691",
+      "bytes": 26104
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-10.diagnostics.csv": {
+      "sha256": "b8d3033b15a1cca60994506a4fc1b7557e2651b7771f74296ca52cc137f2ee86",
+      "bytes": 2804
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-10.mountstats.end": {
+      "sha256": "59fd17472c4cb09cddc09bdd69b7d2493bca033e4722d679d16b4d510f84e693",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-10.mountstats.warm": {
+      "sha256": "2debd00ceb4f96eac1b2c77817027f28e4407b8363f18a5e4e130a3afd70508b",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-10.raw.csv": {
+      "sha256": "c3ee946c580949db4d2552aa113439b776c0349e105ace933d09f2721ab567f4",
+      "bytes": 1504974
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-10.req.csv": {
+      "sha256": "9c873e40721f7c4864c5ff8f367e2503b1c09854ef0e06312339b9a4904f1bf8",
+      "bytes": 7633
+    },
+    "rep-1/diagnostic/non-lustre/fsx_ontap-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-0.1.compile.csv": {
+      "sha256": "87e243fbe12d7bdd7751e39c4f4b8de83940519e74415d51291be180b7dfae8b",
+      "bytes": 27012
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-0.1.diagnostics.csv": {
+      "sha256": "c402f23dbcd4e997593e5c4b177b4aba2e13ed30221be40a9099558aa4f7d5de",
+      "bytes": 282065
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-0.1.mountstats.end": {
+      "sha256": "b06b3385626bafb4b5f9fa48350f777d4bc1b83eb80aa2773fded446ad85306b",
+      "bytes": 68321
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-0.1.mountstats.warm": {
+      "sha256": "2bd681adced0be49205e5d86521d5eebc43e132647ae4dda649ca3fb08e566f2",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-0.1.raw.csv": {
+      "sha256": "64f695096e9f22116505aa8425b5dffb996f8562f52c3e89834c9c946b82569f",
+      "bytes": 1650690
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-0.1.req.csv": {
+      "sha256": "b2e7245d2cd7c89bbaf03759a0914736c5899d119bdf776469cc1ffa3adfeedf",
+      "bytes": 634374
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-0.1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-1.compile.csv": {
+      "sha256": "7721f4dc4e4c5c9c33fc642e5ee0b4d93fc7447d119e5c8a148f83d4ac4d1b63",
+      "bytes": 25006
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-1.diagnostics.csv": {
+      "sha256": "53a7ef9fe6c0776f79865d329a802576d932a8d7c120d32a5ccb531c16398e01",
+      "bytes": 27834
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-1.mountstats.end": {
+      "sha256": "75e7ccd8ff4ce889aa6fe8f75b4dc12734fca12fb8cb3d2316b0548991e9a4de",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-1.mountstats.warm": {
+      "sha256": "51aa126f28828d7a0aa499674a03a41c39be0d4744bf6f59294920e581f74d2f",
+      "bytes": 68241
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-1.raw.csv": {
+      "sha256": "c9695f82f48b6d5b51d6ce0cad818b5dc763ef5ea1fccf278fe4f88c7c4b1f0c",
+      "bytes": 1568945
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-1.req.csv": {
+      "sha256": "dfcd292d7e757f0f812ca822cf0fab77f778bcdf0cbf6185b456a261240e34aa",
+      "bytes": 68001
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-10.compile.csv": {
+      "sha256": "480b85ee033edc3b9bfaefdb4d965ee31a66576916c320380dc7a8814e1198bd",
+      "bytes": 26004
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-10.diagnostics.csv": {
+      "sha256": "d47b93774286af930e8e6fe83eb2329c30dcf7239e3ac1a60ebc2738cacc88f2",
+      "bytes": 2788
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-10.mountstats.end": {
+      "sha256": "80f6475e4650e5cb954c9ddebd9f63fae9d9217d07084dd5adabf6f9f371dcc9",
+      "bytes": 68326
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-10.mountstats.warm": {
+      "sha256": "e163cd1534220a09df62f3899565bfc0e6b13574ba394c8460d8e890d8805854",
+      "bytes": 68236
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-10.raw.csv": {
+      "sha256": "0c91401a723c14d4184101d898d38324d431fe42b8ba735cebadf8becdc45faf",
+      "bytes": 1486916
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-10.req.csv": {
+      "sha256": "226c4d813c0d921b5bb4f3398d97b4eeee0fb27b627f9837b08704fe62ea6eb1",
+      "bytes": 7662
+    },
+    "rep-1/diagnostic/non-lustre/fsx_openzfs-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/diagnostic/protocol.json": {
+      "sha256": "c7cbcfbb99952a59deb88d1f61aa60b15b6ef886e396666d7a7bd8e38c808f2c",
+      "bytes": 295040
+    },
+    "rep-1/diagnostic/trace-quiet.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rep-1/ec2.task.log": {
+      "sha256": "5ae5167e23587ddae83bde585f3c4074cdbcef6013cfd633a76c1e74a1d84c12",
+      "bytes": 15033
+    },
+    "rep-1/fsx-provenance.json": {
+      "sha256": "bb8e11151263dd9f6dcdfdcd9195cf93b7089a5cf87d56bcb4a7d8752081d5ae",
+      "bytes": 8066
+    },
+    "rep-1/host-provenance.txt": {
+      "sha256": "7af36951de3937eda047d09a6e48556d274caae301d931854f13aca96eafa16b",
+      "bytes": 12365
+    },
+    "rep-1/meta.json": {
+      "sha256": "0e94cebf0d41ccc24619e8dd96294b0cb52ba157ff69551a00fa5fb0820c6a02",
+      "bytes": 384
+    },
+    "review.md": {
+      "sha256": "c8f89805a5fba445425a78c76f027592431cd119f2c8ee3e6a446c2761dc2069",
+      "bytes": 4231
+    },
+    "teardown.json": {
+      "sha256": "70c8a8d1611b7a1d9bdd5bd26ed041b753dfad2d8c29e6384c4e200f505d9f53",
+      "bytes": 22045
+    },
+    "validation.json": {
+      "sha256": "3b60bc5d9d712fe742e68b34303530826b604a862cc9946f5ff8c4db9e001bc3",
+      "bytes": 1180
+    }
+  }
+}

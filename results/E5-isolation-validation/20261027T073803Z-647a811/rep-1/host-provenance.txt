@@ -1,0 +1,90 @@
+6.1.188-233.393.amzn2023.aarch64
+{"Cluster":"E5-AttributeCache-dev-ClusterEB0386A7-xKpYSJVmE7A8","ContainerInstanceArn":"arn:aws:ecs:ap-southeast-1:163703054402:container-instance/E5-AttributeCache-dev-ClusterEB0386A7-xKpYSJVmE7A8/cfad89a4441349968dbea3c0a716ea1a","Version":"Amazon ECS Agent - v1.108.1 (*e5e43bd9)"}TARGET                         SOURCE                                                                            FSTYPE OPTIONS
+/mnt/e5/fsx_lustre             10.45.0.190@tcp:/apmofbev                                                         lustre rw,noatime,seclabel,checksum,flock,nouser_xattr,lruresize,lazystatfs,nouser_fid2path,verbose,encrypt
+/mnt/e5/efs_host_plain/default fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/                           nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.107
+/mnt/e5/efs_host_plain/forced  fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/                           nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.107
+/mnt/e5/efs_host_plain/ss-0.1  fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/                           nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.107
+/mnt/e5/efs_host_plain/ss-1    fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/                           nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.107
+/mnt/e5/efs_host_plain/ss-10   fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/                           nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.107
+/mnt/e5/efs_host_tls/default   127.0.0.1:/                                                                       nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=20346,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+/mnt/e5/efs_host_tls/forced    127.0.0.1:/                                                                       nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,noresvport,proto=tcp,port=20343,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+/mnt/e5/efs_host_tls/ss-0.1    127.0.0.1:/                                                                       nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=20077,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+/mnt/e5/efs_host_tls/ss-1      127.0.0.1:/                                                                       nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=20262,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+/mnt/e5/efs_host_tls/ss-10     127.0.0.1:/                                                                       nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=20592,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+/mnt/e5/fsx_openzfs/default    fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx                        nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.176
+/mnt/e5/fsx_openzfs/forced     fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx                        nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.176
+/mnt/e5/fsx_openzfs/ss-0.1     fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx                        nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.176
+/mnt/e5/fsx_openzfs/ss-1       fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx                        nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.176
+/mnt/e5/fsx_openzfs/ss-10      fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx                        nfs4   rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.176
+/mnt/e5/fsx_ontap/default      svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 nfs4   rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.90
+/mnt/e5/fsx_ontap/forced       svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 nfs4   rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.90
+/mnt/e5/fsx_ontap/ss-0.1       svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 nfs4   rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.90
+/mnt/e5/fsx_ontap/ss-1         svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 nfs4   rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.90
+/mnt/e5/fsx_ontap/ss-10        svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 nfs4   rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.70,local_lock=none,addr=10.45.0.90
++ p1=3933
++ e5-seed /mnt/e5-seed/efs/e5/efs_host_plain/a /mnt/e5-seed/efs/e5/efs_host_plain/forced /mnt/e5-seed/efs/e5/efs_host_plain/ss-0.1 /mnt/e5-seed/efs/e5/efs_host_plain/ss-1 /mnt/e5-seed/efs/e5/efs_host_plain/ss-10 /mnt/e5-seed/efs/e5/efs_host_plain/ss-0.1/diag-isolation /mnt/e5-seed/efs/e5/efs_host_plain/ss-1/diag-isolation /mnt/e5-seed/efs/e5/efs_host_plain/ss-10/diag-isolation /mnt/e5-seed/efs/e5/efs_host_tls/a /mnt/e5-seed/efs/e5/efs_host_tls/forced /mnt/e5-seed/efs/e5/efs_host_tls/ss-0.1 /mnt/e5-seed/efs/e5/efs_host_tls/ss-1 /mnt/e5-seed/efs/e5/efs_host_tls/ss-10 /mnt/e5-seed/efs/e5/efs_host_tls/ss-0.1/diag-isolation /mnt/e5-seed/efs/e5/efs_host_tls/ss-1/diag-isolation /mnt/e5-seed/efs/e5/efs_host_tls/ss-10/diag-isolation
++ p2=3934
++ p3=3935
++ p4=3936
++ e5-seed /mnt/e5-ebs/a /mnt/e5-ebs/ss-0.1 /mnt/e5-ebs/ss-1 /mnt/e5-ebs/ss-10 /mnt/e5-ebs/ss-0.1/diag-isolation /mnt/e5-ebs/ss-1/diag-isolation /mnt/e5-ebs/ss-10/diag-isolation /mnt/e5-ebs/ss-0.1/diag-lustre-control /mnt/e5-ebs/ss-1/diag-lustre-control /mnt/e5-ebs/ss-10/diag-lustre-control
++ e5-seed /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/a /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/forced /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-0.1 /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-1 /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-10 /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-0.1/diag-isolation /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-1/diag-isolation /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-10/diag-isolation
++ e5-seed /mnt/e5/fsx_lustre/e5/fsx_lustre/a /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-0.1 /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-1 /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-10 /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-0.1/diag-isolation /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-1/diag-isolation /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-10/diag-isolation
++ e5-seed /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/a /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/forced /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-0.1 /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-1 /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-10 /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-0.1/diag-isolation /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-1/diag-isolation /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-10/diag-isolation
+seeded 1000 files under /mnt/e5-ebs/a
+seeded 1000 files under /mnt/e5-ebs/ss-0.1
+seeded 1000 files under /mnt/e5-ebs/ss-1
+seeded 1000 files under /mnt/e5-ebs/ss-10
+seeded 1000 files under /mnt/e5-ebs/ss-0.1/diag-isolation
+seeded 1000 files under /mnt/e5-ebs/ss-1/diag-isolation
+seeded 1000 files under /mnt/e5-ebs/ss-10/diag-isolation
+seeded 1000 files under /mnt/e5-ebs/ss-0.1/diag-lustre-control
+seeded 1000 files under /mnt/e5-ebs/ss-1/diag-lustre-control
+seeded 1000 files under /mnt/e5-ebs/ss-10/diag-lustre-control
++ wait 3933
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/a
+seeded 1000 files under /mnt/e5/fsx_lustre/e5/fsx_lustre/a
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/forced
+seeded 1000 files under /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-0.1
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-0.1
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/a
+seeded 1000 files under /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-1
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-1
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-10
+seeded 1000 files under /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-10
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-0.1/diag-isolation
+seeded 1000 files under /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-0.1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/forced
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/a
+seeded 1000 files under /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/ss-10/diag-isolation
+seeded 1000 files under /mnt/e5/fsx_lustre/e5/fsx_lustre/ss-10/diag-isolation
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-0.1
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-1
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/forced
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-10
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-0.1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/ss-0.1
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/ss-1
+seeded 1000 files under /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/ss-10/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/ss-10
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/ss-0.1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/ss-1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_plain/ss-10/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/a
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/forced
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/ss-0.1
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/ss-1
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/ss-10
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/ss-0.1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/ss-1/diag-isolation
+seeded 1000 files under /mnt/e5-seed/efs/e5/efs_host_tls/ss-10/diag-isolation
++ wait 3934
++ wait 3935
++ wait 3936
+1793087963
+amazon-efs-utils-3.3.2-1.amzn2023.aarch64
+lustre-client-2.15.6-32.amzn2023.aarch64
+nfs-utils-2.5.4-2.rc3.amzn2023.0.3.aarch64
+

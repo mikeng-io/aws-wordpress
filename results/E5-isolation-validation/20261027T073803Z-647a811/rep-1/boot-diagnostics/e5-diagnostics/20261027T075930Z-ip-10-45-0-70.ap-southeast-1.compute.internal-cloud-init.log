@@ -1,0 +1,803 @@
+Cloud-init v. 22.2.2 running 'init' at Tue, 27 Oct 2026 07:56:35 +0000. Up 4.11 seconds.
+ci-info: ++++++++++++++++++++++++++++++++++++++Net device info++++++++++++++++++++++++++++++++++++++
+ci-info: +--------+------+----------------------------+---------------+--------+-------------------+
+ci-info: | Device |  Up  |          Address           |      Mask     | Scope  |     Hw-Address    |
+ci-info: +--------+------+----------------------------+---------------+--------+-------------------+
+ci-info: |  ens5  | True |         10.45.0.70         | 255.255.255.0 | global | 02:ff:f2:0d:b9:6b |
+ci-info: |  ens5  | True | fe80::ff:f2ff:fe0d:b96b/64 |       .       |  link  | 02:ff:f2:0d:b9:6b |
+ci-info: |   lo   | True |         127.0.0.1          |   255.0.0.0   |  host  |         .         |
+ci-info: |   lo   | True |          ::1/128           |       .       |  host  |         .         |
+ci-info: +--------+------+----------------------------+---------------+--------+-------------------+
+ci-info: +++++++++++++++++++++++++++++Route IPv4 info+++++++++++++++++++++++++++++
+ci-info: +-------+-------------+-----------+-----------------+-----------+-------+
+ci-info: | Route | Destination |  Gateway  |     Genmask     | Interface | Flags |
+ci-info: +-------+-------------+-----------+-----------------+-----------+-------+
+ci-info: |   0   |   0.0.0.0   | 10.45.0.1 |     0.0.0.0     |    ens5   |   UG  |
+ci-info: |   1   |  10.45.0.0  |  0.0.0.0  |  255.255.255.0  |    ens5   |   U   |
+ci-info: |   2   |  10.45.0.1  |  0.0.0.0  | 255.255.255.255 |    ens5   |   UH  |
+ci-info: |   3   |  10.45.0.2  |  0.0.0.0  | 255.255.255.255 |    ens5   |   UH  |
+ci-info: +-------+-------------+-----------+-----------------+-----------+-------+
+ci-info: +++++++++++++++++++Route IPv6 info+++++++++++++++++++
+ci-info: +-------+-------------+---------+-----------+-------+
+ci-info: | Route | Destination | Gateway | Interface | Flags |
+ci-info: +-------+-------------+---------+-----------+-------+
+ci-info: |   0   |  fe80::/64  |    ::   |    ens5   |   U   |
+ci-info: |   2   |    local    |    ::   |    ens5   |   U   |
+ci-info: |   3   |  multicast  |    ::   |    ens5   |   U   |
+ci-info: +-------+-------------+---------+-----------+-------+
+Generating public/private ed25519 key pair.
+Your identification has been saved in /etc/ssh/ssh_host_ed25519_key
+Your public key has been saved in /etc/ssh/ssh_host_ed25519_key.pub
+The key fingerprint is:
+SHA256:nsBmkW+2YUDzY6Qa4btJ0n+K0GkPyBMkC9nkYdbk0M8 root@ip-10-45-0-70.ap-southeast-1.compute.internal
+The key's randomart image is:
++--[ED25519 256]--+
+|  *+o o .        |
+| B =oo *         |
+|+ + +o= +        |
+|.+ . =E= .       |
+|. o = = S        |
+| . * B * +       |
+|  = B . =        |
+|   + + o         |
+|    . o          |
++----[SHA256]-----+
+Generating public/private ecdsa key pair.
+Your identification has been saved in /etc/ssh/ssh_host_ecdsa_key
+Your public key has been saved in /etc/ssh/ssh_host_ecdsa_key.pub
+The key fingerprint is:
+SHA256:nK05gczUZYZLpjFFf7k7pLA07LxwLZBbmtj/U1UbpCQ root@ip-10-45-0-70.ap-southeast-1.compute.internal
+The key's randomart image is:
++---[ECDSA 256]---+
+|       oo.+E ... |
+|      o.+=  o....|
+|      .*... o. .o|
+|     +.=.o . ... |
+|      * S . o.   |
+|     o X O o..   |
+|    . * X o.o    |
+|       + +.  .   |
+|        o...     |
++----[SHA256]-----+
+Cloud-init v. 22.2.2 running 'modules:config' at Tue, 27 Oct 2026 07:56:36 +0000. Up 5.13 seconds.
+Cloud-init v. 22.2.2 running 'modules:final' at Tue, 27 Oct 2026 07:56:36 +0000. Up 5.46 seconds.
++ DIAG_S3=s3://e5-attributecache-dev-diagnosticsbucket7ca30129-j3tqromhp64m/e5-diagnostics
++ trap dump_diagnostics ERR EXIT
++ mkdir -p /mnt/host-facts
++ stat -c %d /
++ cat
++ chmod +x /usr/local/bin/e5-seed
++ dnf install -y amazon-efs-utils lustre-client
+Amazon Linux 2023 repository                     85 MB/s |  83 MB     00:00    
+Amazon Linux 2023 Kernel Livepatch repository   884 kB/s |  87 kB     00:00    
+Package amazon-efs-utils-3.3.2-1.amzn2023.aarch64 is already installed.
+Dependencies resolved.
+================================================================================
+ Package                   Arch    Version                    Repository   Size
+================================================================================
+Installing:
+ lustre-client             aarch64 2.15.6-32.amzn2023         amazonlinux 767 k
+Installing dependencies:
+ amazon-rpm-config         noarch  228-11.amzn2023.0.1        amazonlinux  69 k
+ dwz                       aarch64 0.16-2.amzn2023.0.1        amazonlinux 137 k
+ efi-srpm-macros           noarch  5-4.amzn2023.0.5           amazonlinux  23 k
+ fonts-srpm-macros         noarch  1:2.0.5-12.amzn2023.0.2    amazonlinux  27 k
+ ghc-srpm-macros           noarch  1.5.0-4.amzn2023.0.2       amazonlinux 8.5 k
+ glibc-gconv-extra         aarch64 2.34-231.amzn2023.0.5      amazonlinux 1.9 M
+ go-srpm-macros            noarch  3.8.0-1.amzn2023.0.1       amazonlinux  27 k
+ kernel-srpm-macros        noarch  1.0-14.amzn2023.0.3        amazonlinux 8.8 k
+ libpkgconf                aarch64 1.8.0-4.amzn2023.0.2       amazonlinux  37 k
+ lua-srpm-macros           noarch  1-4.amzn2023.0.2           amazonlinux 9.2 k
+ ocaml-srpm-macros         noarch  6-6.amzn2023.0.2           amazonlinux 8.8 k
+ openblas-srpm-macros      noarch  2-9.amzn2023.0.2           amazonlinux 8.2 k
+ package-notes-srpm-macros noarch  0.4-18.amzn2023.0.5        amazonlinux  13 k
+ perl-AutoLoader           noarch  5.74-477.amzn2023.0.10     amazonlinux  22 k
+ perl-B                    aarch64 1.80-477.amzn2023.0.10     amazonlinux 180 k
+ perl-Carp                 noarch  1.50-458.amzn2023.0.2      amazonlinux  29 k
+ perl-Class-Struct         noarch  0.66-477.amzn2023.0.10     amazonlinux  23 k
+ perl-Data-Dumper          aarch64 2.191-522.amzn2023.0.3     amazonlinux  57 k
+ perl-Digest               noarch  1.20-1.amzn2023.0.2        amazonlinux  26 k
+ perl-Digest-MD5           aarch64 2.59-521.amzn2023.0.2      amazonlinux  38 k
+ perl-DynaLoader           aarch64 1.47-477.amzn2023.0.10     amazonlinux  26 k
+ perl-Encode               aarch64 4:3.21-520.amzn2023.0.2    amazonlinux 1.7 M
+ perl-Errno                aarch64 1.30-477.amzn2023.0.10     amazonlinux  15 k
+ perl-Exporter             noarch  5.79-520.amzn2023.0.1      amazonlinux  32 k
+ perl-Fcntl                aarch64 1.13-477.amzn2023.0.10     amazonlinux  21 k
+ perl-File-Basename        noarch  2.85-477.amzn2023.0.10     amazonlinux  18 k
+ perl-File-Path            noarch  2.18-2.amzn2023.0.2        amazonlinux  36 k
+ perl-File-Temp            noarch  1:0.231.200-2.amzn2023.0.1 amazonlinux  61 k
+ perl-File-stat            noarch  1.09-477.amzn2023.0.10     amazonlinux  18 k
+ perl-FileHandle           noarch  2.03-477.amzn2023.0.10     amazonlinux  16 k
+ perl-Getopt-Long          noarch  1:2.58-521.amzn2023.0.1    amazonlinux  65 k
+ perl-Getopt-Std           noarch  1.12-477.amzn2023.0.10     amazonlinux  16 k
+ perl-HTTP-Tiny            noarch  0.092-2.amzn2023.0.3       amazonlinux  59 k
+ perl-IO                   aarch64 1.43-477.amzn2023.0.10     amazonlinux  87 k
+ perl-IO-Socket-IP         noarch  0.43-522.amzn2023.0.1      amazonlinux  44 k
+ perl-IO-Socket-SSL        noarch  2.075-1.amzn2023.0.3       amazonlinux 216 k
+ perl-IPC-Open3            noarch  1.21-477.amzn2023.0.10     amazonlinux  23 k
+ perl-MIME-Base64          aarch64 3.16-2.amzn2023.0.3        amazonlinux  31 k
+ perl-Net-SSLeay           aarch64 1.94-3.amzn2023.0.5        amazonlinux 392 k
+ perl-POSIX                aarch64 1.94-477.amzn2023.0.10     amazonlinux  97 k
+ perl-PathTools            aarch64 3.78-459.amzn2023.0.3      amazonlinux  85 k
+ perl-Pod-Escapes          noarch  1:1.07-458.amzn2023.0.2    amazonlinux  20 k
+ perl-Pod-Perldoc          noarch  3.28.01-459.amzn2023.0.3   amazonlinux  84 k
+ perl-Pod-Simple           noarch  1:3.42-2.amzn2023.0.2      amazonlinux 215 k
+ perl-Pod-Usage            noarch  4:2.01-2.amzn2023.0.2      amazonlinux  41 k
+ perl-Scalar-List-Utils    aarch64 4:1.56-459.amzn2023.0.3    amazonlinux  70 k
+ perl-SelectSaver          noarch  1.02-477.amzn2023.0.10     amazonlinux  12 k
+ perl-Socket               aarch64 4:2.032-1.amzn2023.0.4     amazonlinux  55 k
+ perl-Storable             aarch64 1:3.37-522.amzn2023.0.3    amazonlinux  96 k
+ perl-Symbol               noarch  1.08-477.amzn2023.0.10     amazonlinux  15 k
+ perl-Term-ANSIColor       noarch  5.01-459.amzn2023.0.2      amazonlinux  48 k
+ perl-Term-Cap             noarch  1.17-458.amzn2023.0.2      amazonlinux  22 k
+ perl-Text-ParseWords      noarch  3.30-458.amzn2023.0.2      amazonlinux  17 k
+ perl-Text-Tabs+Wrap       noarch  2021.0726-1.amzn2023.0.1   amazonlinux  22 k
+ perl-Time-HiRes           aarch64 4:1.9764-460.amzn2023.0.3  amazonlinux  58 k
+ perl-Time-Local           noarch  2:1.300-5.amzn2023.0.2     amazonlinux  34 k
+ perl-URI                  noarch  5.18-1.amzn2023.0.1        amazonlinux 111 k
+ perl-base                 noarch  2.27-477.amzn2023.0.10     amazonlinux  17 k
+ perl-constant             noarch  1.33-459.amzn2023.0.2      amazonlinux  23 k
+ perl-if                   noarch  0.60.800-477.amzn2023.0.10 amazonlinux  14 k
+ perl-interpreter          aarch64 4:5.32.1-477.amzn2023.0.10 amazonlinux  71 k
+ perl-libnet               noarch  3.13-2.amzn2023.0.2        amazonlinux 126 k
+ perl-libs                 aarch64 4:5.32.1-477.amzn2023.0.10 amazonlinux 2.0 M
+ perl-mro                  aarch64 1.23-477.amzn2023.0.10     amazonlinux  28 k
+ perl-overload             noarch  1.31-477.amzn2023.0.10     amazonlinux  46 k
+ perl-overloading          noarch  0.02-477.amzn2023.0.10     amazonlinux  13 k
+ perl-parent               noarch  1:0.238-458.amzn2023.0.2   amazonlinux  14 k
+ perl-podlators            noarch  1:4.14-458.amzn2023.0.2    amazonlinux 112 k
+ perl-srpm-macros          noarch  1-39.amzn2023.0.2          amazonlinux 8.7 k
+ perl-subs                 noarch  1.03-477.amzn2023.0.10     amazonlinux  12 k
+ perl-vars                 noarch  1.05-477.amzn2023.0.10     amazonlinux  13 k
+ pkgconf                   aarch64 1.8.0-4.amzn2023.0.2       amazonlinux  43 k
+ pkgconf-m4                noarch  1.8.0-4.amzn2023.0.2       amazonlinux  15 k
+ pkgconf-pkg-config        aarch64 1.8.0-4.amzn2023.0.2       amazonlinux  11 k
+ python-srpm-macros        noarch  3.9-41.amzn2023.0.6        amazonlinux  20 k
+ rust-toolset-srpm-macros  noarch  1.98.1-1.amzn2023          amazonlinux  13 k
+ unzip                     aarch64 6.0-68.amzn2023.0.2        amazonlinux 180 k
+ zip                       aarch64 3.0-28.amzn2023.0.4        amazonlinux 259 k
+Installing weak dependencies:
+ perl-NDBM_File            aarch64 1.15-477.amzn2023.0.10     amazonlinux  22 k
+
+Transaction Summary
+================================================================================
+Install  80 Packages
+
+Total download size: 10 M
+Installed size: 86 M
+Downloading Packages:
+(1/80): dwz-0.16-2.amzn2023.0.1.aarch64.rpm     5.1 MB/s | 137 kB     00:00    
+(2/80): amazon-rpm-config-228-11.amzn2023.0.1.n 2.4 MB/s |  69 kB     00:00    
+(3/80): efi-srpm-macros-5-4.amzn2023.0.5.noarch 800 kB/s |  23 kB     00:00    
+(4/80): fonts-srpm-macros-2.0.5-12.amzn2023.0.2 1.2 MB/s |  27 kB     00:00    
+(5/80): go-srpm-macros-3.8.0-1.amzn2023.0.1.noa 923 kB/s |  27 kB     00:00    
+(6/80): ghc-srpm-macros-1.5.0-4.amzn2023.0.2.no 189 kB/s | 8.5 kB     00:00    
+(7/80): glibc-gconv-extra-2.34-231.amzn2023.0.5  37 MB/s | 1.9 MB     00:00    
+(8/80): libpkgconf-1.8.0-4.amzn2023.0.2.aarch64 1.6 MB/s |  37 kB     00:00    
+(9/80): kernel-srpm-macros-1.0-14.amzn2023.0.3. 318 kB/s | 8.8 kB     00:00    
+(10/80): lua-srpm-macros-1-4.amzn2023.0.2.noarc 324 kB/s | 9.2 kB     00:00    
+(11/80): lustre-client-2.15.6-32.amzn2023.aarch  35 MB/s | 767 kB     00:00    
+(12/80): ocaml-srpm-macros-6-6.amzn2023.0.2.noa 400 kB/s | 8.8 kB     00:00    
+(13/80): openblas-srpm-macros-2-9.amzn2023.0.2. 317 kB/s | 8.2 kB     00:00    
+(14/80): perl-AutoLoader-5.74-477.amzn2023.0.10 990 kB/s |  22 kB     00:00    
+(15/80): package-notes-srpm-macros-0.4-18.amzn2 492 kB/s |  13 kB     00:00    
+(16/80): perl-B-1.80-477.amzn2023.0.10.aarch64. 7.6 MB/s | 180 kB     00:00    
+(17/80): perl-Carp-1.50-458.amzn2023.0.2.noarch 1.2 MB/s |  29 kB     00:00    
+(18/80): perl-Class-Struct-0.66-477.amzn2023.0. 904 kB/s |  23 kB     00:00    
+(19/80): perl-Data-Dumper-2.191-522.amzn2023.0. 1.9 MB/s |  57 kB     00:00    
+(20/80): perl-Digest-1.20-1.amzn2023.0.2.noarch 1.0 MB/s |  26 kB     00:00    
+(21/80): perl-Digest-MD5-2.59-521.amzn2023.0.2. 1.4 MB/s |  38 kB     00:00    
+(22/80): perl-DynaLoader-1.47-477.amzn2023.0.10 1.0 MB/s |  26 kB     00:00    
+(23/80): perl-Encode-3.21-520.amzn2023.0.2.aarc  61 MB/s | 1.7 MB     00:00    
+(24/80): perl-Errno-1.30-477.amzn2023.0.10.aarc 515 kB/s |  15 kB     00:00    
+(25/80): perl-Exporter-5.79-520.amzn2023.0.1.no 1.5 MB/s |  32 kB     00:00    
+(26/80): perl-File-Basename-2.85-477.amzn2023.0 808 kB/s |  18 kB     00:00    
+(27/80): perl-Fcntl-1.13-477.amzn2023.0.10.aarc 813 kB/s |  21 kB     00:00    
+(28/80): perl-File-Path-2.18-2.amzn2023.0.2.noa 1.6 MB/s |  36 kB     00:00    
+(29/80): perl-File-Temp-0.231.200-2.amzn2023.0. 2.5 MB/s |  61 kB     00:00    
+(30/80): perl-File-stat-1.09-477.amzn2023.0.10. 693 kB/s |  18 kB     00:00    
+(31/80): perl-FileHandle-2.03-477.amzn2023.0.10 672 kB/s |  16 kB     00:00    
+(32/80): perl-Getopt-Long-2.58-521.amzn2023.0.1 2.4 MB/s |  65 kB     00:00    
+(33/80): perl-Getopt-Std-1.12-477.amzn2023.0.10 600 kB/s |  16 kB     00:00    
+(34/80): perl-HTTP-Tiny-0.092-2.amzn2023.0.3.no 2.4 MB/s |  59 kB     00:00    
+(35/80): perl-IO-Socket-IP-0.43-522.amzn2023.0. 1.6 MB/s |  44 kB     00:00    
+(36/80): perl-IO-1.43-477.amzn2023.0.10.aarch64 2.7 MB/s |  87 kB     00:00    
+(37/80): perl-IO-Socket-SSL-2.075-1.amzn2023.0. 7.8 MB/s | 216 kB     00:00    
+(38/80): perl-IPC-Open3-1.21-477.amzn2023.0.10. 943 kB/s |  23 kB     00:00    
+(39/80): perl-MIME-Base64-3.16-2.amzn2023.0.3.a 1.2 MB/s |  31 kB     00:00    
+(40/80): perl-NDBM_File-1.15-477.amzn2023.0.10. 1.0 MB/s |  22 kB     00:00    
+(41/80): perl-Net-SSLeay-1.94-3.amzn2023.0.5.aa  16 MB/s | 392 kB     00:00    
+(42/80): perl-POSIX-1.94-477.amzn2023.0.10.aarc 3.4 MB/s |  97 kB     00:00    
+(43/80): perl-PathTools-3.78-459.amzn2023.0.3.a 1.9 MB/s |  85 kB     00:00    
+(44/80): perl-Pod-Escapes-1.07-458.amzn2023.0.2 818 kB/s |  20 kB     00:00    
+(45/80): perl-Pod-Perldoc-3.28.01-459.amzn2023. 2.6 MB/s |  84 kB     00:00    
+(46/80): perl-Pod-Usage-2.01-2.amzn2023.0.2.noa 1.7 MB/s |  41 kB     00:00    
+(47/80): perl-Pod-Simple-3.42-2.amzn2023.0.2.no 7.5 MB/s | 215 kB     00:00    
+(48/80): perl-Scalar-List-Utils-1.56-459.amzn20 2.6 MB/s |  70 kB     00:00    
+(49/80): perl-SelectSaver-1.02-477.amzn2023.0.1 502 kB/s |  12 kB     00:00    
+(50/80): perl-Socket-2.032-1.amzn2023.0.4.aarch 2.1 MB/s |  55 kB     00:00    
+(51/80): perl-Storable-3.37-522.amzn2023.0.3.aa 5.4 MB/s |  96 kB     00:00    
+(52/80): perl-Symbol-1.08-477.amzn2023.0.10.noa 623 kB/s |  15 kB     00:00    
+(53/80): perl-Term-ANSIColor-5.01-459.amzn2023. 1.9 MB/s |  48 kB     00:00    
+(54/80): perl-Term-Cap-1.17-458.amzn2023.0.2.no 880 kB/s |  22 kB     00:00    
+(55/80): perl-Text-ParseWords-3.30-458.amzn2023 798 kB/s |  17 kB     00:00    
+(56/80): perl-Time-HiRes-1.9764-460.amzn2023.0. 2.5 MB/s |  58 kB     00:00    
+(57/80): perl-Time-Local-1.300-5.amzn2023.0.2.n 1.5 MB/s |  34 kB     00:00    
+(58/80): perl-URI-5.18-1.amzn2023.0.1.noarch.rp 3.2 MB/s | 111 kB     00:00    
+(59/80): perl-Text-Tabs+Wrap-2021.0726-1.amzn20 311 kB/s |  22 kB     00:00    
+(60/80): perl-base-2.27-477.amzn2023.0.10.noarc 473 kB/s |  17 kB     00:00    
+(61/80): perl-constant-1.33-459.amzn2023.0.2.no 908 kB/s |  23 kB     00:00    
+(62/80): perl-if-0.60.800-477.amzn2023.0.10.noa 515 kB/s |  14 kB     00:00    
+(63/80): perl-interpreter-5.32.1-477.amzn2023.0 2.2 MB/s |  71 kB     00:00    
+(64/80): perl-libnet-3.13-2.amzn2023.0.2.noarch 5.6 MB/s | 126 kB     00:00    
+(65/80): perl-mro-1.23-477.amzn2023.0.10.aarch6 943 kB/s |  28 kB     00:00    
+(66/80): perl-libs-5.32.1-477.amzn2023.0.10.aar  51 MB/s | 2.0 MB     00:00    
+(67/80): perl-overload-1.31-477.amzn2023.0.10.n 1.6 MB/s |  46 kB     00:00    
+(68/80): perl-overloading-0.02-477.amzn2023.0.1 546 kB/s |  13 kB     00:00    
+(69/80): perl-parent-0.238-458.amzn2023.0.2.noa 493 kB/s |  14 kB     00:00    
+(70/80): perl-podlators-4.14-458.amzn2023.0.2.n 3.5 MB/s | 112 kB     00:00    
+(71/80): perl-srpm-macros-1-39.amzn2023.0.2.noa 389 kB/s | 8.7 kB     00:00    
+(72/80): perl-subs-1.03-477.amzn2023.0.10.noarc 377 kB/s |  12 kB     00:00    
+(73/80): perl-vars-1.05-477.amzn2023.0.10.noarc 405 kB/s |  13 kB     00:00    
+(74/80): pkgconf-1.8.0-4.amzn2023.0.2.aarch64.r 1.4 MB/s |  43 kB     00:00    
+(75/80): pkgconf-m4-1.8.0-4.amzn2023.0.2.noarch 495 kB/s |  15 kB     00:00    
+(76/80): pkgconf-pkg-config-1.8.0-4.amzn2023.0. 359 kB/s |  11 kB     00:00    
+(77/80): python-srpm-macros-3.9-41.amzn2023.0.6 791 kB/s |  20 kB     00:00    
+(78/80): rust-toolset-srpm-macros-1.98.1-1.amzn 524 kB/s |  13 kB     00:00    
+(79/80): zip-3.0-28.amzn2023.0.4.aarch64.rpm     11 MB/s | 259 kB     00:00    
+(80/80): unzip-6.0-68.amzn2023.0.2.aarch64.rpm  5.5 MB/s | 180 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                            12 MB/s |  10 MB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : perl-Digest-1.20-1.amzn2023.0.2.noarch                1/80 
+  Installing       : perl-Digest-MD5-2.59-521.amzn2023.0.2.aarch64         2/80 
+  Installing       : perl-B-1.80-477.amzn2023.0.10.aarch64                 3/80 
+  Installing       : perl-FileHandle-2.03-477.amzn2023.0.10.noarch         4/80 
+  Installing       : perl-Data-Dumper-2.191-522.amzn2023.0.3.aarch64       5/80 
+  Installing       : perl-libnet-3.13-2.amzn2023.0.2.noarch                6/80 
+  Installing       : perl-URI-5.18-1.amzn2023.0.1.noarch                   7/80 
+  Installing       : perl-AutoLoader-5.74-477.amzn2023.0.10.noarch         8/80 
+  Installing       : perl-Text-Tabs+Wrap-2021.0726-1.amzn2023.0.1.noarc    9/80 
+  Installing       : perl-Time-HiRes-4:1.9764-460.amzn2023.0.3.aarch64    10/80 
+  Installing       : perl-if-0.60.800-477.amzn2023.0.10.noarch            11/80 
+  Installing       : perl-IO-Socket-IP-0.43-522.amzn2023.0.1.noarch       12/80 
+  Installing       : perl-Time-Local-2:1.300-5.amzn2023.0.2.noarch        13/80 
+  Installing       : perl-File-Path-2.18-2.amzn2023.0.2.noarch            14/80 
+  Installing       : perl-Pod-Escapes-1:1.07-458.amzn2023.0.2.noarch      15/80 
+  Installing       : perl-IO-Socket-SSL-2.075-1.amzn2023.0.3.noarch       16/80 
+  Installing       : perl-Net-SSLeay-1.94-3.amzn2023.0.5.aarch64          17/80 
+  Installing       : perl-Class-Struct-0.66-477.amzn2023.0.10.noarch      18/80 
+  Installing       : perl-POSIX-1.94-477.amzn2023.0.10.aarch64            19/80 
+  Installing       : perl-Term-ANSIColor-5.01-459.amzn2023.0.2.noarch     20/80 
+  Installing       : perl-IPC-Open3-1.21-477.amzn2023.0.10.noarch         21/80 
+  Installing       : perl-subs-1.03-477.amzn2023.0.10.noarch              22/80 
+  Installing       : perl-File-Temp-1:0.231.200-2.amzn2023.0.1.noarch     23/80 
+  Installing       : perl-Term-Cap-1.17-458.amzn2023.0.2.noarch           24/80 
+  Installing       : perl-Pod-Simple-1:3.42-2.amzn2023.0.2.noarch         25/80 
+  Installing       : perl-HTTP-Tiny-0.092-2.amzn2023.0.3.noarch           26/80 
+  Installing       : perl-Socket-4:2.032-1.amzn2023.0.4.aarch64           27/80 
+  Installing       : perl-SelectSaver-1.02-477.amzn2023.0.10.noarch       28/80 
+  Installing       : perl-Symbol-1.08-477.amzn2023.0.10.noarch            29/80 
+  Installing       : perl-File-stat-1.09-477.amzn2023.0.10.noarch         30/80 
+  Installing       : perl-podlators-1:4.14-458.amzn2023.0.2.noarch        31/80 
+  Installing       : perl-Pod-Perldoc-3.28.01-459.amzn2023.0.3.noarch     32/80 
+  Installing       : perl-Fcntl-1.13-477.amzn2023.0.10.aarch64            33/80 
+  Installing       : perl-Text-ParseWords-3.30-458.amzn2023.0.2.noarch    34/80 
+  Installing       : perl-base-2.27-477.amzn2023.0.10.noarch              35/80 
+  Installing       : perl-mro-1.23-477.amzn2023.0.10.aarch64              36/80 
+  Installing       : perl-IO-1.43-477.amzn2023.0.10.aarch64               37/80 
+  Installing       : perl-overloading-0.02-477.amzn2023.0.10.noarch       38/80 
+  Installing       : perl-Pod-Usage-4:2.01-2.amzn2023.0.2.noarch          39/80 
+  Installing       : perl-Errno-1.30-477.amzn2023.0.10.aarch64            40/80 
+  Installing       : perl-File-Basename-2.85-477.amzn2023.0.10.noarch     41/80 
+  Installing       : perl-Getopt-Std-1.12-477.amzn2023.0.10.noarch        42/80 
+  Installing       : perl-MIME-Base64-3.16-2.amzn2023.0.3.aarch64         43/80 
+  Installing       : perl-Scalar-List-Utils-4:1.56-459.amzn2023.0.3.aar   44/80 
+  Installing       : perl-constant-1.33-459.amzn2023.0.2.noarch           45/80 
+  Installing       : perl-Storable-1:3.37-522.amzn2023.0.3.aarch64        46/80 
+  Installing       : perl-overload-1.31-477.amzn2023.0.10.noarch          47/80 
+  Installing       : perl-parent-1:0.238-458.amzn2023.0.2.noarch          48/80 
+  Installing       : perl-vars-1.05-477.amzn2023.0.10.noarch              49/80 
+  Installing       : perl-Getopt-Long-1:2.58-521.amzn2023.0.1.noarch      50/80 
+  Installing       : perl-DynaLoader-1.47-477.amzn2023.0.10.aarch64       51/80 
+  Installing       : perl-Carp-1.50-458.amzn2023.0.2.noarch               52/80 
+  Installing       : perl-Exporter-5.79-520.amzn2023.0.1.noarch           53/80 
+  Installing       : perl-NDBM_File-1.15-477.amzn2023.0.10.aarch64        54/80 
+  Installing       : perl-PathTools-3.78-459.amzn2023.0.3.aarch64         55/80 
+  Installing       : perl-Encode-4:3.21-520.amzn2023.0.2.aarch64          56/80 
+  Installing       : perl-libs-4:5.32.1-477.amzn2023.0.10.aarch64         57/80 
+  Installing       : perl-interpreter-4:5.32.1-477.amzn2023.0.10.aarch6   58/80 
+  Installing       : unzip-6.0-68.amzn2023.0.2.aarch64                    59/80 
+  Installing       : zip-3.0-28.amzn2023.0.4.aarch64                      60/80 
+  Installing       : rust-toolset-srpm-macros-1.98.1-1.amzn2023.noarch    61/80 
+  Installing       : pkgconf-m4-1.8.0-4.amzn2023.0.2.noarch               62/80 
+  Installing       : perl-srpm-macros-1-39.amzn2023.0.2.noarch            63/80 
+  Installing       : package-notes-srpm-macros-0.4-18.amzn2023.0.5.noar   64/80 
+  Installing       : openblas-srpm-macros-2-9.amzn2023.0.2.noarch         65/80 
+  Installing       : ocaml-srpm-macros-6-6.amzn2023.0.2.noarch            66/80 
+  Installing       : lua-srpm-macros-1-4.amzn2023.0.2.noarch              67/80 
+  Installing       : libpkgconf-1.8.0-4.amzn2023.0.2.aarch64              68/80 
+  Installing       : kernel-srpm-macros-1.0-14.amzn2023.0.3.noarch        69/80 
+  Installing       : ghc-srpm-macros-1.5.0-4.amzn2023.0.2.noarch          70/80 
+  Installing       : efi-srpm-macros-5-4.amzn2023.0.5.noarch              71/80 
+  Installing       : dwz-0.16-2.amzn2023.0.1.aarch64                      72/80 
+  Installing       : fonts-srpm-macros-1:2.0.5-12.amzn2023.0.2.noarch     73/80 
+  Installing       : go-srpm-macros-3.8.0-1.amzn2023.0.1.noarch           74/80 
+  Installing       : python-srpm-macros-3.9-41.amzn2023.0.6.noarch        75/80 
+  Installing       : amazon-rpm-config-228-11.amzn2023.0.1.noarch         76/80 
+  Running scriptlet: amazon-rpm-config-228-11.amzn2023.0.1.noarch         76/80 
+  Installing       : pkgconf-1.8.0-4.amzn2023.0.2.aarch64                 77/80 
+  Installing       : pkgconf-pkg-config-1.8.0-4.amzn2023.0.2.aarch64      78/80 
+  Installing       : lustre-client-2.15.6-32.amzn2023.aarch64             79/80 
+  Running scriptlet: lustre-client-2.15.6-32.amzn2023.aarch64             79/80 
+  Installing       : glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64      80/80 
+  Running scriptlet: glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64      80/80 
+  Verifying        : amazon-rpm-config-228-11.amzn2023.0.1.noarch          1/80 
+  Verifying        : dwz-0.16-2.amzn2023.0.1.aarch64                       2/80 
+  Verifying        : efi-srpm-macros-5-4.amzn2023.0.5.noarch               3/80 
+  Verifying        : fonts-srpm-macros-1:2.0.5-12.amzn2023.0.2.noarch      4/80 
+  Verifying        : ghc-srpm-macros-1.5.0-4.amzn2023.0.2.noarch           5/80 
+  Verifying        : glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64       6/80 
+  Verifying        : go-srpm-macros-3.8.0-1.amzn2023.0.1.noarch            7/80 
+  Verifying        : kernel-srpm-macros-1.0-14.amzn2023.0.3.noarch         8/80 
+  Verifying        : libpkgconf-1.8.0-4.amzn2023.0.2.aarch64               9/80 
+  Verifying        : lua-srpm-macros-1-4.amzn2023.0.2.noarch              10/80 
+  Verifying        : lustre-client-2.15.6-32.amzn2023.aarch64             11/80 
+  Verifying        : ocaml-srpm-macros-6-6.amzn2023.0.2.noarch            12/80 
+  Verifying        : openblas-srpm-macros-2-9.amzn2023.0.2.noarch         13/80 
+  Verifying        : package-notes-srpm-macros-0.4-18.amzn2023.0.5.noar   14/80 
+  Verifying        : perl-AutoLoader-5.74-477.amzn2023.0.10.noarch        15/80 
+  Verifying        : perl-B-1.80-477.amzn2023.0.10.aarch64                16/80 
+  Verifying        : perl-Carp-1.50-458.amzn2023.0.2.noarch               17/80 
+  Verifying        : perl-Class-Struct-0.66-477.amzn2023.0.10.noarch      18/80 
+  Verifying        : perl-Data-Dumper-2.191-522.amzn2023.0.3.aarch64      19/80 
+  Verifying        : perl-Digest-1.20-1.amzn2023.0.2.noarch               20/80 
+  Verifying        : perl-Digest-MD5-2.59-521.amzn2023.0.2.aarch64        21/80 
+  Verifying        : perl-DynaLoader-1.47-477.amzn2023.0.10.aarch64       22/80 
+  Verifying        : perl-Encode-4:3.21-520.amzn2023.0.2.aarch64          23/80 
+  Verifying        : perl-Errno-1.30-477.amzn2023.0.10.aarch64            24/80 
+  Verifying        : perl-Exporter-5.79-520.amzn2023.0.1.noarch           25/80 
+  Verifying        : perl-Fcntl-1.13-477.amzn2023.0.10.aarch64            26/80 
+  Verifying        : perl-File-Basename-2.85-477.amzn2023.0.10.noarch     27/80 
+  Verifying        : perl-File-Path-2.18-2.amzn2023.0.2.noarch            28/80 
+  Verifying        : perl-File-Temp-1:0.231.200-2.amzn2023.0.1.noarch     29/80 
+  Verifying        : perl-File-stat-1.09-477.amzn2023.0.10.noarch         30/80 
+  Verifying        : perl-FileHandle-2.03-477.amzn2023.0.10.noarch        31/80 
+  Verifying        : perl-Getopt-Long-1:2.58-521.amzn2023.0.1.noarch      32/80 
+  Verifying        : perl-Getopt-Std-1.12-477.amzn2023.0.10.noarch        33/80 
+  Verifying        : perl-HTTP-Tiny-0.092-2.amzn2023.0.3.noarch           34/80 
+  Verifying        : perl-IO-1.43-477.amzn2023.0.10.aarch64               35/80 
+  Verifying        : perl-IO-Socket-IP-0.43-522.amzn2023.0.1.noarch       36/80 
+  Verifying        : perl-IO-Socket-SSL-2.075-1.amzn2023.0.3.noarch       37/80 
+  Verifying        : perl-IPC-Open3-1.21-477.amzn2023.0.10.noarch         38/80 
+  Verifying        : perl-MIME-Base64-3.16-2.amzn2023.0.3.aarch64         39/80 
+  Verifying        : perl-NDBM_File-1.15-477.amzn2023.0.10.aarch64        40/80 
+  Verifying        : perl-Net-SSLeay-1.94-3.amzn2023.0.5.aarch64          41/80 
+  Verifying        : perl-POSIX-1.94-477.amzn2023.0.10.aarch64            42/80 
+  Verifying        : perl-PathTools-3.78-459.amzn2023.0.3.aarch64         43/80 
+  Verifying        : perl-Pod-Escapes-1:1.07-458.amzn2023.0.2.noarch      44/80 
+  Verifying        : perl-Pod-Perldoc-3.28.01-459.amzn2023.0.3.noarch     45/80 
+  Verifying        : perl-Pod-Simple-1:3.42-2.amzn2023.0.2.noarch         46/80 
+  Verifying        : perl-Pod-Usage-4:2.01-2.amzn2023.0.2.noarch          47/80 
+  Verifying        : perl-Scalar-List-Utils-4:1.56-459.amzn2023.0.3.aar   48/80 
+  Verifying        : perl-SelectSaver-1.02-477.amzn2023.0.10.noarch       49/80 
+  Verifying        : perl-Socket-4:2.032-1.amzn2023.0.4.aarch64           50/80 
+  Verifying        : perl-Storable-1:3.37-522.amzn2023.0.3.aarch64        51/80 
+  Verifying        : perl-Symbol-1.08-477.amzn2023.0.10.noarch            52/80 
+  Verifying        : perl-Term-ANSIColor-5.01-459.amzn2023.0.2.noarch     53/80 
+  Verifying        : perl-Term-Cap-1.17-458.amzn2023.0.2.noarch           54/80 
+  Verifying        : perl-Text-ParseWords-3.30-458.amzn2023.0.2.noarch    55/80 
+  Verifying        : perl-Text-Tabs+Wrap-2021.0726-1.amzn2023.0.1.noarc   56/80 
+  Verifying        : perl-Time-HiRes-4:1.9764-460.amzn2023.0.3.aarch64    57/80 
+  Verifying        : perl-Time-Local-2:1.300-5.amzn2023.0.2.noarch        58/80 
+  Verifying        : perl-URI-5.18-1.amzn2023.0.1.noarch                  59/80 
+  Verifying        : perl-base-2.27-477.amzn2023.0.10.noarch              60/80 
+  Verifying        : perl-constant-1.33-459.amzn2023.0.2.noarch           61/80 
+  Verifying        : perl-if-0.60.800-477.amzn2023.0.10.noarch            62/80 
+  Verifying        : perl-interpreter-4:5.32.1-477.amzn2023.0.10.aarch6   63/80 
+  Verifying        : perl-libnet-3.13-2.amzn2023.0.2.noarch               64/80 
+  Verifying        : perl-libs-4:5.32.1-477.amzn2023.0.10.aarch64         65/80 
+  Verifying        : perl-mro-1.23-477.amzn2023.0.10.aarch64              66/80 
+  Verifying        : perl-overload-1.31-477.amzn2023.0.10.noarch          67/80 
+  Verifying        : perl-overloading-0.02-477.amzn2023.0.10.noarch       68/80 
+  Verifying        : perl-parent-1:0.238-458.amzn2023.0.2.noarch          69/80 
+  Verifying        : perl-podlators-1:4.14-458.amzn2023.0.2.noarch        70/80 
+  Verifying        : perl-srpm-macros-1-39.amzn2023.0.2.noarch            71/80 
+  Verifying        : perl-subs-1.03-477.amzn2023.0.10.noarch              72/80 
+  Verifying        : perl-vars-1.05-477.amzn2023.0.10.noarch              73/80 
+  Verifying        : pkgconf-1.8.0-4.amzn2023.0.2.aarch64                 74/80 
+  Verifying        : pkgconf-m4-1.8.0-4.amzn2023.0.2.noarch               75/80 
+  Verifying        : pkgconf-pkg-config-1.8.0-4.amzn2023.0.2.aarch64      76/80 
+  Verifying        : python-srpm-macros-3.9-41.amzn2023.0.6.noarch        77/80 
+  Verifying        : rust-toolset-srpm-macros-1.98.1-1.amzn2023.noarch    78/80 
+  Verifying        : unzip-6.0-68.amzn2023.0.2.aarch64                    79/80 
+  Verifying        : zip-3.0-28.amzn2023.0.4.aarch64                      80/80================================================================================
+WARNING:
+  A newer release of "Amazon Linux" is available.
+
+  Available Versions:
+
+  Version 2023.12.20261026:
+    Run the following command to upgrade to 2023.12.20261026:
+
+      dnf upgrade --releasever=2023.12.20261026
+
+    Release notes:
+     https://docs.aws.amazon.com/linux/al2023/release-notes/relnotes-2023.12.20261026.html
+
+================================================================================
+ 
+
+Installed:
+  amazon-rpm-config-228-11.amzn2023.0.1.noarch                                  
+  dwz-0.16-2.amzn2023.0.1.aarch64                                               
+  efi-srpm-macros-5-4.amzn2023.0.5.noarch                                       
+  fonts-srpm-macros-1:2.0.5-12.amzn2023.0.2.noarch                              
+  ghc-srpm-macros-1.5.0-4.amzn2023.0.2.noarch                                   
+  glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64                               
+  go-srpm-macros-3.8.0-1.amzn2023.0.1.noarch                                    
+  kernel-srpm-macros-1.0-14.amzn2023.0.3.noarch                                 
+  libpkgconf-1.8.0-4.amzn2023.0.2.aarch64                                       
+  lua-srpm-macros-1-4.amzn2023.0.2.noarch                                       
+  lustre-client-2.15.6-32.amzn2023.aarch64                                      
+  ocaml-srpm-macros-6-6.amzn2023.0.2.noarch                                     
+  openblas-srpm-macros-2-9.amzn2023.0.2.noarch                                  
+  package-notes-srpm-macros-0.4-18.amzn2023.0.5.noarch                          
+  perl-AutoLoader-5.74-477.amzn2023.0.10.noarch                                 
+  perl-B-1.80-477.amzn2023.0.10.aarch64                                         
+  perl-Carp-1.50-458.amzn2023.0.2.noarch                                        
+  perl-Class-Struct-0.66-477.amzn2023.0.10.noarch                               
+  perl-Data-Dumper-2.191-522.amzn2023.0.3.aarch64                               
+  perl-Digest-1.20-1.amzn2023.0.2.noarch                                        
+  perl-Digest-MD5-2.59-521.amzn2023.0.2.aarch64                                 
+  perl-DynaLoader-1.47-477.amzn2023.0.10.aarch64                                
+  perl-Encode-4:3.21-520.amzn2023.0.2.aarch64                                   
+  perl-Errno-1.30-477.amzn2023.0.10.aarch64                                     
+  perl-Exporter-5.79-520.amzn2023.0.1.noarch                                    
+  perl-Fcntl-1.13-477.amzn2023.0.10.aarch64                                     
+  perl-File-Basename-2.85-477.amzn2023.0.10.noarch                              
+  perl-File-Path-2.18-2.amzn2023.0.2.noarch                                     
+  perl-File-Temp-1:0.231.200-2.amzn2023.0.1.noarch                              
+  perl-File-stat-1.09-477.amzn2023.0.10.noarch                                  
+  perl-FileHandle-2.03-477.amzn2023.0.10.noarch                                 
+  perl-Getopt-Long-1:2.58-521.amzn2023.0.1.noarch                               
+  perl-Getopt-Std-1.12-477.amzn2023.0.10.noarch                                 
+  perl-HTTP-Tiny-0.092-2.amzn2023.0.3.noarch                                    
+  perl-IO-1.43-477.amzn2023.0.10.aarch64                                        
+  perl-IO-Socket-IP-0.43-522.amzn2023.0.1.noarch                                
+  perl-IO-Socket-SSL-2.075-1.amzn2023.0.3.noarch                                
+  perl-IPC-Open3-1.21-477.amzn2023.0.10.noarch                                  
+  perl-MIME-Base64-3.16-2.amzn2023.0.3.aarch64                                  
+  perl-NDBM_File-1.15-477.amzn2023.0.10.aarch64                                 
+  perl-Net-SSLeay-1.94-3.amzn2023.0.5.aarch64                                   
+  perl-POSIX-1.94-477.amzn2023.0.10.aarch64                                     
+  perl-PathTools-3.78-459.amzn2023.0.3.aarch64                                  
+  perl-Pod-Escapes-1:1.07-458.amzn2023.0.2.noarch                               
+  perl-Pod-Perldoc-3.28.01-459.amzn2023.0.3.noarch                              
+  perl-Pod-Simple-1:3.42-2.amzn2023.0.2.noarch                                  
+  perl-Pod-Usage-4:2.01-2.amzn2023.0.2.noarch                                   
+  perl-Scalar-List-Utils-4:1.56-459.amzn2023.0.3.aarch64                        
+  perl-SelectSaver-1.02-477.amzn2023.0.10.noarch                                
+  perl-Socket-4:2.032-1.amzn2023.0.4.aarch64                                    
+  perl-Storable-1:3.37-522.amzn2023.0.3.aarch64                                 
+  perl-Symbol-1.08-477.amzn2023.0.10.noarch                                     
+  perl-Term-ANSIColor-5.01-459.amzn2023.0.2.noarch                              
+  perl-Term-Cap-1.17-458.amzn2023.0.2.noarch                                    
+  perl-Text-ParseWords-3.30-458.amzn2023.0.2.noarch                             
+  perl-Text-Tabs+Wrap-2021.0726-1.amzn2023.0.1.noarch                           
+  perl-Time-HiRes-4:1.9764-460.amzn2023.0.3.aarch64                             
+  perl-Time-Local-2:1.300-5.amzn2023.0.2.noarch                                 
+  perl-URI-5.18-1.amzn2023.0.1.noarch                                           
+  perl-base-2.27-477.amzn2023.0.10.noarch                                       
+  perl-constant-1.33-459.amzn2023.0.2.noarch                                    
+  perl-if-0.60.800-477.amzn2023.0.10.noarch                                     
+  perl-interpreter-4:5.32.1-477.amzn2023.0.10.aarch64                           
+  perl-libnet-3.13-2.amzn2023.0.2.noarch                                        
+  perl-libs-4:5.32.1-477.amzn2023.0.10.aarch64                                  
+  perl-mro-1.23-477.amzn2023.0.10.aarch64                                       
+  perl-overload-1.31-477.amzn2023.0.10.noarch                                   
+  perl-overloading-0.02-477.amzn2023.0.10.noarch                                
+  perl-parent-1:0.238-458.amzn2023.0.2.noarch                                   
+  perl-podlators-1:4.14-458.amzn2023.0.2.noarch                                 
+  perl-srpm-macros-1-39.amzn2023.0.2.noarch                                     
+  perl-subs-1.03-477.amzn2023.0.10.noarch                                       
+  perl-vars-1.05-477.amzn2023.0.10.noarch                                       
+  pkgconf-1.8.0-4.amzn2023.0.2.aarch64                                          
+  pkgconf-m4-1.8.0-4.amzn2023.0.2.noarch                                        
+  pkgconf-pkg-config-1.8.0-4.amzn2023.0.2.aarch64                               
+  python-srpm-macros-3.9-41.amzn2023.0.6.noarch                                 
+  rust-toolset-srpm-macros-1.98.1-1.amzn2023.noarch                             
+  unzip-6.0-68.amzn2023.0.2.aarch64                                             
+  zip-3.0-28.amzn2023.0.4.aarch64                                               
+
+Complete!
++ EFS_ID=fs-064c9482f8d35c259
++ EFS_DNS=fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com
+++ seq 1 30
++ for i in $(seq 1 30)
++ getent hosts fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com
+10.45.0.107     fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com
++ break
+++ aws fsx describe-storage-virtual-machines --region ap-southeast-1 --storage-virtual-machine-ids svm-025b624e0aa4bc790 --query 'StorageVirtualMachines[0].Endpoints.Nfs.DNSName' --output text
++ ONTAP_DNS=svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com
++ test -n svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com
++ test svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com '!=' None
++ LUSTRE_HOST=fs-06ac7bde61120914b.fsx.ap-southeast-1.amazonaws.com
++ mkdir -p /mnt/e5-seed/efs /mnt/e5-seed/fsx_openzfs /mnt/e5-seed/fsx_ontap /mnt/e5/fsx_lustre /mnt/e5-ebs
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/ /mnt/e5-seed/efs
++ break
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx /mnt/e5-seed/fsx_openzfs
++ break
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 /mnt/e5-seed/fsx_ontap
++ break
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t lustre -o noatime,flock fs-06ac7bde61120914b.fsx.ap-southeast-1.amazonaws.com@tcp:/apmofbev /mnt/e5/fsx_lustre
++ break
+++ stat -c %d /mnt/e5-seed/efs
+++ stat -c %d /
++ test 51 '!=' 66306
+++ stat -c %d /mnt/e5-seed/fsx_openzfs
+++ stat -c %d /
++ test 53 '!=' 66306
+++ stat -c %d /mnt/e5-seed/fsx_ontap
+++ stat -c %d /
++ test 54 '!=' 66306
+++ stat -c %d /mnt/e5/fsx_lustre
+++ stat -c %d /
++ test 4206462640 '!=' 66306
++ mkdir -p /mnt/e5/fsx_lustre/e5/fsx_lustre/conf /mnt/e5-ebs/conf
++ chmod 777 /mnt/e5-seed/efs/e5/efs_host_plain/a/conf /mnt/e5-seed/efs/e5/efs_host_tls/a/conf /mnt/e5-seed/fsx_ontap/e5/fsx_ontap/a/conf /mnt/e5-seed/fsx_openzfs/e5/fsx_openzfs/a/conf /mnt/e5/fsx_lustre/e5/fsx_lustre/conf /mnt/e5-ebs/conf
++ sync
++ date +%s
++ umount /mnt/e5-seed/efs /mnt/e5-seed/fsx_openzfs /mnt/e5-seed/fsx_ontap
++ lctl set_param 'ldlm.namespaces.*.lru_size=clear'
+ldlm.namespaces.MGC10.45.0.190@tcp.lru_size=clear
+ldlm.namespaces.apmofbev-MDT0000-mdc-ffff0003c5a54800.lru_size=clear
+ldlm.namespaces.apmofbev-OST0000-osc-ffff0003c5a54800.lru_size=clear
++ sync
++ echo 3
++ mkdir -p /mnt/e5/efs_host_plain/default
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,nosharecache fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/ /mnt/e5/efs_host_plain/default
++ break
+++ stat -c %d /mnt/e5/efs_host_plain/default
+++ stat -c %d /
++ test 49 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_plain/forced
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,nosharecache,acregmin=0,acregmax=0 fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/ /mnt/e5/efs_host_plain/forced
++ break
+++ stat -c %d /mnt/e5/efs_host_plain/forced
+++ stat -c %d /
++ test 51 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_plain/ss-0.1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,nosharecache fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/ /mnt/e5/efs_host_plain/ss-0.1
++ break
+++ stat -c %d /mnt/e5/efs_host_plain/ss-0.1
+++ stat -c %d /
++ test 52 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_plain/ss-1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,nosharecache fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/ /mnt/e5/efs_host_plain/ss-1
++ break
+++ stat -c %d /mnt/e5/efs_host_plain/ss-1
+++ stat -c %d /
++ test 53 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_plain/ss-10
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,nosharecache fs-064c9482f8d35c259.efs.ap-southeast-1.amazonaws.com:/ /mnt/e5/efs_host_plain/ss-10
++ break
+++ stat -c %d /mnt/e5/efs_host_plain/ss-10
+++ stat -c %d /
++ test 54 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_tls/default
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t efs -o tls,nosharecache fs-064c9482f8d35c259:/ /mnt/e5/efs_host_tls/default
++ break
+++ stat -c %d /mnt/e5/efs_host_tls/default
+++ stat -c %d /
++ test 55 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_tls/forced
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t efs -o tls,nosharecache,acregmin=0,acregmax=0 fs-064c9482f8d35c259:/ /mnt/e5/efs_host_tls/forced
++ break
+++ stat -c %d /mnt/e5/efs_host_tls/forced
+++ stat -c %d /
++ test 56 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_tls/ss-0.1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t efs -o tls,nosharecache fs-064c9482f8d35c259:/ /mnt/e5/efs_host_tls/ss-0.1
++ break
+++ stat -c %d /mnt/e5/efs_host_tls/ss-0.1
+++ stat -c %d /
++ test 57 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_tls/ss-1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t efs -o tls,nosharecache fs-064c9482f8d35c259:/ /mnt/e5/efs_host_tls/ss-1
++ break
+++ stat -c %d /mnt/e5/efs_host_tls/ss-1
+++ stat -c %d /
++ test 58 '!=' 66306
++ mkdir -p /mnt/e5/efs_host_tls/ss-10
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t efs -o tls,nosharecache fs-064c9482f8d35c259:/ /mnt/e5/efs_host_tls/ss-10
++ break
+++ stat -c %d /mnt/e5/efs_host_tls/ss-10
+++ stat -c %d /
++ test 59 '!=' 66306
++ mkdir -p /mnt/e5/fsx_openzfs/default
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx /mnt/e5/fsx_openzfs/default
++ break
+++ stat -c %d /mnt/e5/fsx_openzfs/default
+++ stat -c %d /
++ test 61 '!=' 66306
++ mkdir -p /mnt/e5/fsx_openzfs/forced
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache,acregmin=0,acregmax=0 fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx /mnt/e5/fsx_openzfs/forced
++ break
+++ stat -c %d /mnt/e5/fsx_openzfs/forced
+++ stat -c %d /
++ test 62 '!=' 66306
++ mkdir -p /mnt/e5/fsx_openzfs/ss-0.1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx /mnt/e5/fsx_openzfs/ss-0.1
++ break
+++ stat -c %d /mnt/e5/fsx_openzfs/ss-0.1
+++ stat -c %d /
++ test 63 '!=' 66306
++ mkdir -p /mnt/e5/fsx_openzfs/ss-1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx /mnt/e5/fsx_openzfs/ss-1
++ break
+++ stat -c %d /mnt/e5/fsx_openzfs/ss-1
+++ stat -c %d /
++ test 64 '!=' 66306
++ mkdir -p /mnt/e5/fsx_openzfs/ss-10
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache fs-095384c9293c2430e.fsx.ap-southeast-1.amazonaws.com:/fsx /mnt/e5/fsx_openzfs/ss-10
++ break
+++ stat -c %d /mnt/e5/fsx_openzfs/ss-10
+++ stat -c %d /
++ test 65 '!=' 66306
++ mkdir -p /mnt/e5/fsx_ontap/default
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 /mnt/e5/fsx_ontap/default
++ break
+++ stat -c %d /mnt/e5/fsx_ontap/default
+++ stat -c %d /
++ test 66 '!=' 66306
++ mkdir -p /mnt/e5/fsx_ontap/forced
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache,acregmin=0,acregmax=0 svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 /mnt/e5/fsx_ontap/forced
++ break
+++ stat -c %d /mnt/e5/fsx_ontap/forced
+++ stat -c %d /
++ test 67 '!=' 66306
++ mkdir -p /mnt/e5/fsx_ontap/ss-0.1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 /mnt/e5/fsx_ontap/ss-0.1
++ break
+++ stat -c %d /mnt/e5/fsx_ontap/ss-0.1
+++ stat -c %d /
++ test 68 '!=' 66306
++ mkdir -p /mnt/e5/fsx_ontap/ss-1
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 /mnt/e5/fsx_ontap/ss-1
++ break
+++ stat -c %d /mnt/e5/fsx_ontap/ss-1
+++ stat -c %d /
++ test 69 '!=' 66306
++ mkdir -p /mnt/e5/fsx_ontap/ss-10
+++ seq 1 24
++ for i in $(seq 1 24)
++ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,nosharecache svm-025b624e0aa4bc790.fs-07e497eb1d56a54c3.fsx.ap-southeast-1.amazonaws.com:/vol1 /mnt/e5/fsx_ontap/ss-10
++ break
+++ stat -c %d /mnt/e5/fsx_ontap/ss-10
+++ stat -c %d /
++ test 70 '!=' 66306
++ chmod -R 755 /mnt/host-facts
++ dnf install -y aws-cfn-bootstrap
+Last metadata expiration check: 0:02:34 ago on Tue Oct 27 07:56:54 2026.
+Dependencies resolved.
+================================================================================
+ Package             Arch      Version                      Repository     Size
+================================================================================
+Installing:
+ aws-cfn-bootstrap   noarch    2.0-41.amzn2023              amazonlinux   222 k
+Installing dependencies:
+ python-chevron      aarch64   0.13.1-1.amzn2023.0.3        amazonlinux    25 k
+ python3-daemon      noarch    2.3.0-4.amzn2023.0.2         amazonlinux    39 k
+ python3-lockfile    noarch    1:0.12.2-5.amzn2023.0.3      amazonlinux    31 k
+
+Transaction Summary
+================================================================================
+Install  4 Packages
+
+Total download size: 317 k
+Installed size: 1.1 M
+Downloading Packages:
+(1/4): python-chevron-0.13.1-1.amzn2023.0.3.aar 791 kB/s |  25 kB     00:00    
+(2/4): python3-daemon-2.3.0-4.amzn2023.0.2.noar 1.1 MB/s |  39 kB     00:00    
+(3/4): aws-cfn-bootstrap-2.0-41.amzn2023.noarch 5.5 MB/s | 222 kB     00:00    
+(4/4): python3-lockfile-0.12.2-5.amzn2023.0.3.n 1.2 MB/s |  31 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                           2.6 MB/s | 317 kB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : python3-lockfile-1:0.12.2-5.amzn2023.0.3.noarch        1/4 
+  Installing       : python3-daemon-2.3.0-4.amzn2023.0.2.noarch             2/4 
+  Installing       : python-chevron-0.13.1-1.amzn2023.0.3.aarch64           3/4 
+  Running scriptlet: aws-cfn-bootstrap-2.0-41.amzn2023.noarch               4/4 
+  Installing       : aws-cfn-bootstrap-2.0-41.amzn2023.noarch               4/4 
+  Running scriptlet: aws-cfn-bootstrap-2.0-41.amzn2023.noarch               4/4 
+  Verifying        : aws-cfn-bootstrap-2.0-41.amzn2023.noarch               1/4 
+  Verifying        : python-chevron-0.13.1-1.amzn2023.0.3.aarch64           2/4 
+  Verifying        : python3-daemon-2.3.0-4.amzn2023.0.2.noarch             3/4 
+  Verifying        : python3-lockfile-1:0.12.2-5.amzn2023.0.3.noarch        4/4================================================================================
+WARNING:
+  A newer release of "Amazon Linux" is available.
+
+  Available Versions:
+
+  Version 2023.12.20261026:
+    Run the following command to upgrade to 2023.12.20261026:
+
+      dnf upgrade --releasever=2023.12.20261026
+
+    Release notes:
+     https://docs.aws.amazon.com/linux/al2023/release-notes/relnotes-2023.12.20261026.html
+
+================================================================================
+ 
+
+Installed:
+  aws-cfn-bootstrap-2.0-41.amzn2023.noarch                                      
+  python-chevron-0.13.1-1.amzn2023.0.3.aarch64                                  
+  python3-daemon-2.3.0-4.amzn2023.0.2.noarch                                    
+  python3-lockfile-1:0.12.2-5.amzn2023.0.3.noarch                               
+
+Complete!
++ /opt/aws/bin/cfn-signal --exit-code 0 --stack E5-AttributeCache-dev --resource HostAsgASG1C89540F --region ap-southeast-1
++ dump_diagnostics
++ local stamp
+++ date -u +%Y%m%dT%H%M%SZ
+++ hostname
++ stamp=20261027T075930Z-ip-10-45-0-70.ap-southeast-1.compute.internal
++ aws s3 cp /var/log/cloud-init-output.log s3://e5-attributecache-dev-diagnosticsbucket7ca30129-j3tqromhp64m/e5-diagnostics/20261027T075930Z-ip-10-45-0-70.ap-southeast-1.compute.internal-cloud-init.log --only-show-errors

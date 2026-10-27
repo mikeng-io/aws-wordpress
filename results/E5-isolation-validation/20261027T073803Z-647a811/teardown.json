@@ -1,0 +1,927 @@
+{
+  "utc": "2026-10-27T08:46:44.671428+00:00",
+  "source_commit": "647a81139a60fa5564055207d1ca68d8020b8ec2",
+  "scope": "18 enabled regions; direct service inventories selected by E5 tags or exact stack/cluster names; no mutation",
+  "regions": [
+    {
+      "region": "ap-east-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 6
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "ap-northeast-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 3
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "ap-northeast-2",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 2
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "ap-northeast-3",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "ap-south-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "ap-southeast-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 42
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "ap-southeast-2",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "ca-central-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "eu-central-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 2
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "eu-north-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "eu-west-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "eu-west-2",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "eu-west-3",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "sa-east-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "us-east-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 2
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 2
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 1
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "us-east-2",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 2
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "us-west-1",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    },
+    {
+      "region": "us-west-2",
+      "checks": {
+        "cloudformation-list-stacks": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-storage-virtual-machines": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "fsx-describe-backups": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "efs-describe-file-systems": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-instances": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-volumes": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-nat-gateways": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ec2-describe-vpc-endpoints": {
+          "e5_count": 0,
+          "all_count": 0
+        },
+        "ecs-list-clusters": {
+          "e5_count": 0,
+          "all_count": 0
+        }
+      },
+      "errors": {}
+    }
+  ],
+  "e5_diagnostics_buckets": 0,
+  "stack_history": [
+    {
+      "created": "2026-10-27T07:38:18.977000+00:00",
+      "last_event": "2026-10-27T08:43:06.633000+00:00",
+      "status": "DELETE_COMPLETE"
+    }
+  ],
+  "guard": {
+    "phase": "complete",
+    "cleanup_verified": true,
+    "runner_stopped": true,
+    "runner_exit": 0,
+    "stop_reason": "runner exited",
+    "remaining_backups": [],
+    "remaining_stacks": []
+  },
+  "private_raw_directory": ".e5-watchdog/preflight/20261027T084644Z",
+  "clean": true,
+  "source_script_sha256": "23c3eb13a3536b676456986bb8225a2769f64a83f74a9051f43b0ebabd738d40"
+}

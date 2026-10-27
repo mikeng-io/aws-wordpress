@@ -1,26 +1,26 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `PILOT COLLECTED; NOT READY FOR REPLICATIONS 2/3` (2026-10-27 HKT).
-The single authorised AWS pilot collected six tiers and both cohorts. Four of
-18 B cells fail validity gates. Lustre A1 counter-name coverage is corrected in
-the separately versioned offline follow-up; original pilot grading is frozen.
-All aggregate predictions remain NOT EVALUABLE at n=1. No hypothesis verdict changes.
+**Status:** `ISOLATION CANDIDATE PASSED; FORMAL METHOD AMENDMENT PENDING` (2026-10-27 HKT).
+The original single AWS pilot collected six tiers and both cohorts. Four of
+18 B cells fail its unchanged validity gates. Original pilot grading stays frozen;
+aggregate predictions remain NOT EVALUABLE at n=1. No hypothesis verdict changes.
 
-## Current status and handoff (2026-10-26)
+## Current status and handoff (2026-10-27)
 
-**Latest follow-up (2026-10-27):** the [single AWS diagnostic](../../results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
-completed and teardown was independently verified. TLS readahead verification
-produces background root activity, but switching it off leaves residual active
-GETATTR pairs. Lustre lateness reproduces at 23.2%/21.5% under concurrency versus
-0%/0% isolated; shared lock-cache interaction is a candidate mechanism. Amend
-attribution/isolation before a new formal run. No thresholds, original pilot
-grading or aggregate/H1 verdict changed; this short diagnostic is not replication 2.
+**Latest validation:** [isolation candidate v1 live review](../../results/E5-isolation-validation/20261027T073803Z-647a811/review.md)
+reports **PASS_CANDIDATE_ONLY** for all 21 cells. The 360-second quiet idle control
+has zero GETATTR/LOOKUP/ACCESS on five TLS roots and zero traced helper root stat
+calls. All 12 measured NFS cells reconcile exactly; all three isolated Lustre
+intervals have zero late requests. Configuration restoration passes. Benchmark and
+collector exited 0. Independent teardown verified 18 regions /198 inventories,
+zero API errors and no E5 resources or retained diagnostics bucket.
 
-The [isolation candidate v1](method-amendments/20261027-isolation-v1/README.md) now
-provides an explicit two-probe quiet profile, a full five-minute-cycle idle control
-and sequential Lustre/EBS reference pairs. It is offline verified, diagnostic-only
-and budget/live acceptance is still outstanding. The registered study runner and
-grader remain unchanged.
+The [prior diagnostic](../../results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
+identified helper root activity and reproduced Lustre concurrency sensitivity.
+The [predeclared candidate](method-amendments/20261027-isolation-v1/README.md)
+uses an explicit two-probe quiet profile and sequential Lustre/EBS pairs. It is
+not a production-default measurement or a formal replication. The registered
+study runner, grader and original validity thresholds remain unchanged.
 
 See the [pilot review](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
 [unchanged-method grading](../../results/E5/20261026T152946Z-b1efcb2/summary.md) and
@@ -30,14 +30,15 @@ cleanup; this validates the normal live path, not every injected failure path.
 
 **Next work, before another paid run:**
 
-- Attribute the ten GETATTR operations outside request phases in each EFS TLS B
-  window; preserve exact reconciliation rather than subtracting background noise.
-- Confirm the deployed Lustre `ldlm_ibits_enqueue` counter semantics and add a raw
-  fixture regression. Keep this pilot's original grading when reanalysing.
-- Diagnose Lustre's 25.7% late-request share at 0.1s and concurrent instrumentation
-  overhead. Do not relax the predeclared 5% gate to fit this observation.
-- Record any apparatus/method amendment, refresh budget/baseline, and obtain the
-  separate go-ahead for another run. Replications 2/3 have not been launched.
+- Version a formal method amendment covering helper configuration, workload
+  scheduling and same-time EBS reference binding for the formal P7 gate.
+- Preserve the registered 300s/600s windows and validate the full cohort-A
+  first-touch/expiry method; this candidate measured short cohort-B-like windows.
+- Update the runner and grader together with provenance and negative controls,
+  then verify offline. Keep both prior runs and their grading frozen.
+- Refresh budget/baseline and separately authorise independent formal
+  replications. The current US$20 ceiling and single-candidate approval do not
+  authorise automatic retries or replications 2/3.
 
 The local NFS checks, phase-attributed RPC amendment, conservative expiry probes
 and host watchdog remain integrated. Historical attempts and protocol decisions

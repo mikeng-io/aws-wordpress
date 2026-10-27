@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-27T08:27:41.498042+00:00",
+  "launch_source_commit": "647a81139a60fa5564055207d1ca68d8020b8ec2",
+  "method": "isolation-candidate-v1",
+  "study_replication": false,
+  "command": "python3 analysis/e5_diagnostic_stats.py <run>/rep-1/diagnostic",
+  "source_sha256": {
+    "analysis/e5_diagnostic_stats.py": "13f835dbc3967bcc0a6c4b0eb35b36681c9ba1bfc5b724fa068aad8c20cde723",
+    "infra/lib/stacks/bench/e5-isolation-validation.py": "b62db40e594446912f82c647b81ffe4167ed5e6c870ef8f5ff077ef49ed231f2",
+    "infra/lib/stacks/bench/e5-diagnostic.py": "9cedebd0007414586f1c3e6d49eba94e5cf34b8af5b9dd5af142cf181b586f1b",
+    "experiments/E5-attribute-cache/scripts/watchdog.py": "7b4858d35f3648ab16d3e6495f891f6a948795e5c77650fcf3bd48c3588cc2a5"
+  },
+  "raw_diagnostic_files": 161,
+  "candidate_acceptance": "PASS_CANDIDATE_ONLY",
+  "formal_study_verdict": false
+}

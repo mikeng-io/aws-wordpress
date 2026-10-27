@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-27T08:01:44.302838+00:00",
+  "ownership_verified": true,
+  "source_commit": "647a81139a60fa5564055207d1ca68d8020b8ec2",
+  "launch_type": "EC2",
+  "task_last_status": "RUNNING",
+  "containers": [
+    {
+      "name": "bench",
+      "image_digest": "sha256:9b370d2d01d80417831ca39239765aecf0403a1fac51c57fb0f2b0a6c9accefb",
+      "last_status": "RUNNING"
+    },
+    {
+      "name": "cache-dropper",
+      "image_digest": "sha256:9b370d2d01d80417831ca39239765aecf0403a1fac51c57fb0f2b0a6c9accefb",
+      "last_status": "RUNNING"
+    }
+  ]
+}

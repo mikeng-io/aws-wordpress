@@ -1,0 +1,55 @@
+{
+  "schema": "e5-diagnostic-serve-v1",
+  "mode": "concurrent",
+  "warmup": 60,
+  "measure": 180,
+  "plan": [
+    {
+      "tier": "fsx_lustre",
+      "directory": "/bench/fsx_lustre/ss-10/diag-isolation",
+      "delta": "10"
+    },
+    {
+      "tier": "ebs",
+      "directory": "/bench/ebs/ss-10/diag-lustre-control",
+      "delta": "10"
+    }
+  ],
+  "cells": [
+    {
+      "cell": "fsx_lustre-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_lustre/ss-10/diag-isolation",
+        "10",
+        "60",
+        "180",
+        "B-10",
+        "/tmp/e5-diagnostic/lustre-10/fsx_lustre-10",
+        "1"
+      ],
+      "started_monotonic_ns": 1571317009209,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 1802459007062
+    },
+    {
+      "cell": "ebs-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/ebs/ss-10/diag-lustre-control",
+        "10",
+        "60",
+        "180",
+        "B-10",
+        "/tmp/e5-diagnostic/lustre-10/ebs-10",
+        "1"
+      ],
+      "started_monotonic_ns": 1571318537027,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 1802459078511
+    }
+  ],
+  "study_replication": false
+}

@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-27T08:47:55.668002+00:00",
+  "ceiling_usd": 20,
+  "authorisation": "Mike: let update to $20; one fresh isolation candidate only",
+  "prelaunch_planning_proxy_usd": 11.482673737375,
+  "reported_regional_all_account_usd": 5.5382086755,
+  "estimated": true,
+  "actual_e5_allocation_verified": false,
+  "stack_minutes": 64.79426666666667,
+  "standing_rate_usd_per_hour": 0.95475,
+  "endpoint_rate_component_usd_per_hour": 0.12,
+  "full_stack_lifetime_standing_envelope_with_endpoint_rounding_usd": 1.1414502350000002,
+  "candidate_ancillary_reserve_usd": 0.5,
+  "candidate_engineering_envelope_with_ancillary_reserve_usd": 1.6414502350000002,
+  "limitation": "Engineering estimate, not an invoice or verified incremental spend. Regional CE includes other workloads and may not yet include this run. Do not infer actual remaining budget from it. The prelaunch proxy reserved the full previous diagnostic to protect against delayed posting and may double count charges."
+}
