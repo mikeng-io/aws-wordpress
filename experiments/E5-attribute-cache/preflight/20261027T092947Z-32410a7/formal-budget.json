@@ -1,0 +1,90 @@
+{
+  "utc": "2026-10-27T09:33:01.394992+00:00",
+  "method": "isolation-formal-v3",
+  "scope": "one fresh full-method validation; no automatic retries or further replications",
+  "authorisation": "Mike: go after formal v3 offline preparation; total ceiling previously raised to US$20",
+  "source_base_commit": "32410a7",
+  "ceiling_usd": 20,
+  "status": "ONE_FORMAL_VALIDATION_BUDGET_ADMITTED",
+  "reported_regional_all_account_usd": 5.5382086755,
+  "ce_estimated": true,
+  "actual_e5_allocation_verified": false,
+  "standing_rate_usd_per_hour": 0.95475,
+  "endpoint_rate_component_usd_per_hour": 0.12,
+  "historical_attempt_envelopes": [
+    {
+      "created": "2026-10-27T07:38:18.977000+00:00",
+      "delete_complete": "2026-10-27T08:43:06.633000+00:00",
+      "stack_minutes": 64.79426666666667,
+      "status": "DELETE_COMPLETE",
+      "standing_envelope_usd": 1.1414502350000002,
+      "ancillary_reserve_usd": 0.5
+    },
+    {
+      "created": "2026-10-27T04:21:42.174000+00:00",
+      "delete_complete": "2026-10-27T05:37:05.743000+00:00",
+      "stack_minutes": 75.39281666666668,
+      "status": "DELETE_COMPLETE",
+      "standing_envelope_usd": 1.288902561875,
+      "ancillary_reserve_usd": 0.5
+    },
+    {
+      "created": "2026-10-26T15:30:06.925000+00:00",
+      "delete_complete": "2026-10-26T16:44:26.423000+00:00",
+      "stack_minutes": 74.32496666666665,
+      "status": "DELETE_COMPLETE",
+      "standing_envelope_usd": 1.2740460987499997,
+      "ancillary_reserve_usd": 0.5
+    },
+    {
+      "created": "2026-10-15T18:31:15.131000+00:00",
+      "delete_complete": "2026-10-15T18:49:37.182000+00:00",
+      "stack_minutes": 18.367516666666667,
+      "status": "DELETE_COMPLETE",
+      "standing_envelope_usd": 0.37553807562499997,
+      "ancillary_reserve_usd": 0.5
+    },
+    {
+      "created": "2026-10-15T17:07:31.805000+00:00",
+      "delete_complete": "2026-10-15T18:22:21.392000+00:00",
+      "stack_minutes": 74.82645000000001,
+      "status": "DELETE_COMPLETE",
+      "standing_envelope_usd": 1.281022985625,
+      "ancillary_reserve_usd": 0.5
+    }
+  ],
+  "excluded_placeholder": {
+    "created": "2026-10-26T15:22:08.386000+00:00",
+    "verified_event_types": [
+      "AWS::CloudFormation::Stack"
+    ],
+    "verified_statuses": [
+      "REVIEW_IN_PROGRESS",
+      "DELETE_IN_PROGRESS",
+      "DELETE_COMPLETE"
+    ],
+    "reason": "Unexecuted review placeholder; no underlying resources were created"
+  },
+  "candidate_run_seconds": 10800,
+  "independent_cleanup_seconds": 5400,
+  "ecs_task_seconds": 7200,
+  "prospective_standing_envelope_usd": 4.356375,
+  "prospective_ancillary_reserve_usd": 0.5,
+  "additional_uncertainty_reserve_usd": 1,
+  "conservative_planning_proxy_total_usd": 19.255543632375,
+  "proxy_headroom_usd": 0.7444563676249984,
+  "limitations": [
+    "Not an invoice, verified E5 allocation or AWS billing guarantee.",
+    "Regional CE includes other workloads. Every known billable E5 attempt is additionally reserved in full, including ones already represented in CE; this intentionally double counts rather than relying on allocation or posting timing.",
+    "Ancillary/billing-minimum uncertainty is reserved, not measured.",
+    "Generic preflight historical $1.55 constants are stale and do not clear this run."
+  ],
+  "baseline": {
+    "regions": 18,
+    "checks": 198,
+    "e5_matches": 0,
+    "api_errors": 0,
+    "e5_buckets": 0
+  },
+  "pricing_snapshot": "results/pricing/20261027T092919Z-32410a7"
+}
