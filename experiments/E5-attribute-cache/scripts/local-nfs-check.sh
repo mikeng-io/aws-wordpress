@@ -17,7 +17,9 @@
 # kernel, not EFS or FSx: its latencies mean nothing, only its RPC counts are
 # evidence. Output is an apparatus check, never a result; it does not go in results/.
 #
-# Usage: local-nfs-check.sh <out-dir> [fast|fast-probe] [leases-off]
+# Usage: local-nfs-check.sh <out-dir> [fast|fast-probe] [leases-off] [helper-probe]
+#   helper-probe  independent 75-second idle/root-stat mechanism control only;
+#                 no seeding, cohorts or study grading. May combine leases-off.
 #   fast        shortened waits and windows, for exercising the plumbing only. The
 #               default is the pre-registered timing (75 s waits, 120 s seed age,
 #               300 s warm-up, 600 s measured), so the attribute timers are crossed.
@@ -30,12 +32,13 @@ set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 OUT="${1:?usage: local-nfs-check.sh <out-dir> [fast] [leases-off]}"
 shift
-FAST=0; LEASES=1; PROBE_IDLE=75
+FAST=0; LEASES=1; PROBE_IDLE=75; HELPER_PROBE=0
 for a in "$@"; do
     case "$a" in
         fast) FAST=1; PROBE_IDLE=2 ;;
         fast-probe) FAST=1; PROBE_IDLE=75 ;;
         leases-off) LEASES=0 ;;
+        helper-probe) HELPER_PROBE=1 ;;
         *) echo "unknown option: $a" >&2; exit 2 ;;
     esac
 done
@@ -54,15 +57,23 @@ docker build -q -t e5-bench-local "$REPO/infra/lib/stacks/bench" >/dev/null
     echo "started_utc,$(date -u +%Y-%m-%dT%H:%M:%SZ)"
     echo "image_id,$(docker image inspect -f '{{.Id}}' e5-bench-local)"
     echo "docker_kernel,$(docker info --format '{{.KernelVersion}}')"
-    echo "mode,$([ "$FAST" = 1 ] && echo fast || echo full)"
-    echo "timing,${TIMING:-pre-registered defaults}"
+    if [ "$HELPER_PROBE" = 1 ]; then
+        echo "mode,helper-probe"
+        echo "timing,75 seconds; cohorts and seed-age gate not run"
+    else
+        echo "mode,$([ "$FAST" = 1 ] && echo fast || echo full)"
+        echo "timing,${TIMING:-pre-registered defaults}"
+    fi
     echo "leases_enable,$LEASES"
+    echo "helper_probe,$HELPER_PROBE"
 } > "$OUT/local-meta.csv"
 
 rc=0
 docker run --rm --privileged --name e5-local-check \
     -v "$REPO/infra/lib/stacks/bench/e5-seed.py:/e5-seed.py:ro" -v "$OUT:/export-out" \
+    -v "$REPO/experiments/E5-attribute-cache/scripts/root-stat-probe.py:/root-stat-probe.py:ro" \
     -e LEASES="$LEASES" \
+    -e E5_DIAGNOSTICS \
     --entrypoint bash e5-bench-local -c "
 set -euo pipefail
 T=efs_host_plain
@@ -76,7 +87,8 @@ OLD_LEASES=\$(cat /proc/sys/fs/leases-enable)
 # client) wedges until Docker is restarted. Seen on the first run of this harness.
 teardown() {
     set +e
-    [ -n "\${SAMPLER:-}" ] && kill \$SAMPLER 2>/dev/null
+    if [ -n \"\${SAMPLER:-}\" ]; then kill \"\$SAMPLER\" 2>/dev/null; fi
+    umount /probe-idle /probe-polled 2>/dev/null
     for f in \$FAMILIES; do umount /bench/\$T.\$f 2>/dev/null; umount /mnt/e5/\$T/\$f 2>/dev/null; done
     umount /seed 2>/dev/null
     exportfs -ua; rpc.nfsd 0
@@ -92,6 +104,17 @@ mkdir -p /export && mount -t tmpfs -o size=512m tmpfs /export
 echo '/export *(rw,no_root_squash,no_subtree_check,fsid=0)' > /etc/exports
 rpcbind; exportfs -ra; rpc.nfsd 8 2>/dev/null || true; rpc.mountd
 OPTS=nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2
+
+# This branch has no workload/seeder and never invokes the study grader.
+if [ '$HELPER_PROBE' = 1 ]; then
+    mkdir -p /probe-idle /probe-polled
+    mount -t nfs -o \$OPTS,nosharecache 127.0.0.1:/ /probe-idle
+    mount -t nfs -o \$OPTS,nosharecache 127.0.0.1:/ /probe-polled
+    test \"\$(stat -c %d /probe-idle)\" != \"\$(stat -c %d /probe-polled)\"
+    findmnt -t nfs,nfs4 -o TARGET,SOURCE,FSTYPE,OPTIONS > /export-out/probe-mounts.txt
+    python3 /root-stat-probe.py /probe-idle /probe-polled > /export-out/root-stat-probe.json
+    exit 0
+fi
 
 # --- seed, through a mount that is then unmounted (as the host user data does) -----
 mkdir -p /seed /bench/host-facts /bench/ebs
@@ -138,6 +161,10 @@ cp /tmp/mount-facts.csv /export-out/rep-1/ec2/mount-facts.csv 2>/dev/null || tru
 exit \$rc
 " || rc=$?
 echo "finished_utc,$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$OUT/local-meta.csv"
-python3 "$REPO/analysis/e5_stats.py" "$OUT" > /dev/null
-echo "local check output: $OUT (summary.md)"
+if [ "$HELPER_PROBE" = 0 ]; then
+    python3 "$REPO/analysis/e5_stats.py" "$OUT" > /dev/null
+    echo "local check output: $OUT (summary.md)"
+else
+    echo "local helper probe output: $OUT (root-stat-probe.json); no study grading"
+fi
 exit $rc

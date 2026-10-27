@@ -230,7 +230,18 @@ static int cmd_serve(int argc, char **argv) {
     build_paths(argv[2]);
 
     char path[MAX_PATH];
-    FILE *req, *raw, *comp;
+    FILE *req, *raw, *comp, *diag = NULL;
+    const char *diagnostics = getenv("E5_DIAGNOSTICS");
+    if (diagnostics && strcmp(diagnostics, "1")) {
+        fprintf(stderr, "agebench: E5_DIAGNOSTICS must be unset or 1\n");
+        return 64;
+    }
+    if (diagnostics) {
+        snprintf(path, sizeof path, "%s.diagnostics.csv", prefix);
+        diag = fopen(path, "w");
+        if (!diag) { perror("agebench: diagnostics output"); return 1; }
+        fprintf(diag, "k,phase,start_ns,end_ns,thread_cpu_ns,rpc_start,rpc_end\n");
+    }
     snprintf(path, sizeof path, "%s.req.csv", prefix);
     req = fopen(path, "w");
     snprintf(path, sizeof path, "%s.raw.csv", prefix);
@@ -259,6 +270,8 @@ static int cmd_serve(int argc, char **argv) {
         }
         clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &deadline, NULL);
         clock_gettime(CLOCK_MONOTONIC, &start);
+        struct timespec cpu_start, cpu_end, end;
+        if (diag && clock_gettime(CLOCK_THREAD_CPUTIME_ID, &cpu_start)) goto bad_counters;
         long late = ns_between(&deadline, &start);
         memset(hs, 0, sizeof hs);
         memset(he, 0, sizeof he);
@@ -287,6 +300,21 @@ static int cmd_serve(int argc, char **argv) {
         if (rpc_mount && (read_rpc_counts(rpc_mount, &r2) ||
                          rpc_delta(&rs, &r0, &r1) || rpc_delta(&re, &r1, &r2))) goto bad_counters;
         clock_gettime(CLOCK_MONOTONIC, &c1); counter_ns += ns_between(&c0, &c1);
+        if (diag) {
+            if (clock_gettime(CLOCK_THREAD_CPUTIME_ID, &cpu_end) ||
+                clock_gettime(CLOCK_MONOTONIC, &end)) goto bad_counters;
+            /* Same r0/r2 samples as phase attribution: no additional RPC reads.
+             * Wall/CPU include histograms and raw output; exclude sleep and the
+             * following req/diagnostics output. Wall minus CPU is off-CPU time,
+             * not proof of server waiting or scheduler contention separately. */
+            fprintf(diag, "%ld,%c,%ld,%ld,%ld,", k, k < n_warm ? 'w' : 'm',
+                    start.tv_sec * 1000000000L + start.tv_nsec,
+                    end.tv_sec * 1000000000L + end.tv_nsec,
+                    ns_between(&cpu_start, &cpu_end));
+            write_rpc(diag, &r0, rpc_mount != NULL);
+            fputc(',', diag); write_rpc(diag, &r2, rpc_mount != NULL);
+            fputc('\n', diag);
+        }
         fprintf(req, "%ld,%c,%ld,%ld,%ld,", k, k < n_warm ? 'w' : 'm', late, sum_s, sum_e);
         write_bins(req, hs);
         fputc(',', req);
@@ -301,10 +329,12 @@ static int cmd_serve(int argc, char **argv) {
     if (copy_file("/proc/self/mountstats", path) != 0) { perror("agebench: mountstats"); return 1; }
     if (ferror(req) || ferror(raw)) { fclose(req); fclose(raw); return 1; }
     int req_rc = fclose(req), raw_rc = fclose(raw);
-    return req_rc || raw_rc ? 1 : 0;
+    int diag_rc = diag ? (ferror(diag) ? (fclose(diag), 1) : fclose(diag)) : 0;
+    return req_rc || raw_rc || diag_rc ? 1 : 0;
 bad_counters:
     fprintf(stderr, "agebench: missing, duplicate or reset phase counters for %s\n", rpc_mount);
     fclose(req); fclose(raw);
+    if (diag) fclose(diag);
     return 2;
 }
 

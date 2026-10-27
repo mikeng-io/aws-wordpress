@@ -890,3 +890,8 @@ The [2026-10-27 offline follow-up](pilot-followup/20261027/README.md) corrects
 Lustre A1 counter-name coverage and records scheduling diagnostics plus a concrete
 TLS helper-interference candidate. Original pilot grading remains frozen;
 TLS attribution and Lustre scheduling still block another paid run.
+
+The [local diagnostic apparatus follow-up](pilot-followup/20261027-apparatus/README.md)
+adds a controlled root-stat probe, opt-in CPU/wall/RPC endpoint telemetry and an
+isolated/concurrent runner. It does not establish TLS causality or actual Lustre
+concurrency behavior; no additional AWS run has been launched.

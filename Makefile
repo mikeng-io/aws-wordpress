@@ -115,6 +115,11 @@ e5-selftest: ## Run E5's grader against synthetic runs that must reach every gra
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_attribution.py
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_pilot_diagnose.py
 
+.PHONY: e5-instrument-selftest
+e5-instrument-selftest: ## Linux integration checks for opt-in telemetry; no privileges/NFS/AWS
+	docker build -q -t e5-bench-local infra/lib/stacks/bench
+	docker run --rm --entrypoint python3 -v "$$PWD:/repo:ro" e5-bench-local /repo/analysis/test_e5_instrument.py -v
+
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results
 	@python3 analysis/e2_chart.py $$(ls -d results/E2/*/ | tail -1)

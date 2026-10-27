@@ -1,0 +1,1176 @@
+{
+  "schema": "e5-local-root-stat-v1",
+  "command": [
+    "stat",
+    "-c",
+    "%d"
+  ],
+  "seconds": 75,
+  "elapsed_ns": 75007260492,
+  "idle_mount": "/probe-idle",
+  "polled_mount": "/probe-polled",
+  "before": {
+    "/probe-idle": {
+      "ACCESS": 0,
+      "GETATTR": 1,
+      "LOOKUP": 0
+    },
+    "/probe-polled": {
+      "ACCESS": 0,
+      "GETATTR": 1,
+      "LOOKUP": 0
+    }
+  },
+  "after": {
+    "/probe-idle": {
+      "ACCESS": 0,
+      "GETATTR": 1,
+      "LOOKUP": 0
+    },
+    "/probe-polled": {
+      "ACCESS": 0,
+      "GETATTR": 2,
+      "LOOKUP": 0
+    }
+  },
+  "delta": {
+    "/probe-idle": {
+      "ACCESS": 0,
+      "GETATTR": 0,
+      "LOOKUP": 0
+    },
+    "/probe-polled": {
+      "ACCESS": 0,
+      "GETATTR": 1,
+      "LOOKUP": 0
+    }
+  },
+  "timeline": [
+    {
+      "k": 0,
+      "start_ns": 249201133770455,
+      "end_ns": 249201135385497,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 1,
+      "start_ns": 249202135696205,
+      "end_ns": 249202141799872,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 2,
+      "start_ns": 249203139304581,
+      "end_ns": 249203144814373,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 3,
+      "start_ns": 249204136057706,
+      "end_ns": 249204141355623,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 4,
+      "start_ns": 249205135846749,
+      "end_ns": 249205139308332,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 5,
+      "start_ns": 249206136496041,
+      "end_ns": 249206142714249,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 6,
+      "start_ns": 249207138179749,
+      "end_ns": 249207142547708,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 7,
+      "start_ns": 249208139302500,
+      "end_ns": 249208143221750,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 8,
+      "start_ns": 249209137982500,
+      "end_ns": 249209143521167,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 9,
+      "start_ns": 249210139077500,
+      "end_ns": 249210147832458,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 10,
+      "start_ns": 249211139365417,
+      "end_ns": 249211146897500,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 11,
+      "start_ns": 249212135672668,
+      "end_ns": 249212142268001,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 12,
+      "start_ns": 249213135449751,
+      "end_ns": 249213141130460,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 13,
+      "start_ns": 249214136543502,
+      "end_ns": 249214145486627,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 14,
+      "start_ns": 249215135818044,
+      "end_ns": 249215139873211,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 15,
+      "start_ns": 249216139833669,
+      "end_ns": 249216148222711,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 16,
+      "start_ns": 249217138388045,
+      "end_ns": 249217142410628,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 17,
+      "start_ns": 249218139738754,
+      "end_ns": 249218142591712,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 18,
+      "start_ns": 249219139316129,
+      "end_ns": 249219144313004,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 19,
+      "start_ns": 249220136569088,
+      "end_ns": 249220142569921,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 20,
+      "start_ns": 249221140236714,
+      "end_ns": 249221146251380,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 21,
+      "start_ns": 249222137886172,
+      "end_ns": 249222143898881,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 22,
+      "start_ns": 249223136232131,
+      "end_ns": 249223143167714,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 23,
+      "start_ns": 249224139967757,
+      "end_ns": 249224145020257,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 24,
+      "start_ns": 249225136521674,
+      "end_ns": 249225146138840,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 25,
+      "start_ns": 249226138015133,
+      "end_ns": 249226144202716,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 26,
+      "start_ns": 249227140338675,
+      "end_ns": 249227146562675,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 27,
+      "start_ns": 249228137484342,
+      "end_ns": 249228143361675,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 28,
+      "start_ns": 249229136406759,
+      "end_ns": 249229138838759,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 29,
+      "start_ns": 249230137750926,
+      "end_ns": 249230144254509,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 30,
+      "start_ns": 249231136689677,
+      "end_ns": 249231143160260,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 31,
+      "start_ns": 249232141260177,
+      "end_ns": 249232151268135,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 32,
+      "start_ns": 249233137120594,
+      "end_ns": 249233144671886,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 33,
+      "start_ns": 249234140243636,
+      "end_ns": 249234146248886,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 34,
+      "start_ns": 249235140545887,
+      "end_ns": 249235146132595,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 35,
+      "start_ns": 249236139066846,
+      "end_ns": 249236145284887,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 36,
+      "start_ns": 249237136353179,
+      "end_ns": 249237138191429,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 37,
+      "start_ns": 249238137253763,
+      "end_ns": 249238143280472,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 38,
+      "start_ns": 249239139063389,
+      "end_ns": 249239145750055,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 39,
+      "start_ns": 249240139642472,
+      "end_ns": 249240145508347,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 40,
+      "start_ns": 249241138954556,
+      "end_ns": 249241146109931,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 41,
+      "start_ns": 249242135224931,
+      "end_ns": 249242136469890,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 42,
+      "start_ns": 249243139769307,
+      "end_ns": 249243146087723,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 43,
+      "start_ns": 249244137335974,
+      "end_ns": 249244140691932,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 44,
+      "start_ns": 249245138103099,
+      "end_ns": 249245144655349,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 45,
+      "start_ns": 249246140382975,
+      "end_ns": 249246146523433,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 46,
+      "start_ns": 249247135834600,
+      "end_ns": 249247139309892,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 47,
+      "start_ns": 249248135837142,
+      "end_ns": 249248138357434,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 48,
+      "start_ns": 249249135456601,
+      "end_ns": 249249140432810,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 49,
+      "start_ns": 249250135691185,
+      "end_ns": 249250141275852,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 50,
+      "start_ns": 249251139112560,
+      "end_ns": 249251144413602,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 51,
+      "start_ns": 249252136778769,
+      "end_ns": 249252140468269,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 52,
+      "start_ns": 249253137677395,
+      "end_ns": 249253142072811,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 53,
+      "start_ns": 249254139354020,
+      "end_ns": 249254142145229,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 54,
+      "start_ns": 249255137159604,
+      "end_ns": 249255142124312,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 55,
+      "start_ns": 249256138396105,
+      "end_ns": 249256143397146,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 56,
+      "start_ns": 249257135154272,
+      "end_ns": 249257139237813,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 57,
+      "start_ns": 249258139228772,
+      "end_ns": 249258145072022,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 58,
+      "start_ns": 249259139748148,
+      "end_ns": 249259144179898,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 59,
+      "start_ns": 249260137729481,
+      "end_ns": 249260141652273,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 60,
+      "start_ns": 249261138449399,
+      "end_ns": 249261144541524,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 61,
+      "start_ns": 249262140352399,
+      "end_ns": 249262146402524,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 62,
+      "start_ns": 249263138747275,
+      "end_ns": 249263144879983,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 63,
+      "start_ns": 249264138210692,
+      "end_ns": 249264144578858,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 64,
+      "start_ns": 249265136038442,
+      "end_ns": 249265143312901,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 65,
+      "start_ns": 249266139140693,
+      "end_ns": 249266147116193,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 66,
+      "start_ns": 249267140331776,
+      "end_ns": 249267145577235,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 67,
+      "start_ns": 249268139825569,
+      "end_ns": 249268150296985,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 68,
+      "start_ns": 249269138295944,
+      "end_ns": 249269143703486,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 69,
+      "start_ns": 249270140209694,
+      "end_ns": 249270146465986,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 70,
+      "start_ns": 249271139676403,
+      "end_ns": 249271145291861,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 71,
+      "start_ns": 249272137617987,
+      "end_ns": 249272140447904,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 72,
+      "start_ns": 249273138707862,
+      "end_ns": 249273143987029,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 73,
+      "start_ns": 249274135562404,
+      "end_ns": 249274140770946,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    },
+    {
+      "k": 74,
+      "start_ns": 249275139454655,
+      "end_ns": 249275141686280,
+      "idle": {
+        "ACCESS": 0,
+        "GETATTR": 1,
+        "LOOKUP": 0
+      },
+      "polled": {
+        "ACCESS": 0,
+        "GETATTR": 2,
+        "LOOKUP": 0
+      }
+    }
+  ],
+  "limitation": "models one helper command; not actual watchdog, TLS or EFS attribution"
+}

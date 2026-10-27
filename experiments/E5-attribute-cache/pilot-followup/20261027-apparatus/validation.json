@@ -1,0 +1,24 @@
+{
+  "attribution_regressions": 26,
+  "aws_calls_or_launches": false,
+  "baseline_commit": "062c8ef",
+  "corrected_local_probe_container_absent": true,
+  "corrected_local_probe_exit": 0,
+  "docker_restart_performed": false,
+  "first_attempt_exit": 1,
+  "first_attempt_kernel_shutdown_eventually_completed": true,
+  "first_attempt_targeted_sigkill_requested": true,
+  "leases_enable_after": 1,
+  "limitation": "local root-stat command control; not actual watchdog/TLS/Lustre; source hashes taken at final validation",
+  "linux_integration_tests": 7,
+  "local_probe_runtime_harness_note": "final harness also improves stdout/metadata labels; runtime used the same corrected teardown guard",
+  "original_pilot_manifest_entries_unchanged": 289,
+  "scheduling_regressions": 7,
+  "sources_at_validation_sha256": {
+    "analysis/test_e5_instrument.py": "7f2ee51b63d612613c13c812f69db267923447785fc006ba2b7e06ac65a7b0ce",
+    "experiments/E5-attribute-cache/scripts/diagnostic-serve.py": "2019ffc4ad0de848a84740eac170851c25cb25dae75d42bb66dcad8b8989f8da",
+    "experiments/E5-attribute-cache/scripts/local-nfs-check.sh": "229d1b0a3eef26a02a59598eb451cf546f20a38079b8d503bf93b30d928c9597",
+    "experiments/E5-attribute-cache/scripts/root-stat-probe.py": "ca4ad873e3032d420013a79561965145d8fab1bf5bbcbce3768e5cc263a68007",
+    "infra/lib/stacks/bench/agebench.c": "783c76c7dbf170bd387472ebf0779b13a0dc565be34b919dae9e1110713f312a"
+  }
+}
