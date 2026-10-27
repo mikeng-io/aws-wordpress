@@ -1,0 +1,36 @@
+{
+  "status": "BUDGET_CLEARANCE_REQUIRED_NO_LAUNCH",
+  "source_commit": "f8d53fda2d539c8f864878c31de0514fd5cc18df",
+  "live_mutations": false,
+  "scope": "one isolation-validation candidate; no formal replications",
+  "ceiling_usd": 10,
+  "reported_regional_all_account_usd": 5.5382086755,
+  "reported_cost_estimated": true,
+  "actual_e5_allocation_verified": false,
+  "prior_diagnostic_stack_minutes": 75.39281666666668,
+  "standing_usd_per_hour": 0.95475,
+  "endpoint_component_usd_per_hour": 0.12,
+  "prior_diagnostic_standing_with_endpoint_rounding_usd": 1.288902561875,
+  "prior_diagnostic_ancillary_reserve_usd": 0.5,
+  "candidate_run_seconds": 4500,
+  "candidate_cleanup_seconds": 5400,
+  "candidate_standing_with_endpoint_rounding_usd": 2.6555625,
+  "candidate_ancillary_reserve_usd": 0.5,
+  "additional_uncertainty_reserve_usd": 1,
+  "conservative_planning_proxy_total_usd": 11.482673737375,
+  "excess_over_ceiling_usd": 1.4826737373750003,
+  "limitations": [
+    "Regional all-account CE includes other studies and is not E5 allocation.",
+    "Adding the full previous diagnostic envelope protects against delayed posting; it may double count some already posted charges. This is a planning proxy, not an invoice or verified incremental spend.",
+    "Standing rate excludes ancillary usage; reserves are estimates, not guaranteed AWS billing caps.",
+    "Generic preflight historical $1.55 constant is stale and does not clear candidate budget."
+  ],
+  "baseline": {
+    "regions": 18,
+    "checks": 198,
+    "e5_matches": 0,
+    "api_errors": 0,
+    "retained_e5_buckets": 0
+  },
+  "pricing_source": "https://aws.amazon.com/privatelink/pricing/"
+}
