@@ -168,7 +168,7 @@ class Preflight:
         report['budget']={'pricing_snapshot':str(price_path.parent.relative_to(REPO)),
             'pricing_utc':prices['snapshot_utc'],'pricing_fresh_today':datetime.fromisoformat(prices['snapshot_utc']).date()==datetime.now(timezone.utc).date() and prices['region']==REGION,'standing_subtotal_usd_per_hour':round(subtotal,5),
             'excludes':'EBS root, small EFS/S3/log usage, request/data-transfer charges and billing minimum effects',
-            'hard_ceiling_usd':10,'historical_estimate_usd':1.55,'historical_basis':'E5 README attempt log; not an invoice',
+            'hard_ceiling_usd':20,'historical_estimate_usd':1.55,'historical_basis':'E5 README attempt log; not an invoice',
             'estimated_remaining_before_pilot_usd':8.45,
             'pilot_planning_target_usd':2,'additional_planning_reserve_usd':1,
             'projected_total_with_reserve_usd':4.55,

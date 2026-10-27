@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-27T07:37:53.060220+00:00",
+  "authorisation": "Mike: let update to $20",
+  "previous_ceiling_usd": 10,
+  "current_ceiling_usd": 20,
+  "scope": "one fresh isolation-validation candidate; no formal replications or automatic retries",
+  "planning_proxy_usd": 11.482673737375,
+  "run_seconds": 4500,
+  "cleanup_seconds": 5400,
+  "actual_e5_billing_verified": false
+}

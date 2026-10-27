@@ -559,7 +559,7 @@ refreshed with `make pricing` on the day.
 |---|---|
 | One replication | 80–100 min. Deploy and FSx creation took ~25–35 min in E2. Seeding and the age gate overlap the task launch. Cohort A takes ~20 min (6 tiers × two 75 s waits plus the passes). Cohort B takes 15 min. Destroy and sweep take ~20 min. |
 | Three replications | ~4.5–5 h × $0.955 ≈ **$4.50–5** |
-| **Hard ceiling** | **$10**, including failed attempts. Past it: stop and diagnose, do not retry. |
+| **Hard ceiling** | **$20**, including failed attempts (updated by Mike on 2026-10-27). Past it: stop and diagnose, do not retry. |
 
 ### Go-ahead (2026-10-16, local; 2026-10-15T17:06Z)
 
@@ -909,3 +909,16 @@ The [local diagnostic apparatus follow-up](pilot-followup/20261027-apparatus/REA
 adds a controlled root-stat probe, opt-in CPU/wall/RPC endpoint telemetry and an
 isolated/concurrent runner. It does not establish TLS causality or actual Lustre
 concurrency behavior; no additional AWS run has been launched.
+
+### Budget authorisation update — 2026-10-27
+
+Mike explicitly increased the total E5 study ceiling from US$10 to **US$20**
+("let update to $20"). This clears the single isolation candidate described in
+`method-amendments/20261027-isolation-v1/`; it does not authorise formal
+replications or automatic retries. The existing 4500-second run and 5400-second
+cleanup ceilings, measurement windows and acceptance gates remain unchanged.
+
+The [fresh planning review](preflight/20261027T073002Z-f8d53fd/candidate-budget.md)
+recorded a conservative US$11.4827 planning proxy. Historical US$10 receipts are
+retained as issued; they are superseded for the current ceiling only. Actual
+E5 billing allocation remains unverified.
