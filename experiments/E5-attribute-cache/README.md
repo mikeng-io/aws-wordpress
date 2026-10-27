@@ -1,50 +1,50 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `FORMAL V3 OFFLINE VERIFIED; LIVE FULL-METHOD VALIDATION PENDING` (2026-10-27 HKT).
-The original single AWS pilot collected six tiers and both cohorts. Four of
-18 B cells fail its unchanged validity gates. Original pilot grading stays frozen;
-aggregate predictions remain NOT EVALUABLE at n=1. No hypothesis verdict changes.
+**Status:** `FORMAL V3 COLLECTED; CELL VALIDITY PASS; P7 ATTRIBUTION ERROR; n=1` (2026-10-27 HKT).
+The first full formal-v3 run has eligible protocol inputs, 46 valid A cells,
+18 valid B targets and three valid matched EBS references. P7 remains ERROR on
+its 10s matched-reference noise gate. All ten aggregate predictions remain
+NOT EVALUABLE; no H1 verdict changes. Earlier methods stay frozen and separate.
 
 ## Current status and handoff (2026-10-27)
 
-**Latest validation:** [isolation candidate v1 live review](../../results/E5-isolation-validation/20261027T073803Z-647a811/review.md)
-reports **PASS_CANDIDATE_ONLY** for all 21 cells. The 360-second quiet idle control
-has zero GETATTR/LOOKUP/ACCESS on five TLS roots and zero traced helper root stat
-calls. All 12 measured NFS cells reconcile exactly; all three isolated Lustre
-intervals have zero late requests. Configuration restoration passes. Benchmark and
-collector exited 0. Independent teardown verified 18 regions /198 inventories,
-zero API errors and no E5 resources or retained diagnostics bucket.
+**Latest full-method validation:** [formal v3 live review](../../results/E5-formal/20261027T093314Z-b5b480f/review.md).
+The complete A/D method and 300s/600s B grids pass their cell-validity checks.
+Quiet idle spans 360.013169466 seconds with zero selected TLS root RPCs and traced
+root stat calls. All measured NFS phase/window counters reconcile exactly;
+worst target lateness is 1/6000 (0.0167%). Original helper bytes/config are restored.
+Independent teardown verifies 18 regions /198 inventories, zero API errors and
+no E5 workload resources or retained diagnostics bucket. Benchmark/collector exit 0.
 
-The [prior diagnostic](../../results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
-identified helper root activity and reproduced Lustre concurrency sensitivity.
-The [predeclared candidate](method-amendments/20261027-isolation-v1/README.md)
-uses an explicit two-probe quiet profile and sequential Lustre/EBS pairs. It is
-not a production-default measurement or a formal replication. Legacy prediction
-thresholds and the ordinary concurrent schedule remain in force; formal v3 uses
-separate dispatch and a matched-reference grader.
+P7's 10s EBS slow centroid (14601ns) reaches the Lustre classification threshold
+(14208ns), triggering the unchanged noise rule. Its slow share is 0.1100%, below
+the separate 1% share gate. The [raw-tail review](../../results/E5-formal/20261027T093314Z-b5b480f/p7-noise-review.json)
+finds 27 of 30 EBS operations reaching that boundary are first stats in requests;
+this is a diagnostic clue, not a causal explanation or permission to remove them.
+Per-run P1-P3 are REFUTED, P4-P6/P8-P10 SUPPORTED and P7 ERROR. These are not
+aggregate verdicts or a general filesystem ranking.
 
-See the [pilot review](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
-[unchanged-method grading](../../results/E5/20261026T152946Z-b1efcb2/summary.md) and
-[final teardown evidence](../../results/E5/20261026T152946Z-b1efcb2/teardown.json).
-Source was clean at `b1efcb2`. Host watchdog and direct-service inventories verify
-cleanup; this validates the normal live path, not every injected failure path.
+Earlier evidence: [original pilot](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
+[A1 counter follow-up](pilot-followup/20261027/README.md),
+[helper/concurrency diagnostic](../../results/E5-diagnostic/20261027T042037Z-7d9be14/review.md),
+and [accepted short candidate](../../results/E5-isolation-validation/20261027T073803Z-647a811/review.md).
+The pilot's 14/18 valid B cells and original grading remain unchanged. The short
+candidate and diagnostic do not count toward the formal-v3 replication count.
 
-The [formal isolation v3 amendment](method-amendments/20261027-formal-v3/README.md)
-now implements complete A/D phases, four 300s/600s B batches, same-time P7 EBS
-references, strict provenance gates and separate collector/guard/CDK mode. Its
-full-window synthetic fixtures, Linux instrument checks and offline CDK synth
-pass. This implementation step made no live AWS call or paid deployment. The
-formal method's complete live runtime and cohort-A evidence remain unmeasured.
+The [formal v3 amendment](method-amendments/20261027-formal-v3/README.md) fixes the
+quiet profile, full A/D phases, sequential Lustre/EBS binding and unchanged hard
+thresholds. Its execution source is `b5b480f`; the full live evidence and actual
+runtime are now recorded separately from its offline preparation receipts.
 
 **Next work, before another paid run:**
 
-- Refresh budget/allocation, pricing and baseline under the US$20 total ceiling;
-  do not reuse the generic preflight's stale $1.55 historical estimate.
-- Separately authorise one fresh full-method validation from the committed v3
-  apparatus, with its three-hour run and 90-minute cleanup guard ceilings.
-- Check full A/D signatures, 300s/600s windows, P7 controls and independent teardown.
-  Only then consider separately authorised independent replications for aggregation.
-  Do not count the earlier pilot, diagnostic or candidate toward formal v3 n=3.
+- Review the P7 first-operation/control-noise attribution and replication readiness,
+  preserving the existing noise rule and all raw operations. Do not silently warm
+  or remove the first stat, relax gates or regrade this result to fit a prediction.
+- Refresh allocation/pricing and remaining budget under the US$20 total ceiling.
+  The generic pilot preflight's $1.55 historical constant remains stale.
+- Separately authorise any independent replication only after that review and
+  budget clearance. No automatic retries or replications 2/3 were launched.
 
 The local NFS checks, phase-attributed RPC amendment, conservative expiry probes
 and host watchdog remain integrated. Historical attempts and protocol decisions

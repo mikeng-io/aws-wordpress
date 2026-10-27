@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-27T11:22:06.737474+00:00",
+  "launch_source_commit": "b5b480fe0f2882bf89cca56561ff435cf7b35517",
+  "method": "isolation-formal-v3",
+  "command": "python3 analysis/e5_formal_stats.py <run>",
+  "source_sha256": {
+    "analysis/e5_formal_stats.py": "374702cc8d2f6574864ee9fd0e46c31970d2a5793a7e72327a64ddb03f1c8791",
+    "analysis/e5_stats.py": "c9c6c46c58a13f39e4caa2effa742e80138b093e94cfb6a6cdf1ea4416c83d3c",
+    "analysis/e5_diagnostic_stats.py": "13f835dbc3967bcc0a6c4b0eb35b36681c9ba1bfc5b724fa068aad8c20cde723"
+  },
+  "raw_formal_files": 501,
+  "protocol": "ELIGIBLE",
+  "full_method_validation": "PASS",
+  "p7": "ERROR: matched EBS noise at 10s",
+  "aggregate_verdict": "NOT EVALUABLE; n=1"
+}

@@ -1,0 +1,82 @@
+device 127.0.0.1:/e5/efs_host_tls/forced mounted on /bench/efs_host_tls.forced with fstype nfs4 statvers=1.1
+	opts:	rw,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,acdirmin=30,acdirmax=60,hard,nosharecache,noresvport,proto=tcp,port=20211,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none
+	age:	650
+	impl_id:	name='Amazon EFS',domain='aws.amazon.com',date='0,0'
+	caps:	caps=0x8003c0b7,wtmult=512,dtsize=1048576,bsize=0,namlen=255
+	nfsv4:	bm0=0xfe1fafff,bm1=0xfdfe3e,bm2=0x800,acl=0x0,sessions,pnfs=not configured,lease_time=90,lease_expired=0
+	sec:	flavor=1,pseudoflavor=1
+	events:	11002 31969 0 0 0 1043 33014 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+	bytes:	0 0 0 0 0 0 0 0 
+	RPC iostats version: 1.1  p/v: 100003/4 (nfs)
+	xprt:	tcp 0 0 4 0 0 12121 12121 0 12121 0 2 0 0
+	per-op statistics
+	        NULL: 1 1 0 44 24 0 174 174 0
+	        READ: 0 0 0 0 0 0 0 0 0
+	       WRITE: 0 0 0 0 0 0 0 0 0
+	      COMMIT: 0 0 0 0 0 0 0 0 0
+	        OPEN: 0 0 0 0 0 0 0 0 0
+	OPEN_CONFIRM: 0 0 0 0 0 0 0 0 0
+	 OPEN_NOATTR: 0 0 0 0 0 0 0 0 0
+	OPEN_DOWNGRADE: 0 0 0 0 0 0 0 0 0
+	       CLOSE: 0 0 0 0 0 0 0 0 0
+	     SETATTR: 0 0 0 0 0 0 0 0 0
+	      FSINFO: 2 2 0 624 304 0 0 0 0
+	       RENEW: 0 0 0 0 0 0 0 0 0
+	 SETCLIENTID: 0 0 0 0 0 0 0 0 0
+	SETCLIENTID_CONFIRM: 0 0 0 0 0 0 0 0 0
+	        LOCK: 0 0 0 0 0 0 0 0 0
+	       LOCKT: 0 0 0 0 0 0 0 0 0
+	       LOCKU: 0 0 0 0 0 0 0 0 0
+	      ACCESS: 44 44 0 14244 7392 0 16 17 0
+	     GETATTR: 11003 11003 0 3476936 2640720 28 3646 3758 0
+	      LOOKUP: 1043 1043 0 358516 404684 2 1197 1208 0
+	 LOOKUP_ROOT: 1 1 0 184 380 0 0 0 0
+	      REMOVE: 0 0 0 0 0 0 0 0 0
+	      RENAME: 0 0 0 0 0 0 0 0 0
+	        LINK: 0 0 0 0 0 0 0 0 0
+	     SYMLINK: 0 0 0 0 0 0 0 0 0
+	      CREATE: 0 0 0 0 0 0 0 0 0
+	    PATHCONF: 1 1 0 308 116 0 0 0 0
+	      STATFS: 2 2 0 632 272 0 1 1 0
+	    READLINK: 0 0 0 0 0 0 0 0 0
+	     READDIR: 0 0 0 0 0 0 0 0 0
+	 SERVER_CAPS: 3 3 0 948 516 0 1 1 0
+	 DELEGRETURN: 0 0 0 0 0 0 0 0 0
+	      GETACL: 0 0 0 0 0 0 0 0 0
+	      SETACL: 0 0 0 0 0 0 0 0 0
+	FS_LOCATIONS: 0 0 0 0 0 0 0 0 0
+	RELEASE_LOCKOWNER: 0 0 0 0 0 0 0 0 0
+	     SECINFO: 0 0 0 0 0 0 0 0 0
+	FSID_PRESENT: 0 0 0 0 0 0 0 0 0
+	 EXCHANGE_ID: 3 3 0 984 840 0 0 0 0
+	CREATE_SESSION: 3 3 0 840 292 0 1 1 1
+	DESTROY_SESSION: 1 1 0 144 44 0 0 0 1
+	    SEQUENCE: 10 10 0 1600 764 0 28 29 1
+	GET_LEASE_TIME: 1 1 0 176 112 0 0 0 0
+	RECLAIM_COMPLETE: 2 2 0 336 176 0 0 0 0
+	   LAYOUTGET: 0 0 0 0 0 0 0 0 0
+	GETDEVICEINFO: 0 0 0 0 0 0 0 0 0
+	LAYOUTCOMMIT: 0 0 0 0 0 0 0 0 0
+	LAYOUTRETURN: 0 0 0 0 0 0 0 0 0
+	SECINFO_NO_NAME: 1 1 0 172 104 0 1 1 0
+	TEST_STATEID: 0 0 0 0 0 0 0 0 0
+	FREE_STATEID: 0 0 0 0 0 0 0 0 0
+	GETDEVICELIST: 0 0 0 0 0 0 0 0 0
+	BIND_CONN_TO_SESSION: 0 0 0 0 0 0 0 0 0
+	DESTROY_CLIENTID: 0 0 0 0 0 0 0 0 0
+	        SEEK: 0 0 0 0 0 0 0 0 0
+	    ALLOCATE: 0 0 0 0 0 0 0 0 0
+	  DEALLOCATE: 0 0 0 0 0 0 0 0 0
+	 LAYOUTSTATS: 0 0 0 0 0 0 0 0 0
+	       CLONE: 0 0 0 0 0 0 0 0 0
+	        COPY: 0 0 0 0 0 0 0 0 0
+	OFFLOAD_CANCEL: 0 0 0 0 0 0 0 0 0
+	     LOOKUPP: 0 0 0 0 0 0 0 0 0
+	 LAYOUTERROR: 0 0 0 0 0 0 0 0 0
+	 COPY_NOTIFY: 0 0 0 0 0 0 0 0 0
+	    GETXATTR: 0 0 0 0 0 0 0 0 0
+	    SETXATTR: 0 0 0 0 0 0 0 0 0
+	  LISTXATTRS: 0 0 0 0 0 0 0 0 0
+	 REMOVEXATTR: 0 0 0 0 0 0 0 0 0
+	   READ_PLUS: 0 0 0 0 0 0 0 0 0
+

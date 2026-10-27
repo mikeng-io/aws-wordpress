@@ -1,0 +1,215 @@
+{
+    "FileSystems": [
+        {
+            "OwnerId": "163703054402",
+            "CreationTime": "2026-10-27T09:34:08.324000+00:00",
+            "FileSystemId": "fs-0100e145ea3228c2c",
+            "FileSystemType": "LUSTRE",
+            "Lifecycle": "AVAILABLE",
+            "StorageCapacity": 1200,
+            "StorageType": "SSD",
+            "VpcId": "vpc-067bc94e9e68100bd",
+            "SubnetIds": [
+                "subnet-0ac7119baa155860a"
+            ],
+            "NetworkInterfaceIds": [
+                "eni-0783e794e9e01d4c1",
+                "eni-0d2715b060ad35a26"
+            ],
+            "DNSName": "fs-0100e145ea3228c2c.fsx.ap-southeast-1.amazonaws.com",
+            "ResourceARN": "arn:aws:fsx:ap-southeast-1:163703054402:file-system/fs-0100e145ea3228c2c",
+            "Tags": [
+                {
+                    "Key": "Study",
+                    "Value": "aws-wordpress"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "E5-AttributeCache-dev"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E5-AttributeCache-dev/789ac4b0-d1e9-11f1-a148-06ffdfde3ec1"
+                },
+                {
+                    "Key": "Experiment",
+                    "Value": "E5"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "FsxLustreEBC8CCA6"
+                },
+                {
+                    "Key": "E5WatchdogRun",
+                    "Value": "6be2e42983844451a7955383971c9617"
+                },
+                {
+                    "Key": "EstimatedHourlyUsd",
+                    "Value": "0.96"
+                },
+                {
+                    "Key": "Topology",
+                    "Value": "dev"
+                }
+            ],
+            "LustreConfiguration": {
+                "WeeklyMaintenanceStartTime": "6:16:30",
+                "DeploymentType": "SCRATCH_2",
+                "MountName": "elp6fbev",
+                "CopyTagsToBackups": false,
+                "DataCompressionType": "NONE",
+                "LogConfiguration": {
+                    "Level": "DISABLED"
+                }
+            },
+            "FileSystemTypeVersion": "2.15"
+        },
+        {
+            "OwnerId": "163703054402",
+            "CreationTime": "2026-10-27T09:34:08.448000+00:00",
+            "FileSystemId": "fs-05a55e5c6f01d44d6",
+            "FileSystemType": "OPENZFS",
+            "Lifecycle": "AVAILABLE",
+            "StorageCapacity": 64,
+            "StorageType": "SSD",
+            "VpcId": "vpc-067bc94e9e68100bd",
+            "SubnetIds": [
+                "subnet-0ac7119baa155860a"
+            ],
+            "NetworkInterfaceIds": [
+                "eni-0acfecfd9ed525d56"
+            ],
+            "DNSName": "fs-05a55e5c6f01d44d6.fsx.ap-southeast-1.amazonaws.com",
+            "KmsKeyId": "arn:aws:kms:ap-southeast-1:163703054402:key/f5174814-01e5-4633-a078-050656304a07",
+            "ResourceARN": "arn:aws:fsx:ap-southeast-1:163703054402:file-system/fs-05a55e5c6f01d44d6",
+            "Tags": [
+                {
+                    "Key": "Study",
+                    "Value": "aws-wordpress"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "E5-AttributeCache-dev"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E5-AttributeCache-dev/789ac4b0-d1e9-11f1-a148-06ffdfde3ec1"
+                },
+                {
+                    "Key": "Experiment",
+                    "Value": "E5"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "FsxOpenZfs"
+                },
+                {
+                    "Key": "E5WatchdogRun",
+                    "Value": "6be2e42983844451a7955383971c9617"
+                },
+                {
+                    "Key": "EstimatedHourlyUsd",
+                    "Value": "0.96"
+                },
+                {
+                    "Key": "Topology",
+                    "Value": "dev"
+                }
+            ],
+            "OpenZFSConfiguration": {
+                "CopyTagsToBackups": true,
+                "CopyTagsToVolumes": false,
+                "DeploymentType": "SINGLE_AZ_1",
+                "ThroughputCapacity": 128,
+                "WeeklyMaintenanceStartTime": "5:18:00",
+                "DiskIopsConfiguration": {
+                    "Mode": "AUTOMATIC",
+                    "Iops": 192
+                },
+                "RootVolumeId": "fsvol-0d06220cdad396751"
+            },
+            "NetworkType": "IPV4"
+        },
+        {
+            "OwnerId": "163703054402",
+            "CreationTime": "2026-10-27T09:34:15.014000+00:00",
+            "FileSystemId": "fs-0779405d1fff447d0",
+            "FileSystemType": "ONTAP",
+            "Lifecycle": "AVAILABLE",
+            "StorageCapacity": 1024,
+            "StorageType": "SSD",
+            "VpcId": "vpc-067bc94e9e68100bd",
+            "SubnetIds": [
+                "subnet-0ac7119baa155860a"
+            ],
+            "NetworkInterfaceIds": [
+                "eni-0efbfd72786dd2862",
+                "eni-0b396343f78f50a84"
+            ],
+            "KmsKeyId": "arn:aws:kms:ap-southeast-1:163703054402:key/f5174814-01e5-4633-a078-050656304a07",
+            "ResourceARN": "arn:aws:fsx:ap-southeast-1:163703054402:file-system/fs-0779405d1fff447d0",
+            "Tags": [
+                {
+                    "Key": "Study",
+                    "Value": "aws-wordpress"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-name",
+                    "Value": "E5-AttributeCache-dev"
+                },
+                {
+                    "Key": "aws:cloudformation:stack-id",
+                    "Value": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E5-AttributeCache-dev/789ac4b0-d1e9-11f1-a148-06ffdfde3ec1"
+                },
+                {
+                    "Key": "Experiment",
+                    "Value": "E5"
+                },
+                {
+                    "Key": "aws:cloudformation:logical-id",
+                    "Value": "FsxOntap"
+                },
+                {
+                    "Key": "E5WatchdogRun",
+                    "Value": "6be2e42983844451a7955383971c9617"
+                },
+                {
+                    "Key": "EstimatedHourlyUsd",
+                    "Value": "0.96"
+                },
+                {
+                    "Key": "Topology",
+                    "Value": "dev"
+                }
+            ],
+            "OntapConfiguration": {
+                "DeploymentType": "SINGLE_AZ_1",
+                "Endpoints": {
+                    "Intercluster": {
+                        "DNSName": "intercluster.fs-0779405d1fff447d0.fsx.ap-southeast-1.amazonaws.com",
+                        "IpAddresses": [
+                            "10.45.0.169",
+                            "10.45.0.44"
+                        ]
+                    },
+                    "Management": {
+                        "DNSName": "management.fs-0779405d1fff447d0.fsx.ap-southeast-1.amazonaws.com",
+                        "IpAddresses": [
+                            "10.45.0.154"
+                        ]
+                    }
+                },
+                "DiskIopsConfiguration": {
+                    "Mode": "AUTOMATIC",
+                    "Iops": 3072
+                },
+                "PreferredSubnetId": "subnet-0ac7119baa155860a",
+                "ThroughputCapacity": 128,
+                "WeeklyMaintenanceStartTime": "7:21:30",
+                "HAPairs": 1,
+                "ThroughputCapacityPerHAPair": 128
+            },
+            "NetworkType": "IPV4"
+        }
+    ]
+}

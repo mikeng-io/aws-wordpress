@@ -2,14 +2,18 @@
 
 **Status:** `MECHANISM REFUTED, CLAIM REFRAMED — SUPPORTED` — see E1, E2, and the rewrite below
 
-**Current qualification (2026-10-26):** the SUPPORTED label above is the retained
+**Current qualification (2026-10-27):** the SUPPORTED label above is the retained
 E1/E2-era verdict, not acceptance of a production steady-state cost model. The
-2026-10-15 evidence note below already records the cache confound and contradictory
-within-tier effects. E5 has no gradable AWS run; its integrated local NFS checks
-validate apparatus only. This reconciliation changes no verdict. Read the original
-restatement below as the claim under review, including "the whole story", rather
-than a settled conclusion. Sources: `results/E2/20261015T000959Z-85382cc/` and
-[E5's handoff](../experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-26).
+2026-10-15 evidence note below records the cache confound and contradictory
+within-tier effects. E5 formal v3 now has one protocol-eligible full-method run
+with valid A/B/reference inputs, but P7 remains ERROR on its 10s matched-EBS noise
+gate and all aggregate predictions remain NOT EVALUABLE at n=1. Earlier pilot,
+diagnostic and short-candidate methods are not pooled with it. This changes no H1
+verdict. Read the original restatement below as the claim under review, including
+"the whole story", rather than a settled conclusion. Sources:
+`results/E2/20261015T000959Z-85382cc/`, the
+[formal-v3 review](../results/E5-formal/20261027T093314Z-b5b480f/review.md) and
+[E5 handoff](../experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-27).
 
 > **Rewritten** after E1 and E3. The original claim was that co-located tasks share
 > a warm NFS cache, so *placement* determines performance. E1 refuted that

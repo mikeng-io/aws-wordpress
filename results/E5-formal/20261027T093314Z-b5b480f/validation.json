@@ -1,0 +1,89 @@
+{
+  "utc": "2026-10-27T11:45:00.227782+00:00",
+  "launch_source_commit": "b5b480fe0f2882bf89cca56561ff435cf7b35517",
+  "method": "isolation-formal-v3",
+  "study_replication": true,
+  "independent_deployments": 1,
+  "protocol_eligibility": "ELIGIBLE",
+  "full_method_cell_validity": "PASS",
+  "evaluated_a_cells": 46,
+  "separate_a8_warm_passes": 4,
+  "b_target_cells": 18,
+  "matched_ebs_references": 3,
+  "all_a_b_reference_cells_valid": true,
+  "per_run_prediction_grades": {
+    "1": "REFUTED",
+    "2": "REFUTED",
+    "3": "REFUTED",
+    "4": "SUPPORTED",
+    "5": "SUPPORTED",
+    "6": "SUPPORTED",
+    "8": "SUPPORTED",
+    "9": "SUPPORTED",
+    "10": "SUPPORTED",
+    "7": "ERROR"
+  },
+  "aggregate_verdicts": {
+    "1": "NOT EVALUABLE",
+    "2": "NOT EVALUABLE",
+    "3": "NOT EVALUABLE",
+    "4": "NOT EVALUABLE",
+    "5": "NOT EVALUABLE",
+    "6": "NOT EVALUABLE",
+    "7": "NOT EVALUABLE",
+    "8": "NOT EVALUABLE",
+    "9": "NOT EVALUABLE",
+    "10": "NOT EVALUABLE"
+  },
+  "p7_evaluable": false,
+  "p7_noise_rule_unchanged": true,
+  "maximum_target_late_share": 0.00016666666666666666,
+  "request_lateness_threshold": 0.05,
+  "nfs_phase_window_reconciliation": "EXACT",
+  "quiet_idle_actual_seconds": 360.013169466,
+  "original_helper_bytes_restored": true,
+  "expiry_probe_states": {
+    "efs_host_plain": {
+      "0.1": "REVALIDATION_OBSERVED",
+      "1": "REVALIDATION_OBSERVED",
+      "10": "REVALIDATION_OBSERVED"
+    },
+    "efs_host_tls": {
+      "0.1": "REVALIDATION_OBSERVED",
+      "1": "REVALIDATION_OBSERVED",
+      "10": "REVALIDATION_OBSERVED"
+    },
+    "fsx_openzfs": {
+      "0.1": "REVALIDATION_OBSERVED",
+      "1": "REVALIDATION_OBSERVED",
+      "10": "REVALIDATION_OBSERVED"
+    },
+    "fsx_ontap": {
+      "0.1": "REVALIDATION_OBSERVED",
+      "1": "REVALIDATION_OBSERVED",
+      "10": "REVALIDATION_OBSERVED"
+    }
+  },
+  "formal_raw_files_unchanged": 501,
+  "prior_frozen_files_unchanged": 819,
+  "analysis_reproduced_byte_for_byte": true,
+  "p7_raw_review_reproduced_byte_for_byte": true,
+  "runtime_scripts_matching_committed_source": 7,
+  "benchmark_exit": 0,
+  "collector_exit": 0,
+  "deadline_handover": false,
+  "guard_cleanup_verified": true,
+  "inventory_regions": 18,
+  "inventory_checks": 198,
+  "inventory_api_errors": 0,
+  "owned_final_backups_removed": 2,
+  "diagnostics_bucket_copied_and_removed": true,
+  "no_automatic_retries": true,
+  "no_additional_replications_launched": true,
+  "original_thresholds_preserved": true,
+  "raw_runtime_whitespace": "retained without normalization",
+  "credential_scan_matches": 0,
+  "credential_scanned_result_files": 522,
+  "credential_scanned_authored_docs": 3,
+  "credential_scan_scope": "Exact active AWS credential values plus access-key/private-key patterns; gzip data decompressed; includes final manifest"
+}

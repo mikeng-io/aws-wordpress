@@ -1,0 +1,16 @@
+{
+  "run_kind": "formal-isolation",
+  "max_seconds": 10800,
+  "phase": "complete",
+  "cleanup_verified": true,
+  "runner_stopped": true,
+  "stop_reason": "runner exited",
+  "runner_exit": 0,
+  "remaining_backups": [],
+  "remaining_stacks": [],
+  "guard_identity_sha256": "6e5f8b53c31be1b13ea3e72fac59bf69a75b70bfdb0a84a1ed6d7fe9d0025206",
+  "benchmark_exit": 0,
+  "docker_runner_exit": 0,
+  "deadline_handover": false,
+  "utc": "2026-10-27T11:42:40.694565+00:00"
+}

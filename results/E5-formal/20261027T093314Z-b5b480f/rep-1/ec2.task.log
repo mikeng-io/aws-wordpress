@@ -1,0 +1,104 @@
+2026-10-27T09:56:11.805000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 host root device (from host): 66306
+2026-10-27T09:56:11.863000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount check passed:
+2026-10-27T09:56:11.866000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   ebs -> /bench/ebs (st_dev=66306, fs=xfs)
+2026-10-27T09:56:11.869000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_lustre -> /bench/fsx_lustre (st_dev=3755661998, fs=lustre)
+2026-10-27T09:56:11.874000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_plain.default -> /bench/efs_host_plain.default (st_dev=48, fs=nfs)
+2026-10-27T09:56:11.877000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_plain.forced -> /bench/efs_host_plain.forced (st_dev=49, fs=nfs)
+2026-10-27T09:56:11.880000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_plain.ss-0.1 -> /bench/efs_host_plain.ss-0.1 (st_dev=51, fs=nfs)
+2026-10-27T09:56:11.883000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_plain.ss-1 -> /bench/efs_host_plain.ss-1 (st_dev=53, fs=nfs)
+2026-10-27T09:56:11.886000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_plain.ss-10 -> /bench/efs_host_plain.ss-10 (st_dev=54, fs=nfs)
+2026-10-27T09:56:11.889000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_tls.default -> /bench/efs_host_tls.default (st_dev=55, fs=nfs)
+2026-10-27T09:56:11.892000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_tls.forced -> /bench/efs_host_tls.forced (st_dev=56, fs=nfs)
+2026-10-27T09:56:11.895000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_tls.ss-0.1 -> /bench/efs_host_tls.ss-0.1 (st_dev=57, fs=nfs)
+2026-10-27T09:56:11.900000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_tls.ss-1 -> /bench/efs_host_tls.ss-1 (st_dev=58, fs=nfs)
+2026-10-27T09:56:11.903000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   efs_host_tls.ss-10 -> /bench/efs_host_tls.ss-10 (st_dev=59, fs=nfs)
+2026-10-27T09:56:11.906000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_openzfs.default -> /bench/fsx_openzfs.default (st_dev=61, fs=nfs)
+2026-10-27T09:56:11.908000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_openzfs.forced -> /bench/fsx_openzfs.forced (st_dev=62, fs=nfs)
+2026-10-27T09:56:11.911000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_openzfs.ss-0.1 -> /bench/fsx_openzfs.ss-0.1 (st_dev=63, fs=nfs)
+2026-10-27T09:56:11.913000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_openzfs.ss-1 -> /bench/fsx_openzfs.ss-1 (st_dev=64, fs=nfs)
+2026-10-27T09:56:11.916000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_openzfs.ss-10 -> /bench/fsx_openzfs.ss-10 (st_dev=65, fs=nfs)
+2026-10-27T09:56:11.919000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_ontap.default -> /bench/fsx_ontap.default (st_dev=66, fs=nfs)
+2026-10-27T09:56:11.922000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_ontap.forced -> /bench/fsx_ontap.forced (st_dev=67, fs=nfs)
+2026-10-27T09:56:11.924000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_ontap.ss-0.1 -> /bench/fsx_ontap.ss-0.1 (st_dev=68, fs=nfs)
+2026-10-27T09:56:11.927000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_ontap.ss-1 -> /bench/fsx_ontap.ss-1 (st_dev=69, fs=nfs)
+2026-10-27T09:56:11.930000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99   fsx_ontap.ss-10 -> /bench/fsx_ontap.ss-10 (st_dev=70, fs=nfs)
+2026-10-27T09:56:11.930000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 run order: ebs=/bench/ebs fsx_lustre=/bench/fsx_lustre efs_host_plain.default=/bench/efs_host_plain.default efs_host_plain.forced=/bench/efs_host_plain.forced efs_host_plain.ss-0.1=/bench/efs_host_plain.ss-0.1 efs_host_plain.ss-1=/bench/efs_host_plain.ss-1 efs_host_plain.ss-10=/bench/efs_host_plain.ss-10 efs_host_tls.default=/bench/efs_host_tls.default efs_host_tls.forced=/bench/efs_host_tls.forced efs_host_tls.ss-0.1=/bench/efs_host_tls.ss-0.1 efs_host_tls.ss-1=/bench/efs_host_tls.ss-1 efs_host_tls.ss-10=/bench/efs_host_tls.ss-10 fsx_openzfs.default=/bench/fsx_openzfs.default fsx_openzfs.forced=/bench/fsx_openzfs.forced fsx_openzfs.ss-0.1=/bench/fsx_openzfs.ss-0.1 fsx_openzfs.ss-1=/bench/fsx_openzfs.ss-1 fsx_openzfs.ss-10=/bench/fsx_openzfs.ss-10 fsx_ontap.default=/bench/fsx_ontap.default fsx_ontap.forced=/bench/fsx_ontap.forced fsx_ontap.ss-0.1=/bench/fsx_ontap.ss-0.1 fsx_ontap.ss-1=/bench/fsx_ontap.ss-1 fsx_ontap.ss-10=/bench/fsx_ontap.ss-10
+2026-10-27T09:56:12.077000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 negotiated mount facts:
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,ebs,1
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_lustre,2
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_plain.default,3
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_plain.forced,4
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_plain.ss-0.1,5
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_plain.ss-1,6
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_plain.ss-10,7
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_tls.default,8
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_tls.forced,9
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_tls.ss-0.1,10
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_tls.ss-1,11
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,efs_host_tls.ss-10,12
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_openzfs.default,13
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_openzfs.forced,14
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_openzfs.ss-0.1,15
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_openzfs.ss-1,16
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_openzfs.ss-10,17
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_ontap.default,18
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_ontap.forced,19
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_ontap.ss-0.1,20
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_ontap.ss-1,21
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 order,fsx_ontap.ss-10,22
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 kernel,6.1.188-233.393.amzn2023.aarch64
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mtu,ecs-eth0,1500
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mtu,eth0,9001
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mtu,lo,65536
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,ebs,xfs,/dev/nvme0n1p1[/mnt/e5-ebs],rw,noatime,seclabel,attr2,inode64,logbufs=8,logbsize=32k,sunit=1024,swidth=1024,noquota
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_lustre,lustre,10.45.0.58@tcp:/elp6fbev[/e5/fsx_lustre],rw,noatime,seclabel,checksum,flock,nouser_xattr,lruresize,lazystatfs,nouser_fid2path,verbose,encrypt
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_plain.default,nfs,fs-02871f832780b9e15.efs.ap-southeast-1.amazonaws.com:/e5/efs_host_plain/a,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.110
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_plain.forced,nfs,fs-02871f832780b9e15.efs.ap-southeast-1.amazonaws.com:/e5/efs_host_plain/forced,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.110
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_plain.ss-0.1,nfs,fs-02871f832780b9e15.efs.ap-southeast-1.amazonaws.com:/e5/efs_host_plain/ss-0.1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.110
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_plain.ss-1,nfs,fs-02871f832780b9e15.efs.ap-southeast-1.amazonaws.com:/e5/efs_host_plain/ss-1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.110
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_plain.ss-10,nfs,fs-02871f832780b9e15.efs.ap-southeast-1.amazonaws.com:/e5/efs_host_plain/ss-10,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.110
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_tls.default,nfs,127.0.0.1:/e5/efs_host_tls/a,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=21036,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_tls.forced,nfs,127.0.0.1:/e5/efs_host_tls/forced,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,noresvport,proto=tcp,port=20211,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_tls.ss-0.1,nfs,127.0.0.1:/e5/efs_host_tls/ss-0.1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=20668,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_tls.ss-1,nfs,127.0.0.1:/e5/efs_host_tls/ss-1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=20619,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,efs_host_tls.ss-10,nfs,127.0.0.1:/e5/efs_host_tls/ss-10,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,noresvport,proto=tcp,port=20069,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_openzfs.default,nfs,fs-05a55e5c6f01d44d6.fsx.ap-southeast-1.amazonaws.com:/fsx/e5/fsx_openzfs/a,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.73
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_openzfs.forced,nfs,fs-05a55e5c6f01d44d6.fsx.ap-southeast-1.amazonaws.com:/fsx/e5/fsx_openzfs/forced,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.73
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_openzfs.ss-0.1,nfs,fs-05a55e5c6f01d44d6.fsx.ap-southeast-1.amazonaws.com:/fsx/e5/fsx_openzfs/ss-0.1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.73
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_openzfs.ss-1,nfs,fs-05a55e5c6f01d44d6.fsx.ap-southeast-1.amazonaws.com:/fsx/e5/fsx_openzfs/ss-1,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.73
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_openzfs.ss-10,nfs,fs-05a55e5c6f01d44d6.fsx.ap-southeast-1.amazonaws.com:/fsx/e5/fsx_openzfs/ss-10,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.73
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_ontap.default,nfs,svm-044a7d4027da4ff90.fs-0779405d1fff447d0.fsx.ap-southeast-1.amazonaws.com:/vol1/e5/fsx_ontap/a,rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.251
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_ontap.forced,nfs,svm-044a7d4027da4ff90.fs-0779405d1fff447d0.fsx.ap-southeast-1.amazonaws.com:/vol1/e5/fsx_ontap/forced,rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,acregmin=0,acregmax=0,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.251
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_ontap.ss-0.1,nfs,svm-044a7d4027da4ff90.fs-0779405d1fff447d0.fsx.ap-southeast-1.amazonaws.com:/vol1/e5/fsx_ontap/ss-0.1,rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.251
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_ontap.ss-1,nfs,svm-044a7d4027da4ff90.fs-0779405d1fff447d0.fsx.ap-southeast-1.amazonaws.com:/vol1/e5/fsx_ontap/ss-1,rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.251
+2026-10-27T09:56:12.078000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 mount,fsx_ontap.ss-10,nfs,svm-044a7d4027da4ff90.fs-0779405d1fff447d0.fsx.ap-southeast-1.amazonaws.com:/vol1/e5/fsx_ontap/ss-10,rw,relatime,vers=4.1,rsize=65536,wsize=65536,namlen=255,hard,nosharecache,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.45.0.108,local_lock=none,addr=10.45.0.251
+2026-10-27T10:02:41.467000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:41] E5 mount options verified: nosharecache everywhere, acregmin=acregmax=0 only on forced
+2026-10-27T10:02:41.478000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:41] seed age gate passed: 484 s since seeding
+2026-10-27T10:02:42.625000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:42] ebs: POSIX conformance PASSED
+2026-10-27T10:02:43.945000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:43] efs_host_plain: POSIX conformance PASSED
+2026-10-27T10:02:45.286000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:45] efs_host_tls: POSIX conformance PASSED
+2026-10-27T10:02:46.463000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:46] fsx_openzfs: POSIX conformance PASSED
+2026-10-27T10:02:47.637000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:47] fsx_ontap: POSIX conformance PASSED
+2026-10-27T10:02:48.811000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:48] fsx_lustre: POSIX conformance PASSED
+2026-10-27T10:02:48.814000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:48] cohort A tier order: efs_host_tls fsx_ontap fsx_lustre ebs efs_host_plain fsx_openzfs
+2026-10-27T10:02:48.816000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:48] cohort A: efs_host_tls
+2026-10-27T10:02:51.011000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:02:51]   efs_host_tls: waiting 75s for attributes to expire
+2026-10-27T10:04:08.834000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:04:08]   efs_host_tls: waiting 75s for attributes to expire
+2026-10-27T10:05:29.778000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:05:29] cohort A: fsx_ontap
+2026-10-27T10:05:30.068000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:05:30]   fsx_ontap: waiting 75s for attributes to expire
+2026-10-27T10:06:45.823000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:06:45]   fsx_ontap: waiting 75s for attributes to expire
+2026-10-27T10:08:02.600000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:08:02] cohort A: fsx_lustre
+2026-10-27T10:08:03.511000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:08:03]   fsx_lustre: waiting 75s for attributes to expire
+2026-10-27T10:09:20.214000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:09:20]   fsx_lustre: waiting 75s for attributes to expire
+2026-10-27T10:10:35.861000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:10:35] cohort A: ebs
+2026-10-27T10:10:35.914000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:10:35]   ebs: waiting 75s for attributes to expire
+2026-10-27T10:11:51.714000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:11:51]   ebs: waiting 75s for attributes to expire
+2026-10-27T10:13:06.768000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:13:06] cohort A: efs_host_plain
+2026-10-27T10:13:08.799000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:13:08]   efs_host_plain: waiting 75s for attributes to expire
+2026-10-27T10:14:26.198000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:14:26]   efs_host_plain: waiting 75s for attributes to expire
+2026-10-27T10:15:46.065000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:15:46] cohort A: fsx_openzfs
+2026-10-27T10:15:46.253000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:15:46]   fsx_openzfs: waiting 75s for attributes to expire
+2026-10-27T10:17:01.880000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [10:17:01]   fsx_openzfs: waiting 75s for attributes to expire
+2026-10-27T11:18:25.278000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [11:18:25] E5 mount options verified: nosharecache everywhere, acregmin=acregmax=0 only on forced
+2026-10-27T11:18:25.287000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [11:18:25] seed age gate passed: 5028 s since seeding
+2026-10-27T11:18:25.289000+00:00 e5-ec2/bench/a6eec191bbe74410a886f4dc63113a99 [11:18:25] expiry probes: idle 75s after all B readers stop

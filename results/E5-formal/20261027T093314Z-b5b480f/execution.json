@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-27T11:30:32.164817+00:00",
+  "collector_container_ownership_verified": true,
+  "benchmark_exit": 0,
+  "collector_evidence": "[11:20:21]   ec2 exit=0 (Essential container in task exited)",
+  "collector_exit_pending": false,
+  "collector_exit": 0,
+  "guard_cleanup_verified": true,
+  "deadline_handover": false
+}

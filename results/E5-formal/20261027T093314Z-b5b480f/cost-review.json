@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-27T11:45:00.227782+00:00",
+  "ceiling_usd": 20,
+  "prelaunch_planning_proxy_usd": 19.255543632375,
+  "post_measurement_reported_regional_all_account_usd": 5.5382086755,
+  "ce_query_utc": "2026-10-27T11:31:30.466926+00:00",
+  "ce_estimated": true,
+  "actual_e5_allocation_verified": false,
+  "stack_minutes": 124.84461666666667,
+  "standing_rate_usd_per_hour": 0.95475,
+  "endpoint_rate_component_usd_per_hour": 0.12,
+  "full_stack_lifetime_standing_envelope_with_endpoint_rounding_usd": 2.096900729375,
+  "ancillary_reserve_usd": 0.5,
+  "current_run_engineering_envelope_including_ancillary_reserve_usd": 2.596900729375,
+  "conservative_postrun_proxy_usd": 16.99606936175,
+  "proxy_headroom_usd": 3.003930638250001,
+  "limitations": [
+    "Not an invoice, actual E5 allocation or verified remaining balance.",
+    "Regional CE includes other workloads; every five prior billable E5 attempts is additionally reserved, intentionally double counting rather than relying on attribution or posting timing.",
+    "Includes the separate $1 uncertainty reserve and $0.50 ancillary reserve per actual attempt. Ancillary/minimum-billing usage is estimated.",
+    "Shared CDK/ECR assets and provider log archives are outside the workload inventory; they are not claimed deleted."
+  ]
+}

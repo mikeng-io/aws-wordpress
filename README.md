@@ -80,8 +80,9 @@ that would falsify it, recorded before any experiment runs.
 ## Status
 
 E0, E1 and E3 have completed runs; E2 has completed block-backed, EFS mount and
-FSx groups, with the FUSE-backed arms still open. E5 has one collected AWS pilot
-with measurement blockers; its aggregate predictions remain NOT EVALUABLE.
+FSx groups, with the FUSE-backed arms still open. E5 formal v3 has one full-method
+valid run; P7 remains ERROR on its matched-reference noise gate, and all aggregate
+predictions remain NOT EVALUABLE. Earlier pilot/diagnostic evidence stays frozen.
 Status reconciled on 2026-10-27 HKT; historical findings remain available with their
 original measurements.
 
@@ -134,37 +135,29 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx groups complete; FUSE arms open; NFS cache confound identified** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete; fresh-file cache mix, not production steady state** |
 | [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
-| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | single AWS pilot collected; 14/18 B cells valid; measurement blockers; n=1, no aggregate verdict |
+| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | formal v3 n=1: all A/B/reference cells valid; P7 attribution ERROR; no aggregate verdict |
 
 The cost entries are historical apparatus estimates, not a current price quote;
-E5's refreshed standing subtotal is $0.95475/hr from `results/pricing/20261027T041025Z-56295b7/`; ancillary usage/minimum billing excluded.
+E5's refreshed standing subtotal is $0.95475/hr from `results/pricing/20261027T092919Z-32410a7/`; ancillary usage/minimum billing excluded.
 
-**Next: amend E5 measurement isolation before formal replications.**
-The [single-pilot review](results/E5/20261026T152946Z-b1efcb2/pilot-review.md)
-records EFS TLS RPC attribution errors, the original Lustre counter-name gap and
-Lustre 0.1s schedule lateness. The unchanged grader has 14/18 valid B cells;
-all ten aggregate predictions remain NOT EVALUABLE at n=1. AWS teardown is
-verified by the host guard and fresh inventories across all 18 enabled regions.
-Replications 2/3 remain behind the separate go-ahead. The filesystem research
-objective and H1 verdict are unchanged.
+**Next: review E5 P7 noise attribution before further replications.**
+The [first full formal-v3 validation](results/E5-formal/20261027T093314Z-b5b480f/review.md)
+collects complete A/D phases and 300s/600s B grids: 46 A cells, 18 B targets and
+three same-time EBS references are valid. TLS root attribution reconciles exactly;
+worst target lateness is 1/6000. P7 still returns ERROR because the 10s EBS slow
+centroid reaches the Lustre classification boundary. No threshold was relaxed.
+All ten aggregate predictions remain NOT EVALUABLE at n=1; H1 is unchanged.
+Benchmark and collector exited 0. Independent 18-region /198-inventory teardown
+verified no E5 workload resources or retained diagnostics bucket.
 
-The [offline follow-up](experiments/E5-attribute-cache/pilot-followup/20261027/README.md)
-corrects Lustre A1 counter coverage, retains a versioned A1 reanalysis, and
-quantifies schedule overruns. TLS attribution and Lustre timing remain open.
-
-The [single AWS diagnostic](results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
-confirms helper-induced TLS root activity and reproduces Lustre lateness under
-18-cell concurrency (23.2%/21.5%, versus 0%/0% isolated). Disabling readahead
-verification alone leaves two residual GETATTRs per active window. Shared Lustre
-lock-cache interaction needs isolation; no gate or hypothesis verdict was changed.
-The diagnostic completed, and the host guard plus an independent 18-region audit
-verified teardown. It is not a formal replication.
-
-The [isolation candidate](experiments/E5-attribute-cache/method-amendments/20261027-isolation-v1/README.md)
-is implemented and verified offline: both TLS probes controlled explicitly,
-non-Lustre workloads separated from sequential Lustre/EBS reference pairs, with
-unchanged hard gates. Live candidate acceptance and fresh budget clearance remain
-outstanding; no additional AWS run was launched for this preparation.
+The [original pilot](results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
+[counter follow-up](experiments/E5-attribute-cache/pilot-followup/20261027/README.md),
+[helper/concurrency diagnostic](results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
+and [accepted short candidate](results/E5-isolation-validation/20261027T073803Z-647a811/review.md)
+remain separate, frozen evidence. They are not pooled with formal v3. The
+[formal amendment](experiments/E5-attribute-cache/method-amendments/20261027-formal-v3/README.md)
+predeclares the quiet profile, complete windows and P7 reference binding.
+Further paid runs need a separate go-ahead and refreshed budget under US$20.
 
 E4 remains specced. E2 narrowed its substrate question for the tested workload;
 E5 must establish the remaining cache cost before deciding whether to build an

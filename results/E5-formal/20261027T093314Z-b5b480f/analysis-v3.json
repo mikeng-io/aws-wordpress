@@ -1,0 +1,1994 @@
+{
+  "method": "isolation-formal-v3",
+  "study_replication": true,
+  "replications": {
+    "20261027T093314Z-b5b480f/rep-1": {
+      "protocol": {
+        "status": "ELIGIBLE",
+        "reasons": [],
+        "apparatus_sha256": {
+          "e5-formal.py": "22c57f6a4551a9b9266ef024061fcb0243751fcf0dc7abbcf46a2e228d4db74d",
+          "e5-run": "3ab6b46c640a4b5b030cfe472d47d15f458e074a04cf3ff67cb70edecc332a1f",
+          "diagnostic-serve.py": "74dcc882298c41110c523a2d50a88c02aeb6327eb65eeda4ca20e23506793389",
+          "e5-isolation-validation.py": "b62db40e594446912f82c647b81ffe4167ed5e6c870ef8f5ff077ef49ed231f2",
+          "e5-diagnostic.py": "9cedebd0007414586f1c3e6d49eba94e5cf34b8af5b9dd5af142cf181b586f1b",
+          "e5-diagnostic-host.py": "60b53bf8ca9a85a2b58900db8cc784aab094cf7911a8f622715bd3800204bd21",
+          "cache-dropper": "5599528d4a76e45dcdfe4f873e3e47b69c75114fe5af11b7b017f719d14a56de",
+          "agebench": "b5094edec25be642421c3d3b71112ed9e5c9fe9f5e6aded53a2fa48c4b206f0f"
+        }
+      },
+      "full_method_validation": "PASS",
+      "a": {
+        "ebs": {
+          "A1": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 3921,
+            "p90_ns": 6681,
+            "p99_ns": 684947,
+            "median_ci95_ns": [
+              3890,
+              3956
+            ],
+            "geomean_ns": 5309.5,
+            "geomean_over_median": 1.354,
+            "tail_p99_over_p50": 174.69,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1967,
+            "p90_ns": 2285,
+            "p99_ns": 4288,
+            "median_ci95_ns": [
+              1958,
+              1977
+            ],
+            "geomean_ns": 2068.0,
+            "geomean_over_median": 1.051,
+            "tail_p99_over_p50": 2.18,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1378,
+            "p90_ns": 1648,
+            "p99_ns": 1985,
+            "median_ci95_ns": [
+              1356,
+              1389
+            ],
+            "geomean_ns": 1400.8,
+            "geomean_over_median": 1.017,
+            "tail_p99_over_p50": 1.44,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 999,
+            "p90_ns": 1186,
+            "p99_ns": 2108,
+            "median_ci95_ns": [
+              994,
+              1005
+            ],
+            "geomean_ns": 1052.3,
+            "geomean_over_median": 1.053,
+            "tail_p99_over_p50": 2.11,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 1374,
+            "p90_ns": 1640,
+            "p99_ns": 1974,
+            "median_ci95_ns": [
+              1365,
+              1383
+            ],
+            "geomean_ns": 1406.0,
+            "geomean_over_median": 1.023,
+            "tail_p99_over_p50": 1.44,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 711335,
+            "p90_ns": 936814,
+            "p99_ns": 1230845,
+            "median_ci95_ns": [
+              698076,
+              724167
+            ],
+            "geomean_ns": 716253.6,
+            "geomean_over_median": 1.007,
+            "tail_p99_over_p50": 1.73,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "block reference, no signature",
+            "n": 1000,
+            "p50_ns": 5913,
+            "p90_ns": 7612,
+            "p99_ns": 8898,
+            "median_ci95_ns": [
+              5823,
+              6042
+            ],
+            "geomean_ns": 5887.5,
+            "geomean_over_median": 0.996,
+            "tail_p99_over_p50": 1.5,
+            "status": "OK"
+          }
+        },
+        "efs_host_plain": {
+          "A1": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1 LOOKUP \u0394=1040 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1079229,
+            "p90_ns": 1201293,
+            "p99_ns": 4030713,
+            "median_ci95_ns": [
+              1074699,
+              1084910
+            ],
+            "geomean_ns": 1116449.4,
+            "geomean_over_median": 1.034,
+            "tail_p99_over_p50": 3.73,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1000 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 844907,
+            "p90_ns": 933858,
+            "p99_ns": 1058868,
+            "median_ci95_ns": [
+              840141,
+              848449
+            ],
+            "geomean_ns": 850110.1,
+            "geomean_over_median": 1.006,
+            "tail_p99_over_p50": 1.25,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1041 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 271448,
+            "p90_ns": 310067,
+            "p99_ns": 807244,
+            "median_ci95_ns": [
+              269704,
+              273027
+            ],
+            "geomean_ns": 278947.1,
+            "geomean_over_median": 1.028,
+            "tail_p99_over_p50": 2.97,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1128,
+            "p90_ns": 1306,
+            "p99_ns": 2572,
+            "median_ci95_ns": [
+              1121,
+              1140
+            ],
+            "geomean_ns": 1179.1,
+            "geomean_over_median": 1.045,
+            "tail_p99_over_p50": 2.28,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1556,
+            "p90_ns": 1811,
+            "p99_ns": 2431,
+            "median_ci95_ns": [
+              1545,
+              1565
+            ],
+            "geomean_ns": 1591.0,
+            "geomean_over_median": 1.022,
+            "tail_p99_over_p50": 1.56,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=1000 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 2025535,
+            "p90_ns": 2245355,
+            "p99_ns": 2465571,
+            "median_ci95_ns": [
+              2013831,
+              2040059
+            ],
+            "geomean_ns": 2006196.5,
+            "geomean_over_median": 0.99,
+            "tail_p99_over_p50": 1.22,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=41 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 605763,
+            "p90_ns": 678961,
+            "p99_ns": 1217579,
+            "median_ci95_ns": [
+              601647,
+              609311
+            ],
+            "geomean_ns": 620239.6,
+            "geomean_over_median": 1.024,
+            "tail_p99_over_p50": 2.01,
+            "status": "OK"
+          },
+          "A8": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=10000 LOOKUP \u0394=0 READ \u0394=0 for 10000 ops",
+            "n": 10000,
+            "p50_ns": 268078,
+            "p90_ns": 317014,
+            "p99_ns": 398354,
+            "median_ci95_ns": [
+              267423,
+              268721
+            ],
+            "geomean_ns": 272738.6,
+            "geomean_over_median": 1.017,
+            "tail_p99_over_p50": 1.49,
+            "status": "OK"
+          }
+        },
+        "efs_host_tls": {
+          "A1": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1040 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1169324,
+            "p90_ns": 1295154,
+            "p99_ns": 4289729,
+            "median_ci95_ns": [
+              1163821,
+              1175281
+            ],
+            "geomean_ns": 1210255.4,
+            "geomean_over_median": 1.035,
+            "tail_p99_over_p50": 3.67,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1000 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 912026,
+            "p90_ns": 1014468,
+            "p99_ns": 1167541,
+            "median_ci95_ns": [
+              907117,
+              916117
+            ],
+            "geomean_ns": 920037.9,
+            "geomean_over_median": 1.009,
+            "tail_p99_over_p50": 1.28,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1041 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 357096,
+            "p90_ns": 407266,
+            "p99_ns": 1058829,
+            "median_ci95_ns": [
+              354725,
+              360009
+            ],
+            "geomean_ns": 368452.1,
+            "geomean_over_median": 1.032,
+            "tail_p99_over_p50": 2.97,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1103,
+            "p90_ns": 1242,
+            "p99_ns": 2383,
+            "median_ci95_ns": [
+              1100,
+              1107
+            ],
+            "geomean_ns": 1147.6,
+            "geomean_over_median": 1.04,
+            "tail_p99_over_p50": 2.16,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1542,
+            "p90_ns": 1777,
+            "p99_ns": 2420,
+            "median_ci95_ns": [
+              1535,
+              1550
+            ],
+            "geomean_ns": 1571.5,
+            "geomean_over_median": 1.019,
+            "tail_p99_over_p50": 1.57,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=1000 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 2346282,
+            "p90_ns": 2628963,
+            "p99_ns": 3036071,
+            "median_ci95_ns": [
+              2334796,
+              2362679
+            ],
+            "geomean_ns": 2340539.5,
+            "geomean_over_median": 0.998,
+            "tail_p99_over_p50": 1.29,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=41 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 746903,
+            "p90_ns": 823776,
+            "p99_ns": 1459687,
+            "median_ci95_ns": [
+              743065,
+              750170
+            ],
+            "geomean_ns": 761735.8,
+            "geomean_over_median": 1.02,
+            "tail_p99_over_p50": 1.95,
+            "status": "OK"
+          },
+          "A8": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=10000 LOOKUP \u0394=0 READ \u0394=0 for 10000 ops",
+            "n": 10000,
+            "p50_ns": 340502,
+            "p90_ns": 389154,
+            "p99_ns": 481487,
+            "median_ci95_ns": [
+              339880,
+              341174
+            ],
+            "geomean_ns": 345215.5,
+            "geomean_over_median": 1.014,
+            "tail_p99_over_p50": 1.41,
+            "status": "OK"
+          }
+        },
+        "fsx_openzfs": {
+          "A1": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1 LOOKUP \u0394=1040 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 72016,
+            "p90_ns": 90350,
+            "p99_ns": 360946,
+            "median_ci95_ns": [
+              71610,
+              72463
+            ],
+            "geomean_ns": 76772.4,
+            "geomean_over_median": 1.066,
+            "tail_p99_over_p50": 5.01,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1000 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 70669,
+            "p90_ns": 97874,
+            "p99_ns": 124822,
+            "median_ci95_ns": [
+              70448,
+              70862
+            ],
+            "geomean_ns": 75171.7,
+            "geomean_over_median": 1.064,
+            "tail_p99_over_p50": 1.77,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1041 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 98041,
+            "p90_ns": 98467,
+            "p99_ns": 294826,
+            "median_ci95_ns": [
+              98020,
+              98052
+            ],
+            "geomean_ns": 99566.9,
+            "geomean_over_median": 1.016,
+            "tail_p99_over_p50": 3.01,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1108,
+            "p90_ns": 1269,
+            "p99_ns": 2528,
+            "median_ci95_ns": [
+              1104,
+              1113
+            ],
+            "geomean_ns": 1160.6,
+            "geomean_over_median": 1.047,
+            "tail_p99_over_p50": 2.28,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1547,
+            "p90_ns": 1789,
+            "p99_ns": 2449,
+            "median_ci95_ns": [
+              1539,
+              1557
+            ],
+            "geomean_ns": 1571.6,
+            "geomean_over_median": 1.016,
+            "tail_p99_over_p50": 1.58,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=1000 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 354386,
+            "p90_ns": 463803,
+            "p99_ns": 1948724,
+            "median_ci95_ns": [
+              349693,
+              358277
+            ],
+            "geomean_ns": 372739.1,
+            "geomean_over_median": 1.052,
+            "tail_p99_over_p50": 5.5,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=41 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 196264,
+            "p90_ns": 223531,
+            "p99_ns": 413389,
+            "median_ci95_ns": [
+              196164,
+              196340
+            ],
+            "geomean_ns": 199148.3,
+            "geomean_over_median": 1.015,
+            "tail_p99_over_p50": 2.11,
+            "status": "OK"
+          },
+          "A8": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=10000 LOOKUP \u0394=0 READ \u0394=0 for 10000 ops",
+            "n": 10000,
+            "p50_ns": 76133,
+            "p90_ns": 98180,
+            "p99_ns": 163792,
+            "median_ci95_ns": [
+              75806,
+              76423
+            ],
+            "geomean_ns": 79497.8,
+            "geomean_over_median": 1.044,
+            "tail_p99_over_p50": 2.15,
+            "status": "OK"
+          }
+        },
+        "fsx_ontap": {
+          "A1": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1 LOOKUP \u0394=1040 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 118910,
+            "p90_ns": 131727,
+            "p99_ns": 582188,
+            "median_ci95_ns": [
+              118563,
+              119301
+            ],
+            "geomean_ns": 124809.9,
+            "geomean_over_median": 1.05,
+            "tail_p99_over_p50": 4.9,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=1000 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 112194,
+            "p90_ns": 128858,
+            "p99_ns": 172898,
+            "median_ci95_ns": [
+              111550,
+              112656
+            ],
+            "geomean_ns": 114788.4,
+            "geomean_over_median": 1.023,
+            "tail_p99_over_p50": 1.54,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=1041 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 113052,
+            "p90_ns": 127211,
+            "p99_ns": 338038,
+            "median_ci95_ns": [
+              112578,
+              113585
+            ],
+            "geomean_ns": 117666.5,
+            "geomean_over_median": 1.041,
+            "tail_p99_over_p50": 2.99,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1091,
+            "p90_ns": 1208,
+            "p99_ns": 1912,
+            "median_ci95_ns": [
+              1088,
+              1093
+            ],
+            "geomean_ns": 1122.6,
+            "geomean_over_median": 1.029,
+            "tail_p99_over_p50": 1.75,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 1411,
+            "p90_ns": 1592,
+            "p99_ns": 1924,
+            "median_ci95_ns": [
+              1393,
+              1422
+            ],
+            "geomean_ns": 1425.5,
+            "geomean_over_median": 1.01,
+            "tail_p99_over_p50": 1.36,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=0 LOOKUP \u0394=0 READ \u0394=1000 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 560859,
+            "p90_ns": 640999,
+            "p99_ns": 771353,
+            "median_ci95_ns": [
+              553382,
+              566271
+            ],
+            "geomean_ns": 543751.7,
+            "geomean_over_median": 0.969,
+            "tail_p99_over_p50": 1.38,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "recorded, not gated: GETATTR \u0394=41 LOOKUP \u0394=0 READ \u0394=0 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 282840,
+            "p90_ns": 312253,
+            "p99_ns": 537938,
+            "median_ci95_ns": [
+              281732,
+              283635
+            ],
+            "geomean_ns": 290777.6,
+            "geomean_over_median": 1.028,
+            "tail_p99_over_p50": 1.9,
+            "status": "OK"
+          },
+          "A8": {
+            "signature": "PASS",
+            "signature_detail": "GETATTR \u0394=10000 LOOKUP \u0394=0 READ \u0394=0 for 10000 ops",
+            "n": 10000,
+            "p50_ns": 111897,
+            "p90_ns": 124815,
+            "p99_ns": 185253,
+            "median_ci95_ns": [
+              111741,
+              112033
+            ],
+            "geomean_ns": 114654.4,
+            "geomean_over_median": 1.025,
+            "tail_p99_over_p50": 1.66,
+            "status": "OK"
+          }
+        },
+        "fsx_lustre": {
+          "A1": {
+            "signature": "PASS",
+            "signature_detail": "mdc miss RPCs \u0394=1041 for 1000 ops",
+            "n": 1000,
+            "p50_ns": 307915,
+            "p90_ns": 341395,
+            "p99_ns": 640028,
+            "median_ci95_ns": [
+              306019,
+              310484
+            ],
+            "geomean_ns": 312878.1,
+            "geomean_over_median": 1.016,
+            "tail_p99_over_p50": 2.08,
+            "status": "OK"
+          },
+          "A2": {
+            "signature": "N/A",
+            "signature_detail": "only A1 is checked on Lustre (A3 waived: locks do not expire at 75 s)",
+            "n": 1000,
+            "p50_ns": 134672,
+            "p90_ns": 148724,
+            "p99_ns": 190782,
+            "median_ci95_ns": [
+              134338,
+              134969
+            ],
+            "geomean_ns": 137886.1,
+            "geomean_over_median": 1.024,
+            "tail_p99_over_p50": 1.42,
+            "status": "OK"
+          },
+          "A3": {
+            "signature": "N/A",
+            "signature_detail": "only A1 is checked on Lustre (A3 waived: locks do not expire at 75 s)",
+            "n": 1000,
+            "p50_ns": 6650,
+            "p90_ns": 7127,
+            "p99_ns": 8174,
+            "median_ci95_ns": [
+              6631,
+              6670
+            ],
+            "geomean_ns": 6718.2,
+            "geomean_over_median": 1.01,
+            "tail_p99_over_p50": 1.23,
+            "status": "OK"
+          },
+          "A4": {
+            "signature": "N/A",
+            "signature_detail": "only A1 is checked on Lustre (A3 waived: locks do not expire at 75 s)",
+            "n": 1000,
+            "p50_ns": 1658,
+            "p90_ns": 1876,
+            "p99_ns": 3195,
+            "median_ci95_ns": [
+              1638,
+              1668
+            ],
+            "geomean_ns": 1707.1,
+            "geomean_over_median": 1.03,
+            "tail_p99_over_p50": 1.93,
+            "status": "OK"
+          },
+          "A5": {
+            "signature": "N/A",
+            "signature_detail": "only A1 is checked on Lustre (A3 waived: locks do not expire at 75 s)",
+            "n": 1000,
+            "p50_ns": 6631,
+            "p90_ns": 7120,
+            "p99_ns": 8249,
+            "median_ci95_ns": [
+              6606,
+              6664
+            ],
+            "geomean_ns": 6695.2,
+            "geomean_over_median": 1.01,
+            "tail_p99_over_p50": 1.24,
+            "status": "OK"
+          },
+          "A6": {
+            "signature": "N/A",
+            "signature_detail": "only A1 is checked on Lustre (A3 waived: locks do not expire at 75 s)",
+            "n": 1000,
+            "p50_ns": 750528,
+            "p90_ns": 855745,
+            "p99_ns": 1156314,
+            "median_ci95_ns": [
+              744891,
+              756927
+            ],
+            "geomean_ns": 724664.0,
+            "geomean_over_median": 0.966,
+            "tail_p99_over_p50": 1.54,
+            "status": "OK"
+          },
+          "A7": {
+            "signature": "N/A",
+            "signature_detail": "only A1 is checked on Lustre (A3 waived: locks do not expire at 75 s)",
+            "n": 1000,
+            "p50_ns": 359685,
+            "p90_ns": 410642,
+            "p99_ns": 724972,
+            "median_ci95_ns": [
+              357563,
+              361450
+            ],
+            "geomean_ns": 368995.2,
+            "geomean_over_median": 1.026,
+            "tail_p99_over_p50": 2.02,
+            "status": "OK"
+          }
+        }
+      },
+      "b": {
+        "ebs": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 6000,
+            "late_share": 0.0,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.001523,
+            "slow_share_enoent": 0.001144,
+            "counter_snapshot_ns_per_request": 196,
+            "stat_sum_per_request_ns": {
+              "amortised": 1707294.6,
+              "median": 1681177,
+              "p99": 1984716,
+              "max": 8753061
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1661,
+              "slow_centroid_ns": 10777,
+              "threshold_ns": 4231
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.00222,
+            "slow_share_enoent": 0.001143,
+            "counter_snapshot_ns_per_request": 191,
+            "stat_sum_per_request_ns": {
+              "amortised": 1713124.6,
+              "median": 1706730,
+              "p99": 1816394,
+              "max": 3208236
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1670,
+              "slow_centroid_ns": 13295,
+              "threshold_ns": 4712
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.001967,
+            "slow_share_enoent": 1.7e-05,
+            "counter_snapshot_ns_per_request": 163,
+            "stat_sum_per_request_ns": {
+              "amortised": 1681064.0,
+              "median": 1680505,
+              "p99": 1730349,
+              "max": 1731779
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1650,
+              "slow_centroid_ns": 10717,
+              "threshold_ns": 4206
+            }
+          }
+        },
+        "efs_host_plain": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 6000,
+            "late_share": 0.0,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.001741,
+            "slow_share_enoent": 0.00112,
+            "counter_snapshot_ns_per_request": 2272958,
+            "stat_sum_per_request_ns": {
+              "amortised": 2577875.4,
+              "median": 2025919,
+              "p99": 18629116,
+              "max": 70369747
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1995,
+              "slow_centroid_ns": 296417,
+              "threshold_ns": 24316
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 10400,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 10,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 10410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.0017333333333333333,
+            "rpc_ops_per_enoent": 1.6666666666666667e-06,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.0017333333333333333,
+              "latency": 0.001741,
+              "tolerance": 0.002,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.017002,
+            "slow_share_enoent": 0.000297,
+            "counter_snapshot_ns_per_request": 2232544,
+            "stat_sum_per_request_ns": {
+              "amortised": 7376140.0,
+              "median": 2040320,
+              "p99": 169709502,
+              "max": 203861988
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1998,
+              "slow_centroid_ns": 297677,
+              "threshold_ns": 24387
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 10352,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 58,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 10410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.017253333333333332,
+            "rpc_ops_per_enoent": 9.666666666666667e-05,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.017253333333333332,
+              "latency": 0.017002,
+              "tolerance": 0.0034506666666666666,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.158033,
+            "slow_share_enoent": 0.001033,
+            "counter_snapshot_ns_per_request": 2259958,
+            "stat_sum_per_request_ns": {
+              "amortised": 50045901.4,
+              "median": 24361330,
+              "p99": 234479158,
+              "max": 254174381
+            },
+            "stat_split": {
+              "fast_centroid_ns": 2014,
+              "slow_centroid_ns": 288608,
+              "threshold_ns": 24109
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 9732,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 20,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 9752,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.1622,
+            "rpc_ops_per_enoent": 0.0003333333333333333,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.1622,
+              "latency": 0.158033,
+              "tolerance": 0.032440000000000004,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          }
+        },
+        "efs_host_tls": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 6000,
+            "late_share": 0.0,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.001759,
+            "slow_share_enoent": 0.0,
+            "counter_snapshot_ns_per_request": 2262222,
+            "stat_sum_per_request_ns": {
+              "amortised": 2771741.8,
+              "median": 2013972,
+              "p99": 27580522,
+              "max": 123740134
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1991,
+              "slow_centroid_ns": 378809,
+              "threshold_ns": 27462
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 10410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 0,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 10410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.001735,
+            "rpc_ops_per_enoent": 0.0,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.001735,
+              "latency": 0.001759,
+              "tolerance": 0.002,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.017057,
+            "slow_share_enoent": 0.0,
+            "counter_snapshot_ns_per_request": 2273965,
+            "stat_sum_per_request_ns": {
+              "amortised": 9268943.5,
+              "median": 2047304,
+              "p99": 225481005,
+              "max": 301427002
+            },
+            "stat_split": {
+              "fast_centroid_ns": 2016,
+              "slow_centroid_ns": 384424,
+              "threshold_ns": 27837
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 10370,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 40,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 10410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.017283333333333335,
+            "rpc_ops_per_enoent": 6.666666666666667e-05,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.017283333333333335,
+              "latency": 0.017057,
+              "tolerance": 0.003456666666666667,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.1665,
+            "slow_share_enoent": 0.000917,
+            "counter_snapshot_ns_per_request": 2346025,
+            "stat_sum_per_request_ns": {
+              "amortised": 69408845.5,
+              "median": 21126976,
+              "p99": 296235282,
+              "max": 300002883
+            },
+            "stat_split": {
+              "fast_centroid_ns": 2030,
+              "slow_centroid_ns": 375448,
+              "threshold_ns": 27605
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 10157,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 84,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 10241,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.16928333333333334,
+            "rpc_ops_per_enoent": 0.0014,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.16928333333333334,
+              "latency": 0.1665,
+              "tolerance": 0.03385666666666667,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          }
+        },
+        "fsx_openzfs": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 6000,
+            "late_share": 0.0,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.002564,
+            "slow_share_enoent": 0.001107,
+            "counter_snapshot_ns_per_request": 2262194,
+            "stat_sum_per_request_ns": {
+              "amortised": 2185760.3,
+              "median": 2169618,
+              "p99": 2661284,
+              "max": 6209554
+            },
+            "stat_split": {
+              "fast_centroid_ns": 2134,
+              "slow_centroid_ns": 12844,
+              "threshold_ns": 5235
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 350,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 60,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 5.833333333333333e-05,
+            "rpc_ops_per_enoent": 1e-05,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 5.833333333333333e-05,
+              "latency": 0.002564,
+              "tolerance": 0.002,
+              "status": "DISAGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.000397,
+            "slow_share_enoent": 0.0,
+            "counter_snapshot_ns_per_request": 2269405,
+            "stat_sum_per_request_ns": {
+              "amortised": 2233250.4,
+              "median": 2164980,
+              "p99": 5346716,
+              "max": 6529303
+            },
+            "stat_split": {
+              "fast_centroid_ns": 2137,
+              "slow_centroid_ns": 139353,
+              "threshold_ns": 17258
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 0,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.0006833333333333333,
+            "rpc_ops_per_enoent": 0.0,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.0006833333333333333,
+              "latency": 0.000397,
+              "tolerance": 0.002,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.004517,
+            "slow_share_enoent": 0.0,
+            "counter_snapshot_ns_per_request": 2191460,
+            "stat_sum_per_request_ns": {
+              "amortised": 2844902.4,
+              "median": 2270204,
+              "p99": 5794841,
+              "max": 5854255
+            },
+            "stat_split": {
+              "fast_centroid_ns": 2159,
+              "slow_centroid_ns": 119661,
+              "threshold_ns": 16072
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 0,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.006833333333333334,
+            "rpc_ops_per_enoent": 0.0,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.006833333333333334,
+              "latency": 0.004517,
+              "tolerance": 0.002,
+              "status": "DISAGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          }
+        },
+        "fsx_ontap": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 6000,
+            "late_share": 0.0,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.003097,
+            "slow_share_enoent": 0.0,
+            "counter_snapshot_ns_per_request": 2239755,
+            "stat_sum_per_request_ns": {
+              "amortised": 2308310.5,
+              "median": 2070390,
+              "p99": 8771298,
+              "max": 61463894
+            },
+            "stat_split": {
+              "fast_centroid_ns": 2014,
+              "slow_centroid_ns": 64197,
+              "threshold_ns": 11371
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 10404,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 6,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 10410,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.001734,
+            "rpc_ops_per_enoent": 1e-06,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.001734,
+              "latency": 0.003097,
+              "tolerance": 0.002,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.017232,
+            "slow_share_enoent": 0.00021,
+            "counter_snapshot_ns_per_request": 2208905,
+            "stat_sum_per_request_ns": {
+              "amortised": 4293717.1,
+              "median": 1978759,
+              "p99": 95039034,
+              "max": 134722804
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1944,
+              "slow_centroid_ns": 122612,
+              "threshold_ns": 15440
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 10345,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 64,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 10409,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.017241666666666666,
+            "rpc_ops_per_enoent": 0.00010666666666666667,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.017241666666666666,
+              "latency": 0.017232,
+              "tolerance": 0.003448333333333333,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.159767,
+            "slow_share_enoent": 0.000617,
+            "counter_snapshot_ns_per_request": 2332943,
+            "stat_sum_per_request_ns": {
+              "amortised": 22051002.7,
+              "median": 10299204,
+              "p99": 101131119,
+              "max": 106506195
+            },
+            "stat_split": {
+              "fast_centroid_ns": 1972,
+              "slow_centroid_ns": 120905,
+              "threshold_ns": 15442
+            },
+            "counter_rpc_ops": {
+              "positive": {
+                "GETATTR": 9870,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "negative": {
+                "GETATTR": 20,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "window": {
+                "GETATTR": 9890,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              }
+            },
+            "rpc_ops_per_stat": 0.1645,
+            "rpc_ops_per_enoent": 0.0003333333333333333,
+            "expiry_probe": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "xcheck": {
+              "counter": 0.1645,
+              "latency": 0.159767,
+              "tolerance": 0.032900000000000006,
+              "status": "AGREE",
+              "role": "diagnostic only; RPC operations are not file-miss events"
+            }
+          }
+        },
+        "fsx_lustre": {
+          "0.1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 6000,
+            "late_share": 0.00016666666666666666,
+            "stat_ops": 6000000,
+            "slow_share_stat": 0.001396,
+            "slow_share_enoent": 0.001992,
+            "counter_snapshot_ns_per_request": 306,
+            "stat_sum_per_request_ns": {
+              "amortised": 7185051.3,
+              "median": 7158697,
+              "p99": 7632270,
+              "max": 18064637
+            },
+            "stat_split": {
+              "fast_centroid_ns": 7081,
+              "slow_centroid_ns": 52546,
+              "threshold_ns": 19290
+            }
+          },
+          "1": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 600,
+            "late_share": 0.0,
+            "stat_ops": 600000,
+            "slow_share_stat": 0.005912,
+            "slow_share_enoent": 0.001697,
+            "counter_snapshot_ns_per_request": 204,
+            "stat_sum_per_request_ns": {
+              "amortised": 7404550.9,
+              "median": 7358510,
+              "p99": 8678688,
+              "max": 16567487
+            },
+            "stat_split": {
+              "fast_centroid_ns": 7249,
+              "slow_centroid_ns": 25656,
+              "threshold_ns": 13638
+            }
+          },
+          "10": {
+            "status": "OK",
+            "method": "rpc-phases-v2",
+            "measured_requests": 60,
+            "late_share": 0.0,
+            "stat_ops": 60000,
+            "slow_share_stat": 0.008817,
+            "slow_share_enoent": 0.016667,
+            "counter_snapshot_ns_per_request": 148,
+            "stat_sum_per_request_ns": {
+              "amortised": 7737831.5,
+              "median": 7575410,
+              "p99": 11163948,
+              "max": 12881548
+            },
+            "stat_split": {
+              "fast_centroid_ns": 7435,
+              "slow_centroid_ns": 27151,
+              "threshold_ns": 14208
+            }
+          }
+        }
+      },
+      "matched_controls": {
+        "0.1": {
+          "status": "OK",
+          "method": "rpc-phases-v2",
+          "measured_requests": 6000,
+          "late_share": 0.0,
+          "stat_ops": 6000000,
+          "slow_share_stat": 0.002099,
+          "slow_share_enoent": 6.5e-05,
+          "counter_snapshot_ns_per_request": 196,
+          "stat_sum_per_request_ns": {
+            "amortised": 1608125.5,
+            "median": 1600435,
+            "p99": 1705137,
+            "max": 4362870
+          },
+          "stat_split": {
+            "fast_centroid_ns": 1552,
+            "slow_centroid_ns": 18863,
+            "threshold_ns": 5410
+          }
+        },
+        "1": {
+          "status": "OK",
+          "method": "rpc-phases-v2",
+          "measured_requests": 600,
+          "late_share": 0.0,
+          "stat_ops": 600000,
+          "slow_share_stat": 0.002918,
+          "slow_share_enoent": 4.2e-05,
+          "counter_snapshot_ns_per_request": 183,
+          "stat_sum_per_request_ns": {
+            "amortised": 1580491.1,
+            "median": 1579035,
+            "p99": 1637696,
+            "max": 1965977
+          },
+          "stat_split": {
+            "fast_centroid_ns": 1547,
+            "slow_centroid_ns": 7639,
+            "threshold_ns": 3438
+          }
+        },
+        "10": {
+          "status": "OK",
+          "method": "rpc-phases-v2",
+          "measured_requests": 60,
+          "late_share": 0.0,
+          "stat_ops": 60000,
+          "slow_share_stat": 0.0011,
+          "slow_share_enoent": 0.001,
+          "counter_snapshot_ns_per_request": 130,
+          "stat_sum_per_request_ns": {
+            "amortised": 1569122.7,
+            "median": 1568419,
+            "p99": 1622866,
+            "max": 1637261
+          },
+          "stat_split": {
+            "fast_centroid_ns": 1545,
+            "slow_centroid_ns": 14601,
+            "threshold_ns": 4750
+          }
+        }
+      },
+      "grades": {
+        "1": {
+          "grade": "REFUTED",
+          "ratio_to_e2": {
+            "efs_host_plain": 0.328,
+            "fsx_openzfs": 1.0,
+            "fsx_lustre": 2.067
+          }
+        },
+        "2": {
+          "grade": "REFUTED",
+          "ontap_over_openzfs": 1.153,
+          "ontap_over_efs": 0.416
+        },
+        "3": {
+          "grade": "REFUTED",
+          "a1_over_a3": {
+            "efs_host_plain": 3.976,
+            "efs_host_tls": 3.275,
+            "fsx_openzfs": 0.735,
+            "fsx_ontap": 1.052
+          }
+        },
+        "4": {
+          "grade": "SUPPORTED",
+          "a8_over_a3": {
+            "efs_host_plain": 0.988,
+            "efs_host_tls": 0.954,
+            "fsx_openzfs": 0.777,
+            "fsx_ontap": 0.99
+          }
+        },
+        "5": {
+          "grade": "SUPPORTED",
+          "rpc_ops_per_stat": {
+            "efs_host_plain@0.1": 0.0017333333333333333,
+            "efs_host_plain@1": 0.017253333333333332,
+            "efs_host_plain@10": 0.1622,
+            "efs_host_tls@0.1": 0.001735,
+            "efs_host_tls@1": 0.017283333333333335,
+            "efs_host_tls@10": 0.16928333333333334,
+            "fsx_ontap@0.1": 0.001734,
+            "fsx_ontap@1": 0.017241666666666666,
+            "fsx_ontap@10": 0.1645
+          }
+        },
+        "6": {
+          "grade": "SUPPORTED",
+          "rpc_ops_per_stat": {
+            "0.1": 5.833333333333333e-05,
+            "1": 0.0006833333333333333,
+            "10": 0.006833333333333334
+          },
+          "expiry_probes": {
+            "0.1": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "1": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "10": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            }
+          },
+          "note": "amended rate test; no causal delegation verdict"
+        },
+        "8": {
+          "grade": "SUPPORTED",
+          "rpc_ops_per_call_at_1s": {
+            "efs_host_plain": {
+              "enoent": 9.666666666666667e-05,
+              "stat": 0.017253333333333332
+            },
+            "efs_host_tls": {
+              "enoent": 6.666666666666667e-05,
+              "stat": 0.017283333333333335
+            },
+            "fsx_openzfs": {
+              "enoent": 0.0,
+              "stat": 0.0006833333333333333
+            },
+            "fsx_ontap": {
+              "enoent": 0.00010666666666666667,
+              "stat": 0.017241666666666666
+            }
+          },
+          "note": "amended phase-attributed rate test; positive phase precedes ENOENT"
+        },
+        "9": {
+          "grade": "SUPPORTED",
+          "efs_over_ebs": 4.31,
+          "efs_per_request_ns": {
+            "amortised": 7376140.0,
+            "median": 2040320,
+            "p99": 169709502,
+            "max": 203861988
+          },
+          "ebs_per_request_ns": {
+            "amortised": 1713124.6,
+            "median": 1706730,
+            "p99": 1816394,
+            "max": 3208236
+          }
+        },
+        "10": {
+          "grade": "SUPPORTED",
+          "top5pct_share_of_rpc_ops": 0.7886,
+          "requests": 600,
+          "rpc_ops": 10352
+        },
+        "7": {
+          "grade": "ERROR",
+          "why": "EBS noise makes Lustre slow-cluster attribution ambiguous at 10s",
+          "reference_binding": "same-time EBS from the corresponding Lustre batch"
+        }
+      },
+      "source_commit": "b5b480fe0f2882bf89cca56561ff435cf7b35517",
+      "image_digest": "sha256:c42cef080f1637ef57f8417a7cf5efaf595de345de4492b305e43bccfeaf8ec6",
+      "deployment_id": "12c50af3a77b0044a0ffcbdc19af52d290cbb3fbb088827e183944798636cb0c"
+    }
+  },
+  "predictions": {
+    "1": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "REFUTED",
+          "ratio_to_e2": {
+            "efs_host_plain": 0.328,
+            "fsx_openzfs": 1.0,
+            "fsx_lustre": 2.067
+          }
+        }
+      }
+    },
+    "2": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "REFUTED",
+          "ontap_over_openzfs": 1.153,
+          "ontap_over_efs": 0.416
+        }
+      }
+    },
+    "3": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "REFUTED",
+          "a1_over_a3": {
+            "efs_host_plain": 3.976,
+            "efs_host_tls": 3.275,
+            "fsx_openzfs": 0.735,
+            "fsx_ontap": 1.052
+          }
+        }
+      }
+    },
+    "4": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "SUPPORTED",
+          "a8_over_a3": {
+            "efs_host_plain": 0.988,
+            "efs_host_tls": 0.954,
+            "fsx_openzfs": 0.777,
+            "fsx_ontap": 0.99
+          }
+        }
+      }
+    },
+    "5": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "SUPPORTED",
+          "rpc_ops_per_stat": {
+            "efs_host_plain@0.1": 0.0017333333333333333,
+            "efs_host_plain@1": 0.017253333333333332,
+            "efs_host_plain@10": 0.1622,
+            "efs_host_tls@0.1": 0.001735,
+            "efs_host_tls@1": 0.017283333333333335,
+            "efs_host_tls@10": 0.16928333333333334,
+            "fsx_ontap@0.1": 0.001734,
+            "fsx_ontap@1": 0.017241666666666666,
+            "fsx_ontap@10": 0.1645
+          }
+        }
+      }
+    },
+    "6": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "SUPPORTED",
+          "rpc_ops_per_stat": {
+            "0.1": 5.833333333333333e-05,
+            "1": 0.0006833333333333333,
+            "10": 0.006833333333333334
+          },
+          "expiry_probes": {
+            "0.1": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "1": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            },
+            "10": {
+              "state": "REVALIDATION_OBSERVED",
+              "idle_seconds": 75.0,
+              "rpc_ops": {
+                "GETATTR": 1041,
+                "LOOKUP": 0,
+                "ACCESS": 0
+              },
+              "note": "suppression is consistent with delegations; does not prove held state"
+            }
+          },
+          "note": "amended rate test; no causal delegation verdict"
+        }
+      }
+    },
+    "7": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "ERROR",
+          "why": "EBS noise makes Lustre slow-cluster attribution ambiguous at 10s",
+          "reference_binding": "same-time EBS from the corresponding Lustre batch"
+        }
+      }
+    },
+    "8": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "SUPPORTED",
+          "rpc_ops_per_call_at_1s": {
+            "efs_host_plain": {
+              "enoent": 9.666666666666667e-05,
+              "stat": 0.017253333333333332
+            },
+            "efs_host_tls": {
+              "enoent": 6.666666666666667e-05,
+              "stat": 0.017283333333333335
+            },
+            "fsx_openzfs": {
+              "enoent": 0.0,
+              "stat": 0.0006833333333333333
+            },
+            "fsx_ontap": {
+              "enoent": 0.00010666666666666667,
+              "stat": 0.017241666666666666
+            }
+          },
+          "note": "amended phase-attributed rate test; positive phase precedes ENOENT"
+        }
+      }
+    },
+    "9": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "SUPPORTED",
+          "efs_over_ebs": 4.31,
+          "efs_per_request_ns": {
+            "amortised": 7376140.0,
+            "median": 2040320,
+            "p99": 169709502,
+            "max": 203861988
+          },
+          "ebs_per_request_ns": {
+            "amortised": 1713124.6,
+            "median": 1706730,
+            "p99": 1816394,
+            "max": 3208236
+          }
+        }
+      }
+    },
+    "10": {
+      "status": "NOT EVALUABLE",
+      "per_replication": {
+        "20261027T093314Z-b5b480f/rep-1": {
+          "grade": "SUPPORTED",
+          "top5pct_share_of_rpc_ops": 0.7886,
+          "requests": 600,
+          "rpc_ops": 10352
+        }
+      }
+    }
+  },
+  "grader_sha256": {
+    "e5_formal_stats.py": "374702cc8d2f6574864ee9fd0e46c31970d2a5793a7e72327a64ddb03f1c8791",
+    "e5_stats.py": "c9c6c46c58a13f39e4caa2effa742e80138b093e94cfb6a6cdf1ea4416c83d3c",
+    "e5_diagnostic_stats.py": "13f835dbc3967bcc0a6c4b0eb35b36681c9ba1bfc5b724fa068aad8c20cde723"
+  }
+}

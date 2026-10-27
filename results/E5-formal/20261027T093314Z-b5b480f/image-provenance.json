@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-27T11:18:53.356807+00:00",
+  "source_commit": "b5b480fe0f2882bf89cca56561ff435cf7b35517",
+  "ownership_verified": true,
+  "observation": "ECS control-plane metadata; no host command",
+  "task_status": "RUNNING",
+  "containers": [
+    {
+      "name": "cache-dropper",
+      "image_digest": "sha256:c42cef080f1637ef57f8417a7cf5efaf595de345de4492b305e43bccfeaf8ec6",
+      "last_status": "RUNNING"
+    },
+    {
+      "name": "bench",
+      "image_digest": "sha256:c42cef080f1637ef57f8417a7cf5efaf595de345de4492b305e43bccfeaf8ec6",
+      "last_status": "RUNNING"
+    }
+  ]
+}

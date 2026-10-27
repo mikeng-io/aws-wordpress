@@ -1,0 +1,93 @@
+{
+  "method": "isolation-formal-v3",
+  "grade_unchanged": "P7 ERROR",
+  "interval_checks": {
+    "0.1": {
+      "control_slow_share": 0.002099,
+      "control_slow_centroid_ns": 18863,
+      "lustre_threshold_ns": 19290,
+      "lustre_slow_share": 0.001396,
+      "share_gate_triggered": false,
+      "centroid_gate_triggered": false
+    },
+    "1": {
+      "control_slow_share": 0.002918,
+      "control_slow_centroid_ns": 7639,
+      "lustre_threshold_ns": 13638,
+      "lustre_slow_share": 0.005912,
+      "share_gate_triggered": false,
+      "centroid_gate_triggered": false
+    },
+    "10": {
+      "control_slow_share": 0.0011,
+      "control_slow_centroid_ns": 14601,
+      "lustre_threshold_ns": 14208,
+      "lustre_slow_share": 0.008817,
+      "share_gate_triggered": false,
+      "centroid_gate_triggered": true
+    }
+  },
+  "exact_10s_control_positive_operations": {
+    "operations": 60000,
+    "sampling": "all 60 measured requests, 1000 stat calls each; warm requests excluded",
+    "at_or_above_lustre_boundary": 30,
+    "requests_with_such_operations": 28,
+    "sequence_positions": {
+      "0": 27,
+      "176": 1,
+      "524": 1,
+      "972": 1
+    },
+    "top_requests": [
+      [
+        "38",
+        2
+      ],
+      [
+        "48",
+        2
+      ],
+      [
+        "30",
+        1
+      ],
+      [
+        "31",
+        1
+      ],
+      [
+        "34",
+        1
+      ],
+      [
+        "35",
+        1
+      ],
+      [
+        "37",
+        1
+      ],
+      [
+        "39",
+        1
+      ],
+      [
+        "41",
+        1
+      ],
+      [
+        "42",
+        1
+      ]
+    ],
+    "p50_ns": 1536,
+    "p99_ns": 2184,
+    "maximum_ns": 62363,
+    "source_sha256": "d52a09fdad9e1d0938d8af0e213c4d77e2bbad4fe05f03dc17796e4b9b8034a8"
+  },
+  "limitations": [
+    "Descriptive raw-tail review only; does not alter the registered histogram classifier or P7 gate.",
+    "CPU/wall telemetry does not identify the producer of a timing outlier or distinguish OS scheduling from filesystem waits.",
+    "n=1; no causal DLM or general performance verdict."
+  ]
+}
