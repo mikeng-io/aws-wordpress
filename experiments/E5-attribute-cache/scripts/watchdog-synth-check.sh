@@ -31,6 +31,7 @@ export E5_WATCHDOG_TOKEN=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/tagged >/dev/null
 unset E5_WATCHDOG_TOKEN
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5Diagnostic=1 --output /tmp/diagnostic >/dev/null
+./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5Diagnostic=1 -c e5IsolationValidation=1 --output /tmp/isolation >/dev/null
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/bare >/dev/null
 python3 - <<'PY'
 import json
@@ -67,7 +68,19 @@ normal_task=next(r['Properties'] for r in normal['Resources'].values() if r['Typ
 assert 'PidMode' not in normal_task
 assert not {'helper-config','tls-roots'} & {v['Name'] for v in normal_task['Volumes']}
 print('PASS: diagnostic-only PID/config mounts, fresh subtrees and unprivileged bench; study stays separate')
+isolation=json.loads(Path('/tmp/isolation/E5-AttributeCache-dev.template.json').read_text())
+task=next(r['Properties'] for r in isolation['Resources'].values() if r['Type']=='AWS::ECS::TaskDefinition')
+bench=next(c for c in task['ContainerDefinitions'] if c['Name']=='bench')
+assert {v['Name']:v['Value'] for v in bench['Environment']}['E5_DIAGNOSTIC_PROFILE']=='isolation-candidate-v1'
+text=json.dumps(isolation)
+assert 'diag-isolation' in text and 'diag-lustre-control' in text
+assert 'diag-round-1' not in text and 'diag-tls-on' not in text
+print('PASS: candidate profile and fresh EBS references are explicit, historical diagnostic unchanged')
 PY
+if ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5IsolationValidation=1 --output /tmp/invalid-isolation >/tmp/invalid-isolation.log 2>&1; then
+    echo 'FAIL: isolation accepted outside diagnostic mode' >&2; exit 1
+fi
+grep -q 'Isolation validation requires diagnostic mode' /tmp/invalid-isolation.log
 if E5_WATCHDOG_TOKEN=invalid ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/invalid >/tmp/invalid.log 2>&1; then
     echo 'FAIL: invalid token accepted' >&2; exit 1
 fi

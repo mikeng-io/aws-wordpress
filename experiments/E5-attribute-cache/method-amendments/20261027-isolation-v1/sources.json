@@ -1,0 +1,10 @@
+{
+  "analysis/e5_diagnostic_stats.py": "13f835dbc3967bcc0a6c4b0eb35b36681c9ba1bfc5b724fa068aad8c20cde723",
+  "analysis/test_e5_isolation_acceptance.py": "b08180b7be74ee909584c5d5eb71512bb7588055bf94b6310d2acae5dd4beb0a",
+  "infra/lib/stacks/bench/e5-isolation-validation.py": "b62db40e594446912f82c647b81ffe4167ed5e6c870ef8f5ff077ef49ed231f2",
+  "infra/lib/stacks/bench/e5-diagnostic-host.py": "845d08d9d55ed45240bea7b5461a9f3ad234eee91a35d68337b5b189a3d387b1",
+  "infra/lib/stacks/bench/e5-diagnostic.py": "9cedebd0007414586f1c3e6d49eba94e5cf34b8af5b9dd5af142cf181b586f1b",
+  "infra/lib/stacks/e5-attribute-cache.ts": "3740e61151b80ac1f74712317835bc79cc75fe6e7097cb2c0f463bc668854958",
+  "experiments/E5-attribute-cache/scripts/watchdog.py": "7b4858d35f3648ab16d3e6495f891f6a948795e5c77650fcf3bd48c3588cc2a5",
+  "experiments/E5-attribute-cache/scripts/collect.sh": "d0ace42716de409b49af75de5f19a99f1b3b8b508bf207db06f84631cffcea3a"
+}

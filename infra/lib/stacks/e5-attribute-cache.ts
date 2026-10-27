@@ -48,6 +48,8 @@ export class E5AttributeCacheStack extends ExperimentStack {
   constructor(scope: Construct, id: string, props: E5AttributeCacheProps) {
     super(scope, id, props);
     const diagnostic = this.node.tryGetContext('e5Diagnostic') === '1';
+    const isolation = this.node.tryGetContext('e5IsolationValidation') === '1';
+    if (isolation && !diagnostic) throw new Error('Isolation validation requires diagnostic mode');
 
     const instanceType = props.instanceType ?? ec2.InstanceType.of(
       ec2.InstanceClass.C7GD,
@@ -286,7 +288,10 @@ export class E5AttributeCacheStack extends ExperimentStack {
     const seeder = fs.readFileSync(path.join(__dirname, 'bench', 'e5-seed.py'), 'utf8');
     if (seeder.includes('E5SEED_EOF')) throw new Error('e5-seed.py contains the heredoc terminator');
 
-    const diagnosticSubtrees = (base: string, tier: string) => diagnostic ? [
+    const diagnosticSubtrees = (base: string, tier: string) => isolation ? [
+      ...['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-isolation`),
+      ...(tier === 'ebs' ? ['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-lustre-control`) : []),
+    ] : diagnostic ? [
       ...['2','3'].flatMap((r) => ['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-round-${r}`)),
       ...(tier === 'fsx_lustre' ? ['1','4'].map((r) => `${base}/ss-0.1/diag-round-${r}`) : []),
       ...(tier === 'efs_host_tls' ? ['on','off'].flatMap((m) => ['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-tls-${m}`)) : []),
@@ -408,6 +413,7 @@ export class E5AttributeCacheStack extends ExperimentStack {
         E5_NFS_TIERS: NFS_TIERS.join(' '),
         BENCH_S3_BUCKET: resultsBucket.bucketName,
         BENCH_ARM: 'ec2',
+        ...(isolation ? { E5_DIAGNOSTIC_PROFILE: 'isolation-candidate-v1' } : {}),
       },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'e5-ec2', logGroup }),
     });

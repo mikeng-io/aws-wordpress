@@ -91,7 +91,7 @@ def analyze(root):
     except (OSError,ValueError):complete=False
     idle=[]
     for p in protocol['phases']:
-        if p['kind']!='tls-idle':continue
+        if p['kind'] not in ('tls-idle','isolation-idle'):continue
         snapshots=p['snapshots']
         if len(snapshots)<2:
             idle.append(dict(mode=p['mode'],status='INCOMPLETE',snapshots=len(snapshots)))
@@ -106,7 +106,8 @@ def analyze(root):
         except (ValueError,KeyError,OSError,TypeError,ZeroDivisionError,IndexError) as exc:cells[key]=dict(status='ERROR',reason=str(exc))
     integrity_errors=[]
     for phase in protocol['phases']:
-        folder=(f"tls-{phase['mode']}" if phase['kind']=='tls-active' else
+        folder=(phase['folder'] if phase['kind']=='isolation-batch' else
+                f"tls-{phase['mode']}" if phase['kind']=='tls-active' else
                 f"round-{phase['round']}" if phase['kind']=='lustre-concurrency' else None)
         if folder is None:continue
         try:
@@ -117,8 +118,80 @@ def analyze(root):
                 if cell.get('exit_code')!=0:integrity_errors.append(f"{key}: child exit not zero")
         except (OSError,ValueError,KeyError) as exc:integrity_errors.append(f'{folder}: {exc}')
     all_valid=complete and bool(cells) and not integrity_errors and all(v['status']=='VALID_DIAGNOSTIC_INPUT' for v in cells.values())
-    return dict(schema='e5-diagnostic-analysis-v1',completed=complete,all_inputs_valid=all_valid,integrity_errors=integrity_errors,protocol_error=protocol_error,study_replication=False,idle_controls=idle,cells=cells,
+    report = dict(schema='e5-diagnostic-analysis-v1',completed=complete,all_inputs_valid=all_valid,integrity_errors=integrity_errors,protocol_error=protocol_error,study_replication=False,idle_controls=idle,cells=cells,
         trace_root_syscalls_by_kind={p.name:{kind:sum(kind+'(' in line and '/mnt/e5/efs_host_tls/' in line for line in p.read_text().splitlines()) for kind in ('statx','newfstatat')} for p in sorted(root.glob('trace-*.txt'))},
         trace_root_stat_calls={p.name:sum(('statx(' in line or 'newfstatat(' in line) and '/mnt/e5/efs_host_tls/' in line for line in p.read_text().splitlines()) for p in sorted(root.glob('trace-*.txt'))},
         limitations=['n=1; short windows; no study verdict','off-CPU does not distinguish filesystem/lock waits from descheduling'])
+    if protocol.get('method') == 'isolation-candidate-v1':
+        report['candidate_acceptance'] = candidate_acceptance(root,protocol,report)
+    return report
+
+
+def candidate_acceptance(root, protocol, report):
+    """Predeclared candidate checks; never changes the registered E5 grader."""
+    reasons=[]
+    try:
+        marker=json.loads((root/'diagnostic-complete.json').read_text())
+        if marker.get('method')!='isolation-candidate-v1':raise ValueError('wrong candidate marker')
+    except (OSError,ValueError) as exc:reasons.append(f'method identity: {exc}')
+    if not report['all_inputs_valid']:reasons.append('incomplete or invalid diagnostic inputs')
+    if protocol.get('seed_age_at_start_s',0)<120:reasons.append('missing aged seed proof')
+    try:
+        baseline=protocol['baseline'];quiet=protocol['quiet'];after=protocol['after_workload']
+        for meta in (quiet,after):
+            c=meta['config']
+            if c['mount']['optimize_readahead'].lower() not in ('false','no','off','0'):raise ValueError('readahead probe enabled')
+            if c['mount-watchdog']['stunnel_health_check_enabled'].lower() not in ('false','no','off','0'):raise ValueError('health probe enabled')
+            if c['mount-watchdog']['enabled'].lower() not in ('true','yes','on','1'):raise ValueError('lifecycle supervision disabled')
+            if c['mount-watchdog']['poll_interval_sec']!='1':raise ValueError('unsupported watchdog poll interval')
+            if meta['read_ahead_kb']!=baseline['read_ahead_kb']:raise ValueError('effective readahead changed')
+            if meta['watchdog_pid']!=baseline['watchdog_pid']:raise ValueError('watchdog restarted')
+        restored=protocol['restored']
+        if not restored['restored_bytes_match'] or restored['config']!=baseline['config'] or restored['read_ahead_kb']!=baseline['read_ahead_kb']:
+            raise ValueError('restoration unverified')
+    except (KeyError,ValueError,TypeError,AttributeError) as exc:reasons.append(f'helper profile: {exc}')
+    if len(report['idle_controls'])!=1 or report['idle_controls'][0].get('elapsed_seconds',0)<360:
+        reasons.append('quiet idle window shorter than 360 seconds')
+    elif len(report['idle_controls'][0]['deltas'])!=5:
+        reasons.append('quiet idle control missing TLS mount roots')
+    elif any(v for ops in report['idle_controls'][0]['deltas'].values() for v in ops.values()):
+        reasons.append('background GETATTR/LOOKUP/ACCESS in idle control')
+    if not (root/'trace-quiet.txt').is_file() or report['trace_root_stat_calls'].get('trace-quiet.txt',-1)!=0:
+        reasons.append('quiet helper root trace not silent or absent')
+    expected={f'non-lustre/{t}-{d}.req.csv':(d,360) for t in
+              ('ebs','efs_host_plain','efs_host_tls','fsx_openzfs','fsx_ontap') for d in ('0.1','1','10')}
+    expected.update({f'lustre-{d}/{t}-{d}.req.csv':(d,180) for d in ('0.1','1','10') for t in ('fsx_lustre','ebs')})
+    if set(report['cells'])!=set(expected):reasons.append('candidate requires 18 target cells plus three matched EBS references')
+    for key,(d,seconds) in expected.items():
+        cell=report['cells'].get(key,{})
+        if cell.get('status')!='VALID_DIAGNOSTIC_INPUT':continue
+        tier=Path(key).name.rsplit('-',1)[0]
+        nfs=tier not in ('ebs','fsx_lustre')
+        if nfs and 'rpc' not in cell:reasons.append(f'{key}: missing NFS RPC instrumentation')
+        if cell['delta_ns']!=round(float(d)*1e9) or cell['requests']!=round(seconds/float(d)):
+            reasons.append(f'{key}: unexpected interval/window')
+        try:
+            with (root/key).open() as f:header=dict(p.split('=',1) for p in next(f).lstrip('#').split())
+            if int(header['warm_requests'])!=round(60/float(d)):raise ValueError('wrong warmup')
+            if header.get('rpc_mount')!=(f'/bench/{tier}.ss-{d}' if nfs else '-'):
+                raise ValueError('wrong or missing measurement mount')
+        except (OSError,KeyError,ValueError) as exc:reasons.append(f'{key} header: {exc}')
+        if cell['late_share']>.05:reasons.append(f'{key}: >5% later than delta/2')
+        if 'rpc' in cell and any(cell['rpc']['window_minus_phase'].values()):
+            reasons.append(f'{key}: phase/window RPC disagreement')
+    previous_end=None
+    for folder,mode,count in [('non-lustre','concurrent',15)]+[(f'lustre-{d}','concurrent',2) for d in ('0.1','1','10')]:
+        try:
+            job=json.loads((root/folder/'diagnostic-run.json').read_text())
+            if job['mode']!=mode or len(job['cells'])!=count:raise ValueError('wrong batch shape')
+            names={Path(key).name.removesuffix('.req.csv') for key in expected if key.startswith(folder+'/')}
+            if {c['cell'] for c in job['cells']}!=names:raise ValueError('wrong batch cell identities')
+            if job['warmup']!=60 or job['measure']!=(360 if folder=='non-lustre' else 180):raise ValueError('wrong batch timing')
+            start=min(c['started_monotonic_ns'] for c in job['cells'])
+            end=max(c['reaped_monotonic_ns'] for c in job['cells'])
+            if end<start or (previous_end is not None and start<previous_end):raise ValueError('overlapping batches')
+            previous_end=end
+        except (OSError,KeyError,ValueError) as exc:reasons.append(f'{folder} schedule: {exc}')
+    return dict(status='PASS_CANDIDATE_ONLY' if not reasons else 'NOT_READY',reasons=reasons,
+                study_verdict=False,note='An offline fixture pass is not live AWS acceptance or authorisation')
 if __name__=='__main__':print(json.dumps(analyze(Path(sys.argv[1])),indent=2,sort_keys=True))

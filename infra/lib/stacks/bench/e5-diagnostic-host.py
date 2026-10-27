@@ -11,12 +11,44 @@ import os
 from pathlib import Path
 import signal
 import subprocess
+import tempfile
 import time
 
-CTL = Path('/bench/cache-ctl')
+CTL = Path(os.environ.get('CACHE_CTL_DIR','/bench/cache-ctl'))
 CONFIG = Path('/host-efs/efs-utils.conf')
 ROOT = '/mnt/e5/efs_host_tls/'
 FAMILIES = ['default','forced','ss-0.1','ss-1','ss-10']
+
+
+def write_config(value):
+    """Replace atomically so the polling watchdog never reads a truncated file."""
+    info = CONFIG.stat()
+    with tempfile.NamedTemporaryFile(dir=CONFIG.parent, delete=False) as f:
+        temporary = Path(f.name)
+        try:
+            os.fchmod(f.fileno(), info.st_mode & 0o7777)
+            os.fchown(f.fileno(), info.st_uid, info.st_gid)
+            f.write(value); f.flush(); os.fsync(f.fileno())
+            temporary.replace(CONFIG)
+        finally:
+            temporary.unlink(missing_ok=True)
+
+
+def apply_profile(original, verb):
+    if verb not in ('on','off','quiet','restore'):
+        raise ValueError('unknown helper profile')
+    if verb == 'restore':
+        write_config(original)
+        return
+    c = configparser.ConfigParser(interpolation=None)
+    c.read_string(original.decode())
+    if verb == 'quiet' and not c.getboolean('mount-watchdog','enabled',fallback=True):
+        raise ValueError('quiet profile requires lifecycle watchdog enabled')
+    c.set('mount','optimize_readahead','true' if verb == 'on' else 'false')
+    if verb == 'quiet':
+        c.set('mount-watchdog','stunnel_health_check_enabled','false')
+    value = io.StringIO(); c.write(value)
+    write_config(value.getvalue().encode())
 
 
 def rpc_snapshot():
@@ -88,17 +120,14 @@ def serve():
                     verb = request['verb']
                     if verb == 'snapshot':
                         data = rpc_snapshot()
-                    elif verb in ('on','off','restore'):
-                        if verb == 'restore':
-                            CONFIG.write_bytes(original)
-                        else:
-                            c = configparser.ConfigParser(interpolation=None)
-                            c.read_string(original.decode())
-                            c.set('mount','optimize_readahead','true' if verb == 'on' else 'false')
-                            value = io.StringIO(); c.write(value)
-                            CONFIG.write_text(value.getvalue())
+                    elif verb == 'metadata':
+                        data = config_metadata()
+                    elif verb in ('on','off','quiet','restore'):
+                        apply_profile(original,verb)
                         time.sleep(3)  # watchdog reloads the file each poll
                         data = config_metadata()
+                        if verb == 'restore':
+                            data['restored_bytes_match'] = CONFIG.read_bytes() == original
                     elif verb == 'trace-start':
                         if trace is not None:
                             raise ValueError('trace already running')
@@ -126,8 +155,10 @@ def serve():
                 job.unlink()
             time.sleep(.05)
     finally:
-        stop_trace()
-        CONFIG.write_bytes(original)
+        try:
+            stop_trace()
+        finally:
+            write_config(original)
 
 
 if __name__ == '__main__':

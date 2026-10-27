@@ -11,12 +11,38 @@ import sys
 from pathlib import Path
 import subprocess
 import tempfile
+import time
 import unittest
 
 
 @unittest.skipUnless(sys.platform == 'linux' and shutil.which('gcc'),
                      'requires Linux and gcc; use make e5-instrument-selftest')
 class InstrumentTests(unittest.TestCase):
+    def test_candidate_is_packaged_with_fresh_reference_plan(self):
+        program="import runpy;m=runpy.run_path('/usr/local/bin/e5-isolation-validation.py');assert sum(len(p['cells']) for p in m['phases']())==21"
+        subprocess.run(['python3','-c',program],check=True)
+    def test_sidecar_sigterm_exits_and_restores_failed_profile_transition(self):
+        # This runs only inside an ephemeral bench container, with no host config
+        # bind or privileges. A failed metadata read follows a real config write.
+        config=Path('/host-efs/efs-utils.conf');config.parent.mkdir(exist_ok=True)
+        original=b'[mount]\noptimize_readahead=true\n[mount-watchdog]\nenabled=true\nstunnel_health_check_enabled=true\n'
+        config.write_bytes(original)
+        control=self.root/'shutdown-control';control.mkdir()
+        script=Path(__file__).resolve().parents[1]/'infra/lib/stacks/bench/cache-dropper'
+        process=subprocess.Popen(['bash',str(script)],env=dict(os.environ,E5_DIAGNOSTIC='1',CACHE_CTL_DIR=str(control)),
+                                 stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+        try:
+            (control/'diag-test.request').write_text('{"verb":"quiet"}')
+            deadline=time.monotonic()+10
+            while not (control/'diag-test.response').exists() and time.monotonic()<deadline:time.sleep(.05)
+            self.assertTrue((control/'diag-test.response').exists())
+            self.assertIn(b'optimize_readahead = false',config.read_bytes())
+            process.terminate()
+            self.assertEqual(process.wait(timeout=5),0)
+            self.assertEqual(config.read_bytes(),original)
+        finally:
+            if process.poll() is None:process.kill();process.wait()
+            config.unlink(missing_ok=True)
     @classmethod
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()

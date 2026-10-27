@@ -16,7 +16,8 @@ echo ready > "$d/ready"
 if [ "${E5_DIAGNOSTIC:-}" = 1 ]; then
     python3 /usr/local/bin/e5-diagnostic-host.py &
     diagnostic_pid=$!
-    trap 'kill "$diagnostic_pid" 2>/dev/null; wait "$diagnostic_pid" 2>/dev/null' EXIT TERM INT
+    trap 'kill "$diagnostic_pid" 2>/dev/null; wait "$diagnostic_pid" 2>/dev/null' EXIT
+    trap 'exit 0' TERM INT
 fi
 # E5: a snapshot of the Lustre client's counters, on request (request-lustre-stats).
 # Every root the client might use is tried, because where 2.15 puts md_stats and the

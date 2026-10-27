@@ -129,6 +129,7 @@ e5-diagnostic-selftest: ## Diagnostic controls, analysis and watchdog checks; no
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_watchdog.py
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_diagnostic_control.py
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_diagnostic_stats.py
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_isolation_acceptance.py
 
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results

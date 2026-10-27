@@ -160,6 +160,12 @@ lock-cache interaction needs isolation; no gate or hypothesis verdict was change
 The diagnostic completed, and the host guard plus an independent 18-region audit
 verified teardown. It is not a formal replication.
 
+The [isolation candidate](experiments/E5-attribute-cache/method-amendments/20261027-isolation-v1/README.md)
+is implemented and verified offline: both TLS probes controlled explicitly,
+non-Lustre workloads separated from sequential Lustre/EBS reference pairs, with
+unchanged hard gates. Live candidate acceptance and fresh budget clearance remain
+outstanding; no additional AWS run was launched for this preparation.
+
 E4 remains specced. E2 narrowed its substrate question for the tested workload;
 E5 must establish the remaining cache cost before deciding whether to build an
 adapter. JuiceFS, SeaweedFS and Mountpoint-S3 remain unmeasured matrix arms.

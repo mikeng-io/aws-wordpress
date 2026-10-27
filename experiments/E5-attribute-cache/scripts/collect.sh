@@ -33,10 +33,14 @@ RESULT_KIND=E5
 CDK_CONTEXT=()
 case "$RUN_KIND" in
     study) ;;
-    diagnostic)
+    diagnostic|isolation-validation)
         [ "$REPS" = 1 ] && [ -z "${RESUME_RUN_ID:-}" ] || { echo 'diagnostic requires one fresh deployment' >&2; exit 1; }
         RESULT_KIND=E5-diagnostic
         CDK_CONTEXT=(-c e5Diagnostic=1)
+        if [ "$RUN_KIND" = isolation-validation ]; then
+            RESULT_KIND=E5-isolation-validation
+            CDK_CONTEXT+=(-c e5IsolationValidation=1)
+        fi
         ;;
     *) echo 'unsupported E5 run kind' >&2; exit 1 ;;
 esac
@@ -447,7 +451,7 @@ for rep in $(seq "$START_REP" "$REPS"); do
         log "  host provenance captured"
     fi
 
-    if [ "$RUN_KIND" = diagnostic ]; then
+    if [ "$RUN_KIND" != study ]; then
         log 'running one bounded diagnostic task; not a study replication'
         TASK_FAILED=0
         EC2_TASK=$(run_task ec2 "$TASK_DEF" \
@@ -455,13 +459,16 @@ for rep in $(seq "$START_REP" "$REPS"); do
         mkdir -p "$REP_DIR/diagnostic"
         aws s3 sync "s3://$BUCKET/diagnostic/" "$REP_DIR/diagnostic/" --only-show-errors || TASK_FAILED=1
         [ -s "$REP_DIR/diagnostic/diagnostic-complete.json" ] || TASK_FAILED=1
-        python3 - "$REP_DIR/meta.json" "$RUN_ID" "$TASK_FAILED" <<'PY'
+        python3 - "$REP_DIR/meta.json" "$RUN_ID" "$TASK_FAILED" "$RUN_KIND" <<'PY'
 import json,subprocess,sys
 from datetime import datetime,timezone
-json.dump(dict(experiment='E5-diagnostic',study_replication=False,run_id=sys.argv[2],
+protocol_path=__import__('pathlib').Path(sys.argv[1]).parent/'diagnostic/protocol.json'
+protocol=json.load(protocol_path.open()) if protocol_path.exists() else {}
+json.dump(dict(experiment='E5-'+sys.argv[4],study_replication=False,run_id=sys.argv[2],
     source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
     utc=datetime.now(timezone.utc).isoformat(),task_failed=bool(int(sys.argv[3])),
-    protocol='TLS idle on/off/off/on 120s each; active on/off 60+180s; Lustre ABBA 60+180s per round'),
+    protocol_method=protocol.get('method','legacy-diagnostic-v1'),
+    protocol='See diagnostic/protocol.json for the exact profile, schedule and windows'),
     open(sys.argv[1],'w'),indent=2)
 PY
         destroy

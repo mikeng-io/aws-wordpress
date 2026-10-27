@@ -27,6 +27,7 @@ RUN gcc -O2 -Wall -Werror -o /usr/local/bin/agebench /src/agebench.c -lm
 
 COPY request-drop cache-dropper request-lustre-stats /usr/local/bin/
 COPY diagnostic-serve.py e5-diagnostic.py e5-diagnostic-host.py /usr/local/bin/
+COPY e5-isolation-validation.py /usr/local/bin/
 COPY e5-run.sh /usr/local/bin/e5-run
 COPY conformance.sh /usr/local/bin/conformance
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

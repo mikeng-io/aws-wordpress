@@ -45,6 +45,13 @@ budget. Diagnostic resume/multiple deployments are rejected. Results go under
 retains its six-hour default. These runtime limits are not a dollar payment cap.
 `make e5-diagnostic-selftest` runs control, analysis and watchdog checks without AWS.
 
+The prepared `isolation-validation` run kind has the same single-fresh-deployment
+and short-deadline restrictions, with output under `results/E5-isolation-validation`.
+It selects an explicit candidate profile; it is not a study resume or replication.
+See the [candidate contract](../experiments/E5-attribute-cache/method-amendments/20261027-isolation-v1/README.md).
+No budget clearance or live acceptance is implied by its offline tests, and the
+old pilot budget assumptions must not be reused for it.
+
 - E5 deploys with `--method direct`: default change sets create an untagged
   REVIEW_IN_PROGRESS placeholder before execution. The guard never assumes
   ownership of such a placeholder, and an unowned same-name stack prevents a

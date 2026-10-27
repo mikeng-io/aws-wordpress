@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-27T07:18:22.992770+00:00",
+  "baseline": "e0a1013",
+  "live_aws_account_calls": false,
+  "new_aws_deployments": false,
+  "current_host_config_edits": false,
+  "legacy_diagnostic_reanalysis_byte_identical": true,
+  "preserved_runs": {
+    "20261026T152946Z-b1efcb2": {
+      "entries": 289,
+      "manifest_unchanged": true
+    },
+    "20261027T042037Z-7d9be14": {
+      "entries": 351,
+      "manifest_unchanged": true
+    }
+  },
+  "formal_grader_unchanged": true,
+  "formal_study_runner_unchanged": true,
+  "verified_utc": "2026-10-27T07:20:51.204210+00:00",
+  "test_counts": {
+    "watchdog": 35,
+    "control": 8,
+    "analysis": 7,
+    "candidate_acceptance": 3,
+    "linux_instrument": 9
+  }
+}

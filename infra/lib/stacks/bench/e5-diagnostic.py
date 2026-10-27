@@ -9,7 +9,7 @@ import subprocess
 import time
 import uuid
 
-CTL = Path('/bench/cache-ctl')
+CTL = Path(os.environ.get('CACHE_CTL_DIR','/bench/cache-ctl'))
 OUT = Path('/tmp/e5-diagnostic')
 TIERS = ['ebs','efs_host_plain','efs_host_tls','fsx_openzfs','fsx_ontap','fsx_lustre']
 DELTAS = ['0.1','1','10']
@@ -43,6 +43,9 @@ def cell(tier, delta, suffix):
 
 
 def main():
+    profile = os.environ.get('E5_DIAGNOSTIC_PROFILE','legacy')
+    if profile not in ('legacy','isolation-candidate-v1'):
+        raise ValueError('unsupported diagnostic profile')
     OUT.mkdir(exist_ok=False)
     seed = int(Path('/bench/host-facts/seed-utc').read_text())
     age = int(time.time())-seed
@@ -53,6 +56,7 @@ def main():
     shutil.copy('/tmp/mount-facts.csv',OUT/'mount-facts.csv')
     receipt = dict(study_replication=False, warmup_s=60, measured_s=180,
                    seed_age_at_start_s=int(time.time())-seed, phases=[])
+    if profile == 'isolation-candidate-v1':receipt['method']=profile
     (OUT/'protocol.json').write_text(json.dumps(receipt,indent=2)+'\n')
     for tier in TIERS:
         conf = f'/bench/{tier}/conf' if tier in ('ebs','fsx_lustre') else f'/bench/{tier}.default/conf'
@@ -60,6 +64,12 @@ def main():
             subprocess.run(['conformance',conf],check=True,stdout=log,stderr=subprocess.STDOUT)
     spec = importlib.util.spec_from_file_location('runner','/usr/local/bin/diagnostic-serve.py')
     runner = importlib.util.module_from_spec(spec); spec.loader.exec_module(runner)
+    if profile == 'isolation-candidate-v1':
+        spec = importlib.util.spec_from_file_location('isolation','/usr/local/bin/e5-isolation-validation.py')
+        isolation = importlib.util.module_from_spec(spec); spec.loader.exec_module(isolation)
+        isolation.run(host,runner,OUT,receipt['seed_age_at_start_s'])
+        (OUT/'diagnostic-complete.json').write_text(json.dumps(dict(completed=True,study_replication=False,method=profile))+'\n')
+        return
     def save():
         (OUT/'protocol.json').write_text(json.dumps(receipt,indent=2)+'\n')
     try:

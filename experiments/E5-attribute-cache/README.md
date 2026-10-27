@@ -16,6 +16,12 @@ GETATTR pairs. Lustre lateness reproduces at 23.2%/21.5% under concurrency versu
 attribution/isolation before a new formal run. No thresholds, original pilot
 grading or aggregate/H1 verdict changed; this short diagnostic is not replication 2.
 
+The [isolation candidate v1](method-amendments/20261027-isolation-v1/README.md) now
+provides an explicit two-probe quiet profile, a full five-minute-cycle idle control
+and sequential Lustre/EBS reference pairs. It is offline verified, diagnostic-only
+and budget/live acceptance is still outstanding. The registered study runner and
+grader remain unchanged.
+
 See the [pilot review](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
 [unchanged-method grading](../../results/E5/20261026T152946Z-b1efcb2/summary.md) and
 [final teardown evidence](../../results/E5/20261026T152946Z-b1efcb2/teardown.json).
