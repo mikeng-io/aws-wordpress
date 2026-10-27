@@ -33,6 +33,11 @@ RESULT_KIND=E5
 CDK_CONTEXT=()
 case "$RUN_KIND" in
     study) ;;
+    formal-isolation)
+        [ "$REPS" = 1 ] && [ -z "${RESUME_RUN_ID:-}" ] || { echo 'formal isolation requires one fresh deployment' >&2; exit 1; }
+        RESULT_KIND=E5-formal
+        CDK_CONTEXT=(-c e5Formal=1)
+        ;;
     diagnostic|isolation-validation)
         [ "$REPS" = 1 ] && [ -z "${RESUME_RUN_ID:-}" ] || { echo 'diagnostic requires one fresh deployment' >&2; exit 1; }
         RESULT_KIND=E5-diagnostic
@@ -301,15 +306,17 @@ run_task() {
     # Polled, not `aws ecs wait tasks-stopped`: that waiter gives up after 10 minutes
     # (100 x 6 s) and E5's task runs ~35. A waiter that exits non-zero would fire the
     # destroy trap mid-run. 90 minutes is the ceiling; past it the task is stopped.
-    local deadline=$(( $(date +%s) + 5400 )) last=""
+    local task_ceiling=5400
+    [ "$RUN_KIND" != formal-isolation ] || task_ceiling=7200
+    local deadline=$(( $(date +%s) + task_ceiling )) last=""
     while :; do
         last=$(aws ecs describe-tasks --region "$REGION" --cluster "$CLUSTER" --tasks "$task_arn" \
             --query 'tasks[0].lastStatus' --output text)
         [ "$last" = "STOPPED" ] && break
         if [ "$(date +%s)" -ge "$deadline" ]; then
-            log "  $arm task still $last after 90 min - stopping it"
+            log "  $arm task still $last after ${task_ceiling}s - stopping it"
             aws ecs stop-task --region "$REGION" --cluster "$CLUSTER" --task "$task_arn" \
-                --reason "E5 collect.sh 90-minute ceiling" >/dev/null || true
+                --reason "E5 collect.sh task ceiling" >/dev/null || true
             deadline=$(( $(date +%s) + 600 ))
         fi
         sleep 30
@@ -452,23 +459,38 @@ for rep in $(seq "$START_REP" "$REPS"); do
     fi
 
     if [ "$RUN_KIND" != study ]; then
-        log 'running one bounded diagnostic task; not a study replication'
+        PAYLOAD=diagnostic
+        MARKER=diagnostic-complete.json
+        if [ "$RUN_KIND" = formal-isolation ]; then
+            PAYLOAD=formal; MARKER=formal-complete.json
+        fi
+        log "running one bounded $RUN_KIND task"
         TASK_FAILED=0
         EC2_TASK=$(run_task ec2 "$TASK_DEF" \
             "--capacity-provider-strategy capacityProvider=$CAPACITY_PROVIDER,weight=1" "e5-ec2") || TASK_FAILED=1
-        mkdir -p "$REP_DIR/diagnostic"
-        aws s3 sync "s3://$BUCKET/diagnostic/" "$REP_DIR/diagnostic/" --only-show-errors || TASK_FAILED=1
-        [ -s "$REP_DIR/diagnostic/diagnostic-complete.json" ] || TASK_FAILED=1
-        python3 - "$REP_DIR/meta.json" "$RUN_ID" "$TASK_FAILED" "$RUN_KIND" <<'PY'
-import json,subprocess,sys
+        FORMAL_DIGEST=""; FORMAL_DEPLOYMENT=""
+        if [ "$RUN_KIND" = formal-isolation ]; then
+            FORMAL_DIGEST=$(aws ecs describe-tasks --region "$REGION" --cluster "$CLUSTER" --tasks "$EC2_TASK" \
+                --query "tasks[0].containers[?name=='bench'] | [0].imageDigest" --output text) || TASK_FAILED=1
+            FORMAL_DEPLOYMENT=$(aws cloudformation describe-stacks --region "$REGION" --stack-name "$STACK" \
+                --query 'Stacks[0].StackId' --output text) || TASK_FAILED=1
+            [[ "$FORMAL_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]] || TASK_FAILED=1
+            [[ "$FORMAL_DEPLOYMENT" =~ ^arn:aws:cloudformation:ap-southeast-1:[0-9]{12}:stack/E5-AttributeCache-dev/[0-9a-f-]+$ ]] || TASK_FAILED=1
+        fi
+        mkdir -p "$REP_DIR/$PAYLOAD"
+        aws s3 sync "s3://$BUCKET/$PAYLOAD/" "$REP_DIR/$PAYLOAD/" --only-show-errors || TASK_FAILED=1
+        [ -s "$REP_DIR/$PAYLOAD/$MARKER" ] || TASK_FAILED=1
+        python3 - "$REP_DIR/meta.json" "$RUN_ID" "$TASK_FAILED" "$RUN_KIND" "$PAYLOAD" "$FORMAL_DIGEST" "$FORMAL_DEPLOYMENT" <<'PY'
+import hashlib,json,subprocess,sys
 from datetime import datetime,timezone
-protocol_path=__import__('pathlib').Path(sys.argv[1]).parent/'diagnostic/protocol.json'
+protocol_path=__import__('pathlib').Path(sys.argv[1]).parent/sys.argv[5]/'protocol.json'
 protocol=json.load(protocol_path.open()) if protocol_path.exists() else {}
-json.dump(dict(experiment='E5-'+sys.argv[4],study_replication=False,run_id=sys.argv[2],
+json.dump(dict(experiment='E5-'+sys.argv[4],study_replication=sys.argv[4]=='formal-isolation',run_id=sys.argv[2],
     source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
     utc=datetime.now(timezone.utc).isoformat(),task_failed=bool(int(sys.argv[3])),
     protocol_method=protocol.get('method','legacy-diagnostic-v1'),
-    protocol='See diagnostic/protocol.json for the exact profile, schedule and windows'),
+    image_digest=sys.argv[6],deployment_id=hashlib.sha256(sys.argv[7].encode()).hexdigest() if sys.argv[7] else '',
+    protocol='See '+sys.argv[5]+'/protocol.json for the exact profile, schedule and windows'),
     open(sys.argv[1],'w'),indent=2)
 PY
         destroy

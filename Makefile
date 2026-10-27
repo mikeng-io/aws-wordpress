@@ -131,6 +131,11 @@ e5-diagnostic-selftest: ## Diagnostic controls, analysis and watchdog checks; no
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_diagnostic_stats.py
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_isolation_acceptance.py
 
+.PHONY: e5-formal-selftest
+e5-formal-selftest: ## Full-window formal fixtures, matched P7 controls and guard gates; no AWS calls
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_formal.py -v
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_watchdog.py
+
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results
 	@python3 analysis/e2_chart.py $$(ls -d results/E2/*/ | tail -1)

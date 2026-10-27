@@ -1,0 +1,18 @@
+docker build -q -t e5-bench-local infra/lib/stacks/bench
+sha256:b6bbb24e857181cedee4d15756a517aa65c72600e5dec282149daf4bd6031315
+docker run --rm --entrypoint python3 -v "$PWD:/repo:ro" e5-bench-local /repo/analysis/test_e5_instrument.py -v
+test_both_runner_modes_execute_real_instrument_and_record_failures (__main__.InstrumentTests) ... ok
+test_candidate_is_packaged_with_fresh_reference_plan (__main__.InstrumentTests) ... ok
+test_default_has_no_diagnostic_output (__main__.InstrumentTests) ... ok
+test_diagnostic_write_error_fails_run (__main__.InstrumentTests) ... ok
+test_formal_batch_identity_is_explicit_and_runs_real_instrument (__main__.InstrumentTests) ... ok
+test_invalid_opt_in_fails (__main__.InstrumentTests) ... ok
+test_rpc_endpoints_use_existing_phase_reads_and_expose_gaps (__main__.InstrumentTests) ... ok
+test_runner_refuses_existing_output_and_duplicate_cells (__main__.InstrumentTests) ... ok
+test_sidecar_sigterm_exits_and_restores_failed_profile_transition (__main__.InstrumentTests) ... ok
+test_telemetry_covers_real_work_and_preserves_request_schema (__main__.InstrumentTests) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 4.434s
+
+OK

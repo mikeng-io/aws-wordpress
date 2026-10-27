@@ -29,6 +29,14 @@ DELTAS="${E5_DELTAS:-0.1 1 10}"
 RAW_EVERY="${E5_RAW_EVERY:-0.1:100 1:10 10:1}"
 A8_PASSES="${E5_A8_PASSES:-10}"
 OUT=/tmp/e5
+FORMAL_PHASE="${E5_FORMAL_PHASE:-}"
+case "$FORMAL_PHASE" in
+    '') ;;
+    A|D)
+        [ "${E5_FORMAL_METHOD:-}" = isolation-formal-v3 ] || exit 1
+        OUT="${E5_FORMAL_OUT:?}" ;;
+    *) echo 'invalid formal phase' >&2; exit 1 ;;
+esac
 FACTS=/tmp/mount-facts.csv
 mkdir -p "$OUT"
 
@@ -106,6 +114,19 @@ snap() {  # snap <tier> <cohort> <pre|post> <mount-family>
 
 status() { echo "$2,$3" >> "$OUT/$1/status.csv"; }
 
+wait_attributes() {
+    local start end
+    log "  $1: waiting ${WAIT_S}s for attributes to expire"
+    if [ "$FORMAL_PHASE" = A ]; then
+        start=$(python3 -c 'import time;print(time.monotonic_ns())')
+    fi
+    sleep "$WAIT_S"
+    if [ "$FORMAL_PHASE" = A ]; then
+        end=$(python3 -c 'import time;print(time.monotonic_ns())')
+        echo "a_wait,$1,$start,$end" >> "$FACTS"
+    fi
+}
+
 # One cohort: counters, timed pass, counters. Prints nothing on success.
 cohort() {  # cohort <tier> <cohort> <op> <family> [passes]
     local tier=$1 c=$2 op=$3 fam=$4 passes=${5:-1} dir
@@ -123,6 +144,7 @@ cohort() {  # cohort <tier> <cohort> <op> <family> [passes]
 }
 
 # --- conformance, on the default mount, in conf/ only --------------------------
+if [ "$FORMAL_PHASE" != D ]; then
 for tier in $E5_TIERS; do
     mkdir -p "$OUT/$tier"
     : > "$OUT/$tier/status.csv"
@@ -144,12 +166,12 @@ for tier in $order; do
     {
         cohort "$tier" A1 stat default &&
         cohort "$tier" A2 enoent default &&
-        { log "  $tier: waiting ${WAIT_S}s for attributes to expire"; sleep "$WAIT_S"; } &&
+        wait_attributes "$tier" &&
         cohort "$tier" A3 stat default &&
         cohort "$tier" A4 enoent default &&
         cohort "$tier" A5 stat default &&
         cohort "$tier" A6 open_read default &&
-        { log "  $tier: waiting ${WAIT_S}s"; sleep "$WAIT_S"; } &&
+        wait_attributes "$tier" &&
         cohort "$tier" A7 open_read default &&
         if is_nfs "$tier"; then
             # The forced mount's first pass is a first touch (LOOKUP), not a
@@ -159,8 +181,11 @@ for tier in $order; do
         fi
     } || log "  $tier: cohort A stopped at the first ERROR; later cohorts not run"
 done
+fi
+[ "$FORMAL_PHASE" != A ] || exit 0
 
 # --- cohort B: steady state, everything at once ----------------------------------
+if [ "$FORMAL_PHASE" != D ]; then
 log "cohort B: $(echo $E5_TIERS | wc -w) tiers x intervals {$DELTAS}, warm-up ${WARMUP_S}s, measured ${MEASURE_S}s"
 echo "b_start,$(date +%s)" >> "$FACTS"
 pids=()
@@ -200,6 +225,7 @@ for tier in $E5_TIERS; do
         for k in req raw; do [ -f "$OUT/$tier/B-$d.$k.csv" ] && gzip -9 "$OUT/$tier/B-$d.$k.csv"; done
     done
 done
+fi
 
 # --- expiry probe: all B readers are stopped; do not touch ss mounts while idle ---
 # /proc/uptime is monotonic and does not access any measurement mount.
@@ -213,6 +239,7 @@ for tier in $E5_NFS_TIERS; do
         cohort "$tier" "D-$d" stat "ss-$d" || log "  $tier D-$d: probe unavailable"
     done
 done
+[ "$FORMAL_PHASE" != D ] || exit 0
 
 # --- upload --------------------------------------------------------------------
 if [ -n "${BENCH_S3_BUCKET:-}" ]; then

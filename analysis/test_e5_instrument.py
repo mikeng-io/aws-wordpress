@@ -157,6 +157,18 @@ int main(int argc, char **argv) { return agebench_main(argc, argv); }
                 self.assertTrue((out / f'{tier}-0.1.diagnostics.csv').is_file())
         self.assertEqual(self.runner.run(plan, self.root / 'failed', 'concurrent', 0, .2, '/bin/false'), 1)
 
+    def test_formal_batch_identity_is_explicit_and_runs_real_instrument(self):
+        import json
+        plan = [dict(tier='ebs', directory=str(self.tree), delta='0.1')]
+        out = self.root/'formal-batch'
+        self.assertEqual(self.runner.run(plan,out,'concurrent',0,.2,str(self.exe),study_replication=True),0)
+        receipt=json.loads((out/'diagnostic-run.json').read_text())
+        self.assertTrue(receipt['study_replication'])
+        self.assertEqual(receipt['schema'],'e5-formal-batch-v1')
+        self.assertEqual(receipt['cells'][0]['exit_code'],0)
+        program="import runpy;m=runpy.run_path('/usr/local/bin/e5-formal.py');assert sum(len(p['cells']) for p in m['plans']())==21"
+        subprocess.run(['python3','-c',program],check=True)
+
     def test_runner_refuses_existing_output_and_duplicate_cells(self):
         plan = [dict(tier='a', directory=str(self.tree), delta='0.1')]
         with self.assertRaises(FileExistsError):

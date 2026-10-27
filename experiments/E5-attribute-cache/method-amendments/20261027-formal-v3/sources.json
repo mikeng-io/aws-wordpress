@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-27T09:25:26.151416+00:00",
+  "method": "isolation-formal-v3",
+  "base_commit": "386a62a35008edc4ad302f3206927d57e3904da0",
+  "scope": "Offline apparatus amendment; source hashes, not a live launch receipt",
+  "files": {
+    "Makefile": "fe7df95d7ea3a4e07e662706c07623ae604a81bc4c35123f84b5e2e0eaad98d3",
+    "analysis/e5_formal_stats.py": "374702cc8d2f6574864ee9fd0e46c31970d2a5793a7e72327a64ddb03f1c8791",
+    "analysis/e5_stats.py": "c9c6c46c58a13f39e4caa2effa742e80138b093e94cfb6a6cdf1ea4416c83d3c",
+    "analysis/test_e5_diagnostic_control.py": "526fd2bc75ab5376bd534dcb63b2e27d48787aa4ff6e72d8e91c596be2de879b",
+    "analysis/test_e5_formal.py": "483e1dbb9fc9f6b675db999d73874f2d12e45f5f73b7f04d318437661748bd7b",
+    "analysis/test_e5_instrument.py": "737f45964b188308b490897545494a71667684f9aec7f57b9eae77e79131c6de",
+    "analysis/test_e5_watchdog.py": "b13aaf93d61ce178ddd37a0317cea91174602eecbd585b849eaa874131959961",
+    "experiments/E5-attribute-cache/README.md": "2a46da68ed2c724d3757e46a37ef6660613d8792b05e7d36c4d4af10c500b36d",
+    "experiments/E5-attribute-cache/method-amendments/20261027-formal-v3/README.md": "36acb7ff53bf4f14521fcabf02de1a408c074dd503c0fad42356def7d75fd911",
+    "experiments/E5-attribute-cache/scripts/collect.sh": "ad092a4a6d83722f0979087f7ac30c31f8794643aa11fc00234a82147d544232",
+    "experiments/E5-attribute-cache/scripts/watchdog-synth-check.sh": "078dc7483a76251c70a80c3f694764bc57d679c2b5d894e474fee2b768030a0d",
+    "experiments/E5-attribute-cache/scripts/watchdog.py": "ef9e1a8b80c94ddd3e4661e3036a59ec46711ce689b665bb78182656bef2f8be",
+    "infra/lib/stacks/bench/Dockerfile": "42914b9a48ba9d3e78eb5dfc445efdf614c74823548be5bbf42f3ca3e5cf101d",
+    "infra/lib/stacks/bench/diagnostic-serve.py": "74dcc882298c41110c523a2d50a88c02aeb6327eb65eeda4ca20e23506793389",
+    "infra/lib/stacks/bench/e5-diagnostic-host.py": "60b53bf8ca9a85a2b58900db8cc784aab094cf7911a8f622715bd3800204bd21",
+    "infra/lib/stacks/bench/e5-formal.py": "22c57f6a4551a9b9266ef024061fcb0243751fcf0dc7abbcf46a2e228d4db74d",
+    "infra/lib/stacks/bench/e5-run.sh": "3ab6b46c640a4b5b030cfe472d47d15f458e074a04cf3ff67cb70edecc332a1f",
+    "infra/lib/stacks/bench/entrypoint.sh": "6c1dd78ff139d773e786f27dbafda1c9e02b2342fdc098ed1a9a1f8187d7300c",
+    "infra/lib/stacks/e5-attribute-cache.ts": "983e8ae8f34d009b4c4e632e5f67d290a0acf984d5916baa09f7ccf33816ba88"
+  }
+}

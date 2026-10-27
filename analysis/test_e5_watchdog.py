@@ -297,7 +297,8 @@ class WatchdogTests(unittest.TestCase):
             state = json.loads((directory/"state.json").read_text())
             self.assertEqual(state["phase"], "armed")
             self.assertEqual(state["container_id"], "c"*64)
-            expected = 21600 if os.environ.get('E5_RUN_KIND','study') == 'study' else 4500
+            kind = os.environ.get('E5_RUN_KIND','study')
+            expected = 21600 if kind == 'study' else 10800 if kind == 'formal-isolation' else 4500
             self.assertEqual(state['max_seconds'],expected)
         env = {"AWS_DEFAULT_REGION": w.REGION, "AWS_REGION": w.REGION}
         with patch.object(w, "ROOT", self.directory), patch.object(w, "find_aws_v2", return_value="aws"), \
@@ -314,6 +315,13 @@ class WatchdogTests(unittest.TestCase):
     def test_isolation_validation_launcher_keeps_short_deadline(self):
         with patch.dict(os.environ, {'E5_RUN_KIND':'isolation-validation'}):
             self.test_launcher_creates_stopped_container_and_detaches_host_supervisor()
+
+    def test_formal_launcher_has_three_hour_deadline_and_requires_fresh_single_run(self):
+        with patch.dict(os.environ, {'E5_RUN_KIND':'formal-isolation'}):
+            self.test_launcher_creates_stopped_container_and_detaches_host_supervisor()
+            with self.assertRaises(w.Failure): w.launch(3)
+            with patch.dict(os.environ, {'RESUME_RUN_ID':'old'}):
+                with self.assertRaises(w.Failure): w.launch(1)
 
     def test_unresolved_previous_run_blocks_new_launch(self):
         self.guard.save("failed")

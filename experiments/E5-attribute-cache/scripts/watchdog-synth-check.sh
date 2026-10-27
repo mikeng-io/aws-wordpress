@@ -32,6 +32,7 @@ export E5_WATCHDOG_TOKEN=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 unset E5_WATCHDOG_TOKEN
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5Diagnostic=1 --output /tmp/diagnostic >/dev/null
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5Diagnostic=1 -c e5IsolationValidation=1 --output /tmp/isolation >/dev/null
+./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5Formal=1 --output /tmp/formal >/dev/null
 ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/bare >/dev/null
 python3 - <<'PY'
 import json
@@ -76,11 +77,25 @@ text=json.dumps(isolation)
 assert 'diag-isolation' in text and 'diag-lustre-control' in text
 assert 'diag-round-1' not in text and 'diag-tls-on' not in text
 print('PASS: candidate profile and fresh EBS references are explicit, historical diagnostic unchanged')
+formal=json.loads(Path('/tmp/formal/E5-AttributeCache-dev.template.json').read_text())
+task=next(r['Properties'] for r in formal['Resources'].values() if r['Type']=='AWS::ECS::TaskDefinition')
+bench=next(c for c in task['ContainerDefinitions'] if c['Name']=='bench')
+assert task['PidMode']=='host' and not bench.get('Privileged',False)
+assert {v['Name']:v['Value'] for v in bench['Environment']}['BENCH_MODE']=='e5-formal'
+text=json.dumps(formal)
+assert 'formal-lustre-control' in text and 'diag-isolation' not in text and 'diag-round-1' not in text
+assert {'helper-config','tls-roots'} <= {v['Name'] for v in task['Volumes']}
+print('PASS: formal method has explicit mode, lifecycle controller and fresh same-time EBS reference trees')
+
 PY
 if ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5IsolationValidation=1 --output /tmp/invalid-isolation >/tmp/invalid-isolation.log 2>&1; then
     echo 'FAIL: isolation accepted outside diagnostic mode' >&2; exit 1
 fi
 grep -q 'Isolation validation requires diagnostic mode' /tmp/invalid-isolation.log
+if ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups -c e5Formal=1 -c e5Diagnostic=1 --output /tmp/invalid-formal >/tmp/invalid-formal.log 2>&1; then
+    echo 'FAIL: formal accepted with diagnostic context' >&2; exit 1
+fi
+grep -q 'Formal and diagnostic contexts are mutually exclusive' /tmp/invalid-formal.log
 if E5_WATCHDOG_TOKEN=invalid ./node_modules/.bin/cdk synth E5-AttributeCache-dev --no-lookups --output /tmp/invalid >/tmp/invalid.log 2>&1; then
     echo 'FAIL: invalid token accepted' >&2; exit 1
 fi

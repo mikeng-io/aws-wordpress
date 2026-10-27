@@ -634,6 +634,8 @@ def combine(per_rep: list[dict]) -> str:
 
 # =====================================================================================
 def analyse(run_dir: Path) -> dict:
+    if any((p / 'formal' / 'protocol.json').exists() for p in run_dir.glob('rep-*')):
+        raise ValueError('isolation-formal-v3 requires e5_formal_stats.py; legacy P7 reference binding is ineligible')
     reps = sorted((p for p in run_dir.glob("rep-*") if (p / "ec2").is_dir()), key=lambda p: int(p.name[4:]))
     per_rep = {}
     for rep in reps:

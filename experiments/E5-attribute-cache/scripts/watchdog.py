@@ -301,7 +301,7 @@ def lock_root():
 
 def launch(reps):
     kind = os.environ.get('E5_RUN_KIND', 'study')
-    if kind not in ('study','diagnostic','isolation-validation'):
+    if kind not in ('study','diagnostic','isolation-validation','formal-isolation'):
         raise Failure('unsupported E5 run kind')
     if kind != 'study' and (reps != 1 or os.environ.get('RESUME_RUN_ID')):
         raise Failure('diagnostic requires exactly one fresh deployment')
@@ -324,7 +324,7 @@ def launch(reps):
         directory = ROOT / token
         directory.mkdir(mode=0o700)
         state = {"token": token, "account": account, "region": REGION, "aws_bin": aws_bin,
-                 "started": time.time(), "max_seconds": 21600 if kind == 'study' else 4500,
+                 "started": time.time(), "max_seconds": 21600 if kind == 'study' else 10800 if kind == 'formal-isolation' else 4500,
                  "run_kind": kind, "phase": "armed", "stacks": {}}
         guard = Guard(directory, state)
         if guard.describe(STACK) is not None:

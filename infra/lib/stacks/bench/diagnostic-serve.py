@@ -14,7 +14,7 @@ import subprocess
 import time
 
 
-def run(plan, output, mode, warmup, measure, executable):
+def run(plan, output, mode, warmup, measure, executable, *, study_replication=False):
     if (mode not in ('isolated', 'concurrent') or not plan or
             not math.isfinite(warmup) or not math.isfinite(measure) or warmup < 0 or measure <= 0):
         raise ValueError('invalid diagnostic plan/timing/mode')
@@ -73,8 +73,9 @@ def run(plan, output, mode, warmup, measure, executable):
             record['exit_code'] = process.returncode
             log.close()
         (output / 'diagnostic-run.json').write_text(json.dumps(dict(
-            schema='e5-diagnostic-serve-v1', mode=mode, warmup=warmup, measure=measure,
-            plan=plan, cells=receipt, study_replication=False), indent=2)+'\n')
+            schema='e5-formal-batch-v1' if study_replication else 'e5-diagnostic-serve-v1',
+            mode=mode, warmup=warmup, measure=measure,
+            plan=plan, cells=receipt, study_replication=study_replication), indent=2)+'\n')
     return int(any(c['exit_code'] != 0 for c in receipt))
 
 

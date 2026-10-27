@@ -47,9 +47,12 @@ const SINGLE_MOUNT_SUBTREES = ['a', 'ss-0.1', 'ss-1', 'ss-10'];
 export class E5AttributeCacheStack extends ExperimentStack {
   constructor(scope: Construct, id: string, props: E5AttributeCacheProps) {
     super(scope, id, props);
-    const diagnostic = this.node.tryGetContext('e5Diagnostic') === '1';
+    const formal = this.node.tryGetContext('e5Formal') === '1';
+    const requestedDiagnostic = this.node.tryGetContext('e5Diagnostic') === '1';
+    const diagnostic = requestedDiagnostic || formal;
     const isolation = this.node.tryGetContext('e5IsolationValidation') === '1';
     if (isolation && !diagnostic) throw new Error('Isolation validation requires diagnostic mode');
+    if (formal && (requestedDiagnostic || isolation)) throw new Error('Formal and diagnostic contexts are mutually exclusive');
 
     const instanceType = props.instanceType ?? ec2.InstanceType.of(
       ec2.InstanceClass.C7GD,
@@ -288,7 +291,9 @@ export class E5AttributeCacheStack extends ExperimentStack {
     const seeder = fs.readFileSync(path.join(__dirname, 'bench', 'e5-seed.py'), 'utf8');
     if (seeder.includes('E5SEED_EOF')) throw new Error('e5-seed.py contains the heredoc terminator');
 
-    const diagnosticSubtrees = (base: string, tier: string) => isolation ? [
+    const diagnosticSubtrees = (base: string, tier: string) => formal ? (
+      tier === 'ebs' ? ['0.1','1','10'].map((d) => `${base}/ss-${d}/formal-lustre-control`) : []
+    ) : isolation ? [
       ...['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-isolation`),
       ...(tier === 'ebs' ? ['0.1','1','10'].map((d) => `${base}/ss-${d}/diag-lustre-control`) : []),
     ] : diagnostic ? [
@@ -404,7 +409,7 @@ export class E5AttributeCacheStack extends ExperimentStack {
       memoryReservationMiB: 512,
       cpu: 1024,
       environment: {
-        BENCH_MODE: diagnostic ? 'e5-diagnostic' : 'e5',
+        BENCH_MODE: formal ? 'e5-formal' : diagnostic ? 'e5-diagnostic' : 'e5',
         // e5-run shuffles at tier level and records it; entrypoint's per-mount
         // shuffle would only scramble the mount-facts list.
         BENCH_SHUFFLE: '0',

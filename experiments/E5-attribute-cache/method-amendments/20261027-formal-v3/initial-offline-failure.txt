@@ -1,0 +1,13 @@
+======================================================================
+ERROR: test_three_independent_identical_apparatus_can_aggregate (test_e5_formal.FormalTests.test_three_independent_identical_apparatus_can_aggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/analysis/test_e5_formal.py", line 125, in test_three_independent_identical_apparatus_can_aggregate
+    self.assertEqual(g.analyse(runs)['predictions']['P7']['status'],'SUPPORTED')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'P7'
+
+----------------------------------------------------------------------
+Ran 12 tests in 18.615s
+
+FAILED (errors=1)

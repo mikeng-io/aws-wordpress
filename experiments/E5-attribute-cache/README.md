@@ -1,6 +1,6 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `ISOLATION CANDIDATE PASSED; FORMAL METHOD AMENDMENT PENDING` (2026-10-27 HKT).
+**Status:** `FORMAL V3 OFFLINE VERIFIED; LIVE FULL-METHOD VALIDATION PENDING` (2026-10-27 HKT).
 The original single AWS pilot collected six tiers and both cohorts. Four of
 18 B cells fail its unchanged validity gates. Original pilot grading stays frozen;
 aggregate predictions remain NOT EVALUABLE at n=1. No hypothesis verdict changes.
@@ -19,8 +19,9 @@ The [prior diagnostic](../../results/E5-diagnostic/20261027T042037Z-7d9be14/revi
 identified helper root activity and reproduced Lustre concurrency sensitivity.
 The [predeclared candidate](method-amendments/20261027-isolation-v1/README.md)
 uses an explicit two-probe quiet profile and sequential Lustre/EBS pairs. It is
-not a production-default measurement or a formal replication. The registered
-study runner, grader and original validity thresholds remain unchanged.
+not a production-default measurement or a formal replication. Legacy prediction
+thresholds and the ordinary concurrent schedule remain in force; formal v3 uses
+separate dispatch and a matched-reference grader.
 
 See the [pilot review](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
 [unchanged-method grading](../../results/E5/20261026T152946Z-b1efcb2/summary.md) and
@@ -28,17 +29,22 @@ See the [pilot review](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md
 Source was clean at `b1efcb2`. Host watchdog and direct-service inventories verify
 cleanup; this validates the normal live path, not every injected failure path.
 
+The [formal isolation v3 amendment](method-amendments/20261027-formal-v3/README.md)
+now implements complete A/D phases, four 300s/600s B batches, same-time P7 EBS
+references, strict provenance gates and separate collector/guard/CDK mode. Its
+full-window synthetic fixtures, Linux instrument checks and offline CDK synth
+pass. This implementation step made no live AWS call or paid deployment. The
+formal method's complete live runtime and cohort-A evidence remain unmeasured.
+
 **Next work, before another paid run:**
 
-- Version a formal method amendment covering helper configuration, workload
-  scheduling and same-time EBS reference binding for the formal P7 gate.
-- Preserve the registered 300s/600s windows and validate the full cohort-A
-  first-touch/expiry method; this candidate measured short cohort-B-like windows.
-- Update the runner and grader together with provenance and negative controls,
-  then verify offline. Keep both prior runs and their grading frozen.
-- Refresh budget/baseline and separately authorise independent formal
-  replications. The current US$20 ceiling and single-candidate approval do not
-  authorise automatic retries or replications 2/3.
+- Refresh budget/allocation, pricing and baseline under the US$20 total ceiling;
+  do not reuse the generic preflight's stale $1.55 historical estimate.
+- Separately authorise one fresh full-method validation from the committed v3
+  apparatus, with its three-hour run and 90-minute cleanup guard ceilings.
+- Check full A/D signatures, 300s/600s windows, P7 controls and independent teardown.
+  Only then consider separately authorised independent replications for aggregation.
+  Do not count the earlier pilot, diagnostic or candidate toward formal v3 n=3.
 
 The local NFS checks, phase-attributed RPC amendment, conservative expiry probes
 and host watchdog remain integrated. Historical attempts and protocol decisions

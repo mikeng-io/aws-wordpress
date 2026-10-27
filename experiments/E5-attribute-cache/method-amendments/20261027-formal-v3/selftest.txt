@@ -1,0 +1,115 @@
+PASS  P1   all supported                -> SUPPORTED
+PASS  P1   all refuted                  -> REFUTED
+PASS  P1   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P1   one ERROR replication        -> NOT EVALUABLE
+PASS  P1   two replications only        -> NOT EVALUABLE
+PASS  P2   all supported                -> SUPPORTED
+PASS  P2   all refuted                  -> REFUTED
+PASS  P2   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P2   one ERROR replication        -> NOT EVALUABLE
+PASS  P2   two replications only        -> NOT EVALUABLE
+PASS  P3   all supported                -> SUPPORTED
+PASS  P3   all refuted                  -> REFUTED
+PASS  P3   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P3   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P3   one ERROR replication        -> NOT EVALUABLE
+PASS  P3   two replications only        -> NOT EVALUABLE
+PASS  P4   all supported                -> SUPPORTED
+PASS  P4   all refuted                  -> REFUTED
+PASS  P4   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P4   one ERROR replication        -> NOT EVALUABLE
+PASS  P4   two replications only        -> NOT EVALUABLE
+PASS  P5   all supported                -> SUPPORTED
+PASS  P5   all refuted                  -> REFUTED
+PASS  P5   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P5   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P5   one ERROR replication        -> NOT EVALUABLE
+PASS  P5   two replications only        -> NOT EVALUABLE
+PASS  P6   all supported                -> SUPPORTED
+PASS  P6   all refuted                  -> REFUTED
+PASS  P6   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P6   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P6   one ERROR replication        -> NOT EVALUABLE
+PASS  P6   two replications only        -> NOT EVALUABLE
+PASS  P7   all supported                -> SUPPORTED
+PASS  P7   all refuted                  -> REFUTED
+PASS  P7   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P7   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P7   one ERROR replication        -> NOT EVALUABLE
+PASS  P7   two replications only        -> NOT EVALUABLE
+PASS  P8   all supported                -> SUPPORTED
+PASS  P8   all refuted                  -> REFUTED
+PASS  P8   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P8   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P8   one ERROR replication        -> NOT EVALUABLE
+PASS  P8   two replications only        -> NOT EVALUABLE
+PASS  P9   all supported                -> SUPPORTED
+PASS  P9   all refuted                  -> REFUTED
+PASS  P9   mixed S/R/S                  -> INCONCLUSIVE
+PASS  P9   per-rep inconclusive         -> INCONCLUSIVE
+PASS  P9   one ERROR replication        -> NOT EVALUABLE
+PASS  P9   two replications only        -> NOT EVALUABLE
+PASS  P10  all supported                -> SUPPORTED
+PASS  P10  all refuted                  -> REFUTED
+PASS  P10  mixed S/R/S                  -> INCONCLUSIVE
+PASS  P10  per-rep inconclusive         -> INCONCLUSIVE
+PASS  P10  one ERROR replication        -> NOT EVALUABLE
+PASS  P10  two replications only        -> NOT EVALUABLE
+PASS  P1   unknown Lustre counter       -> NOT EVALUABLE
+PASS  P1   Lustre half the RPCs         -> NOT EVALUABLE
+
+all cases reached their intended grade
+..........................
+----------------------------------------------------------------------
+Ran 26 tests in 1.655s
+
+OK
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.000s
+
+OK
+....................................
+----------------------------------------------------------------------
+Ran 36 tests in 2.056s
+
+OK
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.006s
+
+OK
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.009s
+
+OK
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.196s
+
+OK
+test_complete_formal_fixture_passes_but_n1_cannot_issue_aggregate_verdict (test_e5_formal.FormalTests.test_complete_formal_fixture_passes_but_n1_cannot_issue_aggregate_verdict) ... ok
+test_conformance_and_missing_probe_are_rejected (test_e5_formal.FormalTests.test_conformance_and_missing_probe_are_rejected) ... ok
+test_coordinator_success_path_exports_all_batches_and_restores (test_e5_formal.FormalTests.test_coordinator_success_path_exports_all_batches_and_restores) ... ok
+test_duplicate_deployments_and_apparatus_drift_cannot_be_pooled (test_e5_formal.FormalTests.test_duplicate_deployments_and_apparatus_drift_cannot_be_pooled) ... ok
+test_exact_five_percent_lateness_boundary_is_preserved (test_e5_formal.FormalTests.test_exact_five_percent_lateness_boundary_is_preserved) ... ok
+test_legacy_grader_and_mixed_method_pooling_are_refused (test_e5_formal.FormalTests.test_legacy_grader_and_mixed_method_pooling_are_refused) ... ok
+test_p7_uses_same_time_control_not_non_lustre_ebs (test_e5_formal.FormalTests.test_p7_uses_same_time_control_not_non_lustre_ebs) ... ok
+test_profile_idle_restore_and_phase_negative_controls (test_e5_formal.FormalTests.test_profile_idle_restore_and_phase_negative_controls) ... ok
+test_rpc_residual_and_lateness_keep_original_cell_gates (test_e5_formal.FormalTests.test_rpc_residual_and_lateness_keep_original_cell_gates) ... ok
+test_runner_restores_even_when_a_or_trace_shutdown_fails (test_e5_formal.FormalTests.test_runner_restores_even_when_a_or_trace_shutdown_fails) ... ok
+test_short_a_wait_and_wrong_a_operation_are_rejected (test_e5_formal.FormalTests.test_short_a_wait_and_wrong_a_operation_are_rejected) ... ok
+test_short_windows_missing_reference_and_wrong_command_are_rejected (test_e5_formal.FormalTests.test_short_windows_missing_reference_and_wrong_command_are_rejected) ... ok
+test_three_independent_identical_apparatus_can_aggregate (test_e5_formal.FormalTests.test_three_independent_identical_apparatus_can_aggregate) ... ok
+test_trace_root_call_is_rejected (test_e5_formal.FormalTests.test_trace_root_call_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 21.345s
+
+OK
+....................................
+----------------------------------------------------------------------
+Ran 36 tests in 2.065s
+
+OK

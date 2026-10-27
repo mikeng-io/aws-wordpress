@@ -1,0 +1,31 @@
+{
+  "utc": "2026-10-27T09:23:25.559387+00:00",
+  "method": "isolation-formal-v3",
+  "status": "OFFLINE_VERIFIED",
+  "live_full_method_validation": false,
+  "aws_api_calls": 0,
+  "new_paid_deployments": 0,
+  "formal_tests": 14,
+  "linux_instrument_tests": 10,
+  "watchdog_tests": 36,
+  "diagnostic_control_tests": 9,
+  "legacy_grader_regression": "all expected grades reached",
+  "regression_commands": [
+    "make e5-selftest",
+    "make e5-diagnostic-selftest",
+    "make e5-formal-selftest",
+    "make e5-instrument-selftest",
+    "make e5-watchdog-synth-check"
+  ],
+  "all_commands_exit": 0,
+  "frozen_files_unchanged": 819,
+  "pilot_grading_equal_to_pre_amendment_source": true,
+  "both_diagnostic_analyses_byte_identical": true,
+  "full_duration_live_nfs_lustre_measured": false,
+  "ceiling_usd": 20,
+  "paid_runs_authorised_by_this_step": 0,
+  "collector_identity_checks": "valid digest/stack accepted; missing digest or stack rejected",
+  "shell_syntax": "PASS",
+  "credential_pattern_scan_matches": 0,
+  "post_suite_check": "Collector identity syntax validation was added after the full suite; its valid/missing-value cases and shell syntax were then checked separately."
+}

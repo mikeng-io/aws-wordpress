@@ -1,0 +1,8 @@
+{
+  "frozen_files_unchanged": 819,
+  "pilot_current_grading_equal_to_pre_amendment_source": true,
+  "legacy_diagnostic_analysis_byte_identical": true,
+  "candidate_analysis_byte_identical": true,
+  "no_aws_calls": true,
+  "no_new_deployment": true
+}

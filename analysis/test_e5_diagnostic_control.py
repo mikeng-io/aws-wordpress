@@ -16,6 +16,13 @@ i = importlib.util.module_from_spec(spec); spec.loader.exec_module(i)
 
 
 class ControlTests(unittest.TestCase):
+    def test_idle_trace_must_stay_alive_after_attach(self):
+        from unittest.mock import Mock
+        h.require_live_trace(None)
+        h.require_live_trace(Mock(poll=lambda:None))
+        with self.assertRaisesRegex(ValueError,'trace ended'):
+            h.require_live_trace(Mock(poll=lambda:1))
+
     def test_quiet_profile_controls_both_probes_and_preserves_lifecycle(self):
         original=b'[mount]\noptimize_readahead=true\n[mount-watchdog]\nenabled=true\nstunnel_health_check_enabled=true\n'
         with tempfile.TemporaryDirectory() as name:

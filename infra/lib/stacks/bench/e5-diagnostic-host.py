@@ -98,15 +98,23 @@ def config_metadata():
     return dict(config=selected, read_ahead_kb=readahead, watchdog_pid=watchdog_pid())
 
 
+def require_live_trace(trace):
+    if trace is not None and trace.poll() is not None:
+        raise ValueError('trace ended before idle control completed')
+
+
 def serve():
     original = CONFIG.read_bytes()
     trace = None
     def stop_trace():
         nonlocal trace
         if trace is not None:
+            ended = trace.poll() is not None
             trace.terminate()
             trace.wait(timeout=10)
             trace = None
+            if ended:
+                raise ValueError('trace ended before explicit stop')
     def terminate(*_):
         raise SystemExit(0)
     signal.signal(signal.SIGTERM, terminate)
@@ -119,6 +127,7 @@ def serve():
                     request = json.loads(job.read_text())
                     verb = request['verb']
                     if verb == 'snapshot':
+                        require_live_trace(trace)
                         data = rpc_snapshot()
                     elif verb == 'metadata':
                         data = config_metadata()

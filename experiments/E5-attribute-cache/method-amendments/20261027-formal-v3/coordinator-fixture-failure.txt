@@ -1,0 +1,16 @@
+======================================================================
+FAIL: test_coordinator_success_path_exports_all_batches_and_restores (test_e5_formal.FormalTests.test_coordinator_success_path_exports_all_batches_and_restores)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repo>/analysis/test_e5_formal.py", line 162, in test_coordinator_success_path_exports_all_batches_and_restores
+    self.assertEqual(g.analyse([out_run])['replications']['coordinator/rep-1']['full_method_validation'],'PASS')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NOT_READY' != 'PASS'
+- NOT_READY
++ PASS
+
+
+----------------------------------------------------------------------
+Ran 14 tests in 20.097s
+
+FAILED (failures=1)
