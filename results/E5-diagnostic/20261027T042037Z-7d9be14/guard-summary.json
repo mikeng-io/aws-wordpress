@@ -1,0 +1,15 @@
+{
+  "run_kind": "diagnostic",
+  "max_seconds": 4500,
+  "phase": "complete",
+  "cleanup_verified": true,
+  "runner_stopped": true,
+  "stop_reason": "host run deadline exceeded",
+  "runner_exit": null,
+  "remaining_backups": [],
+  "remaining_stacks": [],
+  "docker_runner_exit": 137,
+  "benchmark_exit": 0,
+  "receipt_created_utc": "2026-10-27T05:38:36.603258+00:00",
+  "diagnostic_files_recovered_by_host_guard": 3
+}

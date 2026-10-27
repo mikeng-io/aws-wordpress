@@ -1,0 +1,82 @@
+Exploratory read-only snapshot, not a protocol gate
+2026-10-27T05:15:28Z
+ldlm.namespaces.MGC10.45.0.125@tcp.lru_size=1600
+ldlm.namespaces.hxaofbev-MDT0000-mdc-ffff0003c5943800.lru_size=1600
+ldlm.namespaces.hxaofbev-OST0000-osc-ffff0003c5943800.lru_size=1600
+ldlm.namespaces.MGC10.45.0.125@tcp.lock_count=4
+ldlm.namespaces.hxaofbev-MDT0000-mdc-ffff0003c5943800.lock_count=1596
+ldlm.namespaces.hxaofbev-OST0000-osc-ffff0003c5943800.lock_count=1591
+ldlm.namespaces.MGC10.45.0.125@tcp.lock_unused_count=0
+ldlm.namespaces.hxaofbev-MDT0000-mdc-ffff0003c5943800.lock_unused_count=1595
+ldlm.namespaces.hxaofbev-OST0000-osc-ffff0003c5943800.lock_unused_count=1591
+ldlm.namespaces.MGC10.45.0.125@tcp.lru_max_age=600000
+ldlm.namespaces.hxaofbev-MDT0000-mdc-ffff0003c5943800.lru_max_age=600000
+ldlm.namespaces.hxaofbev-OST0000-osc-ffff0003c5943800.lru_max_age=600000
+mdc.hxaofbev-MDT0000-mdc-ffff0003c5943800.stats=
+snapshot_time             1793078128.057759219 secs.nsecs
+start_time                1793075991.033068026 secs.nsecs
+elapsed_time              2137.024691193 secs.nsecs
+req_waittime              1908007 samples [usec] 105 206837 363978838 323573608154
+req_active                1908008 samples [reqs] 1 4 3045831 5604997
+ldlm_glimpse_enqueue      1 samples [reqs] 1 1 1 1
+ldlm_flock_enqueue        6 samples [reqs] 1 1 6 6
+ldlm_ibits_enqueue        1873183 samples [reqs] 1 1 1873183 1873183
+ost_set_info              1 samples [usec] 304 304 304 92416
+mds_getattr               2 samples [usec] 138 154 292 42760
+mds_close                 19026 samples [usec] 120 16611 4553889 2913678087
+mds_readpage              4 samples [usec] 273 351 1199 363355
+mds_connect               1 samples [usec] 264 264 264 69696
+mds_get_root              1 samples [usec] 166 166 166 27556
+mds_statfs                4 samples [usec] 305 1843 2766 3680654
+mds_sync                  1 samples [usec] 154 154 154 23716
+mds_getxattr              2 samples [usec] 107 125 232 27074
+ldlm_cancel               15179 samples [usec] 117 4901 3003171 798657289
+obd_ping                  64 samples [usec] 253 439 19243 5834001
+seq_query                 1 samples [usec] 3902 3902 3902 15225604
+mdc.hxaofbev-MDT0000-mdc-ffff0003c5943800.import=
+import:
+    name: hxaofbev-MDT0000-mdc-ffff0003c5943800
+    target: hxaofbev-MDT0000_UUID
+    state: FULL
+    connect_flags: [ write_grant, server_lock, version, acl, create_on_write, inode_bit_locks, getattr_by_fid, no_oh_for_devices, max_byte_per_rpc, early_lock_cancel, adaptive_timeouts, lru_resize, alt_checksum_algorithm, fid_is_enabled, version_recovery, pools, grant_shrink, large_ea, full20, layout_lock, 64bithash, jobstats, umask, einprogress, grant_param, lvb_type, short_io, flock_deadlock, disp_stripe, open_by_fid, lfsck, multi_mod_rpcs, dir_stripe, subtree, bulk_mbits, second_flags, file_secctx, dir_migrate, sum_statfs, overstriping, flr, lock_convert, archive_id_array, increasing_xid, selinux_policy, lsom, pcc, crush, async_discard, client_encryption, getattr_pfid, dom_lvb, reply_mbits, atomic_open_lock, name_encryption ]
+    connect_data:
+       flags: 0xae7a5e7be344d2b8
+       instance: 1
+       target_version: 2.15.8.0
+       initial_grant: 3407872
+       max_brw_size: 1048576
+       ibits_known: 0x7f
+       grant_block_size: 131072
+       grant_inode_size: 4096
+       grant_max_extent_size: 134217728
+       grant_extent_tax: 655360
+       cksum_types: 0xf7
+       max_easize: 65536
+       max_mod_rpcs: 64
+    import_flags: [ replayable, pingable, connect_tried ]
+    connection:
+       failover_nids: [ 10.45.0.125@tcp ]
+       current_connection: 10.45.0.125@tcp
+       connection_attempts: 1
+       generation: 1
+       in-progress_invalidations: 0
+       idle: 0 sec
+    rpcs:
+       inflight: 1
+       unregistering: 0
+       timeouts: 0
+       avg_waittime: 190 usec
+    service_estimates:
+       services: 15 sec
+       network: 1 sec
+    transactions:
+       last_replay: 0
+       peer_committed: 4295005903
+       last_checked: 4295005903
+ldlm.namespaces.MGC10.45.0.125@tcp.pool.limit=0
+ldlm.namespaces.hxaofbev-MDT0000-mdc-ffff0003c5943800.pool.limit=1569149
+ldlm.namespaces.hxaofbev-OST0000-osc-ffff0003c5943800.pool.limit=772400
+ldlm.namespaces.MGC10.45.0.125@tcp.pool.granted=0
+ldlm.namespaces.hxaofbev-MDT0000-mdc-ffff0003c5943800.pool.granted=1590
+ldlm.namespaces.hxaofbev-OST0000-osc-ffff0003c5943800.pool.granted=1600
+

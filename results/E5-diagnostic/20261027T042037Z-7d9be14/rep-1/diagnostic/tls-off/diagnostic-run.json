@@ -1,0 +1,83 @@
+{
+  "schema": "e5-diagnostic-serve-v1",
+  "mode": "concurrent",
+  "warmup": 60,
+  "measure": 180,
+  "plan": [
+    {
+      "tier": "efs_host_tls",
+      "directory": "/bench/efs_host_tls.ss-0.1/diag-tls-off",
+      "delta": "0.1",
+      "nfs_mount": "/bench/efs_host_tls.ss-0.1"
+    },
+    {
+      "tier": "efs_host_tls",
+      "directory": "/bench/efs_host_tls.ss-1/diag-tls-off",
+      "delta": "1",
+      "nfs_mount": "/bench/efs_host_tls.ss-1"
+    },
+    {
+      "tier": "efs_host_tls",
+      "directory": "/bench/efs_host_tls.ss-10/diag-tls-off",
+      "delta": "10",
+      "nfs_mount": "/bench/efs_host_tls.ss-10"
+    }
+  ],
+  "cells": [
+    {
+      "cell": "efs_host_tls-0.1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_tls.ss-0.1/diag-tls-off",
+        "0.1",
+        "60",
+        "180",
+        "B-0.1",
+        "/tmp/e5-diagnostic/tls-off/efs_host_tls-0.1",
+        "100",
+        "/bench/efs_host_tls.ss-0.1"
+      ],
+      "started_monotonic_ns": 1208633742316,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 1451963069076
+    },
+    {
+      "cell": "efs_host_tls-1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_tls.ss-1/diag-tls-off",
+        "1",
+        "60",
+        "180",
+        "B-1",
+        "/tmp/e5-diagnostic/tls-off/efs_host_tls-1",
+        "10",
+        "/bench/efs_host_tls.ss-1"
+      ],
+      "started_monotonic_ns": 1208635286999,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 1451963133514
+    },
+    {
+      "cell": "efs_host_tls-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_tls.ss-10/diag-tls-off",
+        "10",
+        "60",
+        "180",
+        "B-10",
+        "/tmp/e5-diagnostic/tls-off/efs_host_tls-10",
+        "1",
+        "/bench/efs_host_tls.ss-10"
+      ],
+      "started_monotonic_ns": 1208636892782,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 1451963166575
+    }
+  ],
+  "study_replication": false
+}

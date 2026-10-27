@@ -124,6 +124,12 @@ e5-instrument-selftest: ## Linux integration checks for opt-in telemetry; no pri
 	docker build -q -t e5-bench-local infra/lib/stacks/bench
 	docker run --rm --entrypoint python3 -v "$$PWD:/repo:ro" e5-bench-local /repo/analysis/test_e5_instrument.py -v
 
+.PHONY: e5-diagnostic-selftest
+e5-diagnostic-selftest: ## Diagnostic controls, analysis and watchdog checks; no AWS calls
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_watchdog.py
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_diagnostic_control.py
+	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_diagnostic_stats.py
+
 .PHONY: charts
 charts: ## Regenerate E2's figures from the committed raw results
 	@python3 analysis/e2_chart.py $$(ls -d results/E2/*/ | tail -1)

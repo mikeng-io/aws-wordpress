@@ -1,0 +1,18 @@
+{
+  "analysis_schema": "e5-diagnostic-analysis-v1",
+  "analysis_source": "analysis/e5_diagnostic_stats.py",
+  "analysis_source_sha256": "709751ca33654c4bb942cd713aa8d8cd7d5287eb7d09e8c41729ab09232583ab",
+  "analysis_test_source_sha256": "650670af8b3f1f3e6440d5bf130503bf8a5efc11fe8f92c0d55693076f7e390c",
+  "analysis_input_hashes": "raw-diagnostic-sha256.json",
+  "raw_files": 327,
+  "runtime_watchdog_source_sha256": "9bb291c91546bc252e87b92ed923c8b44d7c4db99c93fa269a3909057b3562c6",
+  "runtime_watchdog_control_functions_ast_match_inspected_upstream_v3_3_2": true,
+  "original_pilot_preserved": true,
+  "freeze_utc": "2026-10-27T05:41:05.912364+00:00",
+  "inspected_upstream_efs_utils_commit": "39e24e4954342c3ef7b63498170761ae803d2ecd",
+  "ast_compared_functions": [
+    "verify_and_update_readahead",
+    "check_stunnel_health",
+    "should_revise_readahead"
+  ]
+}

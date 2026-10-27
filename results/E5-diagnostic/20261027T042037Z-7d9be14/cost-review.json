@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-27T05:41:36.003733+00:00",
+  "post_run_reported_regional_all_account_usd": 5.5382086755,
+  "estimated": true,
+  "stack_minutes": 75.39281666666668,
+  "standing_rate_usd_per_hour": 0.95475,
+  "full_stack_lifetime_standing_envelope_usd": 1.1996881952083334,
+  "limitation": "Not actual E5 allocation or final billed cost; minimum billing and ancillary usage remain distinct; CE is delayed. Do not add this envelope to CE as verified incremental spend.",
+  "ceiling_usd": 10,
+  "prelaunch_planning_total_usd": 9.663771175499999,
+  "actual_remaining_verified": false
+}

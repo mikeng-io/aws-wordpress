@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-27T05:43:13.087922+00:00",
+  "diagnostic_raw_files_unchanged": 327,
+  "original_pilot_entries_unchanged": 289,
+  "original_manifest_unchanged": true,
+  "analysis_reproduced_byte_for_byte": true,
+  "diagnostic_cells": 44,
+  "all_diagnostic_inputs_valid": true,
+  "study_replication": false,
+  "benchmark_exit": 0,
+  "collector_exit": 137,
+  "watchdog_deadline_handover": true,
+  "inventory_checks": 198,
+  "inventory_api_errors": 0,
+  "cleanup_verified": true,
+  "credential_scan_matches": 0,
+  "credential_scanned_files": 352,
+  "offline_tests": {
+    "watchdog": 34,
+    "control": 4,
+    "linux_instrument": 7,
+    "analysis": 7
+  },
+  "source_commit": "7d9be14ee89fd8b8ebd1f4a55daf6c1ec166b979",
+  "authored_code_docs_diff_check": "PASS",
+  "raw_runtime_whitespace": "4892 expected formatting findings across 95 proc snapshots/logs; bytes preserved, not normalized"
+}

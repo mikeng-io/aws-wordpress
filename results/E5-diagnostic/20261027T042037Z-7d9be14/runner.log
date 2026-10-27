@@ -1,0 +1,1484 @@
+
+added 12 packages in 3s
+node required : 22.17.0
+node active   : v22.17.0
+  node OK
+aws cli       : aws-cli/2.35.19 Python/3.14.6 Linux/6.12.72-linuxkit exe/aarch64.debian.12 (/usr/local/bin/aws)
+docker        : Docker version 29.2.1, build a5c7197
+cdk           : 2.1138.0 (build a4c0282)
+Sending build context to Docker daemon  95.23kB
+
+Step 1/15 : FROM public.ecr.aws/amazonlinux/amazonlinux:2023
+ ---> 2b549889a846
+Step 2/15 : RUN dnf install -y gcc awscli-2 util-linux-core nfs-utils strace && dnf clean all
+ ---> Running in 24976b8ee514
+Amazon Linux 2023 repository                     51 MB/s |  82 MB     00:01    
+Last metadata expiration check: 0:00:10 ago on Tue Oct 27 04:20:48 2026.
+Dependencies resolved.
+================================================================================
+ Package                   Arch    Version                    Repository   Size
+================================================================================
+Installing:
+ awscli-2                  noarch  2.36.47-4.amzn2023.0.1     amazonlinux  14 M
+ gcc                       aarch64 11.5.0-5.amzn2023.0.5      amazonlinux  31 M
+ nfs-utils                 aarch64 1:2.5.4-2.rc3.amzn2023.0.3 amazonlinux 430 k
+ strace                    aarch64 6.12-1.amzn2023.0.1        amazonlinux 1.4 M
+ util-linux-core           aarch64 2.37.4-1.amzn2023.0.6      amazonlinux 441 k
+Installing dependencies:
+ amazon-rpm-config         noarch  228-11.amzn2023.0.1        amazonlinux  69 k
+ annobin-docs              noarch  12.69-1.amzn2023.0.1       amazonlinux  93 k
+ annobin-plugin-gcc        aarch64 12.69-1.amzn2023.0.1       amazonlinux 973 k
+ binutils                  aarch64 2.41-50.amzn2023.0.5       amazonlinux 5.6 M
+ cpp                       aarch64 11.5.0-5.amzn2023.0.5      amazonlinux  10 M
+ cracklib                  aarch64 2.9.6-27.amzn2023.0.2      amazonlinux  83 k
+ cyrus-sasl-lib            aarch64 2.1.27-18.amzn2023.0.3     amazonlinux 776 k
+ dbus                      aarch64 1:1.12.28-1.amzn2023.0.1   amazonlinux 8.5 k
+ dbus-broker               aarch64 32-1.amzn2023.0.2          amazonlinux 168 k
+ dbus-common               noarch  1:1.12.28-1.amzn2023.0.1   amazonlinux  15 k
+ device-mapper             aarch64 1.02.185-1.amzn2023.0.5    amazonlinux 135 k
+ device-mapper-libs        aarch64 1.02.185-1.amzn2023.0.5    amazonlinux 169 k
+ diffutils                 aarch64 3.8-1.amzn2023.0.2         amazonlinux 368 k
+ dwz                       aarch64 0.16-2.amzn2023.0.1        amazonlinux 137 k
+ e2fsprogs-libs            aarch64 1.46.5-2.amzn2023.0.2      amazonlinux 227 k
+ efi-srpm-macros           noarch  5-4.amzn2023.0.5           amazonlinux  23 k
+ elfutils-debuginfod-client
+                           aarch64 0.188-3.amzn2023.0.3       amazonlinux  34 k
+ file                      aarch64 5.39-7.amzn2023.0.4        amazonlinux  50 k
+ findutils                 aarch64 1:4.8.0-2.amzn2023.0.2     amazonlinux 541 k
+ fonts-srpm-macros         noarch  1:2.0.5-12.amzn2023.0.2    amazonlinux  27 k
+ gc                        aarch64 8.0.4-5.amzn2023.0.2       amazonlinux 102 k
+ gcc-plugin-annobin        aarch64 11.5.0-5.amzn2023.0.5      amazonlinux  37 k
+ ghc-srpm-macros           noarch  1.5.0-4.amzn2023.0.2       amazonlinux 8.5 k
+ glibc-devel               aarch64 2.34-231.amzn2023.0.5      amazonlinux 445 k
+ glibc-gconv-extra         aarch64 2.34-231.amzn2023.0.5      amazonlinux 1.9 M
+ go-srpm-macros            noarch  3.8.0-1.amzn2023.0.1       amazonlinux  27 k
+ groff-base                aarch64 1.22.4-7.amzn2023.0.2      amazonlinux 1.0 M
+ gssproxy                  aarch64 0.9.2-6.amzn2023.0.1       amazonlinux 112 k
+ guile22                   aarch64 2.2.7-2.amzn2023.0.3       amazonlinux 6.4 M
+ gzip                      aarch64 1.12-1.amzn2023.0.1        amazonlinux 158 k
+ jansson                   aarch64 2.14-0.amzn2023            amazonlinux  47 k
+ kernel-srpm-macros        noarch  1.0-14.amzn2023.0.3        amazonlinux 8.8 k
+ kernel6.18-headers        aarch64 1:6.18.54-121.166.amzn2023 amazonlinux 1.5 M
+ keyutils                  aarch64 1.6.3-1.amzn2023.0.2       amazonlinux  73 k
+ kmod                      aarch64 29-2.amzn2023.0.6          amazonlinux 112 k
+ kmod-libs                 aarch64 29-2.amzn2023.0.6          amazonlinux  62 k
+ libargon2                 aarch64 20171227-9.amzn2023.0.2    amazonlinux  30 k
+ libbasicobjects           aarch64 0.1.1-47.amzn2023.0.2      amazonlinux  27 k
+ libcollection             aarch64 0.7.0-47.amzn2023.0.2      amazonlinux  45 k
+ libdb                     aarch64 5.3.28-49.amzn2023.0.2     amazonlinux 731 k
+ libeconf                  aarch64 0.7.9-1.amzn2023.0.1       amazonlinux  36 k
+ libev                     aarch64 4.33-3.amzn2023.0.2        amazonlinux  52 k
+ libevent                  aarch64 2.1.12-3.amzn2023.0.4      amazonlinux 256 k
+ libfdisk                  aarch64 2.37.4-1.amzn2023.0.6      amazonlinux 148 k
+ libini_config             aarch64 1.3.1-47.amzn2023.0.2      amazonlinux  67 k
+ libmpc                    aarch64 1.2.1-2.amzn2023.0.2       amazonlinux  63 k
+ libnfsidmap               aarch64 1:2.5.4-2.rc3.amzn2023.0.3 amazonlinux  61 k
+ libpath_utils             aarch64 0.2.1-47.amzn2023.0.2      amazonlinux  30 k
+ libpkgconf                aarch64 1.8.0-4.amzn2023.0.2       amazonlinux  37 k
+ libpwquality              aarch64 1.4.4-6.amzn2023.0.2       amazonlinux 106 k
+ libref_array              aarch64 0.1.5-47.amzn2023.0.2      amazonlinux  28 k
+ libseccomp                aarch64 2.5.3-1.amzn2023.0.2       amazonlinux  72 k
+ libselinux-utils          aarch64 3.4-5.amzn2023.0.2         amazonlinux 145 k
+ libsemanage               aarch64 3.4-5.amzn2023.0.2         amazonlinux 119 k
+ libtirpc                  aarch64 1.3.3-0.amzn2023           amazonlinux  96 k
+ libtool-ltdl              aarch64 2.4.7-1.amzn2023.0.3       amazonlinux  38 k
+ libutempter               aarch64 1.2.1-4.amzn2023.0.2       amazonlinux  27 k
+ libverto-libev            aarch64 0.3.2-1.amzn2023.0.2       amazonlinux  14 k
+ libxcrypt-devel           aarch64 4.4.33-7.amzn2023          amazonlinux  32 k
+ lua-srpm-macros           noarch  1-4.amzn2023.0.2           amazonlinux 9.2 k
+ make                      aarch64 1:4.3-5.amzn2023.0.2       amazonlinux 530 k
+ ncurses                   aarch64 6.6-1.amzn2023.0.1         amazonlinux 426 k
+ ocaml-srpm-macros         noarch  6-6.amzn2023.0.2           amazonlinux 8.8 k
+ openblas-srpm-macros      noarch  2-9.amzn2023.0.2           amazonlinux 8.2 k
+ openldap                  aarch64 2.4.57-6.amzn2023.0.7      amazonlinux 253 k
+ package-notes-srpm-macros noarch  0.4-18.amzn2023.0.5        amazonlinux  13 k
+ pam                       aarch64 1.5.1-8.amzn2023.0.8       amazonlinux 561 k
+ paper                     aarch64 2.3-2.amzn2023.0.3         amazonlinux  32 k
+ perl-AutoLoader           noarch  5.74-477.amzn2023.0.10     amazonlinux  22 k
+ perl-B                    aarch64 1.80-477.amzn2023.0.10     amazonlinux 180 k
+ perl-Carp                 noarch  1.50-458.amzn2023.0.2      amazonlinux  29 k
+ perl-Class-Struct         noarch  0.66-477.amzn2023.0.10     amazonlinux  23 k
+ perl-Data-Dumper          aarch64 2.191-522.amzn2023.0.3     amazonlinux  57 k
+ perl-Digest               noarch  1.20-1.amzn2023.0.2        amazonlinux  26 k
+ perl-Digest-MD5           aarch64 2.59-521.amzn2023.0.2      amazonlinux  38 k
+ perl-DynaLoader           aarch64 1.47-477.amzn2023.0.10     amazonlinux  26 k
+ perl-Encode               aarch64 4:3.21-520.amzn2023.0.2    amazonlinux 1.7 M
+ perl-Errno                aarch64 1.30-477.amzn2023.0.10     amazonlinux  15 k
+ perl-Exporter             noarch  5.79-520.amzn2023.0.1      amazonlinux  32 k
+ perl-Fcntl                aarch64 1.13-477.amzn2023.0.10     amazonlinux  21 k
+ perl-File-Basename        noarch  2.85-477.amzn2023.0.10     amazonlinux  18 k
+ perl-File-Copy            noarch  2.34-477.amzn2023.0.10     amazonlinux  21 k
+ perl-File-Path            noarch  2.18-2.amzn2023.0.2        amazonlinux  36 k
+ perl-File-Temp            noarch  1:0.231.200-2.amzn2023.0.1 amazonlinux  61 k
+ perl-File-stat            noarch  1.09-477.amzn2023.0.10     amazonlinux  18 k
+ perl-FileHandle           noarch  2.03-477.amzn2023.0.10     amazonlinux  16 k
+ perl-Getopt-Long          noarch  1:2.58-521.amzn2023.0.1    amazonlinux  65 k
+ perl-Getopt-Std           noarch  1.12-477.amzn2023.0.10     amazonlinux  16 k
+ perl-HTTP-Tiny            noarch  0.092-2.amzn2023.0.3       amazonlinux  59 k
+ perl-IO                   aarch64 1.43-477.amzn2023.0.10     amazonlinux  87 k
+ perl-IO-Socket-IP         noarch  0.43-522.amzn2023.0.1      amazonlinux  44 k
+ perl-IO-Socket-SSL        noarch  2.075-1.amzn2023.0.3       amazonlinux 216 k
+ perl-IPC-Open3            noarch  1.21-477.amzn2023.0.10     amazonlinux  23 k
+ perl-IPC-Run3             noarch  0.049-5.amzn2023.0.1       amazonlinux  40 k
+ perl-MIME-Base64          aarch64 3.16-2.amzn2023.0.3        amazonlinux  31 k
+ perl-Net-SSLeay           aarch64 1.94-3.amzn2023.0.5        amazonlinux 392 k
+ perl-POSIX                aarch64 1.94-477.amzn2023.0.10     amazonlinux  97 k
+ perl-PathTools            aarch64 3.78-459.amzn2023.0.3      amazonlinux  85 k
+ perl-Pod-Escapes          noarch  1:1.07-458.amzn2023.0.2    amazonlinux  20 k
+ perl-Pod-Perldoc          noarch  3.28.01-459.amzn2023.0.3   amazonlinux  84 k
+ perl-Pod-Simple           noarch  1:3.42-2.amzn2023.0.2      amazonlinux 215 k
+ perl-Pod-Usage            noarch  4:2.01-2.amzn2023.0.2      amazonlinux  41 k
+ perl-Scalar-List-Utils    aarch64 4:1.56-459.amzn2023.0.3    amazonlinux  70 k
+ perl-SelectSaver          noarch  1.02-477.amzn2023.0.10     amazonlinux  12 k
+ perl-Socket               aarch64 4:2.032-1.amzn2023.0.4     amazonlinux  55 k
+ perl-Storable             aarch64 1:3.37-522.amzn2023.0.3    amazonlinux  96 k
+ perl-Symbol               noarch  1.08-477.amzn2023.0.10     amazonlinux  15 k
+ perl-Term-ANSIColor       noarch  5.01-459.amzn2023.0.2      amazonlinux  48 k
+ perl-Term-Cap             noarch  1.17-458.amzn2023.0.2      amazonlinux  22 k
+ perl-Text-ParseWords      noarch  3.30-458.amzn2023.0.2      amazonlinux  17 k
+ perl-Text-Tabs+Wrap       noarch  2021.0726-1.amzn2023.0.1   amazonlinux  22 k
+ perl-Time-HiRes           aarch64 4:1.9764-460.amzn2023.0.3  amazonlinux  58 k
+ perl-Time-Local           noarch  2:1.300-5.amzn2023.0.2     amazonlinux  34 k
+ perl-URI                  noarch  5.18-1.amzn2023.0.1        amazonlinux 111 k
+ perl-base                 noarch  2.27-477.amzn2023.0.10     amazonlinux  17 k
+ perl-constant             noarch  1.33-459.amzn2023.0.2      amazonlinux  23 k
+ perl-if                   noarch  0.60.800-477.amzn2023.0.10 amazonlinux  14 k
+ perl-interpreter          aarch64 4:5.32.1-477.amzn2023.0.10 amazonlinux  71 k
+ perl-libnet               noarch  3.13-2.amzn2023.0.2        amazonlinux 126 k
+ perl-libs                 aarch64 4:5.32.1-477.amzn2023.0.10 amazonlinux 2.0 M
+ perl-locale               noarch  1.09-477.amzn2023.0.10     amazonlinux  14 k
+ perl-mro                  aarch64 1.23-477.amzn2023.0.10     amazonlinux  28 k
+ perl-overload             noarch  1.31-477.amzn2023.0.10     amazonlinux  46 k
+ perl-overloading          noarch  0.02-477.amzn2023.0.10     amazonlinux  13 k
+ perl-parent               noarch  1:0.238-458.amzn2023.0.2   amazonlinux  14 k
+ perl-podlators            noarch  1:4.14-458.amzn2023.0.2    amazonlinux 112 k
+ perl-srpm-macros          noarch  1-39.amzn2023.0.2          amazonlinux 8.7 k
+ perl-subs                 noarch  1.03-477.amzn2023.0.10     amazonlinux  12 k
+ perl-vars                 noarch  1.05-477.amzn2023.0.10     amazonlinux  13 k
+ pkgconf                   aarch64 1.8.0-4.amzn2023.0.2       amazonlinux  43 k
+ pkgconf-m4                noarch  1.8.0-4.amzn2023.0.2       amazonlinux  15 k
+ pkgconf-pkg-config        aarch64 1.8.0-4.amzn2023.0.2       amazonlinux  11 k
+ policycoreutils           aarch64 3.4-6.amzn2023.0.3         amazonlinux 213 k
+ python-srpm-macros        noarch  3.9-41.amzn2023.0.6        amazonlinux  20 k
+ python3-awscrt            aarch64 0.36.4-1.amzn2023.0.2      amazonlinux 1.8 M
+ python3-colorama          noarch  0.4.4-2.amzn2023.0.2       amazonlinux  33 k
+ python3-dateutil          noarch  1:2.8.1-3.amzn2023.0.2     amazonlinux 289 k
+ python3-distro            noarch  1.5.0-5.amzn2023.0.2       amazonlinux  36 k
+ python3-docutils          noarch  0.16-4.amzn2023.0.2        amazonlinux 1.5 M
+ python3-idna              noarch  2.10-3.amzn2023.0.4        amazonlinux  98 k
+ python3-jmespath          noarch  0.10.0-1.amzn2023.0.3      amazonlinux  46 k
+ python3-prompt-toolkit    noarch  3.0.24-1.amzn2023.0.2      amazonlinux 608 k
+ python3-pysocks           noarch  1.7.1-8.amzn2023.0.2       amazonlinux  34 k
+ python3-ruamel-yaml       aarch64 0.16.6-5.amzn2023.0.2      amazonlinux 189 k
+ python3-ruamel-yaml-clib  aarch64 0.1.2-6.amzn2023.0.2       amazonlinux 134 k
+ python3-setuptools        noarch  59.6.0-2.amzn2023.0.6      amazonlinux 941 k
+ python3-six               noarch  1.15.0-5.amzn2023.0.2      amazonlinux  36 k
+ python3-urllib3           noarch  1.25.10-5.amzn2023.0.9     amazonlinux 180 k
+ python3-wcwidth           noarch  0.2.5-3.amzn2023.0.2       amazonlinux  41 k
+ quota                     aarch64 1:4.06-4.amzn2023.0.2      amazonlinux 193 k
+ quota-nls                 noarch  1:4.06-4.amzn2023.0.2      amazonlinux  77 k
+ rpcbind                   aarch64 1.2.6-0.amzn2023.0.3       amazonlinux  58 k
+ rpm-plugin-selinux        aarch64 4.16.1.3-29.amzn2023.0.8   amazonlinux  15 k
+ rust-toolset-srpm-macros  noarch  1.98.1-1.amzn2023          amazonlinux  13 k
+ selinux-policy            noarch  38.1.76-1.amzn2023.0.3     amazonlinux  37 k
+ selinux-policy-targeted   noarch  38.1.76-1.amzn2023.0.3     amazonlinux 6.5 M
+ shadow-utils              aarch64 2:4.9-12.amzn2023.0.4      amazonlinux 1.1 M
+ systemd                   aarch64 252.23-15.amzn2023         amazonlinux 4.0 M
+ systemd-libs              aarch64 252.23-15.amzn2023         amazonlinux 587 k
+ systemd-pam               aarch64 252.23-15.amzn2023         amazonlinux 305 k
+ unzip                     aarch64 6.0-68.amzn2023.0.2        amazonlinux 180 k
+ util-linux                aarch64 2.37.4-1.amzn2023.0.6      amazonlinux 2.2 M
+ xkeyboard-config          noarch  2.41-1.amzn2023.0.1        amazonlinux 922 k
+ zip                       aarch64 3.0-28.amzn2023.0.4        amazonlinux 259 k
+Installing weak dependencies:
+ cryptsetup-libs           aarch64 2.6.1-1.amzn2023.0.1       amazonlinux 485 k
+ groff                     aarch64 1.22.4-7.amzn2023.0.2      amazonlinux 1.1 M
+ libxkbcommon              aarch64 1.6.0-2.amzn2023.0.1       amazonlinux 144 k
+ perl-NDBM_File            aarch64 1.15-477.amzn2023.0.10     amazonlinux  22 k
+ psutils                   noarch  2.05-1.amzn2023.0.2        amazonlinux  51 k
+ python3-pygments          noarch  2.7.4-1.amzn2023.0.3       amazonlinux 1.8 M
+ qrencode-libs             aarch64 4.1.1-2.amzn2023.0.2       amazonlinux  66 k
+ systemd-networkd          aarch64 252.23-15.amzn2023         amazonlinux 571 k
+ systemd-resolved          aarch64 252.23-15.amzn2023         amazonlinux 251 k
+
+Transaction Summary
+================================================================================
+Install  178 Packages
+
+Total download size: 117 M
+Installed size: 617 M
+Downloading Packages:
+(1/178): annobin-docs-12.69-1.amzn2023.0.1.noar 3.7 MB/s |  93 kB     00:00    
+(2/178): amazon-rpm-config-228-11.amzn2023.0.1. 2.9 MB/s |  69 kB     00:00    
+(3/178): annobin-plugin-gcc-12.69-1.amzn2023.0.  17 MB/s | 973 kB     00:00    
+(4/178): binutils-2.41-50.amzn2023.0.5.aarch64.  38 MB/s | 5.6 MB     00:00    
+(5/178): cracklib-2.9.6-27.amzn2023.0.2.aarch64 514 kB/s |  83 kB     00:00    
+(6/178): awscli-2-2.36.47-4.amzn2023.0.1.noarch  32 MB/s |  14 MB     00:00    
+(7/178): cpp-11.5.0-5.amzn2023.0.5.aarch64.rpm   25 MB/s |  10 MB     00:00    
+(8/178): cryptsetup-libs-2.6.1-1.amzn2023.0.1.a 3.5 MB/s | 485 kB     00:00    
+(9/178): cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.  32 MB/s | 776 kB     00:00    
+(10/178): dbus-1.12.28-1.amzn2023.0.1.aarch64.r 377 kB/s | 8.5 kB     00:00    
+(11/178): dbus-broker-32-1.amzn2023.0.2.aarch64 7.5 MB/s | 168 kB     00:00    
+(12/178): dbus-common-1.12.28-1.amzn2023.0.1.no 1.1 MB/s |  15 kB     00:00    
+(13/178): device-mapper-1.02.185-1.amzn2023.0.5 8.4 MB/s | 135 kB     00:00    
+(14/178): device-mapper-libs-1.02.185-1.amzn202  11 MB/s | 169 kB     00:00    
+(15/178): diffutils-3.8-1.amzn2023.0.2.aarch64.  19 MB/s | 368 kB     00:00    
+(16/178): dwz-0.16-2.amzn2023.0.1.aarch64.rpm   8.9 MB/s | 137 kB     00:00    
+(17/178): efi-srpm-macros-5-4.amzn2023.0.5.noar 1.8 MB/s |  23 kB     00:00    
+(18/178): e2fsprogs-libs-1.46.5-2.amzn2023.0.2.  11 MB/s | 227 kB     00:00    
+(19/178): file-5.39-7.amzn2023.0.4.aarch64.rpm  4.0 MB/s |  50 kB     00:00    
+(20/178): elfutils-debuginfod-client-0.188-3.am 2.1 MB/s |  34 kB     00:00    
+(21/178): findutils-4.8.0-2.amzn2023.0.2.aarch6  27 MB/s | 541 kB     00:00    
+(22/178): fonts-srpm-macros-2.0.5-12.amzn2023.0 2.1 MB/s |  27 kB     00:00    
+(23/178): gc-8.0.4-5.amzn2023.0.2.aarch64.rpm   5.3 MB/s | 102 kB     00:00    
+(24/178): gcc-plugin-annobin-11.5.0-5.amzn2023. 1.3 MB/s |  37 kB     00:00    
+(25/178): ghc-srpm-macros-1.5.0-4.amzn2023.0.2. 107 kB/s | 8.5 kB     00:00    
+(26/178): glibc-devel-2.34-231.amzn2023.0.5.aar 3.4 MB/s | 445 kB     00:00    
+(27/178): glibc-gconv-extra-2.34-231.amzn2023.0  10 MB/s | 1.9 MB     00:00    
+(28/178): go-srpm-macros-3.8.0-1.amzn2023.0.1.n 161 kB/s |  27 kB     00:00    
+(29/178): gcc-11.5.0-5.amzn2023.0.5.aarch64.rpm  68 MB/s |  31 MB     00:00    
+(30/178): groff-1.22.4-7.amzn2023.0.2.aarch64.r 6.3 MB/s | 1.1 MB     00:00    
+(31/178): groff-base-1.22.4-7.amzn2023.0.2.aarc 7.4 MB/s | 1.0 MB     00:00    
+(32/178): gssproxy-0.9.2-6.amzn2023.0.1.aarch64 6.0 MB/s | 112 kB     00:00    
+(33/178): gzip-1.12-1.amzn2023.0.1.aarch64.rpm  6.8 MB/s | 158 kB     00:00    
+(34/178): jansson-2.14-0.amzn2023.aarch64.rpm   670 kB/s |  47 kB     00:00    
+(35/178): guile22-2.2.7-2.amzn2023.0.3.aarch64.  66 MB/s | 6.4 MB     00:00    
+(36/178): kernel-srpm-macros-1.0-14.amzn2023.0. 125 kB/s | 8.8 kB     00:00    
+(37/178): kernel6.18-headers-6.18.54-121.166.am  48 MB/s | 1.5 MB     00:00    
+(38/178): keyutils-1.6.3-1.amzn2023.0.2.aarch64 3.0 MB/s |  73 kB     00:00    
+(39/178): kmod-29-2.amzn2023.0.6.aarch64.rpm    4.5 MB/s | 112 kB     00:00    
+(40/178): kmod-libs-29-2.amzn2023.0.6.aarch64.r 4.4 MB/s |  62 kB     00:00    
+(41/178): libargon2-20171227-9.amzn2023.0.2.aar 2.9 MB/s |  30 kB     00:00    
+(42/178): libbasicobjects-0.1.1-47.amzn2023.0.2 2.6 MB/s |  27 kB     00:00    
+(43/178): libcollection-0.7.0-47.amzn2023.0.2.a 3.9 MB/s |  45 kB     00:00    
+(44/178): libeconf-0.7.9-1.amzn2023.0.1.aarch64 2.4 MB/s |  36 kB     00:00    
+(45/178): libdb-5.3.28-49.amzn2023.0.2.aarch64.  36 MB/s | 731 kB     00:00    
+(46/178): libevent-2.1.12-3.amzn2023.0.4.aarch6  19 MB/s | 256 kB     00:00    
+(47/178): libev-4.33-3.amzn2023.0.2.aarch64.rpm 2.6 MB/s |  52 kB     00:00    
+(48/178): libfdisk-2.37.4-1.amzn2023.0.6.aarch6  11 MB/s | 148 kB     00:00    
+(49/178): libini_config-1.3.1-47.amzn2023.0.2.a 5.6 MB/s |  67 kB     00:00    
+(50/178): libmpc-1.2.1-2.amzn2023.0.2.aarch64.r 5.2 MB/s |  63 kB     00:00    
+(51/178): libnfsidmap-2.5.4-2.rc3.amzn2023.0.3. 4.8 MB/s |  61 kB     00:00    
+(52/178): libpkgconf-1.8.0-4.amzn2023.0.2.aarch 3.0 MB/s |  37 kB     00:00    
+(53/178): libpath_utils-0.2.1-47.amzn2023.0.2.a 2.1 MB/s |  30 kB     00:00    
+(54/178): libpwquality-1.4.4-6.amzn2023.0.2.aar 9.3 MB/s | 106 kB     00:00    
+(55/178): libref_array-0.1.5-47.amzn2023.0.2.aa 2.4 MB/s |  28 kB     00:00    
+(56/178): libseccomp-2.5.3-1.amzn2023.0.2.aarch 5.7 MB/s |  72 kB     00:00    
+(57/178): libselinux-utils-3.4-5.amzn2023.0.2.a  12 MB/s | 145 kB     00:00    
+(58/178): libsemanage-3.4-5.amzn2023.0.2.aarch6  10 MB/s | 119 kB     00:00    
+(59/178): libtirpc-1.3.3-0.amzn2023.aarch64.rpm 9.0 MB/s |  96 kB     00:00    
+(60/178): libtool-ltdl-2.4.7-1.amzn2023.0.3.aar 2.9 MB/s |  38 kB     00:00    
+(61/178): libverto-libev-0.3.2-1.amzn2023.0.2.a 1.2 MB/s |  14 kB     00:00    
+(62/178): libutempter-1.2.1-4.amzn2023.0.2.aarc 2.0 MB/s |  27 kB     00:00    
+(63/178): libxcrypt-devel-4.4.33-7.amzn2023.aar 2.8 MB/s |  32 kB     00:00    
+(64/178): lua-srpm-macros-1-4.amzn2023.0.2.noar 727 kB/s | 9.2 kB     00:00    
+(65/178): libxkbcommon-1.6.0-2.amzn2023.0.1.aar 9.4 MB/s | 144 kB     00:00    
+(66/178): make-4.3-5.amzn2023.0.2.aarch64.rpm    26 MB/s | 530 kB     00:00    
+(67/178): nfs-utils-2.5.4-2.rc3.amzn2023.0.3.aa  23 MB/s | 430 kB     00:00    
+(68/178): ncurses-6.6-1.amzn2023.0.1.aarch64.rp  18 MB/s | 426 kB     00:00    
+(69/178): ocaml-srpm-macros-6-6.amzn2023.0.2.no 412 kB/s | 8.8 kB     00:00    
+(70/178): openblas-srpm-macros-2-9.amzn2023.0.2 649 kB/s | 8.2 kB     00:00    
+(71/178): openldap-2.4.57-6.amzn2023.0.7.aarch6  18 MB/s | 253 kB     00:00    
+(72/178): pam-1.5.1-8.amzn2023.0.8.aarch64.rpm   28 MB/s | 561 kB     00:00    
+(73/178): package-notes-srpm-macros-0.4-18.amzn 612 kB/s |  13 kB     00:00    
+(74/178): paper-2.3-2.amzn2023.0.3.aarch64.rpm  1.8 MB/s |  32 kB     00:00    
+(75/178): perl-AutoLoader-5.74-477.amzn2023.0.1 1.8 MB/s |  22 kB     00:00    
+(76/178): perl-B-1.80-477.amzn2023.0.10.aarch64  14 MB/s | 180 kB     00:00    
+(77/178): perl-Carp-1.50-458.amzn2023.0.2.noarc 2.3 MB/s |  29 kB     00:00    
+(78/178): perl-Class-Struct-0.66-477.amzn2023.0 1.8 MB/s |  23 kB     00:00    
+(79/178): perl-Data-Dumper-2.191-522.amzn2023.0 4.9 MB/s |  57 kB     00:00    
+(80/178): perl-Digest-1.20-1.amzn2023.0.2.noarc 2.2 MB/s |  26 kB     00:00    
+(81/178): perl-Digest-MD5-2.59-521.amzn2023.0.2 3.0 MB/s |  38 kB     00:00    
+(82/178): perl-DynaLoader-1.47-477.amzn2023.0.1 2.1 MB/s |  26 kB     00:00    
+(83/178): perl-Encode-3.21-520.amzn2023.0.2.aar  51 MB/s | 1.7 MB     00:00    
+(84/178): perl-Exporter-5.79-520.amzn2023.0.1.n 1.3 MB/s |  32 kB     00:00    
+(85/178): perl-Errno-1.30-477.amzn2023.0.10.aar 588 kB/s |  15 kB     00:00    
+(86/178): perl-Fcntl-1.13-477.amzn2023.0.10.aar 1.6 MB/s |  21 kB     00:00    
+(87/178): perl-File-Basename-2.85-477.amzn2023. 1.4 MB/s |  18 kB     00:00    
+(88/178): perl-File-Copy-2.34-477.amzn2023.0.10 1.7 MB/s |  21 kB     00:00    
+(89/178): perl-File-Path-2.18-2.amzn2023.0.2.no 2.7 MB/s |  36 kB     00:00    
+(90/178): perl-File-Temp-0.231.200-2.amzn2023.0 5.4 MB/s |  61 kB     00:00    
+(91/178): perl-File-stat-1.09-477.amzn2023.0.10 1.3 MB/s |  18 kB     00:00    
+(92/178): perl-Getopt-Long-2.58-521.amzn2023.0. 4.4 MB/s |  65 kB     00:00    
+(93/178): perl-Getopt-Std-1.12-477.amzn2023.0.1 1.2 MB/s |  16 kB     00:00    
+(94/178): perl-FileHandle-2.03-477.amzn2023.0.1 897 kB/s |  16 kB     00:00    
+(95/178): perl-HTTP-Tiny-0.092-2.amzn2023.0.3.n 4.6 MB/s |  59 kB     00:00    
+(96/178): perl-IO-1.43-477.amzn2023.0.10.aarch6 6.6 MB/s |  87 kB     00:00    
+(97/178): perl-IO-Socket-IP-0.43-522.amzn2023.0 3.3 MB/s |  44 kB     00:00    
+(98/178): perl-IO-Socket-SSL-2.075-1.amzn2023.0  18 MB/s | 216 kB     00:00    
+(99/178): perl-IPC-Open3-1.21-477.amzn2023.0.10 1.9 MB/s |  23 kB     00:00    
+(100/178): perl-IPC-Run3-0.049-5.amzn2023.0.1.n 3.4 MB/s |  40 kB     00:00    
+(101/178): perl-MIME-Base64-3.16-2.amzn2023.0.3 1.8 MB/s |  31 kB     00:00    
+(102/178): perl-NDBM_File-1.15-477.amzn2023.0.1 1.3 MB/s |  22 kB     00:00    
+(103/178): perl-Net-SSLeay-1.94-3.amzn2023.0.5.  19 MB/s | 392 kB     00:00    
+(104/178): perl-PathTools-3.78-459.amzn2023.0.3 7.1 MB/s |  85 kB     00:00    
+(105/178): perl-POSIX-1.94-477.amzn2023.0.10.aa 7.1 MB/s |  97 kB     00:00    
+(106/178): perl-Pod-Escapes-1.07-458.amzn2023.0 1.8 MB/s |  20 kB     00:00    
+(107/178): perl-Pod-Perldoc-3.28.01-459.amzn202 5.2 MB/s |  84 kB     00:00    
+(108/178): perl-Pod-Simple-3.42-2.amzn2023.0.2.  13 MB/s | 215 kB     00:00    
+(109/178): perl-Pod-Usage-2.01-2.amzn2023.0.2.n 2.6 MB/s |  41 kB     00:00    
+(110/178): perl-Scalar-List-Utils-1.56-459.amzn 5.1 MB/s |  70 kB     00:00    
+(111/178): perl-SelectSaver-1.02-477.amzn2023.0 940 kB/s |  12 kB     00:00    
+(112/178): perl-Socket-2.032-1.amzn2023.0.4.aar 4.2 MB/s |  55 kB     00:00    
+(113/178): perl-Symbol-1.08-477.amzn2023.0.10.n 1.0 MB/s |  15 kB     00:00    
+(114/178): perl-Storable-3.37-522.amzn2023.0.3. 5.7 MB/s |  96 kB     00:00    
+(115/178): perl-Term-ANSIColor-5.01-459.amzn202 3.0 MB/s |  48 kB     00:00    
+(116/178): perl-Term-Cap-1.17-458.amzn2023.0.2. 1.8 MB/s |  22 kB     00:00    
+(117/178): perl-Text-ParseWords-3.30-458.amzn20 1.3 MB/s |  17 kB     00:00    
+(118/178): perl-Text-Tabs+Wrap-2021.0726-1.amzn 1.7 MB/s |  22 kB     00:00    
+(119/178): perl-Time-Local-1.300-5.amzn2023.0.2 3.4 MB/s |  34 kB     00:00    
+(120/178): perl-Time-HiRes-1.9764-460.amzn2023. 4.9 MB/s |  58 kB     00:00    
+(121/178): perl-URI-5.18-1.amzn2023.0.1.noarch.  10 MB/s | 111 kB     00:00    
+(122/178): perl-constant-1.33-459.amzn2023.0.2. 2.3 MB/s |  23 kB     00:00    
+(123/178): perl-base-2.27-477.amzn2023.0.10.noa 1.4 MB/s |  17 kB     00:00    
+(124/178): perl-if-0.60.800-477.amzn2023.0.10.n 1.2 MB/s |  14 kB     00:00    
+(125/178): perl-interpreter-5.32.1-477.amzn2023 5.6 MB/s |  71 kB     00:00    
+(126/178): perl-libnet-3.13-2.amzn2023.0.2.noar 9.8 MB/s | 126 kB     00:00    
+(127/178): perl-libs-5.32.1-477.amzn2023.0.10.a  47 MB/s | 2.0 MB     00:00    
+(128/178): perl-locale-1.09-477.amzn2023.0.10.n 409 kB/s |  14 kB     00:00    
+(129/178): perl-mro-1.23-477.amzn2023.0.10.aarc 828 kB/s |  28 kB     00:00    
+(130/178): perl-overloading-0.02-477.amzn2023.0 1.3 MB/s |  13 kB     00:00    
+(131/178): perl-parent-0.238-458.amzn2023.0.2.n 1.3 MB/s |  14 kB     00:00    
+(132/178): perl-overload-1.31-477.amzn2023.0.10 3.3 MB/s |  46 kB     00:00    
+(133/178): perl-podlators-4.14-458.amzn2023.0.2 7.5 MB/s | 112 kB     00:00    
+(134/178): perl-srpm-macros-1-39.amzn2023.0.2.n 652 kB/s | 8.7 kB     00:00    
+(135/178): perl-subs-1.03-477.amzn2023.0.10.noa 916 kB/s |  12 kB     00:00    
+(136/178): pkgconf-1.8.0-4.amzn2023.0.2.aarch64 2.8 MB/s |  43 kB     00:00    
+(137/178): perl-vars-1.05-477.amzn2023.0.10.noa 824 kB/s |  13 kB     00:00    
+(138/178): pkgconf-m4-1.8.0-4.amzn2023.0.2.noar 902 kB/s |  15 kB     00:00    
+(139/178): pkgconf-pkg-config-1.8.0-4.amzn2023. 829 kB/s |  11 kB     00:00    
+(140/178): policycoreutils-3.4-6.amzn2023.0.3.a  15 MB/s | 213 kB     00:00    
+(141/178): psutils-2.05-1.amzn2023.0.2.noarch.r 3.6 MB/s |  51 kB     00:00    
+(142/178): python-srpm-macros-3.9-41.amzn2023.0 1.7 MB/s |  20 kB     00:00    
+(143/178): python3-colorama-0.4.4-2.amzn2023.0. 3.0 MB/s |  33 kB     00:00    
+(144/178): python3-awscrt-0.36.4-1.amzn2023.0.2  42 MB/s | 1.8 MB     00:00    
+(145/178): python3-dateutil-2.8.1-3.amzn2023.0. 8.2 MB/s | 289 kB     00:00    
+(146/178): python3-distro-1.5.0-5.amzn2023.0.2. 1.1 MB/s |  36 kB     00:00    
+(147/178): python3-docutils-0.16-4.amzn2023.0.2  39 MB/s | 1.5 MB     00:00    
+(148/178): python3-idna-2.10-3.amzn2023.0.4.noa 2.5 MB/s |  98 kB     00:00    
+(149/178): python3-jmespath-0.10.0-1.amzn2023.0 1.2 MB/s |  46 kB     00:00    
+(150/178): python3-prompt-toolkit-3.0.24-1.amzn  28 MB/s | 608 kB     00:00    
+(151/178): python3-pysocks-1.7.1-8.amzn2023.0.2 1.4 MB/s |  34 kB     00:00    
+(152/178): python3-pygments-2.7.4-1.amzn2023.0.  40 MB/s | 1.8 MB     00:00    
+(153/178): python3-ruamel-yaml-0.16.6-5.amzn202 6.6 MB/s | 189 kB     00:00    
+(154/178): python3-ruamel-yaml-clib-0.1.2-6.amz 5.1 MB/s | 134 kB     00:00    
+(155/178): python3-setuptools-59.6.0-2.amzn2023  38 MB/s | 941 kB     00:00    
+(156/178): python3-six-1.15.0-5.amzn2023.0.2.no 1.5 MB/s |  36 kB     00:00    
+(157/178): python3-urllib3-1.25.10-5.amzn2023.0 7.0 MB/s | 180 kB     00:00    
+(158/178): python3-wcwidth-0.2.5-3.amzn2023.0.2 3.3 MB/s |  41 kB     00:00    
+(159/178): qrencode-libs-4.1.1-2.amzn2023.0.2.a 5.3 MB/s |  66 kB     00:00    
+(160/178): quota-4.06-4.amzn2023.0.2.aarch64.rp  14 MB/s | 193 kB     00:00    
+(161/178): rpcbind-1.2.6-0.amzn2023.0.3.aarch64 5.5 MB/s |  58 kB     00:00    
+(162/178): quota-nls-4.06-4.amzn2023.0.2.noarch 5.8 MB/s |  77 kB     00:00    
+(163/178): rpm-plugin-selinux-4.16.1.3-29.amzn2 1.0 MB/s |  15 kB     00:00    
+(164/178): rust-toolset-srpm-macros-1.98.1-1.am 899 kB/s |  13 kB     00:00    
+(165/178): selinux-policy-38.1.76-1.amzn2023.0. 2.1 MB/s |  37 kB     00:00    
+(166/178): shadow-utils-4.9-12.amzn2023.0.4.aar  12 MB/s | 1.1 MB     00:00    
+(167/178): selinux-policy-targeted-38.1.76-1.am  50 MB/s | 6.5 MB     00:00    
+(168/178): strace-6.12-1.amzn2023.0.1.aarch64.r  11 MB/s | 1.4 MB     00:00    
+(169/178): systemd-252.23-15.amzn2023.aarch64.r  50 MB/s | 4.0 MB     00:00    
+(170/178): systemd-libs-252.23-15.amzn2023.aarc  10 MB/s | 587 kB     00:00    
+(171/178): systemd-networkd-252.23-15.amzn2023.  10 MB/s | 571 kB     00:00    
+(172/178): systemd-pam-252.23-15.amzn2023.aarch  20 MB/s | 305 kB     00:00    
+(173/178): systemd-resolved-252.23-15.amzn2023.  16 MB/s | 251 kB     00:00    
+(174/178): unzip-6.0-68.amzn2023.0.2.aarch64.rp  11 MB/s | 180 kB     00:00    
+(175/178): util-linux-core-2.37.4-1.amzn2023.0.  11 MB/s | 441 kB     00:00    
+(176/178): util-linux-2.37.4-1.amzn2023.0.6.aar  49 MB/s | 2.2 MB     00:00    
+(177/178): xkeyboard-config-2.41-1.amzn2023.0.1  18 MB/s | 922 kB     00:00    
+(178/178): zip-3.0-28.amzn2023.0.4.aarch64.rpm   18 MB/s | 259 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                            45 MB/s | 117 MB     00:02     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Running scriptlet: selinux-policy-targeted-38.1.76-1.amzn2023.0.3.noarc   1/1 
+  Preparing        :                                                        1/1 
+  Installing       : systemd-libs-252.23-15.amzn2023.aarch64              1/178 
+  Installing       : python3-setuptools-59.6.0-2.amzn2023.0.6.noarch      2/178 
+  Installing       : libtirpc-1.3.3-0.amzn2023.aarch64                    3/178 
+  Installing       : python3-ruamel-yaml-clib-0.1.2-6.amzn2023.0.2.aa     4/178 
+  Installing       : python3-ruamel-yaml-0.16.6-5.amzn2023.0.2.aarch6     5/178 
+  Installing       : util-linux-core-2.37.4-1.amzn2023.0.6.aarch64        6/178 
+  Running scriptlet: util-linux-core-2.37.4-1.amzn2023.0.6.aarch64        6/178 
+  Installing       : python3-wcwidth-0.2.5-3.amzn2023.0.2.noarch          7/178 
+  Installing       : python3-six-1.15.0-5.amzn2023.0.2.noarch             8/178 
+  Installing       : libsemanage-3.4-5.amzn2023.0.2.aarch64               9/178 
+  Installing       : shadow-utils-2:4.9-12.amzn2023.0.4.aarch64          10/178 
+  Installing       : libref_array-0.1.5-47.amzn2023.0.2.aarch64          11/178 
+  Installing       : libmpc-1.2.1-2.amzn2023.0.2.aarch64                 12/178 
+  Installing       : libfdisk-2.37.4-1.amzn2023.0.6.aarch64              13/178 
+  Running scriptlet: groff-base-1.22.4-7.amzn2023.0.2.aarch64            14/178 
+  Installing       : groff-base-1.22.4-7.amzn2023.0.2.aarch64            14/178 
+  Running scriptlet: groff-base-1.22.4-7.amzn2023.0.2.aarch64            14/178 
+  Installing       : diffutils-3.8-1.amzn2023.0.2.aarch64                15/178 
+  Installing       : cpp-11.5.0-5.amzn2023.0.5.aarch64                   16/178 
+  Running scriptlet: libutempter-1.2.1-4.amzn2023.0.2.aarch64            17/178 
+  Installing       : libutempter-1.2.1-4.amzn2023.0.2.aarch64            17/178 
+  Installing       : python3-dateutil-1:2.8.1-3.amzn2023.0.2.noarch      18/178 
+  Installing       : python3-distro-1.5.0-5.amzn2023.0.2.noarch          19/178 
+  Installing       : xkeyboard-config-2.41-1.amzn2023.0.1.noarch         20/178 
+  Installing       : libxkbcommon-1.6.0-2.amzn2023.0.1.aarch64           21/178 
+  Installing       : unzip-6.0-68.amzn2023.0.2.aarch64                   22/178 
+  Installing       : zip-3.0-28.amzn2023.0.4.aarch64                     23/178 
+  Installing       : rust-toolset-srpm-macros-1.98.1-1.amzn2023.noarc    24/178 
+  Installing       : quota-nls-1:4.06-4.amzn2023.0.2.noarch              25/178 
+  Installing       : qrencode-libs-4.1.1-2.amzn2023.0.2.aarch64          26/178 
+  Installing       : python3-pysocks-1.7.1-8.amzn2023.0.2.noarch         27/178 
+  Installing       : python3-pygments-2.7.4-1.amzn2023.0.3.noarch        28/178 
+  Installing       : python3-prompt-toolkit-3.0.24-1.amzn2023.0.2.noa    29/178 
+  Installing       : python3-jmespath-0.10.0-1.amzn2023.0.3.noarch       30/178 
+  Installing       : python3-idna-2.10-3.amzn2023.0.4.noarch             31/178 
+  Installing       : python3-urllib3-1.25.10-5.amzn2023.0.9.noarch       32/178 
+  Installing       : python3-docutils-0.16-4.amzn2023.0.2.noarch         33/178 
+  Installing       : python3-colorama-0.4.4-2.amzn2023.0.2.noarch        34/178 
+  Installing       : python3-awscrt-0.36.4-1.amzn2023.0.2.aarch64        35/178 
+  Installing       : pkgconf-m4-1.8.0-4.amzn2023.0.2.noarch              36/178 
+  Installing       : perl-srpm-macros-1-39.amzn2023.0.2.noarch           37/178 
+  Installing       : package-notes-srpm-macros-0.4-18.amzn2023.0.5.no    38/178 
+  Installing       : openblas-srpm-macros-2-9.amzn2023.0.2.noarch        39/178 
+  Installing       : ocaml-srpm-macros-6-6.amzn2023.0.2.noarch           40/178 
+  Installing       : ncurses-6.6-1.amzn2023.0.1.aarch64                  41/178 
+  Installing       : perl-Digest-1.20-1.amzn2023.0.2.noarch              42/178 
+  Installing       : perl-Digest-MD5-2.59-521.amzn2023.0.2.aarch64       43/178 
+  Installing       : perl-B-1.80-477.amzn2023.0.10.aarch64               44/178 
+  Installing       : perl-FileHandle-2.03-477.amzn2023.0.10.noarch       45/178 
+  Installing       : perl-Data-Dumper-2.191-522.amzn2023.0.3.aarch64     46/178 
+  Installing       : perl-libnet-3.13-2.amzn2023.0.2.noarch              47/178 
+  Installing       : perl-AutoLoader-5.74-477.amzn2023.0.10.noarch       48/178 
+  Installing       : perl-URI-5.18-1.amzn2023.0.1.noarch                 49/178 
+  Installing       : perl-Text-Tabs+Wrap-2021.0726-1.amzn2023.0.1.noa    50/178 
+  Installing       : perl-Time-HiRes-4:1.9764-460.amzn2023.0.3.aarch6    51/178 
+  Installing       : perl-if-0.60.800-477.amzn2023.0.10.noarch           52/178 
+  Installing       : perl-IO-Socket-IP-0.43-522.amzn2023.0.1.noarch      53/178 
+  Installing       : perl-Time-Local-2:1.300-5.amzn2023.0.2.noarch       54/178 
+  Installing       : perl-File-Path-2.18-2.amzn2023.0.2.noarch           55/178 
+  Installing       : perl-IO-Socket-SSL-2.075-1.amzn2023.0.3.noarch      56/178 
+  Installing       : perl-Net-SSLeay-1.94-3.amzn2023.0.5.aarch64         57/178 
+  Installing       : perl-Pod-Escapes-1:1.07-458.amzn2023.0.2.noarch     58/178 
+  Installing       : perl-Class-Struct-0.66-477.amzn2023.0.10.noarch     59/178 
+  Installing       : perl-POSIX-1.94-477.amzn2023.0.10.aarch64           60/178 
+  Installing       : perl-Term-ANSIColor-5.01-459.amzn2023.0.2.noarch    61/178 
+  Installing       : perl-IPC-Open3-1.21-477.amzn2023.0.10.noarch        62/178 
+  Installing       : perl-subs-1.03-477.amzn2023.0.10.noarch             63/178 
+  Installing       : perl-File-Temp-1:0.231.200-2.amzn2023.0.1.noarch    64/178 
+  Installing       : perl-HTTP-Tiny-0.092-2.amzn2023.0.3.noarch          65/178 
+  Installing       : perl-Term-Cap-1.17-458.amzn2023.0.2.noarch          66/178 
+  Installing       : perl-Pod-Simple-1:3.42-2.amzn2023.0.2.noarch        67/178 
+  Installing       : perl-Socket-4:2.032-1.amzn2023.0.4.aarch64          68/178 
+  Installing       : perl-SelectSaver-1.02-477.amzn2023.0.10.noarch      69/178 
+  Installing       : perl-Symbol-1.08-477.amzn2023.0.10.noarch           70/178 
+  Installing       : perl-File-stat-1.09-477.amzn2023.0.10.noarch        71/178 
+  Installing       : perl-podlators-1:4.14-458.amzn2023.0.2.noarch       72/178 
+  Installing       : perl-Pod-Perldoc-3.28.01-459.amzn2023.0.3.noarch    73/178 
+  Installing       : perl-Fcntl-1.13-477.amzn2023.0.10.aarch64           74/178 
+  Installing       : perl-Text-ParseWords-3.30-458.amzn2023.0.2.noarc    75/178 
+  Installing       : perl-base-2.27-477.amzn2023.0.10.noarch             76/178 
+  Installing       : perl-mro-1.23-477.amzn2023.0.10.aarch64             77/178 
+  Installing       : perl-IO-1.43-477.amzn2023.0.10.aarch64              78/178 
+  Installing       : perl-overloading-0.02-477.amzn2023.0.10.noarch      79/178 
+  Installing       : perl-Pod-Usage-4:2.01-2.amzn2023.0.2.noarch         80/178 
+  Installing       : perl-Errno-1.30-477.amzn2023.0.10.aarch64           81/178 
+  Installing       : perl-File-Basename-2.85-477.amzn2023.0.10.noarch    82/178 
+  Installing       : perl-Getopt-Std-1.12-477.amzn2023.0.10.noarch       83/178 
+  Installing       : perl-MIME-Base64-3.16-2.amzn2023.0.3.aarch64        84/178 
+  Installing       : perl-Scalar-List-Utils-4:1.56-459.amzn2023.0.3.a    85/178 
+  Installing       : perl-constant-1.33-459.amzn2023.0.2.noarch          86/178 
+  Installing       : perl-Storable-1:3.37-522.amzn2023.0.3.aarch64       87/178 
+  Installing       : perl-overload-1.31-477.amzn2023.0.10.noarch         88/178 
+  Installing       : perl-parent-1:0.238-458.amzn2023.0.2.noarch         89/178 
+  Installing       : perl-vars-1.05-477.amzn2023.0.10.noarch             90/178 
+  Installing       : perl-Getopt-Long-1:2.58-521.amzn2023.0.1.noarch     91/178 
+  Installing       : perl-DynaLoader-1.47-477.amzn2023.0.10.aarch64      92/178 
+  Installing       : perl-Carp-1.50-458.amzn2023.0.2.noarch              93/178 
+  Installing       : perl-Exporter-5.79-520.amzn2023.0.1.noarch          94/178 
+  Installing       : perl-NDBM_File-1.15-477.amzn2023.0.10.aarch64       95/178 
+  Installing       : perl-PathTools-3.78-459.amzn2023.0.3.aarch64        96/178 
+  Installing       : perl-Encode-4:3.21-520.amzn2023.0.2.aarch64         97/178 
+  Installing       : perl-libs-4:5.32.1-477.amzn2023.0.10.aarch64        98/178 
+  Installing       : perl-interpreter-4:5.32.1-477.amzn2023.0.10.aarc    99/178 
+  Installing       : perl-File-Copy-2.34-477.amzn2023.0.10.noarch       100/178 
+  Installing       : perl-IPC-Run3-0.049-5.amzn2023.0.1.noarch          101/178 
+  Installing       : perl-locale-1.09-477.amzn2023.0.10.noarch          102/178 
+  Installing       : paper-2.3-2.amzn2023.0.3.aarch64                   103/178 
+  Installing       : psutils-2.05-1.amzn2023.0.2.noarch                 104/178 
+  Running scriptlet: groff-1.22.4-7.amzn2023.0.2.aarch64                105/178 
+  Installing       : groff-1.22.4-7.amzn2023.0.2.aarch64                105/178 
+  Running scriptlet: groff-1.22.4-7.amzn2023.0.2.aarch64                105/178 
+  Installing       : lua-srpm-macros-1-4.amzn2023.0.2.noarch            106/178 
+  Installing       : libtool-ltdl-2.4.7-1.amzn2023.0.3.aarch64          107/178 
+  Installing       : libselinux-utils-3.4-5.amzn2023.0.2.aarch64        108/178 
+  Installing       : libseccomp-2.5.3-1.amzn2023.0.2.aarch64            109/178 
+  Installing       : libpkgconf-1.8.0-4.amzn2023.0.2.aarch64            110/178 
+  Installing       : libpath_utils-0.2.1-47.amzn2023.0.2.aarch64        111/178 
+  Installing       : libevent-2.1.12-3.amzn2023.0.4.aarch64             112/178 
+  Installing       : libev-4.33-3.amzn2023.0.2.aarch64                  113/178 
+  Installing       : libverto-libev-0.3.2-1.amzn2023.0.2.aarch64        114/178 
+  Installing       : libeconf-0.7.9-1.amzn2023.0.1.aarch64              115/178 
+  Installing       : libdb-5.3.28-49.amzn2023.0.2.aarch64               116/178 
+  Installing       : libcollection-0.7.0-47.amzn2023.0.2.aarch64        117/178 
+  Installing       : libbasicobjects-0.1.1-47.amzn2023.0.2.aarch64      118/178 
+  Installing       : libini_config-1.3.1-47.amzn2023.0.2.aarch64        119/178 
+  Installing       : libargon2-20171227-9.amzn2023.0.2.aarch64          120/178 
+  Installing       : kmod-libs-29-2.amzn2023.0.6.aarch64                121/178 
+  Installing       : kmod-29-2.amzn2023.0.6.aarch64                     122/178 
+  Installing       : keyutils-1.6.3-1.amzn2023.0.2.aarch64              123/178 
+  Installing       : kernel6.18-headers-1:6.18.54-121.166.amzn2023.aa   124/178 
+  Installing       : kernel-srpm-macros-1.0-14.amzn2023.0.3.noarch      125/178 
+  Installing       : jansson-2.14-0.amzn2023.aarch64                    126/178 
+  Installing       : gzip-1.12-1.amzn2023.0.1.aarch64                   127/178 
+  Installing       : cracklib-2.9.6-27.amzn2023.0.2.aarch64             128/178 
+  Installing       : pam-1.5.1-8.amzn2023.0.8.aarch64                   129/178 
+  Installing       : libpwquality-1.4.4-6.amzn2023.0.2.aarch64          130/178 
+  Installing       : util-linux-2.37.4-1.amzn2023.0.6.aarch64           131/178 
+warning: /etc/adjtime created as /etc/adjtime.rpmnew
+
+  Running scriptlet: util-linux-2.37.4-1.amzn2023.0.6.aarch64           131/178 
+  Installing       : policycoreutils-3.4-6.amzn2023.0.3.aarch64         132/178 
+  Running scriptlet: policycoreutils-3.4-6.amzn2023.0.3.aarch64         132/178 
+  Installing       : rpm-plugin-selinux-4.16.1.3-29.amzn2023.0.8.aarc   133/178 
+  Installing       : selinux-policy-38.1.76-1.amzn2023.0.3.noarch       134/178 
+  Running scriptlet: selinux-policy-38.1.76-1.amzn2023.0.3.noarch       134/178 
+  Running scriptlet: selinux-policy-targeted-38.1.76-1.amzn2023.0.3.n   135/178 
+  Installing       : selinux-policy-targeted-38.1.76-1.amzn2023.0.3.n   135/178 
+  Running scriptlet: selinux-policy-targeted-38.1.76-1.amzn2023.0.3.n   135/178 
+  Installing       : ghc-srpm-macros-1.5.0-4.amzn2023.0.2.noarch        136/178 
+  Installing       : gc-8.0.4-5.amzn2023.0.2.aarch64                    137/178 
+  Installing       : guile22-2.2.7-2.amzn2023.0.3.aarch64               138/178 
+  Installing       : make-1:4.3-5.amzn2023.0.2.aarch64                  139/178 
+  Installing       : findutils-1:4.8.0-2.amzn2023.0.2.aarch64           140/178 
+  Installing       : file-5.39-7.amzn2023.0.4.aarch64                   141/178 
+  Installing       : elfutils-debuginfod-client-0.188-3.amzn2023.0.3.   142/178 
+  Installing       : binutils-2.41-50.amzn2023.0.5.aarch64              143/178 
+  Running scriptlet: binutils-2.41-50.amzn2023.0.5.aarch64              143/178 
+  Installing       : efi-srpm-macros-5-4.amzn2023.0.5.noarch            144/178 
+  Installing       : e2fsprogs-libs-1.46.5-2.amzn2023.0.2.aarch64       145/178 
+  Installing       : quota-1:4.06-4.amzn2023.0.2.aarch64                146/178 
+  Installing       : dwz-0.16-2.amzn2023.0.1.aarch64                    147/178 
+  Installing       : dbus-common-1:1.12.28-1.amzn2023.0.1.noarch        148/178 
+  Running scriptlet: dbus-common-1:1.12.28-1.amzn2023.0.1.noarch        148/178 
+  Running scriptlet: dbus-broker-32-1.amzn2023.0.2.aarch64              149/178 
+  Installing       : dbus-broker-32-1.amzn2023.0.2.aarch64              149/178 
+  Running scriptlet: dbus-broker-32-1.amzn2023.0.2.aarch64              149/178 
+  Installing       : dbus-1:1.12.28-1.amzn2023.0.1.aarch64              150/178 
+  Installing       : cryptsetup-libs-2.6.1-1.amzn2023.0.1.aarch64       151/178 
+  Installing       : device-mapper-libs-1.02.185-1.amzn2023.0.5.aarch   152/178 
+  Installing       : device-mapper-1.02.185-1.amzn2023.0.5.aarch64      153/178 
+  Installing       : systemd-networkd-252.23-15.amzn2023.aarch64        154/178 
+  Running scriptlet: systemd-networkd-252.23-15.amzn2023.aarch64        154/178 
+  Installing       : systemd-pam-252.23-15.amzn2023.aarch64             155/178 
+  Installing       : systemd-resolved-252.23-15.amzn2023.aarch64        156/178 
+  Running scriptlet: systemd-resolved-252.23-15.amzn2023.aarch64        156/178 
+  Installing       : systemd-252.23-15.amzn2023.aarch64                 157/178 
+  Running scriptlet: systemd-252.23-15.amzn2023.aarch64                 157/178 
+Creating group 'input' with GID 104.
+Creating group 'kvm' with GID 36.
+Creating group 'render' with GID 105.
+Creating group 'sgx' with GID 106.
+Creating group 'systemd-journal' with GID 190.
+Creating group 'systemd-network' with GID 192.
+Creating user 'systemd-network' (systemd Network Management) with UID 192 and GID 192.
+Creating group 'systemd-oom' with GID 999.
+Creating user 'systemd-oom' (systemd Userspace OOM Killer) with UID 999 and GID 999.
+Creating group 'systemd-resolve' with GID 193.
+Creating user 'systemd-resolve' (systemd Resolver) with UID 193 and GID 193.
+
+  Running scriptlet: gssproxy-0.9.2-6.amzn2023.0.1.aarch64              158/178 
+  Installing       : gssproxy-0.9.2-6.amzn2023.0.1.aarch64              158/178 
+  Running scriptlet: gssproxy-0.9.2-6.amzn2023.0.1.aarch64              158/178 
+  Running scriptlet: rpcbind-1.2.6-0.amzn2023.0.3.aarch64               159/178 
+  Installing       : rpcbind-1.2.6-0.amzn2023.0.3.aarch64               159/178 
+  Running scriptlet: rpcbind-1.2.6-0.amzn2023.0.3.aarch64               159/178 
+  Installing       : cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.aarch64      160/178 
+  Installing       : openldap-2.4.57-6.amzn2023.0.7.aarch64             161/178 
+  Installing       : libnfsidmap-1:2.5.4-2.rc3.amzn2023.0.3.aarch64     162/178 
+  Installing       : annobin-docs-12.69-1.amzn2023.0.1.noarch           163/178 
+  Installing       : fonts-srpm-macros-1:2.0.5-12.amzn2023.0.2.noarch   164/178 
+  Installing       : go-srpm-macros-3.8.0-1.amzn2023.0.1.noarch         165/178 
+  Installing       : annobin-plugin-gcc-12.69-1.amzn2023.0.1.aarch64    166/178 
+  Installing       : gcc-plugin-annobin-11.5.0-5.amzn2023.0.5.aarch64   167/178 
+  Installing       : gcc-11.5.0-5.amzn2023.0.5.aarch64                  168/178 
+  Installing       : glibc-devel-2.34-231.amzn2023.0.5.aarch64          169/178 
+  Installing       : libxcrypt-devel-4.4.33-7.amzn2023.aarch64          170/178 
+  Installing       : pkgconf-pkg-config-1.8.0-4.amzn2023.0.2.aarch64    171/178 
+  Installing       : pkgconf-1.8.0-4.amzn2023.0.2.aarch64               172/178 
+  Installing       : python-srpm-macros-3.9-41.amzn2023.0.6.noarch      173/178 
+  Installing       : amazon-rpm-config-228-11.amzn2023.0.1.noarch       174/178 
+  Running scriptlet: amazon-rpm-config-228-11.amzn2023.0.1.noarch       174/178 
+  Running scriptlet: nfs-utils-1:2.5.4-2.rc3.amzn2023.0.3.aarch64       175/178 
+  Installing       : nfs-utils-1:2.5.4-2.rc3.amzn2023.0.3.aarch64       175/178 
+  Running scriptlet: nfs-utils-1:2.5.4-2.rc3.amzn2023.0.3.aarch64       175/178 
+System has not been booted with systemd as init system (PID 1). Can't operate.
+Failed to connect to bus: Host is down
+
+System has not been booted with systemd as init system (PID 1). Can't operate.
+Failed to connect to bus: Host is down
+
+  Installing       : awscli-2-2.36.47-4.amzn2023.0.1.noarch             176/178 
+  Installing       : strace-6.12-1.amzn2023.0.1.aarch64                 177/178 
+  Installing       : glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64    178/178 
+  Running scriptlet: glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64    178/178 
+  Running scriptlet: pam-1.5.1-8.amzn2023.0.8.aarch64                   178/178 
+  Running scriptlet: selinux-policy-targeted-38.1.76-1.amzn2023.0.3.n   178/178 
+  Running scriptlet: systemd-resolved-252.23-15.amzn2023.aarch64        178/178 
+  Running scriptlet: glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64    178/178 
+  Verifying        : amazon-rpm-config-228-11.amzn2023.0.1.noarch         1/178 
+  Verifying        : annobin-docs-12.69-1.amzn2023.0.1.noarch             2/178 
+  Verifying        : annobin-plugin-gcc-12.69-1.amzn2023.0.1.aarch64      3/178 
+  Verifying        : awscli-2-2.36.47-4.amzn2023.0.1.noarch               4/178 
+  Verifying        : binutils-2.41-50.amzn2023.0.5.aarch64                5/178 
+  Verifying        : cpp-11.5.0-5.amzn2023.0.5.aarch64                    6/178 
+  Verifying        : cracklib-2.9.6-27.amzn2023.0.2.aarch64               7/178 
+  Verifying        : cryptsetup-libs-2.6.1-1.amzn2023.0.1.aarch64         8/178 
+  Verifying        : cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.aarch64        9/178 
+  Verifying        : dbus-1:1.12.28-1.amzn2023.0.1.aarch64               10/178 
+  Verifying        : dbus-broker-32-1.amzn2023.0.2.aarch64               11/178 
+  Verifying        : dbus-common-1:1.12.28-1.amzn2023.0.1.noarch         12/178 
+  Verifying        : device-mapper-1.02.185-1.amzn2023.0.5.aarch64       13/178 
+  Verifying        : device-mapper-libs-1.02.185-1.amzn2023.0.5.aarch    14/178 
+  Verifying        : diffutils-3.8-1.amzn2023.0.2.aarch64                15/178 
+  Verifying        : dwz-0.16-2.amzn2023.0.1.aarch64                     16/178 
+  Verifying        : e2fsprogs-libs-1.46.5-2.amzn2023.0.2.aarch64        17/178 
+  Verifying        : efi-srpm-macros-5-4.amzn2023.0.5.noarch             18/178 
+  Verifying        : elfutils-debuginfod-client-0.188-3.amzn2023.0.3.    19/178 
+  Verifying        : file-5.39-7.amzn2023.0.4.aarch64                    20/178 
+  Verifying        : findutils-1:4.8.0-2.amzn2023.0.2.aarch64            21/178 
+  Verifying        : fonts-srpm-macros-1:2.0.5-12.amzn2023.0.2.noarch    22/178 
+  Verifying        : gc-8.0.4-5.amzn2023.0.2.aarch64                     23/178 
+  Verifying        : gcc-11.5.0-5.amzn2023.0.5.aarch64                   24/178 
+  Verifying        : gcc-plugin-annobin-11.5.0-5.amzn2023.0.5.aarch64    25/178 
+  Verifying        : ghc-srpm-macros-1.5.0-4.amzn2023.0.2.noarch         26/178 
+  Verifying        : glibc-devel-2.34-231.amzn2023.0.5.aarch64           27/178 
+  Verifying        : glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64     28/178 
+  Verifying        : go-srpm-macros-3.8.0-1.amzn2023.0.1.noarch          29/178 
+  Verifying        : groff-1.22.4-7.amzn2023.0.2.aarch64                 30/178 
+  Verifying        : groff-base-1.22.4-7.amzn2023.0.2.aarch64            31/178 
+  Verifying        : gssproxy-0.9.2-6.amzn2023.0.1.aarch64               32/178 
+  Verifying        : guile22-2.2.7-2.amzn2023.0.3.aarch64                33/178 
+  Verifying        : gzip-1.12-1.amzn2023.0.1.aarch64                    34/178 
+  Verifying        : jansson-2.14-0.amzn2023.aarch64                     35/178 
+  Verifying        : kernel-srpm-macros-1.0-14.amzn2023.0.3.noarch       36/178 
+  Verifying        : kernel6.18-headers-1:6.18.54-121.166.amzn2023.aa    37/178 
+  Verifying        : keyutils-1.6.3-1.amzn2023.0.2.aarch64               38/178 
+  Verifying        : kmod-29-2.amzn2023.0.6.aarch64                      39/178 
+  Verifying        : kmod-libs-29-2.amzn2023.0.6.aarch64                 40/178 
+  Verifying        : libargon2-20171227-9.amzn2023.0.2.aarch64           41/178 
+  Verifying        : libbasicobjects-0.1.1-47.amzn2023.0.2.aarch64       42/178 
+  Verifying        : libcollection-0.7.0-47.amzn2023.0.2.aarch64         43/178 
+  Verifying        : libdb-5.3.28-49.amzn2023.0.2.aarch64                44/178 
+  Verifying        : libeconf-0.7.9-1.amzn2023.0.1.aarch64               45/178 
+  Verifying        : libev-4.33-3.amzn2023.0.2.aarch64                   46/178 
+  Verifying        : libevent-2.1.12-3.amzn2023.0.4.aarch64              47/178 
+  Verifying        : libfdisk-2.37.4-1.amzn2023.0.6.aarch64              48/178 
+  Verifying        : libini_config-1.3.1-47.amzn2023.0.2.aarch64         49/178 
+  Verifying        : libmpc-1.2.1-2.amzn2023.0.2.aarch64                 50/178 
+  Verifying        : libnfsidmap-1:2.5.4-2.rc3.amzn2023.0.3.aarch64      51/178 
+  Verifying        : libpath_utils-0.2.1-47.amzn2023.0.2.aarch64         52/178 
+  Verifying        : libpkgconf-1.8.0-4.amzn2023.0.2.aarch64             53/178 
+  Verifying        : libpwquality-1.4.4-6.amzn2023.0.2.aarch64           54/178 
+  Verifying        : libref_array-0.1.5-47.amzn2023.0.2.aarch64          55/178 
+  Verifying        : libseccomp-2.5.3-1.amzn2023.0.2.aarch64             56/178 
+  Verifying        : libselinux-utils-3.4-5.amzn2023.0.2.aarch64         57/178 
+  Verifying        : libsemanage-3.4-5.amzn2023.0.2.aarch64              58/178 
+  Verifying        : libtirpc-1.3.3-0.amzn2023.aarch64                   59/178 
+  Verifying        : libtool-ltdl-2.4.7-1.amzn2023.0.3.aarch64           60/178 
+  Verifying        : libutempter-1.2.1-4.amzn2023.0.2.aarch64            61/178 
+  Verifying        : libverto-libev-0.3.2-1.amzn2023.0.2.aarch64         62/178 
+  Verifying        : libxcrypt-devel-4.4.33-7.amzn2023.aarch64           63/178 
+  Verifying        : libxkbcommon-1.6.0-2.amzn2023.0.1.aarch64           64/178 
+  Verifying        : lua-srpm-macros-1-4.amzn2023.0.2.noarch             65/178 
+  Verifying        : make-1:4.3-5.amzn2023.0.2.aarch64                   66/178 
+  Verifying        : ncurses-6.6-1.amzn2023.0.1.aarch64                  67/178 
+  Verifying        : nfs-utils-1:2.5.4-2.rc3.amzn2023.0.3.aarch64        68/178 
+  Verifying        : ocaml-srpm-macros-6-6.amzn2023.0.2.noarch           69/178 
+  Verifying        : openblas-srpm-macros-2-9.amzn2023.0.2.noarch        70/178 
+  Verifying        : openldap-2.4.57-6.amzn2023.0.7.aarch64              71/178 
+  Verifying        : package-notes-srpm-macros-0.4-18.amzn2023.0.5.no    72/178 
+  Verifying        : pam-1.5.1-8.amzn2023.0.8.aarch64                    73/178 
+  Verifying        : paper-2.3-2.amzn2023.0.3.aarch64                    74/178 
+  Verifying        : perl-AutoLoader-5.74-477.amzn2023.0.10.noarch       75/178 
+  Verifying        : perl-B-1.80-477.amzn2023.0.10.aarch64               76/178 
+  Verifying        : perl-Carp-1.50-458.amzn2023.0.2.noarch              77/178 
+  Verifying        : perl-Class-Struct-0.66-477.amzn2023.0.10.noarch     78/178 
+  Verifying        : perl-Data-Dumper-2.191-522.amzn2023.0.3.aarch64     79/178 
+  Verifying        : perl-Digest-1.20-1.amzn2023.0.2.noarch              80/178 
+  Verifying        : perl-Digest-MD5-2.59-521.amzn2023.0.2.aarch64       81/178 
+  Verifying        : perl-DynaLoader-1.47-477.amzn2023.0.10.aarch64      82/178 
+  Verifying        : perl-Encode-4:3.21-520.amzn2023.0.2.aarch64         83/178 
+  Verifying        : perl-Errno-1.30-477.amzn2023.0.10.aarch64           84/178 
+  Verifying        : perl-Exporter-5.79-520.amzn2023.0.1.noarch          85/178 
+  Verifying        : perl-Fcntl-1.13-477.amzn2023.0.10.aarch64           86/178 
+  Verifying        : perl-File-Basename-2.85-477.amzn2023.0.10.noarch    87/178 
+  Verifying        : perl-File-Copy-2.34-477.amzn2023.0.10.noarch        88/178 
+  Verifying        : perl-File-Path-2.18-2.amzn2023.0.2.noarch           89/178 
+  Verifying        : perl-File-Temp-1:0.231.200-2.amzn2023.0.1.noarch    90/178 
+  Verifying        : perl-File-stat-1.09-477.amzn2023.0.10.noarch        91/178 
+  Verifying        : perl-FileHandle-2.03-477.amzn2023.0.10.noarch       92/178 
+  Verifying        : perl-Getopt-Long-1:2.58-521.amzn2023.0.1.noarch     93/178 
+  Verifying        : perl-Getopt-Std-1.12-477.amzn2023.0.10.noarch       94/178 
+  Verifying        : perl-HTTP-Tiny-0.092-2.amzn2023.0.3.noarch          95/178 
+  Verifying        : perl-IO-1.43-477.amzn2023.0.10.aarch64              96/178 
+  Verifying        : perl-IO-Socket-IP-0.43-522.amzn2023.0.1.noarch      97/178 
+  Verifying        : perl-IO-Socket-SSL-2.075-1.amzn2023.0.3.noarch      98/178 
+  Verifying        : perl-IPC-Open3-1.21-477.amzn2023.0.10.noarch        99/178 
+  Verifying        : perl-IPC-Run3-0.049-5.amzn2023.0.1.noarch          100/178 
+  Verifying        : perl-MIME-Base64-3.16-2.amzn2023.0.3.aarch64       101/178 
+  Verifying        : perl-NDBM_File-1.15-477.amzn2023.0.10.aarch64      102/178 
+  Verifying        : perl-Net-SSLeay-1.94-3.amzn2023.0.5.aarch64        103/178 
+  Verifying        : perl-POSIX-1.94-477.amzn2023.0.10.aarch64          104/178 
+  Verifying        : perl-PathTools-3.78-459.amzn2023.0.3.aarch64       105/178 
+  Verifying        : perl-Pod-Escapes-1:1.07-458.amzn2023.0.2.noarch    106/178 
+  Verifying        : perl-Pod-Perldoc-3.28.01-459.amzn2023.0.3.noarch   107/178 
+  Verifying        : perl-Pod-Simple-1:3.42-2.amzn2023.0.2.noarch       108/178 
+  Verifying        : perl-Pod-Usage-4:2.01-2.amzn2023.0.2.noarch        109/178 
+  Verifying        : perl-Scalar-List-Utils-4:1.56-459.amzn2023.0.3.a   110/178 
+  Verifying        : perl-SelectSaver-1.02-477.amzn2023.0.10.noarch     111/178 
+  Verifying        : perl-Socket-4:2.032-1.amzn2023.0.4.aarch64         112/178 
+  Verifying        : perl-Storable-1:3.37-522.amzn2023.0.3.aarch64      113/178 
+  Verifying        : perl-Symbol-1.08-477.amzn2023.0.10.noarch          114/178 
+  Verifying        : perl-Term-ANSIColor-5.01-459.amzn2023.0.2.noarch   115/178 
+  Verifying        : perl-Term-Cap-1.17-458.amzn2023.0.2.noarch         116/178 
+  Verifying        : perl-Text-ParseWords-3.30-458.amzn2023.0.2.noarc   117/178 
+  Verifying        : perl-Text-Tabs+Wrap-2021.0726-1.amzn2023.0.1.noa   118/178 
+  Verifying        : perl-Time-HiRes-4:1.9764-460.amzn2023.0.3.aarch6   119/178 
+  Verifying        : perl-Time-Local-2:1.300-5.amzn2023.0.2.noarch      120/178 
+  Verifying        : perl-URI-5.18-1.amzn2023.0.1.noarch                121/178 
+  Verifying        : perl-base-2.27-477.amzn2023.0.10.noarch            122/178 
+  Verifying        : perl-constant-1.33-459.amzn2023.0.2.noarch         123/178 
+  Verifying        : perl-if-0.60.800-477.amzn2023.0.10.noarch          124/178 
+  Verifying        : perl-interpreter-4:5.32.1-477.amzn2023.0.10.aarc   125/178 
+  Verifying        : perl-libnet-3.13-2.amzn2023.0.2.noarch             126/178 
+  Verifying        : perl-libs-4:5.32.1-477.amzn2023.0.10.aarch64       127/178 
+  Verifying        : perl-locale-1.09-477.amzn2023.0.10.noarch          128/178 
+  Verifying        : perl-mro-1.23-477.amzn2023.0.10.aarch64            129/178 
+  Verifying        : perl-overload-1.31-477.amzn2023.0.10.noarch        130/178 
+  Verifying        : perl-overloading-0.02-477.amzn2023.0.10.noarch     131/178 
+  Verifying        : perl-parent-1:0.238-458.amzn2023.0.2.noarch        132/178 
+  Verifying        : perl-podlators-1:4.14-458.amzn2023.0.2.noarch      133/178 
+  Verifying        : perl-srpm-macros-1-39.amzn2023.0.2.noarch          134/178 
+  Verifying        : perl-subs-1.03-477.amzn2023.0.10.noarch            135/178 
+  Verifying        : perl-vars-1.05-477.amzn2023.0.10.noarch            136/178 
+  Verifying        : pkgconf-1.8.0-4.amzn2023.0.2.aarch64               137/178 
+  Verifying        : pkgconf-m4-1.8.0-4.amzn2023.0.2.noarch             138/178 
+  Verifying        : pkgconf-pkg-config-1.8.0-4.amzn2023.0.2.aarch64    139/178 
+  Verifying        : policycoreutils-3.4-6.amzn2023.0.3.aarch64         140/178 
+  Verifying        : psutils-2.05-1.amzn2023.0.2.noarch                 141/178 
+  Verifying        : python-srpm-macros-3.9-41.amzn2023.0.6.noarch      142/178 
+  Verifying        : python3-awscrt-0.36.4-1.amzn2023.0.2.aarch64       143/178 
+  Verifying        : python3-colorama-0.4.4-2.amzn2023.0.2.noarch       144/178 
+  Verifying        : python3-dateutil-1:2.8.1-3.amzn2023.0.2.noarch     145/178 
+  Verifying        : python3-distro-1.5.0-5.amzn2023.0.2.noarch         146/178 
+  Verifying        : python3-docutils-0.16-4.amzn2023.0.2.noarch        147/178 
+  Verifying        : python3-idna-2.10-3.amzn2023.0.4.noarch            148/178 
+  Verifying        : python3-jmespath-0.10.0-1.amzn2023.0.3.noarch      149/178 
+  Verifying        : python3-prompt-toolkit-3.0.24-1.amzn2023.0.2.noa   150/178 
+  Verifying        : python3-pygments-2.7.4-1.amzn2023.0.3.noarch       151/178 
+  Verifying        : python3-pysocks-1.7.1-8.amzn2023.0.2.noarch        152/178 
+  Verifying        : python3-ruamel-yaml-0.16.6-5.amzn2023.0.2.aarch6   153/178 
+  Verifying        : python3-ruamel-yaml-clib-0.1.2-6.amzn2023.0.2.aa   154/178 
+  Verifying        : python3-setuptools-59.6.0-2.amzn2023.0.6.noarch    155/178 
+  Verifying        : python3-six-1.15.0-5.amzn2023.0.2.noarch           156/178 
+  Verifying        : python3-urllib3-1.25.10-5.amzn2023.0.9.noarch      157/178 
+  Verifying        : python3-wcwidth-0.2.5-3.amzn2023.0.2.noarch        158/178 
+  Verifying        : qrencode-libs-4.1.1-2.amzn2023.0.2.aarch64         159/178 
+  Verifying        : quota-1:4.06-4.amzn2023.0.2.aarch64                160/178 
+  Verifying        : quota-nls-1:4.06-4.amzn2023.0.2.noarch             161/178 
+  Verifying        : rpcbind-1.2.6-0.amzn2023.0.3.aarch64               162/178 
+  Verifying        : rpm-plugin-selinux-4.16.1.3-29.amzn2023.0.8.aarc   163/178 
+  Verifying        : rust-toolset-srpm-macros-1.98.1-1.amzn2023.noarc   164/178 
+  Verifying        : selinux-policy-38.1.76-1.amzn2023.0.3.noarch       165/178 
+  Verifying        : selinux-policy-targeted-38.1.76-1.amzn2023.0.3.n   166/178 
+  Verifying        : shadow-utils-2:4.9-12.amzn2023.0.4.aarch64         167/178 
+  Verifying        : strace-6.12-1.amzn2023.0.1.aarch64                 168/178 
+  Verifying        : systemd-252.23-15.amzn2023.aarch64                 169/178 
+  Verifying        : systemd-libs-252.23-15.amzn2023.aarch64            170/178 
+  Verifying        : systemd-networkd-252.23-15.amzn2023.aarch64        171/178 
+  Verifying        : systemd-pam-252.23-15.amzn2023.aarch64             172/178 
+  Verifying        : systemd-resolved-252.23-15.amzn2023.aarch64        173/178 
+  Verifying        : unzip-6.0-68.amzn2023.0.2.aarch64                  174/178 
+  Verifying        : util-linux-2.37.4-1.amzn2023.0.6.aarch64           175/178 
+  Verifying        : util-linux-core-2.37.4-1.amzn2023.0.6.aarch64      176/178 
+  Verifying        : xkeyboard-config-2.41-1.amzn2023.0.1.noarch        177/178 
+  Verifying        : zip-3.0-28.amzn2023.0.4.aarch64                    178/178 
+
+Installed:
+  amazon-rpm-config-228-11.amzn2023.0.1.noarch                                  
+  annobin-docs-12.69-1.amzn2023.0.1.noarch                                      
+  annobin-plugin-gcc-12.69-1.amzn2023.0.1.aarch64                               
+  awscli-2-2.36.47-4.amzn2023.0.1.noarch                                        
+  binutils-2.41-50.amzn2023.0.5.aarch64                                         
+  cpp-11.5.0-5.amzn2023.0.5.aarch64                                             
+  cracklib-2.9.6-27.amzn2023.0.2.aarch64                                        
+  cryptsetup-libs-2.6.1-1.amzn2023.0.1.aarch64                                  
+  cyrus-sasl-lib-2.1.27-18.amzn2023.0.3.aarch64                                 
+  dbus-1:1.12.28-1.amzn2023.0.1.aarch64                                         
+  dbus-broker-32-1.amzn2023.0.2.aarch64                                         
+  dbus-common-1:1.12.28-1.amzn2023.0.1.noarch                                   
+  device-mapper-1.02.185-1.amzn2023.0.5.aarch64                                 
+  device-mapper-libs-1.02.185-1.amzn2023.0.5.aarch64                            
+  diffutils-3.8-1.amzn2023.0.2.aarch64                                          
+  dwz-0.16-2.amzn2023.0.1.aarch64                                               
+  e2fsprogs-libs-1.46.5-2.amzn2023.0.2.aarch64                                  
+  efi-srpm-macros-5-4.amzn2023.0.5.noarch                                       
+  elfutils-debuginfod-client-0.188-3.amzn2023.0.3.aarch64                       
+  file-5.39-7.amzn2023.0.4.aarch64                                              
+  findutils-1:4.8.0-2.amzn2023.0.2.aarch64                                      
+  fonts-srpm-macros-1:2.0.5-12.amzn2023.0.2.noarch                              
+  gc-8.0.4-5.amzn2023.0.2.aarch64                                               
+  gcc-11.5.0-5.amzn2023.0.5.aarch64                                             
+  gcc-plugin-annobin-11.5.0-5.amzn2023.0.5.aarch64                              
+  ghc-srpm-macros-1.5.0-4.amzn2023.0.2.noarch                                   
+  glibc-devel-2.34-231.amzn2023.0.5.aarch64                                     
+  glibc-gconv-extra-2.34-231.amzn2023.0.5.aarch64                               
+  go-srpm-macros-3.8.0-1.amzn2023.0.1.noarch                                    
+  groff-1.22.4-7.amzn2023.0.2.aarch64                                           
+  groff-base-1.22.4-7.amzn2023.0.2.aarch64                                      
+  gssproxy-0.9.2-6.amzn2023.0.1.aarch64                                         
+  guile22-2.2.7-2.amzn2023.0.3.aarch64                                          
+  gzip-1.12-1.amzn2023.0.1.aarch64                                              
+  jansson-2.14-0.amzn2023.aarch64                                               
+  kernel-srpm-macros-1.0-14.amzn2023.0.3.noarch                                 
+  kernel6.18-headers-1:6.18.54-121.166.amzn2023.aarch64                         
+  keyutils-1.6.3-1.amzn2023.0.2.aarch64                                         
+  kmod-29-2.amzn2023.0.6.aarch64                                                
+  kmod-libs-29-2.amzn2023.0.6.aarch64                                           
+  libargon2-20171227-9.amzn2023.0.2.aarch64                                     
+  libbasicobjects-0.1.1-47.amzn2023.0.2.aarch64                                 
+  libcollection-0.7.0-47.amzn2023.0.2.aarch64                                   
+  libdb-5.3.28-49.amzn2023.0.2.aarch64                                          
+  libeconf-0.7.9-1.amzn2023.0.1.aarch64                                         
+  libev-4.33-3.amzn2023.0.2.aarch64                                             
+  libevent-2.1.12-3.amzn2023.0.4.aarch64                                        
+  libfdisk-2.37.4-1.amzn2023.0.6.aarch64                                        
+  libini_config-1.3.1-47.amzn2023.0.2.aarch64                                   
+  libmpc-1.2.1-2.amzn2023.0.2.aarch64                                           
+  libnfsidmap-1:2.5.4-2.rc3.amzn2023.0.3.aarch64                                
+  libpath_utils-0.2.1-47.amzn2023.0.2.aarch64                                   
+  libpkgconf-1.8.0-4.amzn2023.0.2.aarch64                                       
+  libpwquality-1.4.4-6.amzn2023.0.2.aarch64                                     
+  libref_array-0.1.5-47.amzn2023.0.2.aarch64                                    
+  libseccomp-2.5.3-1.amzn2023.0.2.aarch64                                       
+  libselinux-utils-3.4-5.amzn2023.0.2.aarch64                                   
+  libsemanage-3.4-5.amzn2023.0.2.aarch64                                        
+  libtirpc-1.3.3-0.amzn2023.aarch64                                             
+  libtool-ltdl-2.4.7-1.amzn2023.0.3.aarch64                                     
+  libutempter-1.2.1-4.amzn2023.0.2.aarch64                                      
+  libverto-libev-0.3.2-1.amzn2023.0.2.aarch64                                   
+  libxcrypt-devel-4.4.33-7.amzn2023.aarch64                                     
+  libxkbcommon-1.6.0-2.amzn2023.0.1.aarch64                                     
+  lua-srpm-macros-1-4.amzn2023.0.2.noarch                                       
+  make-1:4.3-5.amzn2023.0.2.aarch64                                             
+  ncurses-6.6-1.amzn2023.0.1.aarch64                                            
+  nfs-utils-1:2.5.4-2.rc3.amzn2023.0.3.aarch64                                  
+  ocaml-srpm-macros-6-6.amzn2023.0.2.noarch                                     
+  openblas-srpm-macros-2-9.amzn2023.0.2.noarch                                  
+  openldap-2.4.57-6.amzn2023.0.7.aarch64                                        
+  package-notes-srpm-macros-0.4-18.amzn2023.0.5.noarch                          
+  pam-1.5.1-8.amzn2023.0.8.aarch64                                              
+  paper-2.3-2.amzn2023.0.3.aarch64                                              
+  perl-AutoLoader-5.74-477.amzn2023.0.10.noarch                                 
+  perl-B-1.80-477.amzn2023.0.10.aarch64                                         
+  perl-Carp-1.50-458.amzn2023.0.2.noarch                                        
+  perl-Class-Struct-0.66-477.amzn2023.0.10.noarch                               
+  perl-Data-Dumper-2.191-522.amzn2023.0.3.aarch64                               
+  perl-Digest-1.20-1.amzn2023.0.2.noarch                                        
+  perl-Digest-MD5-2.59-521.amzn2023.0.2.aarch64                                 
+  perl-DynaLoader-1.47-477.amzn2023.0.10.aarch64                                
+  perl-Encode-4:3.21-520.amzn2023.0.2.aarch64                                   
+  perl-Errno-1.30-477.amzn2023.0.10.aarch64                                     
+  perl-Exporter-5.79-520.amzn2023.0.1.noarch                                    
+  perl-Fcntl-1.13-477.amzn2023.0.10.aarch64                                     
+  perl-File-Basename-2.85-477.amzn2023.0.10.noarch                              
+  perl-File-Copy-2.34-477.amzn2023.0.10.noarch                                  
+  perl-File-Path-2.18-2.amzn2023.0.2.noarch                                     
+  perl-File-Temp-1:0.231.200-2.amzn2023.0.1.noarch                              
+  perl-File-stat-1.09-477.amzn2023.0.10.noarch                                  
+  perl-FileHandle-2.03-477.amzn2023.0.10.noarch                                 
+  perl-Getopt-Long-1:2.58-521.amzn2023.0.1.noarch                               
+  perl-Getopt-Std-1.12-477.amzn2023.0.10.noarch                                 
+  perl-HTTP-Tiny-0.092-2.amzn2023.0.3.noarch                                    
+  perl-IO-1.43-477.amzn2023.0.10.aarch64                                        
+  perl-IO-Socket-IP-0.43-522.amzn2023.0.1.noarch                                
+  perl-IO-Socket-SSL-2.075-1.amzn2023.0.3.noarch                                
+  perl-IPC-Open3-1.21-477.amzn2023.0.10.noarch                                  
+  perl-IPC-Run3-0.049-5.amzn2023.0.1.noarch                                     
+  perl-MIME-Base64-3.16-2.amzn2023.0.3.aarch64                                  
+  perl-NDBM_File-1.15-477.amzn2023.0.10.aarch64                                 
+  perl-Net-SSLeay-1.94-3.amzn2023.0.5.aarch64                                   
+  perl-POSIX-1.94-477.amzn2023.0.10.aarch64                                     
+  perl-PathTools-3.78-459.amzn2023.0.3.aarch64                                  
+  perl-Pod-Escapes-1:1.07-458.amzn2023.0.2.noarch                               
+  perl-Pod-Perldoc-3.28.01-459.amzn2023.0.3.noarch                              
+  perl-Pod-Simple-1:3.42-2.amzn2023.0.2.noarch                                  
+  perl-Pod-Usage-4:2.01-2.amzn2023.0.2.noarch                                   
+  perl-Scalar-List-Utils-4:1.56-459.amzn2023.0.3.aarch64                        
+  perl-SelectSaver-1.02-477.amzn2023.0.10.noarch                                
+  perl-Socket-4:2.032-1.amzn2023.0.4.aarch64                                    
+  perl-Storable-1:3.37-522.amzn2023.0.3.aarch64                                 
+  perl-Symbol-1.08-477.amzn2023.0.10.noarch                                     
+  perl-Term-ANSIColor-5.01-459.amzn2023.0.2.noarch                              
+  perl-Term-Cap-1.17-458.amzn2023.0.2.noarch                                    
+  perl-Text-ParseWords-3.30-458.amzn2023.0.2.noarch                             
+  perl-Text-Tabs+Wrap-2021.0726-1.amzn2023.0.1.noarch                           
+  perl-Time-HiRes-4:1.9764-460.amzn2023.0.3.aarch64                             
+  perl-Time-Local-2:1.300-5.amzn2023.0.2.noarch                                 
+  perl-URI-5.18-1.amzn2023.0.1.noarch                                           
+  perl-base-2.27-477.amzn2023.0.10.noarch                                       
+  perl-constant-1.33-459.amzn2023.0.2.noarch                                    
+  perl-if-0.60.800-477.amzn2023.0.10.noarch                                     
+  perl-interpreter-4:5.32.1-477.amzn2023.0.10.aarch64                           
+  perl-libnet-3.13-2.amzn2023.0.2.noarch                                        
+  perl-libs-4:5.32.1-477.amzn2023.0.10.aarch64                                  
+  perl-locale-1.09-477.amzn2023.0.10.noarch                                     
+  perl-mro-1.23-477.amzn2023.0.10.aarch64                                       
+  perl-overload-1.31-477.amzn2023.0.10.noarch                                   
+  perl-overloading-0.02-477.amzn2023.0.10.noarch                                
+  perl-parent-1:0.238-458.amzn2023.0.2.noarch                                   
+  perl-podlators-1:4.14-458.amzn2023.0.2.noarch                                 
+  perl-srpm-macros-1-39.amzn2023.0.2.noarch                                     
+  perl-subs-1.03-477.amzn2023.0.10.noarch                                       
+  perl-vars-1.05-477.amzn2023.0.10.noarch                                       
+  pkgconf-1.8.0-4.amzn2023.0.2.aarch64                                          
+  pkgconf-m4-1.8.0-4.amzn2023.0.2.noarch                                        
+  pkgconf-pkg-config-1.8.0-4.amzn2023.0.2.aarch64                               
+  policycoreutils-3.4-6.amzn2023.0.3.aarch64                                    
+  psutils-2.05-1.amzn2023.0.2.noarch                                            
+  python-srpm-macros-3.9-41.amzn2023.0.6.noarch                                 
+  python3-awscrt-0.36.4-1.amzn2023.0.2.aarch64                                  
+  python3-colorama-0.4.4-2.amzn2023.0.2.noarch                                  
+  python3-dateutil-1:2.8.1-3.amzn2023.0.2.noarch                                
+  python3-distro-1.5.0-5.amzn2023.0.2.noarch                                    
+  python3-docutils-0.16-4.amzn2023.0.2.noarch                                   
+  python3-idna-2.10-3.amzn2023.0.4.noarch                                       
+  python3-jmespath-0.10.0-1.amzn2023.0.3.noarch                                 
+  python3-prompt-toolkit-3.0.24-1.amzn2023.0.2.noarch                           
+  python3-pygments-2.7.4-1.amzn2023.0.3.noarch                                  
+  python3-pysocks-1.7.1-8.amzn2023.0.2.noarch                                   
+  python3-ruamel-yaml-0.16.6-5.amzn2023.0.2.aarch64                             
+  python3-ruamel-yaml-clib-0.1.2-6.amzn2023.0.2.aarch64                         
+  python3-setuptools-59.6.0-2.amzn2023.0.6.noarch                               
+  python3-six-1.15.0-5.amzn2023.0.2.noarch                                      
+  python3-urllib3-1.25.10-5.amzn2023.0.9.noarch                                 
+  python3-wcwidth-0.2.5-3.amzn2023.0.2.noarch                                   
+  qrencode-libs-4.1.1-2.amzn2023.0.2.aarch64                                    
+  quota-1:4.06-4.amzn2023.0.2.aarch64                                           
+  quota-nls-1:4.06-4.amzn2023.0.2.noarch                                        
+  rpcbind-1.2.6-0.amzn2023.0.3.aarch64                                          
+  rpm-plugin-selinux-4.16.1.3-29.amzn2023.0.8.aarch64                           
+  rust-toolset-srpm-macros-1.98.1-1.amzn2023.noarch                             
+  selinux-policy-38.1.76-1.amzn2023.0.3.noarch                                  
+  selinux-policy-targeted-38.1.76-1.amzn2023.0.3.noarch                         
+  shadow-utils-2:4.9-12.amzn2023.0.4.aarch64                                    
+  strace-6.12-1.amzn2023.0.1.aarch64                                            
+  systemd-252.23-15.amzn2023.aarch64                                            
+  systemd-libs-252.23-15.amzn2023.aarch64                                       
+  systemd-networkd-252.23-15.amzn2023.aarch64                                   
+  systemd-pam-252.23-15.amzn2023.aarch64                                        
+  systemd-resolved-252.23-15.amzn2023.aarch64                                   
+  unzip-6.0-68.amzn2023.0.2.aarch64                                             
+  util-linux-2.37.4-1.amzn2023.0.6.aarch64                                      
+  util-linux-core-2.37.4-1.amzn2023.0.6.aarch64                                 
+  xkeyboard-config-2.41-1.amzn2023.0.1.noarch                                   
+  zip-3.0-28.amzn2023.0.4.aarch64                                               
+
+Complete!
+9 files removed
+ ---> Removed intermediate container 24976b8ee514
+ ---> ac24b658080a
+Step 3/15 : COPY bench.c /src/bench.c
+ ---> 9fdb227459f9
+Step 4/15 : RUN gcc -O2 -Wall -o /usr/local/bin/bench /src/bench.c
+ ---> Running in b0705a794069
+ ---> Removed intermediate container b0705a794069
+ ---> 85f8d6df0c4a
+Step 5/15 : COPY tput.c /src/tput.c
+ ---> fca54ae20742
+Step 6/15 : RUN gcc -O2 -Wall -Werror -pthread -o /usr/local/bin/throughput /src/tput.c
+ ---> Running in 3ed807776e5a
+ ---> Removed intermediate container 3ed807776e5a
+ ---> 961af676ea94
+Step 7/15 : COPY agebench.c /src/agebench.c
+ ---> 87ac24e5a372
+Step 8/15 : RUN gcc -O2 -Wall -Werror -o /usr/local/bin/agebench /src/agebench.c -lm
+ ---> Running in 54e365d5c1e8
+ ---> Removed intermediate container 54e365d5c1e8
+ ---> 6a97ec7356a9
+Step 9/15 : COPY request-drop cache-dropper request-lustre-stats /usr/local/bin/
+ ---> fdc883791a65
+Step 10/15 : COPY diagnostic-serve.py e5-diagnostic.py e5-diagnostic-host.py /usr/local/bin/
+ ---> b9943aca27ea
+Step 11/15 : COPY e5-run.sh /usr/local/bin/e5-run
+ ---> dc30e0d098c2
+Step 12/15 : COPY conformance.sh /usr/local/bin/conformance
+ ---> 8edc05e58dd8
+Step 13/15 : COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+ ---> c81999e941df
+Step 14/15 : RUN chmod +x /usr/local/bin/conformance /usr/local/bin/entrypoint.sh     /usr/local/bin/request-drop /usr/local/bin/cache-dropper     /usr/local/bin/request-lustre-stats /usr/local/bin/e5-run
+ ---> Running in c8ceda9c0426
+ ---> Removed intermediate container c8ceda9c0426
+ ---> de987e375095
+Step 15/15 : ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ ---> Running in 8c0ec8ab60e3
+ ---> Removed intermediate container 8c0ec8ab60e3
+ ---> 7cb6898ce721
+Successfully built 7cb6898ce721
+Successfully tagged cdkasset-b4c15388bd745f901befe0fd4711f98d9ac05d70fdc7740fbfa5f9891c63e7d3:latest
+The push refers to repository [163703054402.dkr.ecr.ap-southeast-1.amazonaws.com/cdk-hnb659fds-container-assets-163703054402-ap-southeast-1]
+73182d9aaaea: Preparing
+7ca0feca605f: Preparing
+a3958d0056a5: Preparing
+176bccf4918f: Preparing
+fd3c6dfe72de: Preparing
+0f92f6cc605b: Preparing
+d08234679d62: Preparing
+1b0cbb2f192b: Preparing
+cff7861face2: Preparing
+a74b227db820: Preparing
+6bb9dd921094: Preparing
+74e93ed0c242: Preparing
+20b8478fc52d: Preparing
+f8a888527492: Preparing
+cff7861face2: Waiting
+a74b227db820: Waiting
+6bb9dd921094: Waiting
+74e93ed0c242: Waiting
+20b8478fc52d: Waiting
+f8a888527492: Waiting
+0f92f6cc605b: Waiting
+d08234679d62: Waiting
+1b0cbb2f192b: Waiting
+a3958d0056a5: Pushed
+7ca0feca605f: Pushed
+fd3c6dfe72de: Pushed
+176bccf4918f: Pushed
+73182d9aaaea: Pushed
+0f92f6cc605b: Pushed
+d08234679d62: Pushed
+1b0cbb2f192b: Pushed
+a74b227db820: Pushed
+cff7861face2: Pushed
+f8a888527492: Layer already exists
+6bb9dd921094: Pushed
+74e93ed0c242: Pushed
+20b8478fc52d: Pushed
+b4c15388bd745f901befe0fd4711f98d9ac05d70fdc7740fbfa5f9891c63e7d3: digest: sha256:7922220c4a871a4f2679c1e81a05afbb64a1a54e2f83b0d3f1a21d96615ed0fa size: 3240
+arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E5-AttributeCache-dev/e95dd1a0-d1bd-11f1-9d9e-06ffd225477b
+npm notice
+npm notice New major version of npm available! 10.9.2 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+[04:20:41] === replication 1/1 ===
+[04:20:42] deploying E5-AttributeCache-dev
+
+✨  Synthesis time: 2.34s
+
+E5-AttributeCache-dev: start: Building E5-AttributeCache-dev Template
+E5-AttributeCache-dev: success: Built E5-AttributeCache-dev Template
+E5-AttributeCache-dev: start: Building TaskDefinition/bench/AssetImage
+E5-AttributeCache-dev: start: Publishing E5-AttributeCache-dev Template (163703054402-ap-southeast-1-38e5f12d)
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+E5-AttributeCache-dev: success: Published E5-AttributeCache-dev Template (163703054402-ap-southeast-1-38e5f12d)
+E5-AttributeCache-dev: success: Built TaskDefinition/bench/AssetImage
+E5-AttributeCache-dev: start: Publishing TaskDefinition/bench/AssetImage (163703054402-ap-southeast-1-7e2ddbcd)
+E5-AttributeCache-dev: success: Published TaskDefinition/bench/AssetImage (163703054402-ap-southeast-1-7e2ddbcd)
+E5-AttributeCache-dev: deploying... [1/1]
+E5-AttributeCache-dev: creating stack...
+E5-AttributeCache-dev |   0 | 4:21:42 AM | CREATE_IN_PROGRESS      | AWS::CloudFormation::Stack                    | E5-AttributeCache-dev User Initiated
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |   0 | 4:21:50 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |   0 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) Resource creation Initiated
+E5-AttributeCache-dev |   0 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) Resource creation Initiated
+E5-AttributeCache-dev |   0 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_COMPLETE         | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) Eventual consistency check initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) Resource creation Initiated
+E5-AttributeCache-dev |   1 | 4:21:51 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) Resource creation Initiated
+E5-AttributeCache-dev |   2 | 4:21:54 AM | CREATE_COMPLETE         | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |   3 | 4:21:55 AM | CREATE_COMPLETE         | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |   3 | 4:21:59 AM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) Eventual consistency check initiated
+E5-AttributeCache-dev |   4 | 4:22:00 AM | CREATE_COMPLETE         | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |   5 | 4:22:03 AM | CREATE_COMPLETE         | AWS::EC2::VPC                                 | Vpc (Vpc8378EB38) 
+E5-AttributeCache-dev |   5 | 4:22:03 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) 
+E5-AttributeCache-dev |   5 | 4:22:03 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) 
+E5-AttributeCache-dev |   5 | 4:22:03 AM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |   5 | 4:22:03 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |   5 | 4:22:03 AM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E5-AttributeCache-dev |   5 | 4:22:04 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |   5 | 4:22:04 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |   5 | 4:22:04 AM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Resource creation Initiated
+E5-AttributeCache-dev |   5 | 4:22:04 AM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) Resource creation Initiated
+E5-AttributeCache-dev |   6 | 4:22:04 AM | CREATE_COMPLETE         | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |   6 | 4:22:05 AM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Eventual consistency check initiated
+E5-AttributeCache-dev |   7 | 4:22:05 AM | CREATE_COMPLETE         | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) 
+E5-AttributeCache-dev |   7 | 4:22:05 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |   7 | 4:22:05 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) Resource creation Initiated
+E5-AttributeCache-dev |   7 | 4:22:05 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) Resource creation Initiated
+E5-AttributeCache-dev |   7 | 4:22:06 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) Resource creation Initiated
+E5-AttributeCache-dev |   7 | 4:22:06 AM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |   7 | 4:22:06 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) Resource creation Initiated
+E5-AttributeCache-dev |   7 | 4:22:07 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) Eventual consistency check initiated
+E5-AttributeCache-dev |   7 | 4:22:07 AM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) Resource creation Initiated
+E5-AttributeCache-dev |   8 | 4:22:07 AM | CREATE_COMPLETE         | AWS::EC2::Subnet                              | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E5-AttributeCache-dev |   8 | 4:22:07 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) Resource creation Initiated
+E5-AttributeCache-dev |   9 | 4:22:07 AM | CREATE_COMPLETE         | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |   9 | 4:22:08 AM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |   9 | 4:22:08 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) Resource creation Initiated
+E5-AttributeCache-dev |  10 | 4:22:08 AM | CREATE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |  11 | 4:22:08 AM | CREATE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |  12 | 4:22:08 AM | CREATE_COMPLETE         | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |  13 | 4:22:08 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |  13 | 4:22:08 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |  13 | 4:22:09 AM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) Resource creation Initiated
+E5-AttributeCache-dev |  13 | 4:22:09 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |  14 | 4:22:09 AM | CREATE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |  14 | 4:22:10 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  14 | 4:22:10 AM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  14 | 4:22:10 AM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |  14 | 4:22:10 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) Resource creation Initiated
+E5-AttributeCache-dev |  14 | 4:22:10 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) Resource creation Initiated
+E5-AttributeCache-dev |  14 | 4:22:11 AM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) Resource creation Initiated
+E5-AttributeCache-dev |  14 | 4:22:11 AM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) Resource creation Initiated
+E5-AttributeCache-dev |  14 | 4:22:11 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) Resource creation Initiated
+E5-AttributeCache-dev |  15 | 4:22:11 AM | CREATE_COMPLETE         | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  16 | 4:22:12 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | WorkloadSecurityGroup (WorkloadSecurityGroup4BD3CFC8) 
+E5-AttributeCache-dev |  16 | 4:22:12 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) Eventual consistency check initiated
+E5-AttributeCache-dev |  17 | 4:22:12 AM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |  18 | 4:22:12 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | FsxSecurityGroup (FsxSecurityGroup94E8AC1C) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |  19 | 4:22:13 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:14 AM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  20 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |  20 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) Resource creation Initiated
+E5-AttributeCache-dev |  20 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) Resource creation Initiated
+E5-AttributeCache-dev |  21 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F298862553C54) 
+E5-AttributeCache-dev |  22 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |  23 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |  23 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) Resource creation Initiated
+E5-AttributeCache-dev |  24 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810231E12604C) 
+E5-AttributeCache-dev |  24 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) Resource creation Initiated
+E5-AttributeCache-dev |  25 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049820085A1) 
+E5-AttributeCache-dev |  26 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGrouptoE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181D4A63) 
+E5-AttributeCache-dev |  27 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:1018-1023 (FsxSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2101810237E0F8798) 
+E5-AttributeCache-dev |  28 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988-1023 (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679881023C4FD164E) 
+E5-AttributeCache-dev |  28 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) Resource creation Initiated
+E5-AttributeCache-dev |  29 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |  30 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FsxSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:ALL TRAFFIC (FsxSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD1027667ALLTRAFFIC181A2BD7) 
+E5-AttributeCache-dev |  30 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) Resource creation Initiated
+E5-AttributeCache-dev |  31 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |  32 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:988 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F298801C31780) 
+E5-AttributeCache-dev |  32 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) Resource creation Initiated
+E5-AttributeCache-dev |  33 | 4:22:15 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupEgress                 | FsxSecurityGroup/to E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FsxSecurityGrouptoE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049FE3DF9BD) 
+E5-AttributeCache-dev |  33 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) Resource creation Initiated
+E5-AttributeCache-dev |  33 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) Resource creation Initiated
+E5-AttributeCache-dev |  33 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) Resource creation Initiated
+E5-AttributeCache-dev |  33 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOpenZfs 
+E5-AttributeCache-dev |  33 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) Resource creation Initiated
+E5-AttributeCache-dev |  33 | 4:22:15 AM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  33 | 4:22:16 AM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOntap 
+E5-AttributeCache-dev |  33 | 4:22:16 AM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 4:22:16 AM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |  34 | 4:22:16 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |  34 | 4:22:17 AM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Eventual consistency check initiated
+E5-AttributeCache-dev |  34 | 4:22:17 AM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) Resource creation Initiated
+E5-AttributeCache-dev |  34 | 4:22:17 AM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOpenZfs Resource creation Initiated
+E5-AttributeCache-dev |  35 | 4:22:17 AM | CREATE_COMPLETE         | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  35 | 4:22:18 AM | CREATE_IN_PROGRESS      | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |  35 | 4:22:20 AM | CREATE_IN_PROGRESS      | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) Resource creation Initiated
+E5-AttributeCache-dev |  36 | 4:22:20 AM | CREATE_COMPLETE         | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |  37 | 4:22:22 AM | CREATE_COMPLETE         | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |  37 | 4:22:24 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  37 | 4:22:25 AM | CREATE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOntap Resource creation Initiated
+E5-AttributeCache-dev |  37 | 4:22:25 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Resource creation Initiated
+E5-AttributeCache-dev |  38 | 4:22:26 AM | CREATE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |  39 | 4:22:26 AM | CREATE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |  39 | 4:22:26 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Eventual consistency check initiated
+E5-AttributeCache-dev |  40 | 4:22:31 AM | CREATE_COMPLETE         | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  40 | 4:22:32 AM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |  41 | 4:22:35 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E5-AttributeCache-dev |  41 | 4:22:38 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) Resource creation Initiated
+E5-AttributeCache-dev |  42 | 4:22:41 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |  43 | 4:22:41 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |  43 | 4:22:41 AM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) Resource creation Initiated
+E5-AttributeCache-dev |  44 | 4:22:41 AM | CREATE_COMPLETE         | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |  44 | 4:22:43 AM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) Resource creation Initiated
+E5-AttributeCache-dev |  45 | 4:22:49 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |  46 | 4:22:49 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |  47 | 4:22:49 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |  48 | 4:22:49 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |  49 | 4:22:59 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E5-AttributeCache-dev |  50 | 4:22:59 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |  51 | 4:22:59 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |  52 | 4:23:12 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |  53 | 4:23:28 AM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |  54 | 4:23:48 AM | CREATE_COMPLETE         | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  54 | 4:23:48 AM | CREATE_IN_PROGRESS      | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  54 | 4:23:48 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  54 | 4:23:48 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  54 | 4:23:48 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  54 | 4:23:49 AM | CREATE_IN_PROGRESS      | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) Resource creation Initiated
+E5-AttributeCache-dev |  54 | 4:23:49 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) Resource creation Initiated
+E5-AttributeCache-dev |  55 | 4:23:50 AM | CREATE_COMPLETE         | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  55 | 4:23:50 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) Resource creation Initiated
+E5-AttributeCache-dev |  55 | 4:23:50 AM | CREATE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) Resource creation Initiated
+E5-AttributeCache-dev |  56 | 4:24:06 AM | CREATE_COMPLETE         | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  57 | 4:24:06 AM | CREATE_COMPLETE         | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  58 | 4:24:06 AM | CREATE_COMPLETE         | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  58 | 4:24:07 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  58 | 4:24:07 AM | CREATE_IN_PROGRESS      | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  58 | 4:24:07 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  58 | 4:24:08 AM | CREATE_IN_PROGRESS      | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) Resource creation Initiated
+E5-AttributeCache-dev |  58 | 4:24:08 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) Resource creation Initiated
+E5-AttributeCache-dev |  58 | 4:24:08 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) Resource creation Initiated
+E5-AttributeCache-dev |  59 | 4:24:24 AM | CREATE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  60 | 4:24:24 AM | CREATE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  61 | 4:26:19 AM | CREATE_COMPLETE         | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  62 | 4:27:19 AM | CREATE_COMPLETE         | AWS::FSx::FileSystem                          | FsxOpenZfs 
+E5-AttributeCache-dev |  63 | 4:30:19 AM | CREATE_COMPLETE         | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  64 | 4:37:28 AM | CREATE_COMPLETE         | AWS::FSx::FileSystem                          | FsxOntap 
+E5-AttributeCache-dev |  64 | 4:37:29 AM | CREATE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  64 | 4:37:29 AM | CREATE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm Resource creation Initiated
+E5-AttributeCache-dev |  64 | 4:38:19 AM | CREATE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm Eventual consistency check initiated
+E5-AttributeCache-dev |  65 | 4:38:59 AM | CREATE_COMPLETE         | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  65 | 4:38:59 AM | CREATE_IN_PROGRESS      | AWS::FSx::Volume                              | FsxOntapVolume 
+E5-AttributeCache-dev |  65 | 4:39:00 AM | CREATE_IN_PROGRESS      | AWS::FSx::Volume                              | FsxOntapVolume Resource creation Initiated
+E5-AttributeCache-dev |  65 | 4:39:00 AM | CREATE_IN_PROGRESS      | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  65 | 4:39:02 AM | CREATE_IN_PROGRESS      | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) Resource creation Initiated
+E5-AttributeCache-dev |  66 | 4:39:02 AM | CREATE_COMPLETE         | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  66 | 4:39:03 AM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  66 | 4:39:04 AM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) Resource creation Initiated
+E5-AttributeCache-dev |  66 | 4:39:13 AM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) Eventual consistency check initiated
+E5-AttributeCache-dev |  66 | 4:39:14 AM | CREATE_IN_PROGRESS      | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  66 | 4:39:15 AM | CREATE_IN_PROGRESS      | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) Resource creation Initiated
+E5-AttributeCache-dev |  67 | 4:39:15 AM | CREATE_COMPLETE         | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  67 | 4:39:25 AM | CREATE_IN_PROGRESS      | AWS::FSx::Volume                              | FsxOntapVolume Eventual consistency check initiated
+E5-AttributeCache-dev |  68 | 4:40:01 AM | CREATE_COMPLETE         | AWS::FSx::Volume                              | FsxOntapVolume 
+E5-AttributeCache-dev |  68 | 4:43:20 AM | CREATE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) Received SUCCESS signal with UniqueId i-02fbca408d5ab6149
+E5-AttributeCache-dev |  69 | 4:43:20 AM | CREATE_COMPLETE         | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  69 | 4:43:20 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  69 | 4:43:20 AM | CREATE_IN_PROGRESS      | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |  69 | 4:43:21 AM | CREATE_IN_PROGRESS      | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) Resource creation Initiated
+E5-AttributeCache-dev |  69 | 4:43:21 AM | CREATE_IN_PROGRESS      | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |  69 | 4:43:22 AM | CREATE_IN_PROGRESS      | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) Resource creation Initiated
+E5-AttributeCache-dev |  69 | 4:43:22 AM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) Resource creation Initiated
+E5-AttributeCache-dev |  70 | 4:43:23 AM | CREATE_COMPLETE         | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |  71 | 4:43:38 AM | CREATE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  72 | 4:43:39 AM | CREATE_COMPLETE         | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |  72 | 4:43:39 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  72 | 4:43:41 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) Resource creation Initiated
+E5-AttributeCache-dev |  72 | 4:43:41 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) Eventual consistency check initiated
+E5-AttributeCache-dev |  73 | 4:43:47 AM | CREATE_COMPLETE         | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  73 | 4:43:47 AM | CREATE_IN_PROGRESS      | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |  73 | 4:43:47 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) 
+E5-AttributeCache-dev |  73 | 4:43:48 AM | CREATE_IN_PROGRESS      | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) Resource creation Initiated
+E5-AttributeCache-dev |  73 | 4:43:48 AM | CREATE_IN_PROGRESS      | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) Resource creation Initiated
+E5-AttributeCache-dev |  74 | 4:43:49 AM | CREATE_COMPLETE         | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) 
+E5-AttributeCache-dev |  75 | 4:43:49 AM | CREATE_COMPLETE         | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |  76 | 4:43:50 AM | CREATE_COMPLETE         | AWS::CloudFormation::Stack                    | E5-AttributeCache-dev 
+
+✅  E5-AttributeCache-dev
+
+✨  Deployment time: 1331.52s
+
+Outputs:
+E5-AttributeCache-dev.AsgName = E5-AttributeCache-dev-HostAsgASG1C89540F-RZNhRu5kXKaf
+E5-AttributeCache-dev.CapacityProviderName = E5-AttributeCache-dev-HostCapacityProvider60EEB9E8-QV74XZ3evc7m
+E5-AttributeCache-dev.ClusterName = E5-AttributeCache-dev-ClusterEB0386A7-JzGCyEdCz7Ar
+E5-AttributeCache-dev.DiagnosticsBucketName = e5-attributecache-dev-diagnosticsbucket7ca30129-v6ckdjdmhvd3
+E5-AttributeCache-dev.FileSystemId = fs-0855c64a83bf6a49f
+E5-AttributeCache-dev.FsxLustreDns = fs-06709769eb39fc9fc.fsx.ap-southeast-1.amazonaws.com
+E5-AttributeCache-dev.FsxOntapSvmId = svm-09710c608c67cacf3
+E5-AttributeCache-dev.FsxOpenZfsDns = fs-069f7482c5ff52231.fsx.ap-southeast-1.amazonaws.com
+E5-AttributeCache-dev.InstanceType = c7gd.large
+E5-AttributeCache-dev.LogGroupName = E5-AttributeCache-dev-LogGroupF5B46931-h1MAHn8RFk3b
+E5-AttributeCache-dev.ResultsBucketName = e5-attributecache-dev-resultsbucketa95a2103-zrrrj3z6oy2d
+E5-AttributeCache-dev.SecurityGroupId = sg-07f4d82a6942ee821
+E5-AttributeCache-dev.SubnetId = subnet-07165af19c0c4a33d
+E5-AttributeCache-dev.TaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E5AttributeCachedevTaskDefinition8FD4C977:4
+Stack ARN:
+
+✨  Total time: 1388.94s
+
+[04:44:00]   FSx provenance captured for: fs-06709769eb39fc9fc fs-069f7482c5ff52231 fs-0e2dc4e9c040ddc50 
+[04:44:02]   instance i-02fbca408d5ab6149 (c7gd.large) in ap-southeast-1a
+[04:44:11]   host provenance captured
+[04:44:11] running one bounded diagnostic task; not a study replication
+[04:44:12]   ec2 task started, waiting
+[05:20:57]   ec2 exit=0 (Essential container in task exited)
+[05:21:02] destroying E5-AttributeCache-dev
+E5-AttributeCache-dev: destroying... [1/1]
+E5-AttributeCache-dev |   0 | 5:21:07 AM | DELETE_IN_PROGRESS      | AWS::CloudFormation::Stack                    | E5-AttributeCache-dev User Initiated
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::FSx::Volume                              | FsxOntapVolume 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |   0 | 5:21:09 AM | DELETE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |   1 | 5:21:10 AM | DELETE_COMPLETE         | AWS::CDK::Metadata                            | CDKMetadata/Default (CDKMetadata) 
+E5-AttributeCache-dev |   2 | 5:21:10 AM | DELETE_COMPLETE         | AWS::AutoScaling::LifecycleHook               | HostAsg/LifecycleHookDrainHook (HostAsgLifecycleHookDrainHookDCEBD33E) 
+E5-AttributeCache-dev |   3 | 5:21:10 AM | DELETE_COMPLETE         | AWS::SNS::Subscription                        | HostAsg/DrainECSHook/Function/Topic (HostAsgDrainECSHookFunctionTopicB62C08CC) 
+E5-AttributeCache-dev |   4 | 5:21:10 AM | DELETE_COMPLETE         | AWS::Lambda::Permission                       | HostAsg/DrainECSHook/Function/AllowInvoke:E5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83 (HostAsgDrainECSHookFunctionAllowInvokeE5AttributeCachedevHostAsgLifecycleHookDrainHookTopicBFF27F83F39E187C) 
+E5-AttributeCache-dev |   5 | 5:21:10 AM | DELETE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/ExecutionRole/DefaultPolicy (TaskDefinitionExecutionRoleDefaultPolicy1F3406F5) 
+E5-AttributeCache-dev |   6 | 5:21:10 AM | DELETE_COMPLETE         | AWS::IAM::Policy                              | TaskDefinition/TaskRole/DefaultPolicy (TaskDefinitionTaskRoleDefaultPolicy282E8624) 
+E5-AttributeCache-dev |   7 | 5:21:10 AM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:1018-1023 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD102766710181023B0928257) 
+E5-AttributeCache-dev |   8 | 5:21:10 AM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition                      | TaskDefinition (TaskDefinitionB36D86D9) 
+E5-AttributeCache-dev |   9 | 5:21:10 AM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | FileSystemSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:2049 (FileSystemSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F22049F8A71A5C) 
+E5-AttributeCache-dev |  10 | 5:21:10 AM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | WorkloadSecurityGroup/from E5AttributeCachedevFsxSecurityGroupD1027667:988 (WorkloadSecurityGroupfromE5AttributeCachedevFsxSecurityGroupD10276679888A8F8B32) 
+E5-AttributeCache-dev |  11 | 5:21:10 AM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress                | EndpointSecurityGroup/from E5AttributeCachedevWorkloadSecurityGroupFD76D2F2:443 (EndpointSecurityGroupfromE5AttributeCachedevWorkloadSecurityGroupFD76D2F2443D33B2B1A) 
+E5-AttributeCache-dev |  11 | 5:21:10 AM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  11 | 5:21:10 AM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  12 | 5:21:10 AM | DELETE_COMPLETE         | AWS::S3::BucketPolicy                         | DiagnosticsBucket/Policy (DiagnosticsBucketPolicy746C7F3C) 
+E5-AttributeCache-dev |  12 | 5:21:10 AM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |  12 | 5:21:10 AM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |  12 | 5:21:10 AM | DELETE_IN_PROGRESS      | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |  13 | 5:21:11 AM | DELETE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/LifecycleHookDrainHook/Role/DefaultPolicy (HostAsgLifecycleHookDrainHookRoleDefaultPolicy9B2BA5EC) 
+E5-AttributeCache-dev |  14 | 5:21:11 AM | DELETE_COMPLETE         | AWS::Logs::LogGroup                           | LogGroup (LogGroupF5B46931) 
+E5-AttributeCache-dev |  14 | 5:21:11 AM | DELETE_IN_PROGRESS      | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  14 | 5:21:11 AM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  15 | 5:21:14 AM | DELETE_COMPLETE         | AWS::Lambda::Function                         | HostAsg/DrainECSHook/Function (HostAsgDrainECSHookFunction3C5F76CB) 
+E5-AttributeCache-dev |  15 | 5:21:14 AM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  16 | 5:21:14 AM | DELETE_COMPLETE         | Custom::S3AutoDeleteObjects                   | ResultsBucket/AutoDeleteObjectsCustomResource/Default (ResultsBucketAutoDeleteObjectsCustomResourceA308482A) 
+E5-AttributeCache-dev |  16 | 5:21:14 AM | DELETE_IN_PROGRESS      | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  16 | 5:21:14 AM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  17 | 5:21:15 AM | DELETE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/DrainECSHook/Function/ServiceRole/DefaultPolicy (HostAsgDrainECSHookFunctionServiceRoleDefaultPolicy050BB9B1) 
+E5-AttributeCache-dev |  17 | 5:21:15 AM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  18 | 5:21:16 AM | DELETE_COMPLETE         | AWS::S3::BucketPolicy                         | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E5-AttributeCache-dev |  19 | 5:21:18 AM | DELETE_COMPLETE         | AWS::Lambda::Function                         | Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler (CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F) 
+E5-AttributeCache-dev |  19 | 5:21:18 AM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |  19 | 5:21:18 AM | DELETE_IN_PROGRESS      | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |  20 | 5:21:20 AM | DELETE_COMPLETE         | AWS::S3::Bucket                               | ResultsBucket (ResultsBucketA95A2103) 
+E5-AttributeCache-dev |  21 | 5:21:20 AM | DELETE_COMPLETE         | Custom::VpcRestrictDefaultSG                  | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E5-AttributeCache-dev |  21 | 5:21:21 AM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  22 | 5:21:24 AM | DELETE_COMPLETE         | AWS::Lambda::Function                         | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E5-AttributeCache-dev |  22 | 5:21:24 AM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |  23 | 5:21:25 AM | DELETE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation         | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E5-AttributeCache-dev |  24 | 5:21:26 AM | DELETE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/TaskRole (TaskDefinitionTaskRoleFD40A61D) 
+E5-AttributeCache-dev |  25 | 5:21:26 AM | DELETE_COMPLETE         | AWS::IAM::Role                                | HostAsg/LifecycleHookDrainHook/Role (HostAsgLifecycleHookDrainHookRole1E157CDB) 
+E5-AttributeCache-dev |  26 | 5:21:27 AM | DELETE_COMPLETE         | AWS::IAM::Role                                | TaskDefinition/ExecutionRole (TaskDefinitionExecutionRole8D61C2FB) 
+E5-AttributeCache-dev |  27 | 5:21:28 AM | DELETE_COMPLETE         | AWS::IAM::Role                                | HostAsg/DrainECSHook/Function/ServiceRole (HostAsgDrainECSHookFunctionServiceRoleC27F34FA) 
+E5-AttributeCache-dev |  28 | 5:21:31 AM | DELETE_COMPLETE         | AWS::IAM::Role                                | Custom::S3AutoDeleteObjectsCustomResourceProvider/Role (CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092) 
+E5-AttributeCache-dev |  29 | 5:21:32 AM | DELETE_COMPLETE         | AWS::ECS::ClusterCapacityProviderAssociations | Cluster/Cluster (Cluster3DA9CCBA) 
+E5-AttributeCache-dev |  29 | 5:21:33 AM | DELETE_IN_PROGRESS      | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  30 | 5:21:39 AM | DELETE_COMPLETE         | AWS::IAM::Role                                | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E5-AttributeCache-dev |  31 | 5:21:40 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E5-AttributeCache-dev |  31 | 5:21:40 AM | DELETE_IN_PROGRESS      | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |  32 | 5:21:41 AM | DELETE_COMPLETE         | AWS::EC2::RouteTable                          | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E5-AttributeCache-dev |  33 | 5:21:44 AM | DELETE_COMPLETE         | AWS::ECS::CapacityProvider                    | HostCapacityProvider/HostCapacityProvider (HostCapacityProvider60EEB9E8) 
+E5-AttributeCache-dev |  33 | 5:21:44 AM | DELETE_IN_PROGRESS      | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  34 | 5:21:58 AM | DELETE_COMPLETE         | AWS::SNS::Topic                               | HostAsg/LifecycleHookDrainHook/Topic (HostAsgLifecycleHookDrainHookTopic12C62736) 
+E5-AttributeCache-dev |  35 | 5:23:11 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E5-AttributeCache-dev |  36 | 5:23:11 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsEndpoint (VpcEcsEndpoint81699F6A) 
+E5-AttributeCache-dev |  37 | 5:23:11 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsTelemetryEndpoint (VpcEcsTelemetryEndpointF3189EDA) 
+E5-AttributeCache-dev |  38 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/Ec2MessagesEndpoint (VpcEc2MessagesEndpoint67F1BD3F) 
+E5-AttributeCache-dev |  39 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcsAgentEndpoint (VpcEcsAgentEndpoint7C64BE78) 
+E5-AttributeCache-dev |  40 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmEndpoint (VpcSsmEndpointC46DB833) 
+E5-AttributeCache-dev |  41 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/FsxEndpoint (VpcFsxEndpoint127A2857) 
+E5-AttributeCache-dev |  42 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E5-AttributeCache-dev |  43 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/CloudFormationEndpoint (VpcCloudFormationEndpoint6F86BEC0) 
+E5-AttributeCache-dev |  44 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EfsEndpoint (VpcEfsEndpoint0AC1BF64) 
+E5-AttributeCache-dev |  45 | 5:23:51 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E5-AttributeCache-dev |  46 | 5:24:19 AM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                         | Vpc/SsmMessagesEndpoint (VpcSsmMessagesEndpoint27C6C023) 
+E5-AttributeCache-dev |  46 | 5:24:19 AM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |  47 | 5:24:20 AM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup                       | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E5-AttributeCache-dev |  48 | 5:25:40 AM | DELETE_COMPLETE         | AWS::AutoScaling::AutoScalingGroup            | HostAsg/ASG (HostAsgASG1C89540F) 
+E5-AttributeCache-dev |  48 | 5:25:41 AM | DELETE_IN_PROGRESS      | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  49 | 5:25:42 AM | DELETE_COMPLETE         | AWS::EC2::LaunchTemplate                      | HostAsg/LaunchTemplate (HostAsgLaunchTemplate2753BB7C) 
+E5-AttributeCache-dev |  49 | 5:25:43 AM | DELETE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOpenZfs 
+E5-AttributeCache-dev |  49 | 5:25:43 AM | DELETE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  49 | 5:25:43 AM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  49 | 5:25:43 AM | DELETE_IN_PROGRESS      | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  50 | 5:25:44 AM | DELETE_COMPLETE         | AWS::IAM::Policy                              | HostAsg/InstanceRole/DefaultPolicy (HostAsgInstanceRoleDefaultPolicy03209253) 
+E5-AttributeCache-dev |  50 | 5:25:44 AM | DELETE_IN_PROGRESS      | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |  51 | 5:25:44 AM | DELETE_COMPLETE         | AWS::IAM::InstanceProfile                     | HostAsg/InstanceProfile (HostAsgInstanceProfile5032104C) 
+E5-AttributeCache-dev |  51 | 5:25:44 AM | DELETE_SKIPPED          | AWS::S3::Bucket                               | DiagnosticsBucket (DiagnosticsBucket7CA30129) 
+E5-AttributeCache-dev |  51 | 5:25:44 AM | DELETE_IN_PROGRESS      | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  52 | 5:25:55 AM | DELETE_COMPLETE         | AWS::ECS::Cluster                             | Cluster (ClusterEB0386A7) 
+E5-AttributeCache-dev |  53 | 5:25:59 AM | DELETE_COMPLETE         | AWS::IAM::Role                                | HostAsg/InstanceRole (HostAsgInstanceRoleD0A8B709) 
+E5-AttributeCache-dev |  53 | 5:25:59 AM | DELETE_IN_PROGRESS      | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  54 | 5:26:15 AM | DELETE_COMPLETE         | AWS::EFS::MountTarget                         | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E5-AttributeCache-dev |  54 | 5:26:16 AM | DELETE_IN_PROGRESS      | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |  54 | 5:26:16 AM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |  55 | 5:26:16 AM | DELETE_COMPLETE         | AWS::FSx::Volume                              | FsxOntapVolume 
+E5-AttributeCache-dev |  55 | 5:26:16 AM | DELETE_IN_PROGRESS      | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  56 | 5:26:17 AM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup                       | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E5-AttributeCache-dev |  57 | 5:26:20 AM | DELETE_COMPLETE         | AWS::EFS::FileSystem                          | FileSystem (FileSystem8A8E25C0) 
+E5-AttributeCache-dev |  58 | 5:28:18 AM | DELETE_COMPLETE         | AWS::FSx::StorageVirtualMachine               | FsxOntapSvm 
+E5-AttributeCache-dev |  58 | 5:28:18 AM | DELETE_IN_PROGRESS      | AWS::FSx::FileSystem                          | FsxOntap 
+E5-AttributeCache-dev |  59 | 5:30:02 AM | DELETE_COMPLETE         | AWS::FSx::FileSystem                          | FsxLustre (FsxLustreEBC8CCA6) 
+E5-AttributeCache-dev |  60 | 5:32:49 AM | DELETE_COMPLETE         | AWS::FSx::FileSystem                          | FsxOpenZfs 

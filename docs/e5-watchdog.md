@@ -6,6 +6,11 @@ is now an internal runner command and refuses without a live host lease.
 The later [single-pilot receipt](../results/E5/20261026T152946Z-b1efcb2/pilot-review.md)
 records normal live collection/teardown. It does not validate every failure path.
 
+The [single diagnostic receipt](../results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
+also records a real 75-minute deadline handover: the benchmark exited 0 and its
+data were collected; the collector was killed during ONTAP deletion, and the host
+guard completed scoped cleanup. Its collector exit is 137, not a normal success.
+
 ## Launch and observe
 
 Host requirements are Python 3 with POSIX `fcntl`, AWS CLI v2, working credentials
@@ -32,6 +37,13 @@ means cleanup was verified, **not** that the experiment succeeded. Check
 `runner_exit`, `stop_reason`, replication output and grading separately.
 
 ## Failure handling and ownership
+
+An explicitly authorised `make e5-diagnostic` uses `E5_RUN_KIND=diagnostic`, one
+fresh deployment only, a 4500-second run limit and the same 90-minute cleanup
+budget. Diagnostic resume/multiple deployments are rejected. Results go under
+`results/E5-diagnostic/` and are not registered study replications. The study path
+retains its six-hour default. These runtime limits are not a dollar payment cap.
+`make e5-diagnostic-selftest` runs control, analysis and watchdog checks without AWS.
 
 - E5 deploys with `--method direct`: default change sets create an untagged
   REVIEW_IN_PROGRESS placeholder before execution. The guard never assumes

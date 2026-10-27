@@ -8,6 +8,14 @@ All aggregate predictions remain NOT EVALUABLE at n=1. No hypothesis verdict cha
 
 ## Current status and handoff (2026-10-26)
 
+**Latest follow-up (2026-10-27):** the [single AWS diagnostic](../../results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
+completed and teardown was independently verified. TLS readahead verification
+produces background root activity, but switching it off leaves residual active
+GETATTR pairs. Lustre lateness reproduces at 23.2%/21.5% under concurrency versus
+0%/0% isolated; shared lock-cache interaction is a candidate mechanism. Amend
+attribution/isolation before a new formal run. No thresholds, original pilot
+grading or aggregate/H1 verdict changed; this short diagnostic is not replication 2.
+
 See the [pilot review](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
 [unchanged-method grading](../../results/E5/20261026T152946Z-b1efcb2/summary.md) and
 [final teardown evidence](../../results/E5/20261026T152946Z-b1efcb2/teardown.json).

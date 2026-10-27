@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-27T05:04:30.996913+00:00",
+  "source": "read-only SSM after protocol entered Lustre; original helper config restored before that phase",
+  "selected_config": {
+    "mount": {
+      "optimize_readahead": "true"
+    },
+    "mount-watchdog": {
+      "enabled": "true",
+      "poll_interval_sec": "1",
+      "stunnel_health_check_enabled": "true",
+      "stunnel_health_check_interval_min": "5"
+    }
+  },
+  "clock_ns": {
+    "monotonic": 1513128491672,
+    "unix": 1793077468577691366
+  }
+}

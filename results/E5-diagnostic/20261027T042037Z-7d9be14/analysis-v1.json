@@ -1,0 +1,2938 @@
+{
+  "all_inputs_valid": true,
+  "cells": {
+    "round-1/fsx_lustre-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 950736,
+        "mean": 60648.42055555555,
+        "n": 1800,
+        "p50": 59307,
+        "p99": 73035
+      },
+      "off_cpu_ns": {
+        "maximum": 2720065,
+        "mean": 19431.600555555557,
+        "n": 1800,
+        "p50": 3187,
+        "p99": 221623
+      },
+      "requests": 1800,
+      "service_thread_cpu_share": 0.9978540625611444,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 10353441,
+        "mean": 9035632.262777777,
+        "n": 1800,
+        "p50": 9029071,
+        "p99": 9406088
+      },
+      "wall_ns": {
+        "maximum": 12019532,
+        "mean": 9055063.863333333,
+        "n": 1800,
+        "p50": 9037440,
+        "p99": 9506355
+      }
+    },
+    "round-2/ebs-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 4042430,
+        "mean": 77909.82055555556,
+        "n": 1800,
+        "p50": 61705,
+        "p99": 201398
+      },
+      "off_cpu_ns": {
+        "maximum": 10704746,
+        "mean": 182732.33222222223,
+        "n": 1800,
+        "p50": 8520,
+        "p99": 2231179
+      },
+      "requests": 1800,
+      "service_thread_cpu_share": 0.9435743786132271,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 5305868,
+        "mean": 3055731.467222222,
+        "n": 1800,
+        "p50": 3046213,
+        "p99": 3485703
+      },
+      "wall_ns": {
+        "maximum": 14975862,
+        "mean": 3238463.7994444445,
+        "n": 1800,
+        "p50": 3084829,
+        "p99": 5480695
+      }
+    },
+    "round-2/ebs-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 3131001,
+        "mean": 380890.3611111111,
+        "n": 180,
+        "p50": 70658,
+        "p99": 2969924
+      },
+      "off_cpu_ns": {
+        "maximum": 10198942,
+        "mean": 249977.27222222224,
+        "n": 180,
+        "p50": 36254,
+        "p99": 3738924
+      },
+      "requests": 180,
+      "service_thread_cpu_share": 0.927267465043578,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 4330310,
+        "mean": 3186961.538888889,
+        "n": 180,
+        "p50": 3164073,
+        "p99": 3540434
+      },
+      "wall_ns": {
+        "maximum": 14529252,
+        "mean": 3436938.811111111,
+        "n": 180,
+        "p50": 3207868,
+        "p99": 7006443
+      }
+    },
+    "round-2/ebs-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 73532,
+        "mean": 62210.27777777778,
+        "n": 18,
+        "p50": 62493,
+        "p99": 73532
+      },
+      "off_cpu_ns": {
+        "maximum": 941181,
+        "mean": 319000.6666666667,
+        "n": 18,
+        "p50": 229189,
+        "p99": 941181
+      },
+      "requests": 18,
+      "service_thread_cpu_share": 0.9153839771893835,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 3546360,
+        "mean": 3450978.777777778,
+        "n": 18,
+        "p50": 3447782,
+        "p99": 3546360
+      },
+      "wall_ns": {
+        "maximum": 4475496,
+        "mean": 3769979.4444444445,
+        "n": 18,
+        "p50": 3625950,
+        "p99": 4475496
+      }
+    },
+    "round-2/efs_host_plain-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 5591462,
+        "mean": 151215.53722222222,
+        "n": 1800,
+        "p50": 64138,
+        "p99": 3128066
+      },
+      "off_cpu_ns": {
+        "maximum": 72316922,
+        "mean": 799170.9127777778,
+        "n": 1800,
+        "p50": 163226,
+        "p99": 11849932
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3135,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3135,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.8807999192302887,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 13163998,
+        "mean": 5905278.510555555,
+        "n": 1800,
+        "p50": 5844812,
+        "p99": 6979379
+      },
+      "wall_ns": {
+        "maximum": 85480920,
+        "mean": 6704449.423333333,
+        "n": 1800,
+        "p50": 6022586,
+        "p99": 18536514
+      }
+    },
+    "round-2/efs_host_plain-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 258544,
+        "mean": 65793.7,
+        "n": 180,
+        "p50": 65028,
+        "p99": 78003
+      },
+      "off_cpu_ns": {
+        "maximum": 182127727,
+        "mean": 5104985.744444445,
+        "n": 180,
+        "p50": 13302,
+        "p99": 162166389
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3129,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3129,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.5454271659983471,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 13656863,
+        "mean": 6125306.438888889,
+        "n": 180,
+        "p50": 5848350,
+        "p99": 12254392
+      },
+      "wall_ns": {
+        "maximum": 195784590,
+        "mean": 11230292.183333334,
+        "n": 180,
+        "p50": 5871834,
+        "p99": 174420781
+      }
+    },
+    "round-2/efs_host_plain-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 80543,
+        "mean": 63803.77777777778,
+        "n": 18,
+        "p50": 61751,
+        "p99": 80543
+      },
+      "off_cpu_ns": {
+        "maximum": 234196947,
+        "mean": 51221199.722222224,
+        "n": 18,
+        "p50": 10277795,
+        "p99": 234196947
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3272,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3272,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.17094459328748904,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 26443815,
+        "mean": 10561401.666666666,
+        "n": 18,
+        "p50": 6762331,
+        "p99": 26443815
+      },
+      "wall_ns": {
+        "maximum": 259100858,
+        "mean": 61782601.38888889,
+        "n": 18,
+        "p50": 17040126,
+        "p99": 259100858
+      }
+    },
+    "round-2/efs_host_tls-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 18294010,
+        "mean": 86131.47944444444,
+        "n": 1800,
+        "p50": 61717,
+        "p99": 146995
+      },
+      "off_cpu_ns": {
+        "maximum": 103086597,
+        "mean": 966591.46,
+        "n": 1800,
+        "p50": 87469,
+        "p99": 14247787
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3137,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 945,
+            "next_start_ns": 1794395513411,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1794302535163,
+            "previous_k": 944
+          },
+          {
+            "next_k": 1547,
+            "next_start_ns": 1854595582351,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1854501875746,
+            "previous_k": 1546
+          },
+          {
+            "next_k": 2151,
+            "next_start_ns": 1914995515813,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1914901624751,
+            "previous_k": 2150
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3134,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.8600855440350375,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 3,
+      "thread_cpu_ns": {
+        "maximum": 14819183,
+        "mean": 5941854.513888889,
+        "n": 1800,
+        "p50": 5873629,
+        "p99": 7291203
+      },
+      "wall_ns": {
+        "maximum": 117905780,
+        "mean": 6908445.973888889,
+        "n": 1800,
+        "p50": 6070514,
+        "p99": 21398652
+      }
+    },
+    "round-2/efs_host_tls-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 452889,
+        "mean": 86302.15555555555,
+        "n": 180,
+        "p50": 69471,
+        "p99": 303835
+      },
+      "off_cpu_ns": {
+        "maximum": 270527237,
+        "mean": 6713328.405555556,
+        "n": 180,
+        "p50": 658911,
+        "p99": 253287997
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3130,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 95,
+            "next_start_ns": 1794910053640,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1793933853117,
+            "previous_k": 94
+          },
+          {
+            "next_k": 155,
+            "next_start_ns": 1854910031866,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1854194096415,
+            "previous_k": 154
+          },
+          {
+            "next_k": 215,
+            "next_start_ns": 1914910172917,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1913924664175,
+            "previous_k": 214
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.49675850143886946,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 31443328,
+        "mean": 6626844.105555556,
+        "n": 180,
+        "p50": 6026548,
+        "p99": 30770532
+      },
+      "wall_ns": {
+        "maximum": 301970565,
+        "mean": 13340172.51111111,
+        "n": 180,
+        "p50": 6760633,
+        "p99": 284058529
+      }
+    },
+    "round-2/efs_host_tls-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 78975,
+        "mean": 65737.61111111111,
+        "n": 18,
+        "p50": 64079,
+        "p99": 78975
+      },
+      "off_cpu_ns": {
+        "maximum": 278581275,
+        "mean": 68169734.27777778,
+        "n": 18,
+        "p50": 14832538,
+        "p99": 278581275
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3140,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 10,
+            "next_start_ns": 1799824678997,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1789832573946,
+            "previous_k": 9
+          },
+          {
+            "next_k": 16,
+            "next_start_ns": 1859824676711,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1849832534047,
+            "previous_k": 15
+          },
+          {
+            "next_k": 22,
+            "next_start_ns": 1919824681028,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1909832724354,
+            "previous_k": 21
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3137,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.15767195332145278,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 34300888,
+        "mean": 12760414.666666666,
+        "n": 18,
+        "p50": 7585126,
+        "p99": 34300888
+      },
+      "wall_ns": {
+        "maximum": 310789157,
+        "mean": 80930148.94444445,
+        "n": 18,
+        "p50": 22417664,
+        "p99": 310789157
+      }
+    },
+    "round-2/fsx_lustre-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 417,
+      "late_share": 0.23166666666666666,
+      "lateness_ns": {
+        "maximum": 874026594,
+        "mean": 65096214.64666667,
+        "n": 1800,
+        "p50": 62120,
+        "p99": 711601242
+      },
+      "off_cpu_ns": {
+        "maximum": 647870822,
+        "mean": 35159180.49888889,
+        "n": 1800,
+        "p50": 391866,
+        "p99": 407884380
+      },
+      "requests": 1800,
+      "service_thread_cpu_share": 0.3142386893445601,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 351,
+      "thread_cpu_ns": {
+        "maximum": 107703851,
+        "mean": 16111108.379444445,
+        "n": 1800,
+        "p50": 10276903,
+        "p99": 81075168
+      },
+      "wall_ns": {
+        "maximum": 748101084,
+        "mean": 51270288.87833333,
+        "n": 1800,
+        "p50": 10614550,
+        "p99": 481511078
+      }
+    },
+    "round-2/fsx_lustre-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 2872032,
+        "mean": 81846.26111111112,
+        "n": 180,
+        "p50": 65627,
+        "p99": 247474
+      },
+      "off_cpu_ns": {
+        "maximum": 708391784,
+        "mean": 544629012.3944445,
+        "n": 180,
+        "p50": 526576444,
+        "p99": 691612986
+      },
+      "requests": 180,
+      "service_thread_cpu_share": 0.15121705460238613,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 113123374,
+        "mean": 97029747.77222222,
+        "n": 180,
+        "p50": 95332374,
+        "p99": 112280037
+      },
+      "wall_ns": {
+        "maximum": 801704004,
+        "mean": 641658760.1666666,
+        "n": 180,
+        "p50": 624489953,
+        "p99": 787320361
+      }
+    },
+    "round-2/fsx_lustre-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 84923,
+        "mean": 67797.22222222222,
+        "n": 18,
+        "p50": 69003,
+        "p99": 84923
+      },
+      "off_cpu_ns": {
+        "maximum": 675858741,
+        "mean": 625381859.2222222,
+        "n": 18,
+        "p50": 623772408,
+        "p99": 675858741
+      },
+      "requests": 18,
+      "service_thread_cpu_share": 0.1507352694768261,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 113885743,
+        "mean": 110998490.44444445,
+        "n": 18,
+        "p50": 110874081,
+        "p99": 113885743
+      },
+      "wall_ns": {
+        "maximum": 786396909,
+        "mean": 736380349.6666666,
+        "n": 18,
+        "p50": 733565746,
+        "p99": 786396909
+      }
+    },
+    "round-2/fsx_ontap-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 20408135,
+        "mean": 88639.96555555555,
+        "n": 1800,
+        "p50": 61761,
+        "p99": 118143
+      },
+      "off_cpu_ns": {
+        "maximum": 102163261,
+        "mean": 604598.5827777778,
+        "n": 1800,
+        "p50": 97023,
+        "p99": 3721380
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.9070415271864484,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 2,
+      "thread_cpu_ns": {
+        "maximum": 22528512,
+        "mean": 5899365.655,
+        "n": 1800,
+        "p50": 5846486,
+        "p99": 6781683
+      },
+      "wall_ns": {
+        "maximum": 120318803,
+        "mean": 6503964.237777778,
+        "n": 1800,
+        "p50": 6056662,
+        "p99": 10079094
+      }
+    },
+    "round-2/fsx_ontap-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 4368878,
+        "mean": 224663.92222222223,
+        "n": 180,
+        "p50": 69774,
+        "p99": 4355403
+      },
+      "off_cpu_ns": {
+        "maximum": 141257076,
+        "mean": 2900011.1611111113,
+        "n": 180,
+        "p50": 384083,
+        "p99": 125219837
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.6842148668959626,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 28308566,
+        "mean": 6283483.744444445,
+        "n": 180,
+        "p50": 5804031,
+        "p99": 27574055
+      },
+      "wall_ns": {
+        "maximum": 168831131,
+        "mean": 9183494.905555556,
+        "n": 180,
+        "p50": 6172080,
+        "p99": 153528403
+      }
+    },
+    "round-2/fsx_ontap-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 1395148,
+        "mean": 191296.05555555556,
+        "n": 18,
+        "p50": 67689,
+        "p99": 1395148
+      },
+      "off_cpu_ns": {
+        "maximum": 141228746,
+        "mean": 22839924.277777776,
+        "n": 18,
+        "p50": 522551,
+        "p99": 141228746
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3126,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3126,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.29008968791277745,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 26492699,
+        "mean": 9333047.277777778,
+        "n": 18,
+        "p50": 6147376,
+        "p99": 26492699
+      },
+      "wall_ns": {
+        "maximum": 167721445,
+        "mean": 32172971.555555556,
+        "n": 18,
+        "p50": 6719984,
+        "p99": 167721445
+      }
+    },
+    "round-2/fsx_openzfs-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 6128714,
+        "mean": 69538.63944444444,
+        "n": 1800,
+        "p50": 61812,
+        "p99": 136062
+      },
+      "off_cpu_ns": {
+        "maximum": 8347319,
+        "mean": 283173.86666666664,
+        "n": 1800,
+        "p50": 51458,
+        "p99": 4639702
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 126,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 126,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.9548059797277407,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 8048055,
+        "mean": 5982563.612777778,
+        "n": 1800,
+        "p50": 5956954,
+        "p99": 6579002
+      },
+      "wall_ns": {
+        "maximum": 16020657,
+        "mean": 6265737.479444444,
+        "n": 1800,
+        "p50": 6044367,
+        "p99": 10904943
+      }
+    },
+    "round-2/fsx_openzfs-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 220051,
+        "mean": 66117.33888888889,
+        "n": 180,
+        "p50": 62773,
+        "p99": 146299
+      },
+      "off_cpu_ns": {
+        "maximum": 4263300,
+        "mean": 495065.52777777775,
+        "n": 180,
+        "p50": 117036,
+        "p99": 3782793
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 126,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 126,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.9244372186214365,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 7524996,
+        "mean": 6056645.761111111,
+        "n": 180,
+        "p50": 5982339,
+        "p99": 7500710
+      },
+      "wall_ns": {
+        "maximum": 11764010,
+        "mean": 6551711.288888888,
+        "n": 180,
+        "p50": 6252233,
+        "p99": 10259352
+      }
+    },
+    "round-2/fsx_openzfs-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 78026,
+        "mean": 63389.055555555555,
+        "n": 18,
+        "p50": 61779,
+        "p99": 78026
+      },
+      "off_cpu_ns": {
+        "maximum": 8522386,
+        "mean": 3407961.888888889,
+        "n": 18,
+        "p50": 4713778,
+        "p99": 8522386
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 126,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 126,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.6584402238707051,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 7505751,
+        "mean": 6569682.222222222,
+        "n": 18,
+        "p50": 6463097,
+        "p99": 7505751
+      },
+      "wall_ns": {
+        "maximum": 16028137,
+        "mean": 9977644.111111112,
+        "n": 18,
+        "p50": 11324180,
+        "p99": 16028137
+      }
+    },
+    "round-3/ebs-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 4190974,
+        "mean": 78793.53166666666,
+        "n": 1800,
+        "p50": 61799,
+        "p99": 402006
+      },
+      "off_cpu_ns": {
+        "maximum": 13706396,
+        "mean": 202969.29944444445,
+        "n": 1800,
+        "p50": 13805,
+        "p99": 1918064
+      },
+      "requests": 1800,
+      "service_thread_cpu_share": 0.9373934678544431,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 6725717,
+        "mean": 3039013.4855555557,
+        "n": 1800,
+        "p50": 3024297,
+        "p99": 3450815
+      },
+      "wall_ns": {
+        "maximum": 16825287,
+        "mean": 3241982.785,
+        "n": 1800,
+        "p50": 3076913,
+        "p99": 5363101
+      }
+    },
+    "round-3/ebs-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 208438,
+        "mean": 66716.89444444445,
+        "n": 180,
+        "p50": 62616,
+        "p99": 183288
+      },
+      "off_cpu_ns": {
+        "maximum": 1818210,
+        "mean": 223297.8388888889,
+        "n": 180,
+        "p50": 158563,
+        "p99": 1387245
+      },
+      "requests": 180,
+      "service_thread_cpu_share": 0.933534201092969,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 3625598,
+        "mean": 3136292.2444444443,
+        "n": 180,
+        "p50": 3120289,
+        "p99": 3624023
+      },
+      "wall_ns": {
+        "maximum": 4867451,
+        "mean": 3359590.0833333335,
+        "n": 180,
+        "p50": 3316893,
+        "p99": 4715966
+      }
+    },
+    "round-3/ebs-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 158078,
+        "mean": 80737.55555555556,
+        "n": 18,
+        "p50": 70090,
+        "p99": 158078
+      },
+      "off_cpu_ns": {
+        "maximum": 136616,
+        "mean": 30690.61111111111,
+        "n": 18,
+        "p50": 20847,
+        "p99": 136616
+      },
+      "requests": 18,
+      "service_thread_cpu_share": 0.9911469149835825,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 3521533,
+        "mean": 3435966.611111111,
+        "n": 18,
+        "p50": 3436250,
+        "p99": 3521533
+      },
+      "wall_ns": {
+        "maximum": 3658149,
+        "mean": 3466657.222222222,
+        "n": 18,
+        "p50": 3463750,
+        "p99": 3658149
+      }
+    },
+    "round-3/efs_host_plain-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 5304859,
+        "mean": 91626.61444444445,
+        "n": 1800,
+        "p50": 62604,
+        "p99": 564697
+      },
+      "off_cpu_ns": {
+        "maximum": 87517253,
+        "mean": 1117385.9055555556,
+        "n": 1800,
+        "p50": 130161,
+        "p99": 15011533
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3131,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3131,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.8435597932500122,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 13364481,
+        "mean": 6025189.067777778,
+        "n": 1800,
+        "p50": 5931417,
+        "p99": 7395372
+      },
+      "wall_ns": {
+        "maximum": 100820064,
+        "mean": 7142574.973333334,
+        "n": 1800,
+        "p50": 6109833,
+        "p99": 21835879
+      }
+    },
+    "round-3/efs_host_plain-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 2641196,
+        "mean": 92482.73888888888,
+        "n": 180,
+        "p50": 66008,
+        "p99": 2023561
+      },
+      "off_cpu_ns": {
+        "maximum": 127454441,
+        "mean": 5074039.766666667,
+        "n": 180,
+        "p50": 14788,
+        "p99": 127017809
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.5523578677122029,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 17571443,
+        "mean": 6260996.416666667,
+        "n": 180,
+        "p50": 5829583,
+        "p99": 16456127
+      },
+      "wall_ns": {
+        "maximum": 145025884,
+        "mean": 11335036.183333334,
+        "n": 180,
+        "p50": 5874632,
+        "p99": 142086019
+      }
+    },
+    "round-3/efs_host_plain-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 70216,
+        "mean": 63234.11111111111,
+        "n": 18,
+        "p50": 63625,
+        "p99": 70216
+      },
+      "off_cpu_ns": {
+        "maximum": 281723939,
+        "mean": 65209558.88888889,
+        "n": 18,
+        "p50": 11728980,
+        "p99": 281723939
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3166,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3166,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.1437175576364789,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 30291747,
+        "mean": 10944704.777777778,
+        "n": 18,
+        "p50": 7280366,
+        "p99": 30291747
+      },
+      "wall_ns": {
+        "maximum": 293580368,
+        "mean": 76154263.66666667,
+        "n": 18,
+        "p50": 18556910,
+        "p99": 293580368
+      }
+    },
+    "round-3/efs_host_tls-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 25176565,
+        "mean": 94572.62277777778,
+        "n": 1800,
+        "p50": 61993,
+        "p99": 124164
+      },
+      "off_cpu_ns": {
+        "maximum": 110547431,
+        "mean": 1004455.9088888889,
+        "n": 1800,
+        "p50": 104820,
+        "p99": 14079445
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 1,
+          "GETATTR": 3138,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 910,
+            "next_start_ns": 2034805453272,
+            "operations": {
+              "ACCESS": 1,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2034711491827,
+            "previous_k": 909
+          },
+          {
+            "next_k": 1514,
+            "next_start_ns": 2095205431452,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2095123885972,
+            "previous_k": 1513
+          },
+          {
+            "next_k": 2117,
+            "next_start_ns": 2155505431193,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2155413331314,
+            "previous_k": 2116
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 1,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3135,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 1,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.8574678413508807,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 3,
+      "thread_cpu_ns": {
+        "maximum": 14542309,
+        "mean": 6042767.106666666,
+        "n": 1800,
+        "p50": 5963392,
+        "p99": 7444666
+      },
+      "wall_ns": {
+        "maximum": 125089740,
+        "mean": 7047223.015555556,
+        "n": 1800,
+        "p50": 6177139,
+        "p99": 21219704
+      }
+    },
+    "round-3/efs_host_tls-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 2387607,
+        "mean": 81291.41666666667,
+        "n": 180,
+        "p50": 63683,
+        "p99": 529116
+      },
+      "off_cpu_ns": {
+        "maximum": 249379240,
+        "mean": 6909854.027777778,
+        "n": 180,
+        "p50": 569379,
+        "p99": 231621896
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 1,
+          "GETATTR": 3131,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 91,
+            "next_start_ns": 2034818172442,
+            "operations": {
+              "ACCESS": 1,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2033829869001,
+            "previous_k": 90
+          },
+          {
+            "next_k": 152,
+            "next_start_ns": 2095818179149,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2094825325568,
+            "previous_k": 151
+          },
+          {
+            "next_k": 212,
+            "next_start_ns": 2155818167975,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2154824984943,
+            "previous_k": 211
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 1,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3128,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 1,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.4905760649009941,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 29720540,
+        "mean": 6654200.488888889,
+        "n": 180,
+        "p50": 6024686,
+        "p99": 27200410
+      },
+      "wall_ns": {
+        "maximum": 279099780,
+        "mean": 13564054.516666668,
+        "n": 180,
+        "p50": 6583735,
+        "p99": 257913061
+      }
+    },
+    "round-3/efs_host_tls-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 104627,
+        "mean": 71926.44444444444,
+        "n": 18,
+        "p50": 66942,
+        "p99": 104627
+      },
+      "off_cpu_ns": {
+        "maximum": 269418005,
+        "mean": 62521023.38888889,
+        "n": 18,
+        "p50": 13081859,
+        "p99": 269418005
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 1,
+          "GETATTR": 3142,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 10,
+            "next_start_ns": 2043923894571,
+            "operations": {
+              "ACCESS": 1,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2033932517488,
+            "previous_k": 9
+          },
+          {
+            "next_k": 16,
+            "next_start_ns": 2103923882392,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2093932503335,
+            "previous_k": 15
+          },
+          {
+            "next_k": 22,
+            "next_start_ns": 2163923883956,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 2153932250889,
+            "previous_k": 21
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 1,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3139,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 1,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.1624514680568929,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 28825337,
+        "mean": 12126619.111111112,
+        "n": 18,
+        "p50": 7851911,
+        "p99": 28825337
+      },
+      "wall_ns": {
+        "maximum": 298092213,
+        "mean": 74647642.5,
+        "n": 18,
+        "p50": 21076316,
+        "p99": 298092213
+      }
+    },
+    "round-3/fsx_lustre-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 387,
+      "late_share": 0.215,
+      "lateness_ns": {
+        "maximum": 936722996,
+        "mean": 57287860.491111115,
+        "n": 1800,
+        "p50": 60794,
+        "p99": 643391853
+      },
+      "off_cpu_ns": {
+        "maximum": 575763329,
+        "mean": 33432402.188333333,
+        "n": 1800,
+        "p50": 446011,
+        "p99": 466758244
+      },
+      "requests": 1800,
+      "service_thread_cpu_share": 0.32548810253653,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 304,
+      "thread_cpu_ns": {
+        "maximum": 100770774,
+        "mean": 16132923.959444445,
+        "n": 1800,
+        "p50": 10400924,
+        "p99": 84883939
+      },
+      "wall_ns": {
+        "maximum": 676289375,
+        "mean": 49565326.14777778,
+        "n": 1800,
+        "p50": 10826131,
+        "p99": 546674304
+      }
+    },
+    "round-3/fsx_lustre-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 9180646,
+        "mean": 136992.64444444445,
+        "n": 180,
+        "p50": 78832,
+        "p99": 1158867
+      },
+      "off_cpu_ns": {
+        "maximum": 920840215,
+        "mean": 531141259.26111114,
+        "n": 180,
+        "p50": 522669822,
+        "p99": 651961452
+      },
+      "requests": 180,
+      "service_thread_cpu_share": 0.15679374445022004,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 1,
+      "thread_cpu_ns": {
+        "maximum": 120771172,
+        "mean": 98765428.17777778,
+        "n": 180,
+        "p50": 97043642,
+        "p99": 116344769
+      },
+      "wall_ns": {
+        "maximum": 1009078947,
+        "mean": 629906687.4388889,
+        "n": 180,
+        "p50": 622040076,
+        "p99": 752211383
+      }
+    },
+    "round-3/fsx_lustre-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 74096,
+        "mean": 61645.27777777778,
+        "n": 18,
+        "p50": 59697,
+        "p99": 74096
+      },
+      "off_cpu_ns": {
+        "maximum": 627604300,
+        "mean": 597192828.3888888,
+        "n": 18,
+        "p50": 596127401,
+        "p99": 627604300
+      },
+      "requests": 18,
+      "service_thread_cpu_share": 0.15702217427728524,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 115136066,
+        "mean": 111239600.27777778,
+        "n": 18,
+        "p50": 110189340,
+        "p99": 115136066
+      },
+      "wall_ns": {
+        "maximum": 739985060,
+        "mean": 708432428.6666666,
+        "n": 18,
+        "p50": 705352171,
+        "p99": 739985060
+      }
+    },
+    "round-3/fsx_ontap-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 4020017,
+        "mean": 72757.17722222222,
+        "n": 1800,
+        "p50": 63205,
+        "p99": 129545
+      },
+      "off_cpu_ns": {
+        "maximum": 38276338,
+        "mean": 669027.3461111111,
+        "n": 1800,
+        "p50": 90172,
+        "p99": 7978359
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.8977235133135889,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 13292548,
+        "mean": 5872332.919444445,
+        "n": 1800,
+        "p50": 5806193,
+        "p99": 7186513
+      },
+      "wall_ns": {
+        "maximum": 48393656,
+        "mean": 6541360.265555556,
+        "n": 1800,
+        "p50": 6011249,
+        "p99": 14776671
+      }
+    },
+    "round-3/fsx_ontap-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 156571,
+        "mean": 65623.54444444444,
+        "n": 180,
+        "p50": 61565,
+        "p99": 137947
+      },
+      "off_cpu_ns": {
+        "maximum": 110256364,
+        "mean": 2655466.6944444445,
+        "n": 180,
+        "p50": 388438,
+        "p99": 100548477
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3126,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3126,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.7033096802799033,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 23894045,
+        "mean": 6294831.033333333,
+        "n": 180,
+        "p50": 5888613,
+        "p99": 18951175
+      },
+      "wall_ns": {
+        "maximum": 128864582,
+        "mean": 8950297.727777777,
+        "n": 180,
+        "p50": 6214390,
+        "p99": 124442522
+      }
+    },
+    "round-3/fsx_ontap-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 69418,
+        "mean": 61963.333333333336,
+        "n": 18,
+        "p50": 60561,
+        "p99": 69418
+      },
+      "off_cpu_ns": {
+        "maximum": 134763888,
+        "mean": 22842753.277777776,
+        "n": 18,
+        "p50": 261883,
+        "p99": 134763888
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3126,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3126,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.3042284742929905,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 29838868,
+        "mean": 9988071.833333334,
+        "n": 18,
+        "p50": 6184352,
+        "p99": 29838868
+      },
+      "wall_ns": {
+        "maximum": 160243408,
+        "mean": 32830825.111111112,
+        "n": 18,
+        "p50": 6388527,
+        "p99": 160243408
+      }
+    },
+    "round-3/fsx_openzfs-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 3920971,
+        "mean": 69126.59888888888,
+        "n": 1800,
+        "p50": 60584,
+        "p99": 133921
+      },
+      "off_cpu_ns": {
+        "maximum": 27799424,
+        "mean": 430670.40722222225,
+        "n": 1800,
+        "p50": 15663,
+        "p99": 5581430
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 1277,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 1277,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.9322958835737707,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 9163961,
+        "mean": 5930396.392777778,
+        "n": 1800,
+        "p50": 5880935,
+        "p99": 6701771
+      },
+      "wall_ns": {
+        "maximum": 36963385,
+        "mean": 6361066.8,
+        "n": 1800,
+        "p50": 6021751,
+        "p99": 11912846
+      }
+    },
+    "round-3/fsx_openzfs-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 111740,
+        "mean": 63153.583333333336,
+        "n": 180,
+        "p50": 61212,
+        "p99": 90796
+      },
+      "off_cpu_ns": {
+        "maximum": 32147202,
+        "mean": 984096.5944444444,
+        "n": 180,
+        "p50": 328384,
+        "p99": 27129801
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 1074,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 1074,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.862462557307204,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 12405926,
+        "mean": 6171021.133333334,
+        "n": 180,
+        "p50": 5998248,
+        "p99": 11650523
+      },
+      "wall_ns": {
+        "maximum": 42943043,
+        "mean": 7155117.727777778,
+        "n": 180,
+        "p50": 6340811,
+        "p99": 38780324
+      }
+    },
+    "round-3/fsx_openzfs-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 138502,
+        "mean": 67721.83333333333,
+        "n": 18,
+        "p50": 59912,
+        "p99": 138502
+      },
+      "off_cpu_ns": {
+        "maximum": 31669459,
+        "mean": 6086047.166666667,
+        "n": 18,
+        "p50": 517548,
+        "p99": 31669459
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 1032,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 1032,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.550753435003827,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 12618463,
+        "mean": 7461184.222222222,
+        "n": 18,
+        "p50": 6259032,
+        "p99": 12618463
+      },
+      "wall_ns": {
+        "maximum": 42875998,
+        "mean": 13547231.388888888,
+        "n": 18,
+        "p50": 6780514,
+        "p99": 42875998
+      }
+    },
+    "round-4/fsx_lustre-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 1085434,
+        "mean": 60298.30888888889,
+        "n": 1800,
+        "p50": 58904,
+        "p99": 74072
+      },
+      "off_cpu_ns": {
+        "maximum": 4396386,
+        "mean": 23678.11611111111,
+        "n": 1800,
+        "p50": 2834,
+        "p99": 516367
+      },
+      "requests": 1800,
+      "service_thread_cpu_share": 0.9975728204713598,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 10393124,
+        "mean": 9731725.566111112,
+        "n": 1800,
+        "p50": 9736951,
+        "p99": 10184928
+      },
+      "wall_ns": {
+        "maximum": 14247868,
+        "mean": 9755403.682222223,
+        "n": 1800,
+        "p50": 9744394,
+        "p99": 10396179
+      }
+    },
+    "tls-off/efs_host_tls-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 121644,
+        "mean": 58415.943333333336,
+        "n": 1800,
+        "p50": 59047,
+        "p99": 70393
+      },
+      "off_cpu_ns": {
+        "maximum": 84183333,
+        "mean": 593851.6816666666,
+        "n": 1800,
+        "p50": 2914,
+        "p99": 10771869
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3132,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 2220,
+            "next_start_ns": 1434017130401,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 2,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1433922809473,
+            "previous_k": 2219
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3130,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.9045966844736093,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 13507302,
+        "mean": 5630792.382222222,
+        "n": 1800,
+        "p50": 5566418,
+        "p99": 6863541
+      },
+      "wall_ns": {
+        "maximum": 97690635,
+        "mean": 6224644.063888889,
+        "n": 1800,
+        "p50": 5575273,
+        "p99": 17396701
+      }
+    },
+    "tls-off/efs_host_tls-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 2344978,
+        "mean": 81221.45555555556,
+        "n": 180,
+        "p50": 61246,
+        "p99": 810331
+      },
+      "off_cpu_ns": {
+        "maximum": 212348363,
+        "mean": 5535491.333333333,
+        "n": 180,
+        "p50": 2688,
+        "p99": 208408068
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3129,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 223,
+            "next_start_ns": 1434921540095,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 2,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1433927031342,
+            "previous_k": 222
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3127,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.5202857007378993,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 23350518,
+        "mean": 6003650.488888889,
+        "n": 180,
+        "p50": 5487087,
+        "p99": 22780326
+      },
+      "wall_ns": {
+        "maximum": 234975403,
+        "mean": 11539141.822222222,
+        "n": 180,
+        "p50": 5490154,
+        "p99": 231758586
+      }
+    },
+    "tls-off/efs_host_tls-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 72292,
+        "mean": 60907.444444444445,
+        "n": 18,
+        "p50": 59717,
+        "p99": 72292
+      },
+      "off_cpu_ns": {
+        "maximum": 284267754,
+        "mean": 55342995.833333336,
+        "n": 18,
+        "p50": 11771902,
+        "p99": 284267754
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3200,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 23,
+            "next_start_ns": 1441895134096,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 2,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1431915682384,
+            "previous_k": 22
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3198,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.16732692549136913,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 32224752,
+        "mean": 11121259.5,
+        "n": 18,
+        "p50": 7389709,
+        "p99": 32224752
+      },
+      "wall_ns": {
+        "maximum": 316185104,
+        "mean": 66464255.333333336,
+        "n": 18,
+        "p50": 19171179,
+        "p99": 316185104
+      }
+    },
+    "tls-on/efs_host_tls-0.1.req.csv": {
+      "delta_ns": 100000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 16485578,
+        "mean": 78685.81277777778,
+        "n": 1800,
+        "p50": 59345,
+        "p99": 76347
+      },
+      "off_cpu_ns": {
+        "maximum": 101402333,
+        "mean": 567541.845,
+        "n": 1800,
+        "p50": 2992,
+        "p99": 13579246
+      },
+      "requests": 1800,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3134,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 1079,
+            "next_start_ns": 1073542700843,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1073448289006,
+            "previous_k": 1078
+          },
+          {
+            "next_k": 1680,
+            "next_start_ns": 1133642702396,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 2,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1133548250537,
+            "previous_k": 1679
+          },
+          {
+            "next_k": 2281,
+            "next_start_ns": 1193742712179,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1193648247209,
+            "previous_k": 2280
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 4,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3130,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 4,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.9088176712455972,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 2,
+      "thread_cpu_ns": {
+        "maximum": 15000588,
+        "mean": 5656710.735,
+        "n": 1800,
+        "p50": 5591867,
+        "p99": 7021609
+      },
+      "wall_ns": {
+        "maximum": 116392285,
+        "mean": 6224252.58,
+        "n": 1800,
+        "p50": 5595763,
+        "p99": 20452750
+      }
+    },
+    "tls-on/efs_host_tls-1.req.csv": {
+      "delta_ns": 1000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 79251,
+        "mean": 60746.71666666667,
+        "n": 180,
+        "p50": 59906,
+        "p99": 77111
+      },
+      "off_cpu_ns": {
+        "maximum": 280361803,
+        "mean": 5515292.666666667,
+        "n": 180,
+        "p50": 2858,
+        "p99": 277442177
+      },
+      "requests": 180,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3132,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 108,
+            "next_start_ns": 1073683494889,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1072689137173,
+            "previous_k": 107
+          },
+          {
+            "next_k": 168,
+            "next_start_ns": 1133683494667,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 2,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1132689022097,
+            "previous_k": 167
+          },
+          {
+            "next_k": 229,
+            "next_start_ns": 1194683494803,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1193689024407,
+            "previous_k": 228
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 4,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3128,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 4,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.5255506496268421,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 30072399,
+        "mean": 6109325.772222222,
+        "n": 180,
+        "p50": 5589024,
+        "p99": 29630443
+      },
+      "wall_ns": {
+        "maximum": 310434202,
+        "mean": 11624618.438888889,
+        "n": 180,
+        "p50": 5593190,
+        "p99": 307072620
+      }
+    },
+    "tls-on/efs_host_tls-10.req.csv": {
+      "delta_ns": 10000000000,
+      "late_over_half_interval": 0,
+      "late_share": 0.0,
+      "lateness_ns": {
+        "maximum": 65393,
+        "mean": 61016.22222222222,
+        "n": 18,
+        "p50": 60204,
+        "p99": 65393
+      },
+      "off_cpu_ns": {
+        "maximum": 306078773,
+        "mean": 56178077.5,
+        "n": 18,
+        "p50": 11254536,
+        "p99": 306078773
+      },
+      "requests": 18,
+      "rpc": {
+        "independent_window": {
+          "ACCESS": 0,
+          "GETATTR": 3165,
+          "LOOKUP": 0
+        },
+        "inter_request_events": [
+          {
+            "next_k": 11,
+            "next_start_ns": 1075655406590,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1065674113999,
+            "previous_k": 10
+          },
+          {
+            "next_k": 17,
+            "next_start_ns": 1135655407262,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1125674163436,
+            "previous_k": 16
+          },
+          {
+            "next_k": 23,
+            "next_start_ns": 1195655407648,
+            "operations": {
+              "ACCESS": 0,
+              "GETATTR": 1,
+              "LOOKUP": 0
+            },
+            "previous_end_ns": 1185674969866,
+            "previous_k": 22
+          }
+        ],
+        "limitation": "first measured boundary and window tail not in inter-request gaps; no producer identity",
+        "observed_between_measured_requests": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        },
+        "phase": {
+          "ACCESS": 0,
+          "GETATTR": 3162,
+          "LOOKUP": 0
+        },
+        "window_minus_phase": {
+          "ACCESS": 0,
+          "GETATTR": 3,
+          "LOOKUP": 0
+        }
+      },
+      "service_thread_cpu_share": 0.16437927594313329,
+      "status": "VALID_DIAGNOSTIC_INPUT",
+      "syscall_sum_over_interval": 0,
+      "thread_cpu_ns": {
+        "maximum": 32436794,
+        "mean": 11051080.277777778,
+        "n": 18,
+        "p50": 6975119,
+        "p99": 32436794
+      },
+      "wall_ns": {
+        "maximum": 338515567,
+        "mean": 67229157.77777778,
+        "n": 18,
+        "p50": 18592246,
+        "p99": 338515567
+      }
+    }
+  },
+  "completed": true,
+  "idle_controls": [
+    {
+      "deltas": {
+        "/mnt/e5/efs_host_tls/default": {
+          "ACCESS": 0,
+          "GETATTR": 4,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/forced": {
+          "ACCESS": 0,
+          "GETATTR": 4,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-0.1": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-1": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-10": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        }
+      },
+      "elapsed_seconds": 126.342349742,
+      "host": {
+        "config": {
+          "mount": {
+            "optimize_readahead": "true"
+          },
+          "mount-watchdog": {
+            "enabled": "true",
+            "poll_interval_sec": "1",
+            "stunnel_health_check_enabled": "true",
+            "stunnel_health_check_interval_min": "5"
+          }
+        },
+        "read_ahead_kb": {
+          "default": "15360",
+          "forced": "15360",
+          "ss-0.1": "15360",
+          "ss-1": "15360",
+          "ss-10": "15360"
+        },
+        "watchdog_pid": 4255
+      },
+      "mode": "on"
+    },
+    {
+      "deltas": {
+        "/mnt/e5/efs_host_tls/default": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/forced": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-0.1": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-1": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-10": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "elapsed_seconds": 126.329129803,
+      "host": {
+        "config": {
+          "mount": {
+            "optimize_readahead": "false"
+          },
+          "mount-watchdog": {
+            "enabled": "true",
+            "poll_interval_sec": "1",
+            "stunnel_health_check_enabled": "true",
+            "stunnel_health_check_interval_min": "5"
+          }
+        },
+        "read_ahead_kb": {
+          "default": "15360",
+          "forced": "15360",
+          "ss-0.1": "15360",
+          "ss-1": "15360",
+          "ss-10": "15360"
+        },
+        "watchdog_pid": 4255
+      },
+      "mode": "off"
+    },
+    {
+      "deltas": {
+        "/mnt/e5/efs_host_tls/default": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/forced": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-0.1": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-1": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-10": {
+          "ACCESS": 0,
+          "GETATTR": 0,
+          "LOOKUP": 0
+        }
+      },
+      "elapsed_seconds": 126.342870723,
+      "host": {
+        "config": {
+          "mount": {
+            "optimize_readahead": "false"
+          },
+          "mount-watchdog": {
+            "enabled": "true",
+            "poll_interval_sec": "1",
+            "stunnel_health_check_enabled": "true",
+            "stunnel_health_check_interval_min": "5"
+          }
+        },
+        "read_ahead_kb": {
+          "default": "15360",
+          "forced": "15360",
+          "ss-0.1": "15360",
+          "ss-1": "15360",
+          "ss-10": "15360"
+        },
+        "watchdog_pid": 4255
+      },
+      "mode": "off"
+    },
+    {
+      "deltas": {
+        "/mnt/e5/efs_host_tls/default": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/forced": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-0.1": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-1": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        },
+        "/mnt/e5/efs_host_tls/ss-10": {
+          "ACCESS": 0,
+          "GETATTR": 2,
+          "LOOKUP": 0
+        }
+      },
+      "elapsed_seconds": 126.376719779,
+      "host": {
+        "config": {
+          "mount": {
+            "optimize_readahead": "true"
+          },
+          "mount-watchdog": {
+            "enabled": "true",
+            "poll_interval_sec": "1",
+            "stunnel_health_check_enabled": "true",
+            "stunnel_health_check_interval_min": "5"
+          }
+        },
+        "read_ahead_kb": {
+          "default": "15360",
+          "forced": "15360",
+          "ss-0.1": "15360",
+          "ss-1": "15360",
+          "ss-10": "15360"
+        },
+        "watchdog_pid": 4255
+      },
+      "mode": "on"
+    }
+  ],
+  "integrity_errors": [],
+  "limitations": [
+    "n=1; short windows; no study verdict",
+    "off-CPU does not distinguish filesystem/lock waits from descheduling"
+  ],
+  "protocol_error": null,
+  "schema": "e5-diagnostic-analysis-v1",
+  "study_replication": false,
+  "trace_root_stat_calls": {
+    "trace-idle0.txt": 610,
+    "trace-idle1.txt": 0,
+    "trace-idle2.txt": 0,
+    "trace-idle3.txt": 608
+  },
+  "trace_root_syscalls_by_kind": {
+    "trace-idle0.txt": {
+      "newfstatat": 10,
+      "statx": 600
+    },
+    "trace-idle1.txt": {
+      "newfstatat": 0,
+      "statx": 0
+    },
+    "trace-idle2.txt": {
+      "newfstatat": 0,
+      "statx": 0
+    },
+    "trace-idle3.txt": {
+      "newfstatat": 8,
+      "statx": 600
+    }
+  }
+}

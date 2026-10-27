@@ -1,0 +1,33 @@
+{
+  "schema": "e5-diagnostic-serve-v1",
+  "mode": "isolated",
+  "warmup": 60,
+  "measure": 180,
+  "plan": [
+    {
+      "tier": "fsx_lustre",
+      "directory": "/bench/fsx_lustre/ss-0.1/diag-round-1",
+      "delta": "0.1"
+    }
+  ],
+  "cells": [
+    {
+      "cell": "fsx_lustre-0.1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_lustre/ss-0.1/diag-round-1",
+        "0.1",
+        "60",
+        "180",
+        "B-0.1",
+        "/tmp/e5-diagnostic/round-1/fsx_lustre-0.1",
+        "100"
+      ],
+      "started_monotonic_ns": 1455039888749,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 1695957227960
+    }
+  ],
+  "study_replication": false
+}

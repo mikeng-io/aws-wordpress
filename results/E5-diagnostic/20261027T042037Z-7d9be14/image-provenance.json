@@ -1,0 +1,19 @@
+{
+  "schema": "e5-runtime-image-v1",
+  "receipt_created_utc": "2026-10-27T05:37:22.568711+00:00",
+  "source": "AWS ECS DescribeTasks for task ID recovered from this run task-log stream",
+  "task_log_sha256": "6af7fa4c2421b02a2d44c1ca3ab8f24d37b3dd3515e635fc4cf0d5245c383e31",
+  "tasks": [
+    {
+      "last_status": "STOPPED",
+      "bench": [
+        {
+          "name": "bench",
+          "imageDigest": "sha256:7922220c4a871a4f2679c1e81a05afbb64a1a54e2f83b0d3f1a21d96615ed0fa",
+          "exitCode": 0,
+          "lastStatus": "STOPPED"
+        }
+      ]
+    }
+  ]
+}
