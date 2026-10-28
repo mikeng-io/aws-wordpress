@@ -107,8 +107,8 @@ run; the unresolved-state check prevents a new guarded launch from bypassing it.
 Expired credentials, missing AWS permissions, service errors or a stuck deletion
 remain explicit failures. This adds no remote scheduler or cloud safety service.
 Keep the existing `caffeinate -i` preflight. The guard is not a dollar-denominated
-budget controller; historical cost estimates and the study's $10 ceiling still
-need operator reconciliation before a pilot.
+budget controller; historical cost estimates and the study's current $30 ceiling
+still need operator reconciliation before a paid run.
 
 ## Reproduce validation
 

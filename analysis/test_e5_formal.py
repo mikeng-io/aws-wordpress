@@ -110,6 +110,25 @@ class FormalTests(unittest.TestCase):
     def test_p7_uses_same_time_control_not_non_lustre_ebs(self):
         self.noise('non-lustre');self.assertEqual(self.report()['grades']['7']['grade'],'SUPPORTED')
         self.noise('lustre-0.1');self.assertEqual(self.report()['protocol']['status'],'ELIGIBLE');self.assertEqual(self.report()['grades']['7']['grade'],'ERROR')
+
+    def test_p7_control_rate_not_centroid_decides(self):
+        # 2026-10-28 amendment: bin 20 centres at ~1.06us, bin 53 at ~47.3us. A
+        # control whose slow centroid is far above the 10us boundary still passes
+        # when only 0.1% of its operations reach that boundary, and errors at 0.3%.
+        def cell(share, centroid):
+            return {'status':'OK','slow_share_stat':share,
+                    'stat_split':{'threshold_ns':10_000,'slow_centroid_ns':centroid,'fast_centroid_ns':1000}}
+        a={}
+        b={'fsx_lustre':{d:cell(0.005,10_000) for d in g.legacy.DELTAS},
+           'ebs':{d:cell(0.001,47_000) for d in g.legacy.DELTAS}}
+        def hist(slow):
+            return {20:1_000_000-slow,53:slow}
+        passed=g.legacy.p7(a,b,{d:hist(1000) for d in g.legacy.DELTAS})
+        self.assertEqual(passed['grade'],'SUPPORTED')
+        self.assertEqual(passed['control_rate_above_boundary']['10'],0.001)
+        self.assertEqual(passed['control_slow_centroid_ns']['10'],47_000)
+        self.assertEqual(g.legacy.p7(a,b,{d:hist(3000) for d in g.legacy.DELTAS})['grade'],'ERROR')
+        self.assertEqual(g.legacy.p7(a,b,None)['grade'],'ERROR')
     def test_rpc_residual_and_lateness_keep_original_cell_gates(self):
         raw=self.root/'batches/non-lustre/efs_host_tls-0.1.mountstats.end';raw.write_text(raw.read_text().replace('GETATTR: 0','GETATTR: 1'))
         f.export_batch(f.plans()[0],raw.parent,self.root);self.assertEqual(self.report()['b']['efs_host_tls']['0.1']['status'],'ERROR');self.assertEqual(self.report()['full_method_validation'],'NOT_READY')

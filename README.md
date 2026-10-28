@@ -157,7 +157,9 @@ and [accepted short candidate](results/E5-isolation-validation/20261027T073803Z-
 remain separate, frozen evidence. They are not pooled with formal v3. The
 [formal amendment](experiments/E5-attribute-cache/method-amendments/20261027-formal-v3/README.md)
 predeclares the quiet profile, complete windows and P7 reference binding.
-Further paid runs need a separate go-ahead and refreshed budget under US$20.
+Further paid runs need a separate go-ahead and refreshed budget under US$30; the
+[P7 control-rate amendment](experiments/E5-attribute-cache/method-amendments/20261028-p7-control-rate/README.md)
+governs P7 for those runs only and the 2026-10-27 result stays frozen.
 
 E4 remains specced. E2 narrowed its substrate question for the tested workload;
 E5 must establish the remaining cache cost before deciding whether to build an

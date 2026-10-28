@@ -1,11 +1,12 @@
 # P7 control review — the 10s noise gate is the first stat of the request
 
-**Status:** `REVIEW COMPLETE; PROPOSAL NOT IN FORCE; DECISION REQUIRED` (2026-10-28 UTC).
-This review does **not** regrade the formal-v3 run, drop any operation, warm the
-benchmark, or change a threshold. P7 stays **ERROR** for
+**Status:** `REVIEW COMPLETE; PROPOSAL ADOPTED 2026-10-28; FUTURE RUNS ONLY`.
+Mike chose option 2 on 2026-10-28 and raised the study ceiling to **US$30**. The
+dated [control-rate amendment](../../method-amendments/20261028-p7-control-rate/README.md)
+is now on record and is the binding rule for replications 2–4. This review still
+does **not** regrade the formal-v3 run, drop any operation, warm the benchmark, or
+change a target threshold. P7 stays **ERROR** for
 `results/E5-formal/20261027T093314Z-b5b480f/`, and no aggregate verdict exists.
-The proposal in the last section applies to future replications only, and only if
-the study owner approves it.
 
 **Reproduce:** `python3 analysis/e5_p7_control_review.py` (no AWS, reads committed
 raw data). Output: [review.json](review.json).
@@ -153,45 +154,44 @@ neither of the things that description implies.
   operationalisation, even though the rest of the formal method is.
 - P7 is the only prediction blocked this way. This review changes no other grade.
 
-## Proposal — for future replications only, not in force
+## Proposal — adopted 2026-10-28 for future replications only
 
 Replace the control-side centroid veto with the direct overlap measurement already
 computed above:
 
 1. **Control test.** Let `control_rate` be the share of measured-window control
    positive `stat`s whose latency is at or above the target's classifier threshold.
-   P7 is `NOT EVALUABLE` if `control_rate > 0.2%`, or if the control's slow share
-   exceeds the existing 1% gate. Keep both checks.
+   The replication grades `ERROR` if `control_rate > 0.2%`, or if the control's slow
+   share exceeds the existing 1% gate. Keep both checks. `ERROR` is the existing
+   per-replication sentinel for "cannot grade"; `combine()` already reports the
+   aggregate as `NOT EVALUABLE`.
    *Derivation:* 0.2% is one fifth of P7's own 1% SUPPORT bound. If the control
    cannot produce one fifth of the smallest target effect we would call supported,
    it cannot explain that effect. Observed margins are 2.4–4× below the bound.
 2. **Diagnostics, not vetoes.** Report the control slow centroid and the
    first-operation decomposition alongside the grade. The centroid stays visible
    but no longer decides, because two control cells in the same run differ by 36%.
-3. **Label.** Emit `NOT EVALUABLE` on a control failure, as the registered text
-   already says, instead of `ERROR`.
+3. **No new grade string.** Keep the per-replication `ERROR` sentinel and let the
+   existing aggregation produce `NOT EVALUABLE`. A new per-replication label would
+   change the schema and every consumer for no gain.
 4. **Unchanged.** Target thresholds (SUPPORT ≤1%, REFUTE >5%), the share gate, P9
    and P10, every raw operation, and the rule that the first `stat` remains in all
    summed-time costs. No operation is dropped or warmed away.
 
-If approved, this needs a dated amendment under `method-amendments/` **before**
-another paid run, and it still does not apply to the 2026-10-27 result.
+The amendment still does not apply to the 2026-10-27 result.
 
-## Decision required
+## Decision — 2026-10-28
 
-- Adopt the proposal, keep P7 ERROR here, and authorise one replication under it?
-- Or hold the rule, record P7 as not evaluable for this instrument, and spend the
-  remaining budget on E2's FUSE arms or E4 instead?
+Mike chose **option 2**: raise the study ceiling to **US$30** and chase n=3. This
+adopts the control-rate amendment for future replications while leaving the
+2026-10-27 result frozen at `P7 ERROR`. Remaining conditions before each paid run:
 
-Budget context is unchanged: conservative post-run proxy US$16.996 of a US$20
-ceiling. One formal replication is about US$2.60, so one fits and a second does
-not. Aggregate P7 needs three evaluable replications, so the ceiling remains the
-binding constraint on any n=3 path.
+- refresh pricing and the allocation/pricing snapshot;
+- run the replications sequentially, reviewing each before the next;
+- stop on a protocol `ERROR`, a budget breach, or a teardown failure.
 
-**Budget arithmetic.** Because this run is frozen, an adopted rule still needs three
-*future* evaluable replications for an aggregate verdict: about US$7.80 at the
-current envelope, against roughly US$3.00 of headroom. A P7-only apparatus (Lustre
-plus matched EBS, three deltas, no seven-tier grid) would be materially cheaper and
-is the only route to n=3 inside the ceiling, but it has not been costed. Without a
-raised ceiling or that narrower apparatus, P7 stays a documented n=1 non-verdict
-even if the rule is adopted.
+**Budget arithmetic.** Conservative post-run proxy US$16.996. Three future
+replications at the current ~US$2.60 envelope are ~US$7.80, for a planning total of
+**US$24.796**, leaving **US$5.204** below the new ceiling. That fits, but only just:
+a fourth replication does not. If refreshed pricing puts a replication above
+~US$3.00, stop and re-plan rather than absorb it.

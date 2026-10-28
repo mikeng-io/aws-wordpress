@@ -43,14 +43,15 @@ runtime are now recorded separately from its offline preparation receipts.
 
 **Next work, before another paid run:**
 
-- **P7 review: complete (2026-10-28).** [Review](p7-review/20261028/README.md). The
-  existing noise rule and all raw operations were preserved, and this run was not
-  regraded. The remaining decision is whether to adopt the proposed rate-based
-  control test before another paid run.
-- Refresh allocation/pricing and remaining budget under the US$20 total ceiling.
-  The generic pilot preflight's $1.55 historical constant remains stale.
-- Separately authorise any independent replication only after that decision and
-  budget clearance. No automatic retries or replications 2/3 were launched.
+- **P7 review and rule: decided (2026-10-28).** [Review](p7-review/20261028/README.md)
+  preserved the existing rule for this run; Mike then adopted the
+  [control-rate amendment](method-amendments/20261028-p7-control-rate/README.md) for
+  future replications and raised the ceiling to US$30. This run was not regraded.
+- Refresh allocation/pricing and remaining budget under the US$30 total ceiling.
+  The preflight constants now carry the US$16.996 proxy instead of $1.55.
+- Three sequential replications are authorised under the amendment; no automatic
+  retries. Review each run before starting the next, and stop on protocol ERROR,
+  teardown failure or a budget breach.
 
 The local NFS checks, phase-attributed RPC amendment, conservative expiry probes
 and host watchdog remain integrated. Historical attempts and protocol decisions
@@ -572,7 +573,7 @@ refreshed with `make pricing` on the day.
 |---|---|
 | One replication | 80–100 min. Deploy and FSx creation took ~25–35 min in E2. Seeding and the age gate overlap the task launch. Cohort A takes ~20 min (6 tiers × two 75 s waits plus the passes). Cohort B takes 15 min. Destroy and sweep take ~20 min. |
 | Three replications | ~4.5–5 h × $0.955 ≈ **$4.50–5** |
-| **Hard ceiling** | **$20**, including failed attempts (updated by Mike on 2026-10-27). Past it: stop and diagnose, do not retry. |
+| **Hard ceiling** | **$30**, including failed attempts (updated by Mike on 2026-10-28). Past it: stop and diagnose, do not retry. |
 
 ### Go-ahead (2026-10-16, local; 2026-10-15T17:06Z)
 
@@ -935,3 +936,15 @@ The [fresh planning review](preflight/20261027T073002Z-f8d53fd/candidate-budget.
 recorded a conservative US$11.4827 planning proxy. Historical US$10 receipts are
 retained as issued; they are superseded for the current ceiling only. Actual
 E5 billing allocation remains unverified.
+
+### Budget authorisation update — 2026-10-28
+
+Mike increased the total E5 study ceiling from US$20 to **US$30** ("2 -> let
+increase the ceiling to $30") and adopted the
+[P7 control-rate amendment](method-amendments/20261028-p7-control-rate/README.md).
+Three sequential replications under that rule are authorised at the current
+~US$2.60 envelope: planning total US$24.796 against the US$16.996 conservative
+post-run proxy, leaving US$5.204. The authorisation does not cover a fifth
+replication, automatic retries, or another experiment. The frozen 2026-10-27
+`P7 ERROR` is unchanged, and the new rule applies only to runs started after this
+amendment.

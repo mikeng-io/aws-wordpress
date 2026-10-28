@@ -166,8 +166,10 @@ def analyse(run_dirs):
                 identities.add(identity);fingerprint=f
                 a,b=legacy.cohort_a(root),legacy.cohort_b(root)
                 controls={d:legacy.cohort_b_cell('ebs',d,root/'controls'/d) for d in legacy.DELTAS}
+                control_hists={d:(legacy.stat_histogram('ebs',d,root/'controls'/d)
+                                  if controls[d].get('status')=='OK' else None) for d in legacy.DELTAS}
                 grades={k:fn(a,b) for k,fn in legacy.PREDICTIONS.items() if k!='7'}
-                matched={**b,'ebs':controls};grades['7']=legacy.p7(a,matched)
+                matched={**b,'ebs':controls};grades['7']=legacy.p7(a,matched,control_hists)
                 grades['7']['reference_binding']='same-time EBS from the corresponding Lustre batch'
                 valid=all(c['status']=='OK' for t in a.values() for c in t.values()) and all(c['status']=='OK' for t in b.values() for c in t.values()) and all(c['status']=='OK' for c in controls.values())
                 for cells in [*b.values(),controls]:

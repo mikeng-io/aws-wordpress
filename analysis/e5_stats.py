@@ -82,6 +82,9 @@ P6_SUPPORT_MAX = 0.02
 P6_KILL_D10 = 0.05
 P7_SUPPORT_MAX = 0.01
 P7_KILL = 0.05
+# 2026-10-28 amendment: control overlap is a rate, not a centroid. One fifth of the
+# 1% support bound; see method-amendments/20261028-p7-control-rate/.
+P7_CONTROL_MAX_RATE = 0.002
 P8_KILL_RATIO = 2.0
 P9_SUPPORT_MAX = 50.0
 P9_KILL_MIN = 200.0
@@ -454,6 +457,28 @@ def cohort_b(rep_dir: Path) -> dict:
     return {tier: {d: cohort_b_cell(tier, d, rep_dir / "ec2" / tier) for d in DELTAS} for tier in TIERS}
 
 
+def stat_histogram(tier: str, d: str, tdir: Path) -> dict[int, int]:
+    """Pooled measured-window positive-stat histogram, for P7's control-rate rule.
+
+    Re-reads the same request file the cell already validated, so the rate uses the
+    exact bins the cell's slow share uses. The caller passes it only for a cell that
+    graded OK; a missing/short file is an error rather than a silent zero.
+    """
+    header, rows = load_req(tdir / f"B-{d}.req.csv.gz")
+    n_warm, n_meas = int(header["warm_requests"]), int(header["measured_requests"])
+    if header.get("method") != "rpc-phases-v2" or n_meas <= 0 or len(rows) != n_warm + n_meas:
+        raise ValueError("control histogram differs from declared window")
+    hist: dict[int, int] = {}
+    for r in rows[n_warm:]:
+        if sum(r["sb"].values()) != N:
+            raise ValueError("control histogram lacks the expected operations")
+        for b, c in r["sb"].items():
+            hist[b] = hist.get(b, 0) + c
+    if not hist:
+        raise ValueError("empty control stat histogram")
+    return hist
+
+
 def why_a(a: dict, *pairs: tuple[str, str]) -> str:
     return "; ".join(f"{t} {c}: {a.get(t, {}).get(c, {}).get('reason', 'absent')}"
                      for t, c in pairs if a_median(a, t, c) is None)
@@ -557,8 +582,8 @@ def p6(a, b):
             "note": "amended rate test; no causal delegation verdict"}
 
 
-def p7(a, b):
-    sh = {}
+def p7(a, b, control_hists=None):
+    sh, rates, centroids, boundaries = {}, {}, {}, {}
     for d in DELTAS:
         c = b_ok(b, "fsx_lustre", d)
         if c is None:
@@ -567,15 +592,23 @@ def p7(a, b):
         if control is None:
             return err(why_b(b, "ebs", d))
         boundary = c["stat_split"]["threshold_ns"]
-        noise = control["stat_split"]["slow_centroid_ns"]
-        if control["slow_share_stat"] > P7_SUPPORT_MAX or (
-            boundary is not None and noise is not None and noise >= boundary
-            and control["slow_share_stat"] > 0
-        ):
-            return err(f"EBS noise makes Lustre slow-cluster attribution ambiguous at {d}s")
+        hist = (control_hists or {}).get(d)
+        if not hist:
+            return err(f"EBS control histogram unavailable at {d}s")
+        rate = slow_count(hist, math.log10(boundary) if boundary is not None else None) / sum(hist.values())
+        if control["slow_share_stat"] > P7_SUPPORT_MAX or rate > P7_CONTROL_MAX_RATE:
+            return err(f"EBS control overlap {rate:.3%} > {P7_CONTROL_MAX_RATE:.1%} "
+                       f"at {d}s makes Lustre slow-cluster attribution ambiguous")
         sh[d] = c["slow_share_stat"]
+        rates[d] = round(rate, 6)
+        centroids[d] = control["stat_split"]["slow_centroid_ns"]
+        boundaries[d] = boundary
     g = R if any(v > P7_KILL for v in sh.values()) else S if all(v <= P7_SUPPORT_MAX for v in sh.values()) else I
-    return {"grade": g, "slow_share": sh, "note": "latency-only test; does not prove DLM lock state"}
+    return {"grade": g, "slow_share": sh,
+            "control_rate_above_boundary": rates,
+            "control_slow_centroid_ns": centroids,
+            "lustre_threshold_ns": boundaries,
+            "note": "latency-only test; control overlap is a rate; does not prove DLM lock state"}
 
 
 def p8(a, b):
@@ -640,7 +673,18 @@ def analyse(run_dir: Path) -> dict:
     per_rep = {}
     for rep in reps:
         a, b = cohort_a(rep), cohort_b(rep)
-        per_rep[rep.name] = {"a": a, "b": b, "grades": {k: f(a, b) for k, f in PREDICTIONS.items()}}
+        hists = {}
+        for d in DELTAS:
+            if b_ok(b, "ebs", d) is None:
+                hists[d] = None
+                continue
+            try:
+                hists[d] = stat_histogram("ebs", d, rep / "ec2" / "ebs")
+            except (OSError, EOFError, zlib.error, UnicodeError, ValueError, TypeError, KeyError):
+                hists[d] = None
+        grades = {k: f(a, b) for k, f in PREDICTIONS.items() if k != "7"}
+        grades["7"] = p7(a, b, hists)
+        per_rep[rep.name] = {"a": a, "b": b, "grades": grades}
     verdicts = {k: {"status": combine([per_rep[r]["grades"][k] for r in per_rep]),
                     "per_replication": {r: per_rep[r]["grades"][k] for r in per_rep}}
                 for k in PREDICTIONS}

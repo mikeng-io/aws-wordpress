@@ -168,14 +168,14 @@ class Preflight:
         report['budget']={'pricing_snapshot':str(price_path.parent.relative_to(REPO)),
             'pricing_utc':prices['snapshot_utc'],'pricing_fresh_today':datetime.fromisoformat(prices['snapshot_utc']).date()==datetime.now(timezone.utc).date() and prices['region']==REGION,'standing_subtotal_usd_per_hour':round(subtotal,5),
             'excludes':'EBS root, small EFS/S3/log usage, request/data-transfer charges and billing minimum effects',
-            'hard_ceiling_usd':20,'historical_estimate_usd':1.55,'historical_basis':'E5 README attempt log; not an invoice',
-            'estimated_remaining_before_pilot_usd':8.45,
-            'pilot_planning_target_usd':2,'additional_planning_reserve_usd':1,
-            'projected_total_with_reserve_usd':4.55,
+            'hard_ceiling_usd':30,'historical_estimate_usd':16.996,'historical_basis':'conservative post-run planning proxy through formal v3; not an invoice',
+            'estimated_remaining_before_pilot_usd':13.004,
+            'pilot_planning_target_usd':2.6,'additional_planning_reserve_usd':0.4,
+            'projected_total_with_reserve_usd':19.996,
             'actual_remaining_verified':False,
             'pilot_80_to_100_minutes_plus_75s_subtotal_usd':[round(subtotal*m/60,4) for m in (81.25,101.25)]}
         report['readiness']=readiness(report)
-        report['conditions']=['Billing attribution/actual remaining budget unverified; planning uses the recorded $1.55 estimate.',
+        report['conditions']=['Billing attribution/actual remaining budget unverified; planning uses the recorded $16.996 proxy.',
           'Simulator is not live resource-policy, service-role or deletion-timing proof.',
           'Recheck transient baseline/credentials immediately before the single pilot; no deployment performed.']
         output=REPO/'experiments/E5-attribute-cache/preflight'/f'{self.stamp}-{self.sha[:7]}'
