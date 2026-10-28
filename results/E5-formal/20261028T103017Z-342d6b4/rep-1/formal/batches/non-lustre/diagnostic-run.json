@@ -1,0 +1,365 @@
+{
+  "schema": "e5-formal-batch-v1",
+  "mode": "concurrent",
+  "warmup": 300,
+  "measure": 600,
+  "plan": [
+    {
+      "tier": "ebs",
+      "delta": "0.1",
+      "directory": "/bench/ebs/ss-0.1"
+    },
+    {
+      "tier": "ebs",
+      "delta": "1",
+      "directory": "/bench/ebs/ss-1"
+    },
+    {
+      "tier": "ebs",
+      "delta": "10",
+      "directory": "/bench/ebs/ss-10"
+    },
+    {
+      "tier": "efs_host_plain",
+      "delta": "0.1",
+      "directory": "/bench/efs_host_plain.ss-0.1",
+      "nfs_mount": "/bench/efs_host_plain.ss-0.1"
+    },
+    {
+      "tier": "efs_host_plain",
+      "delta": "1",
+      "directory": "/bench/efs_host_plain.ss-1",
+      "nfs_mount": "/bench/efs_host_plain.ss-1"
+    },
+    {
+      "tier": "efs_host_plain",
+      "delta": "10",
+      "directory": "/bench/efs_host_plain.ss-10",
+      "nfs_mount": "/bench/efs_host_plain.ss-10"
+    },
+    {
+      "tier": "efs_host_tls",
+      "delta": "0.1",
+      "directory": "/bench/efs_host_tls.ss-0.1",
+      "nfs_mount": "/bench/efs_host_tls.ss-0.1"
+    },
+    {
+      "tier": "efs_host_tls",
+      "delta": "1",
+      "directory": "/bench/efs_host_tls.ss-1",
+      "nfs_mount": "/bench/efs_host_tls.ss-1"
+    },
+    {
+      "tier": "efs_host_tls",
+      "delta": "10",
+      "directory": "/bench/efs_host_tls.ss-10",
+      "nfs_mount": "/bench/efs_host_tls.ss-10"
+    },
+    {
+      "tier": "fsx_openzfs",
+      "delta": "0.1",
+      "directory": "/bench/fsx_openzfs.ss-0.1",
+      "nfs_mount": "/bench/fsx_openzfs.ss-0.1"
+    },
+    {
+      "tier": "fsx_openzfs",
+      "delta": "1",
+      "directory": "/bench/fsx_openzfs.ss-1",
+      "nfs_mount": "/bench/fsx_openzfs.ss-1"
+    },
+    {
+      "tier": "fsx_openzfs",
+      "delta": "10",
+      "directory": "/bench/fsx_openzfs.ss-10",
+      "nfs_mount": "/bench/fsx_openzfs.ss-10"
+    },
+    {
+      "tier": "fsx_ontap",
+      "delta": "0.1",
+      "directory": "/bench/fsx_ontap.ss-0.1",
+      "nfs_mount": "/bench/fsx_ontap.ss-0.1"
+    },
+    {
+      "tier": "fsx_ontap",
+      "delta": "1",
+      "directory": "/bench/fsx_ontap.ss-1",
+      "nfs_mount": "/bench/fsx_ontap.ss-1"
+    },
+    {
+      "tier": "fsx_ontap",
+      "delta": "10",
+      "directory": "/bench/fsx_ontap.ss-10",
+      "nfs_mount": "/bench/fsx_ontap.ss-10"
+    }
+  ],
+  "cells": [
+    {
+      "cell": "ebs-0.1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/ebs/ss-0.1",
+        "0.1",
+        "300",
+        "600",
+        "B-0.1",
+        "/tmp/e5-formal/batches/non-lustre/ebs-0.1",
+        "100"
+      ],
+      "started_monotonic_ns": 1529682679187,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2430414569959
+    },
+    {
+      "cell": "ebs-1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/ebs/ss-1",
+        "1",
+        "300",
+        "600",
+        "B-1",
+        "/tmp/e5-formal/batches/non-lustre/ebs-1",
+        "10"
+      ],
+      "started_monotonic_ns": 1529684290591,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2430414641524
+    },
+    {
+      "cell": "ebs-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/ebs/ss-10",
+        "10",
+        "300",
+        "600",
+        "B-10",
+        "/tmp/e5-formal/batches/non-lustre/ebs-10",
+        "1"
+      ],
+      "started_monotonic_ns": 1529685857874,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2430414675013
+    },
+    {
+      "cell": "efs_host_plain-0.1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_plain.ss-0.1",
+        "0.1",
+        "300",
+        "600",
+        "B-0.1",
+        "/tmp/e5-formal/batches/non-lustre/efs_host_plain-0.1",
+        "100",
+        "/bench/efs_host_plain.ss-0.1"
+      ],
+      "started_monotonic_ns": 1529687553574,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433082623558
+    },
+    {
+      "cell": "efs_host_plain-1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_plain.ss-1",
+        "1",
+        "300",
+        "600",
+        "B-1",
+        "/tmp/e5-formal/batches/non-lustre/efs_host_plain-1",
+        "10",
+        "/bench/efs_host_plain.ss-1"
+      ],
+      "started_monotonic_ns": 1529689269669,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433082686196
+    },
+    {
+      "cell": "efs_host_plain-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_plain.ss-10",
+        "10",
+        "300",
+        "600",
+        "B-10",
+        "/tmp/e5-formal/batches/non-lustre/efs_host_plain-10",
+        "1",
+        "/bench/efs_host_plain.ss-10"
+      ],
+      "started_monotonic_ns": 1529691164350,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433082727357
+    },
+    {
+      "cell": "efs_host_tls-0.1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_tls.ss-0.1",
+        "0.1",
+        "300",
+        "600",
+        "B-0.1",
+        "/tmp/e5-formal/batches/non-lustre/efs_host_tls-0.1",
+        "100",
+        "/bench/efs_host_tls.ss-0.1"
+      ],
+      "started_monotonic_ns": 1529692759121,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647033855
+    },
+    {
+      "cell": "efs_host_tls-1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_tls.ss-1",
+        "1",
+        "300",
+        "600",
+        "B-1",
+        "/tmp/e5-formal/batches/non-lustre/efs_host_tls-1",
+        "10",
+        "/bench/efs_host_tls.ss-1"
+      ],
+      "started_monotonic_ns": 1529694328365,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647094790
+    },
+    {
+      "cell": "efs_host_tls-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/efs_host_tls.ss-10",
+        "10",
+        "300",
+        "600",
+        "B-10",
+        "/tmp/e5-formal/batches/non-lustre/efs_host_tls-10",
+        "1",
+        "/bench/efs_host_tls.ss-10"
+      ],
+      "started_monotonic_ns": 1529695922275,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647128584
+    },
+    {
+      "cell": "fsx_openzfs-0.1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_openzfs.ss-0.1",
+        "0.1",
+        "300",
+        "600",
+        "B-0.1",
+        "/tmp/e5-formal/batches/non-lustre/fsx_openzfs-0.1",
+        "100",
+        "/bench/fsx_openzfs.ss-0.1"
+      ],
+      "started_monotonic_ns": 1529697498589,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647161555
+    },
+    {
+      "cell": "fsx_openzfs-1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_openzfs.ss-1",
+        "1",
+        "300",
+        "600",
+        "B-1",
+        "/tmp/e5-formal/batches/non-lustre/fsx_openzfs-1",
+        "10",
+        "/bench/fsx_openzfs.ss-1"
+      ],
+      "started_monotonic_ns": 1529699195894,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647195045
+    },
+    {
+      "cell": "fsx_openzfs-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_openzfs.ss-10",
+        "10",
+        "300",
+        "600",
+        "B-10",
+        "/tmp/e5-formal/batches/non-lustre/fsx_openzfs-10",
+        "1",
+        "/bench/fsx_openzfs.ss-10"
+      ],
+      "started_monotonic_ns": 1529702439796,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647226676
+    },
+    {
+      "cell": "fsx_ontap-0.1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_ontap.ss-0.1",
+        "0.1",
+        "300",
+        "600",
+        "B-0.1",
+        "/tmp/e5-formal/batches/non-lustre/fsx_ontap-0.1",
+        "100",
+        "/bench/fsx_ontap.ss-0.1"
+      ],
+      "started_monotonic_ns": 1529705576769,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647258635
+    },
+    {
+      "cell": "fsx_ontap-1",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_ontap.ss-1",
+        "1",
+        "300",
+        "600",
+        "B-1",
+        "/tmp/e5-formal/batches/non-lustre/fsx_ontap-1",
+        "10",
+        "/bench/fsx_ontap.ss-1"
+      ],
+      "started_monotonic_ns": 1529708564451,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647290944
+    },
+    {
+      "cell": "fsx_ontap-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_ontap.ss-10",
+        "10",
+        "300",
+        "600",
+        "B-10",
+        "/tmp/e5-formal/batches/non-lustre/fsx_ontap-10",
+        "1",
+        "/bench/fsx_ontap.ss-10"
+      ],
+      "started_monotonic_ns": 1529712141215,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 2433647325715
+    }
+  ],
+  "study_replication": true
+}
