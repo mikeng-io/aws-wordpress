@@ -1,0 +1,55 @@
+{
+  "schema": "e5-formal-batch-v1",
+  "mode": "concurrent",
+  "warmup": 300,
+  "measure": 600,
+  "plan": [
+    {
+      "tier": "fsx_lustre",
+      "delta": "10",
+      "directory": "/bench/fsx_lustre/ss-10"
+    },
+    {
+      "tier": "ebs",
+      "delta": "10",
+      "directory": "/bench/ebs/ss-10/formal-lustre-control"
+    }
+  ],
+  "cells": [
+    {
+      "cell": "fsx_lustre-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/fsx_lustre/ss-10",
+        "10",
+        "300",
+        "600",
+        "B-10",
+        "/tmp/e5-formal/batches/lustre-10/fsx_lustre-10",
+        "1"
+      ],
+      "started_monotonic_ns": 4369824124982,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 5260945519915
+    },
+    {
+      "cell": "ebs-10",
+      "command": [
+        "agebench",
+        "serve",
+        "/bench/ebs/ss-10/formal-lustre-control",
+        "10",
+        "300",
+        "600",
+        "B-10",
+        "/tmp/e5-formal/batches/lustre-10/ebs-10",
+        "1"
+      ],
+      "started_monotonic_ns": 4369825952181,
+      "exit_code": 0,
+      "reaped_monotonic_ns": 5260945594124
+    }
+  ],
+  "study_replication": true
+}
