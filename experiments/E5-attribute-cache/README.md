@@ -21,6 +21,11 @@ P7's 10s EBS slow centroid (14601ns) reaches the Lustre classification threshold
 the separate 1% share gate. The [raw-tail review](../../results/E5-formal/20261027T093314Z-b5b480f/p7-noise-review.json)
 finds 27 of 30 EBS operations reaching that boundary are first stats in requests;
 this is a diagnostic clue, not a causal explanation or permission to remove them.
+The [P7 control review](p7-review/20261028/README.md) (2026-10-28) follows that clue:
+the control's slow cluster is 60/66 first operations, the first `stat` after a sleep
+costs 9.2× the next one on EBS (a tier with no server), and the same run's other EBS
+control falls below the boundary. The grade is unchanged; the review proposes a
+rate-based control test for future replications, not yet in force.
 Per-run P1-P3 are REFUTED, P4-P6/P8-P10 SUPPORTED and P7 ERROR. These are not
 aggregate verdicts or a general filesystem ranking.
 
@@ -38,12 +43,13 @@ runtime are now recorded separately from its offline preparation receipts.
 
 **Next work, before another paid run:**
 
-- Review the P7 first-operation/control-noise attribution and replication readiness,
-  preserving the existing noise rule and all raw operations. Do not silently warm
-  or remove the first stat, relax gates or regrade this result to fit a prediction.
+- **P7 review: complete (2026-10-28).** [Review](p7-review/20261028/README.md). The
+  existing noise rule and all raw operations were preserved, and this run was not
+  regraded. The remaining decision is whether to adopt the proposed rate-based
+  control test before another paid run.
 - Refresh allocation/pricing and remaining budget under the US$20 total ceiling.
   The generic pilot preflight's $1.55 historical constant remains stale.
-- Separately authorise any independent replication only after that review and
+- Separately authorise any independent replication only after that decision and
   budget clearance. No automatic retries or replications 2/3 were launched.
 
 The local NFS checks, phase-attributed RPC amendment, conservative expiry probes

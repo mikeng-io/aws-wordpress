@@ -119,6 +119,10 @@ e5-selftest: ## Run E5's grader against synthetic runs that must reach every gra
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_attribution.py
 	@PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s analysis -p test_e5_pilot_diagnose.py
 
+.PHONY: e5-p7-review
+e5-p7-review: ## Recompute the P7 control review from committed raw data; no AWS
+	@PYTHONDONTWRITEBYTECODE=1 python3 analysis/e5_p7_control_review.py
+
 .PHONY: e5-instrument-selftest
 e5-instrument-selftest: ## Linux integration checks for opt-in telemetry; no privileges/NFS/AWS
 	docker build -q -t e5-bench-local infra/lib/stacks/bench

@@ -1,0 +1,411 @@
+{
+  "review": "P7 matched-control construct, first-operation decomposition",
+  "generated_utc": "2026-10-28T08:51:23.672503+00:00",
+  "run": "results/E5-formal/20261027T093314Z-b5b480f",
+  "grade_unchanged": "P7 ERROR; no aggregate verdict; no regrade",
+  "gate": {
+    "0.1": {
+      "control_slow_share": 0.002099,
+      "control_slow_centroid_ns": 18863,
+      "lustre_threshold_ns": 19290,
+      "share_gate_triggered": false,
+      "centroid_gate_triggered": false,
+      "registered_consequence": "NOT EVALUABLE",
+      "implemented_consequence": "ERROR"
+    },
+    "1": {
+      "control_slow_share": 0.002918,
+      "control_slow_centroid_ns": 7639,
+      "lustre_threshold_ns": 13638,
+      "share_gate_triggered": false,
+      "centroid_gate_triggered": false,
+      "registered_consequence": "NOT EVALUABLE",
+      "implemented_consequence": "ERROR"
+    },
+    "10": {
+      "control_slow_share": 0.0011,
+      "control_slow_centroid_ns": 14601,
+      "lustre_threshold_ns": 14208,
+      "share_gate_triggered": false,
+      "centroid_gate_triggered": true,
+      "registered_consequence": "NOT EVALUABLE",
+      "implemented_consequence": "ERROR"
+    }
+  },
+  "control_rate_above_lustre_threshold": {
+    "0.1": {
+      "EBS matched": {
+        "above": 5006,
+        "ops": 6000000,
+        "rate": 0.000834
+      },
+      "EBS batch": {
+        "above": 386,
+        "ops": 6000000,
+        "rate": 6.4e-05
+      },
+      "Lustre": {
+        "above": 8377,
+        "ops": 6000000,
+        "rate": 0.001396
+      }
+    },
+    "1": {
+      "EBS matched": {
+        "above": 449,
+        "ops": 600000,
+        "rate": 0.000748
+      },
+      "EBS batch": {
+        "above": 399,
+        "ops": 600000,
+        "rate": 0.000665
+      },
+      "Lustre": {
+        "above": 3547,
+        "ops": 600000,
+        "rate": 0.005912
+      }
+    },
+    "10": {
+      "EBS matched": {
+        "above": 30,
+        "ops": 60000,
+        "rate": 0.0005
+      },
+      "EBS batch": {
+        "above": 20,
+        "ops": 60000,
+        "rate": 0.000333
+      },
+      "Lustre": {
+        "above": 529,
+        "ops": 60000,
+        "rate": 0.008817
+      }
+    }
+  },
+  "same_run_ebs_control_spread": {
+    "0.1": {
+      "matched_slow_centroid_ns": 18863,
+      "batch_slow_centroid_ns": 10777,
+      "lustre_threshold_ns": 19290,
+      "relative_spread": 0.7503
+    },
+    "1": {
+      "matched_slow_centroid_ns": 7639,
+      "batch_slow_centroid_ns": 13295,
+      "lustre_threshold_ns": 13638,
+      "relative_spread": 0.7404
+    },
+    "10": {
+      "matched_slow_centroid_ns": 14601,
+      "batch_slow_centroid_ns": 10717,
+      "lustre_threshold_ns": 14208,
+      "relative_spread": 0.3624
+    }
+  },
+  "first_operation_10s": {
+    "EBS matched": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 12541,
+      "first_p50_ns": 14070,
+      "first_p90_ns": 17702,
+      "rest_p50_ns": 1536,
+      "ratio_p50": 9.16,
+      "threshold_ns": 4750,
+      "slow_ops": 66,
+      "slow_first_ops": 60,
+      "slow_first_share": 0.9091,
+      "slow_centroid_without_first_ns": 13857,
+      "enoent_first_p50_ns": 1756,
+      "enoent_rest_p50_ns": 1068,
+      "enoent_ratio_p50": 1.64
+    },
+    "EBS batch": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 7764,
+      "first_p50_ns": 8856,
+      "first_p90_ns": 11185,
+      "rest_p50_ns": 1632,
+      "ratio_p50": 5.43,
+      "threshold_ns": 4206,
+      "slow_ops": 118,
+      "slow_first_ops": 60,
+      "slow_first_share": 0.5085,
+      "slow_centroid_without_first_ns": 12690,
+      "enoent_first_p50_ns": 2232,
+      "enoent_rest_p50_ns": 998,
+      "enoent_ratio_p50": 2.24
+    },
+    "Lustre": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 62483,
+      "first_p50_ns": 66200,
+      "first_p90_ns": 70258,
+      "rest_p50_ns": 7405,
+      "ratio_p50": 8.94,
+      "threshold_ns": 14208,
+      "slow_ops": 527,
+      "slow_first_ops": 60,
+      "slow_first_share": 0.1139,
+      "slow_centroid_without_first_ns": 172648,
+      "enoent_first_p50_ns": 3307,
+      "enoent_rest_p50_ns": 1810,
+      "enoent_ratio_p50": 1.83
+    },
+    "EFS plain": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 10377,
+      "first_p50_ns": 222484,
+      "first_p90_ns": 562773,
+      "rest_p50_ns": 2027,
+      "ratio_p50": 109.76,
+      "threshold_ns": 24109,
+      "slow_ops": 9482,
+      "slow_first_ops": 30,
+      "slow_first_share": 0.0032,
+      "slow_centroid_without_first_ns": 288114,
+      "enoent_first_p50_ns": 4106,
+      "enoent_rest_p50_ns": 1237,
+      "enoent_ratio_p50": 3.32
+    },
+    "EFS TLS": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 9876,
+      "first_p50_ns": 280794,
+      "first_p90_ns": 932521,
+      "rest_p50_ns": 2029,
+      "ratio_p50": 138.39,
+      "threshold_ns": 27605,
+      "slow_ops": 9991,
+      "slow_first_ops": 30,
+      "slow_first_share": 0.003,
+      "slow_centroid_without_first_ns": 374727,
+      "enoent_first_p50_ns": 4362,
+      "enoent_rest_p50_ns": 1224,
+      "enoent_ratio_p50": 3.56
+    },
+    "OpenZFS": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 8918,
+      "first_p50_ns": 10793,
+      "first_p90_ns": 331244,
+      "rest_p50_ns": 2124,
+      "ratio_p50": 5.08,
+      "threshold_ns": 16072,
+      "slow_ops": 270,
+      "slow_first_ops": 20,
+      "slow_first_share": 0.0741,
+      "slow_centroid_without_first_ns": 111152,
+      "enoent_first_p50_ns": 3850,
+      "enoent_rest_p50_ns": 1179,
+      "enoent_ratio_p50": 3.27
+    },
+    "ONTAP": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 7699,
+      "first_p50_ns": 9038,
+      "first_p90_ns": 407301,
+      "rest_p50_ns": 1992,
+      "ratio_p50": 4.54,
+      "threshold_ns": 15442,
+      "slow_ops": 9586,
+      "slow_first_ops": 20,
+      "slow_first_share": 0.0021,
+      "slow_centroid_without_first_ns": 120627,
+      "enoent_first_p50_ns": 4185,
+      "enoent_rest_p50_ns": 1185,
+      "enoent_ratio_p50": 3.53
+    }
+  },
+  "first_operation_by_interval": {
+    "EBS matched": {
+      "0.1": {
+        "measured_requests": 60,
+        "first_n": 60,
+        "rest_n": 59940,
+        "first_p10_ns": 11582,
+        "first_p50_ns": 14661,
+        "first_p90_ns": 17793,
+        "rest_p50_ns": 1540,
+        "ratio_p50": 9.52
+      },
+      "1": {
+        "measured_requests": 60,
+        "first_n": 60,
+        "rest_n": 59940,
+        "first_p10_ns": 13325,
+        "first_p50_ns": 14733,
+        "first_p90_ns": 17100,
+        "rest_p50_ns": 1541,
+        "ratio_p50": 9.56
+      },
+      "10": {
+        "measured_requests": 60,
+        "first_n": 60,
+        "rest_n": 59940,
+        "first_p10_ns": 12541,
+        "first_p50_ns": 14070,
+        "first_p90_ns": 17702,
+        "rest_p50_ns": 1536,
+        "ratio_p50": 9.16
+      }
+    },
+    "Lustre": {
+      "0.1": {
+        "measured_requests": 60,
+        "first_n": 60,
+        "rest_n": 59940,
+        "first_p10_ns": 64274,
+        "first_p50_ns": 67408,
+        "first_p90_ns": 72977,
+        "rest_p50_ns": 7092,
+        "ratio_p50": 9.5
+      },
+      "1": {
+        "measured_requests": 60,
+        "first_n": 60,
+        "rest_n": 59940,
+        "first_p10_ns": 65067,
+        "first_p50_ns": 67846,
+        "first_p90_ns": 70857,
+        "rest_p50_ns": 7213,
+        "ratio_p50": 9.41
+      },
+      "10": {
+        "measured_requests": 60,
+        "first_n": 60,
+        "rest_n": 59940,
+        "first_p10_ns": 62483,
+        "first_p50_ns": 66200,
+        "first_p90_ns": 70258,
+        "rest_p50_ns": 7405,
+        "ratio_p50": 8.94
+      }
+    }
+  },
+  "frozen_10s_replication": {
+    "pilot EBS": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 7742,
+      "first_p50_ns": 8831,
+      "first_p90_ns": 19988,
+      "rest_p50_ns": 1606,
+      "ratio_p50": 5.5
+    },
+    "pilot Lustre": {
+      "measured_requests": 60,
+      "first_n": 60,
+      "rest_n": 59940,
+      "first_p10_ns": 978168,
+      "first_p50_ns": 1082264,
+      "first_p90_ns": 1310575,
+      "rest_p50_ns": 400227,
+      "ratio_p50": 2.7
+    },
+    "diagnostic r2 EBS": {
+      "measured_requests": 18,
+      "first_n": 18,
+      "rest_n": 17982,
+      "first_p10_ns": 8429,
+      "first_p50_ns": 9400,
+      "first_p90_ns": 11266,
+      "rest_p50_ns": 1676,
+      "ratio_p50": 5.61
+    },
+    "diagnostic r3 EBS": {
+      "measured_requests": 18,
+      "first_n": 18,
+      "rest_n": 17982,
+      "first_p10_ns": 8285,
+      "first_p50_ns": 9871,
+      "first_p90_ns": 11629,
+      "rest_p50_ns": 1757,
+      "ratio_p50": 5.62
+    },
+    "isolation non-lustre EBS": {
+      "measured_requests": 36,
+      "first_n": 36,
+      "rest_n": 35964,
+      "first_p10_ns": 7915,
+      "first_p50_ns": 8493,
+      "first_p90_ns": 9420,
+      "rest_p50_ns": 1672,
+      "ratio_p50": 5.08
+    },
+    "isolation paired EBS": {
+      "measured_requests": 18,
+      "first_n": 18,
+      "rest_n": 17982,
+      "first_p10_ns": 13508,
+      "first_p50_ns": 15660,
+      "first_p90_ns": 17769,
+      "rest_p50_ns": 1567,
+      "ratio_p50": 9.99
+    },
+    "isolation Lustre": {
+      "measured_requests": 18,
+      "first_n": 18,
+      "rest_n": 17982,
+      "first_p10_ns": 67210,
+      "first_p50_ns": 69359,
+      "first_p90_ns": 77664,
+      "rest_p50_ns": 7646,
+      "ratio_p50": 9.07
+    }
+  },
+  "limitations": [
+    "Descriptive review only. It does not alter the registered classifier, the P7 gate or any grade.",
+    "The first operation is a real cost a request pays; this review separates it from steady-state ops, it does not delete it.",
+    "Frozen-run cells used different methods and are not pooled with formal v3; they only test whether the first-op cost recurs.",
+    "n=1 formal deployment. No causal claim about scheduler or CPU-cache behaviour is made from timing alone.",
+    "Histogram rates are bin-limited (20 bins/decade); the raw 10s counts are exact."
+  ],
+  "sources_sha256": {
+    "results/E5-diagnostic/20261027T042037Z-7d9be14/rep-1/diagnostic/round-2/ebs-10.raw.csv": "8a1c810901ad8c79ab65483274f39a58ff208b61e44348dbebf7f69ee630845b",
+    "results/E5-diagnostic/20261027T042037Z-7d9be14/rep-1/diagnostic/round-3/ebs-10.raw.csv": "61b2529122fd0a20ac7cd8ff634beb9a3daf3fd9b56e72d40640eb687852e3c1",
+    "results/E5-formal/20261027T093314Z-b5b480f/analysis-v3.json": "98f38d95655f624c900f3be773cdb7e73fb744095476d561792084e423a0ad5f",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-0.1/ebs-0.1.raw.csv": "ca691d9852c891842aeae3287e17dbe55714080ff5cb20cefa320995aa1e495c",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-0.1/ebs-0.1.req.csv": "1e9f671953c1c8adb135b5cb6d3151dd81115aae20295049b9dcf51e4c0357a2",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-0.1/fsx_lustre-0.1.raw.csv": "5b561d9e03808497998ff513e1563a701b103fb5e82b8ef92524d108a5231e00",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-0.1/fsx_lustre-0.1.req.csv": "5c366ced0c28747e1d040719b2775663bcf07e960c3fda269fd9febf7abcfe3a",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-1/ebs-1.raw.csv": "6c9bab0f266425f9798e10ada420c39bd6628765bfdaf7edc756a4f41dd75df4",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-1/ebs-1.req.csv": "1fd131234ad47354ff78089262a7c17c73001958ca7bc61f2067034d04343c69",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-1/fsx_lustre-1.raw.csv": "e9a0554b590700d4df7f059747088c9af9dbf817004519a8f08b009672c00de6",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-1/fsx_lustre-1.req.csv": "7bddfe2d35fdc3675b6f6982cd97285dfcba2c0f3bc7a1b3c7f7ed0acaff72c2",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-10/ebs-10.raw.csv": "d52a09fdad9e1d0938d8af0e213c4d77e2bbad4fe05f03dc17796e4b9b8034a8",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-10/ebs-10.req.csv": "df41728b0342dcd0637b17fbcccf459ef06aba822cd14074ac737ae0f263bd3f",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-10/fsx_lustre-10.raw.csv": "2d9d48cab129b382025d4f3f744f77d3c8e26d542e8c3d4a8fcd9c801d26fdb3",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/lustre-10/fsx_lustre-10.req.csv": "229b90a402c3dc490abe6fac6dc95ac9fa237a5788d42c91a454e412f92970b4",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/ebs-0.1.req.csv": "584cb7b1da860f6020c78bb191456f23b14f15fc7d2099ade012bff7a8b2a663",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/ebs-1.req.csv": "f19ab79120dbb364c4ce54e47a85156510503157f2347f7aaebad9f6ec5cd08e",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/ebs-10.raw.csv": "2198083762deb464099d57475927906d4d86e88eaffcfb57c3b6440d2032afa7",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/ebs-10.req.csv": "76208354c84a48c86886432eb3ce6d20ba5695b00a465a4969c8ab21ff3036b0",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/efs_host_plain-10.raw.csv": "2de32867101c6ed5884f3377ba2caa9c2f6dd15407f10328e9407ce4d1af0f8e",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/efs_host_tls-10.raw.csv": "5af696811530a9208166f0fef36134f684f6a7beb5943fa5a1d137ebf98fdc67",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/fsx_ontap-10.raw.csv": "3eb7736100af76b92110d2c8a9d8b0f1e8dea2f63740dcd69a32b9f3cd1f73c3",
+    "results/E5-formal/20261027T093314Z-b5b480f/rep-1/formal/batches/non-lustre/fsx_openzfs-10.raw.csv": "2117811920e07def0a45c6ee838c4d06e1666d64051870b53f6cf361273191ba",
+    "results/E5-isolation-validation/20261027T073803Z-647a811/rep-1/diagnostic/lustre-10/ebs-10.raw.csv": "5331537edffd352c36606905d09b78899150911603686e3e97b69b417a7dca96",
+    "results/E5-isolation-validation/20261027T073803Z-647a811/rep-1/diagnostic/lustre-10/fsx_lustre-10.raw.csv": "a5ead6ea9f961a878ed722b3ecba706a00b1b85c2173b7613d6393fa78564c31",
+    "results/E5-isolation-validation/20261027T073803Z-647a811/rep-1/diagnostic/non-lustre/ebs-10.raw.csv": "5f525be971502e711cda54ffdc291dd18c024cfdd8f75ea92d2d3856e9ea9659",
+    "results/E5/20261026T152946Z-b1efcb2/rep-1/ec2/ebs/B-10.raw.csv.gz": "8fe72cc61d27234f8364a72269971da244f1b6af295c69e4cd4cdf0c0f1902b8",
+    "results/E5/20261026T152946Z-b1efcb2/rep-1/ec2/fsx_lustre/B-10.raw.csv.gz": "9d21fb5e2107ae816de24ea1d55aa6c48f24f5abeec87e6869ec321da6311afc"
+  }
+}
