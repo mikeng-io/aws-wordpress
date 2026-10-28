@@ -51,4 +51,14 @@ STOP_AFTER_REP=1 make e5-container REPS=3     # replication 2 of the study
 RESUME_RUN_ID=<run-id> make e5-container REPS=3
 ```
 
-No replication has been launched from this preflight.
+No replication has been launched from this preflight when the report was written.
+
+## Launch
+
+First campaign replication launched 2026-10-28 from `d39d4d5` with
+`STOP_AFTER_REP=1 REPS=3`, host watchdog
+`.e5-watchdog/c84319ce4db04b3ba7feded72d95f443`, runner container
+`b4a806b546e8`, 6-hour guard. The agent sandbox cannot write the host's `~/.docker`,
+so the runner image was built and launched with
+`DOCKER_CONFIG=/tmp/e5-docker-config`; this changes no run input or apparatus file.
+Outcome and review are recorded separately when the replication completes.
