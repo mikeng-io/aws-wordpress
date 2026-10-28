@@ -11,6 +11,10 @@ infra/*.d.ts
 # E0 local apparatus scratch
 experiments/*/out/
 
+# Python bytecode from analysis/
+__pycache__/
+*.pyc
+
 # never commit credentials or account-specific config
 .env
 *.pem
