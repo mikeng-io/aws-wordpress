@@ -187,3 +187,11 @@ Budget context is unchanged: conservative post-run proxy US$16.996 of a US$20
 ceiling. One formal replication is about US$2.60, so one fits and a second does
 not. Aggregate P7 needs three evaluable replications, so the ceiling remains the
 binding constraint on any n=3 path.
+
+**Budget arithmetic.** Because this run is frozen, an adopted rule still needs three
+*future* evaluable replications for an aggregate verdict: about US$7.80 at the
+current envelope, against roughly US$3.00 of headroom. A P7-only apparatus (Lustre
+plus matched EBS, three deltas, no seven-tier grid) would be materially cheaper and
+is the only route to n=3 inside the ceiling, but it has not been costed. Without a
+raised ceiling or that narrower apparatus, P7 stays a documented n=1 non-verdict
+even if the rule is adopted.
