@@ -190,8 +190,9 @@ adopts the control-rate amendment for future replications while leaving the
 - run the replications sequentially, reviewing each before the next;
 - stop on a protocol `ERROR`, a budget breach, or a teardown failure.
 
-**Budget arithmetic.** Conservative post-run proxy US$16.996. Three future
-replications at the current ~US$2.60 envelope are ~US$7.80, for a planning total of
-**US$24.796**, leaving **US$5.204** below the new ceiling. That fits, but only just:
-a fourth replication does not. If refreshed pricing puts a replication above
-~US$3.00, stop and re-plan rather than absorb it.
+**Budget arithmetic.** Conservative post-run proxy US$16.996. The off-protocol
+legacy run of 2026-10-28 (default collector; retained, not pooled) consumes one
+~US$2.60 envelope. Three formal replications at the same envelope are ~US$7.80, for
+a revised planning total of **US$27.396**, leaving **US$2.604** below the ceiling.
+That still fits, but a fourth replication does not. If refreshed pricing puts a
+replication above ~US$3.00, stop and re-plan rather than absorb it.

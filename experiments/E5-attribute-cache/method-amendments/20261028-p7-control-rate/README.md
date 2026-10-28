@@ -93,8 +93,12 @@ fields.
 
 - New ceiling: **US$30**, including failed attempts.
 - Planning proxy after formal v3: **US$16.996**.
-- Three replications at ~US$2.60: **US$7.80**; total **US$24.796**; margin
-  **US$5.204**.
+- Off-protocol legacy run on 2026-10-28 (default `study` collector instead of
+  `formal-isolation`; retained at
+  `results/E5/20261028T090923Z-d39d4d5/`, not graded or pooled): one envelope
+  **~US$2.60**, counted conservatively.
+- Three formal replications at ~US$2.60: **US$7.80**; revised total **US$27.396**;
+  margin **US$2.604**.
 - Run them **sequentially**, one at a time, with a review and a fresh pricing
   snapshot between runs. Stop on a protocol `ERROR`, a teardown failure, or if the
   refreshed envelope for one replication exceeds ~US$3.00.
@@ -102,7 +106,10 @@ fields.
   fifth, automatic retries, or any other experiment.
 
 Actual billing allocation is still not invoice-verified; the proxy is conservative
-and the margin is the guard.
+and the margin is the guard. The 2026-10-28 launch error consumed one replication
+envelope but not a replication slot: the legacy run is retained separately and the
+three formal replications still stand. The margin is now **US$2.604**, not
+US$5.204; no fourth run fits.
 
 ## Limitations
 

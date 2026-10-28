@@ -13,15 +13,16 @@ from the 2026-10-27 snapshot.
 | Item | US$ |
 |---|---:|
 | Conservative post-run proxy (through formal v3) | 16.996 |
-| One replication planning target | 2.600 |
+| Off-protocol legacy run, 2026-10-28 (retained, not pooled) | 2.600 |
+| One formal replication planning target | 2.600 |
 | Reserve | 0.400 |
-| **Projected total with one run** | **19.996** |
+| **Projected total with one formal run** | **22.596** |
 | **Hard ceiling** | **30.000** |
-| Remaining before this run | 13.004 |
+| Remaining before this run | 10.404 |
 
-The amendment's three-replication campaign is **US$24.796** (16.996 + 3 × 2.600),
-leaving **US$5.204**. The 80–100 minute subtotal alone is US$1.29–1.61; the US$2.60
-target is the conservative envelope and is the number the stop rule uses.
+The revised three-replication campaign is **US$27.396** (16.996 + 2.600 + 3 ×
+2.600), leaving **US$2.604**. The 80–100 minute subtotal alone is US$1.29–1.61; the
+US$2.60 target is the conservative envelope and is the number the stop rule uses.
 
 ## Checks
 

@@ -168,10 +168,10 @@ class Preflight:
         report['budget']={'pricing_snapshot':str(price_path.parent.relative_to(REPO)),
             'pricing_utc':prices['snapshot_utc'],'pricing_fresh_today':datetime.fromisoformat(prices['snapshot_utc']).date()==datetime.now(timezone.utc).date() and prices['region']==REGION,'standing_subtotal_usd_per_hour':round(subtotal,5),
             'excludes':'EBS root, small EFS/S3/log usage, request/data-transfer charges and billing minimum effects',
-            'hard_ceiling_usd':30,'historical_estimate_usd':16.996,'historical_basis':'conservative post-run planning proxy through formal v3; not an invoice',
-            'estimated_remaining_before_pilot_usd':13.004,
+            'hard_ceiling_usd':30,'historical_estimate_usd':19.596,'historical_basis':'US$16.996 conservative post-run proxy through formal v3 plus one off-protocol legacy replication envelope; not an invoice',
+            'estimated_remaining_before_pilot_usd':10.404,
             'pilot_planning_target_usd':2.6,'additional_planning_reserve_usd':0.4,
-            'projected_total_with_reserve_usd':19.996,
+            'projected_total_with_reserve_usd':22.596,
             'actual_remaining_verified':False,
             'pilot_80_to_100_minutes_plus_75s_subtotal_usd':[round(subtotal*m/60,4) for m in (81.25,101.25)]}
         report['readiness']=readiness(report)

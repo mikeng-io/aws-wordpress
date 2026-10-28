@@ -942,9 +942,21 @@ E5 billing allocation remains unverified.
 Mike increased the total E5 study ceiling from US$20 to **US$30** ("2 -> let
 increase the ceiling to $30") and adopted the
 [P7 control-rate amendment](method-amendments/20261028-p7-control-rate/README.md).
-Three sequential replications under that rule are authorised at the current
-~US$2.60 envelope: planning total US$24.796 against the US$16.996 conservative
-post-run proxy, leaving US$5.204. The authorisation does not cover a fifth
-replication, automatic retries, or another experiment. The frozen 2026-10-27
+Three sequential formal replications under that rule are authorised at the current
+~US$2.60 envelope. The revised planning total is **US$27.396** after counting the
+off-protocol legacy run below at one envelope, against the US$16.996 conservative
+post-run proxy, leaving **US$2.604**. The authorisation does not cover a fourth
+formal replication, automatic retries, or another experiment. The frozen 2026-10-27
 `P7 ERROR` is unchanged, and the new rule applies only to runs started after this
 amendment.
+
+### Launch correction — 2026-10-28
+
+The first launch used the default `study` collector instead of
+`E5_RUN_KIND=formal-isolation`. It completed as a legacy E5 run at
+[`results/E5/20261028T090923Z-d39d4d5/`](../../results/E5/20261028T090923Z-d39d4d5/):
+282 files, conformance PASS, teardown verified. It is retained unmodified, is
+**not graded or pooled**, and consumed one replication envelope, not a replication
+slot. The formal series restarts with one
+`E5_RUN_KIND=formal-isolation make e5-container REPS=1` deployment per replication,
+writing to `results/E5-formal/<run>/rep-1/formal/`.
