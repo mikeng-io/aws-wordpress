@@ -303,7 +303,7 @@ def grade_prediction_4(run_dir: Path) -> dict:
             continue
         with path.open() as fh:
             for row in csv.reader(fh):
-                if len(row) >= 2:
+                if len(row) >= 2 and not row[0].strip().startswith("TOTAL_"):
                     rows.append((row[0].strip(), row[1].strip(), row[2].strip() if len(row) > 2 else ""))
     if not rows:
         return {"status": "NOT EVALUABLE", "reason": "no Mountpoint conformance CSV"}
