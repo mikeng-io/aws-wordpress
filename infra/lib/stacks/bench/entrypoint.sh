@@ -204,8 +204,22 @@ for pair in $BENCH_MOUNTS; do
     fi
 done
 
+# A tier can be conformance-only. Mountpoint for S3 is the case: E2's prediction 4
+# is about POSIX semantics, and its unlink path fails the benchmark's create/unlink
+# loop before a latency number exists. Forcing a latency CSV would either crash the
+# task or record a number from a different operation; a marker keeps the tier in
+# the manifest without pretending it was benchmarked.
+is_conformance_only() {
+    case " ${BENCH_CONFORMANCE_ONLY:-} " in *" $1 "*) return 0 ;; *) return 1 ;; esac
+}
+
 for pair in $BENCH_MOUNTS; do
     name="${pair%%=*}"; path="${pair#*=}"
+    if is_conformance_only "$name"; then
+        printf 'skipped,0\n' > "/tmp/$name.csv"
+        echo "$name: conformance-only; latency benchmark skipped"
+        continue
+    fi
     echo "benchmarking $name at $path"
     mkdir -p "$path/tree"
     bench "$path/tree" > "/tmp/$name.csv"
@@ -229,6 +243,7 @@ snapshot_nfs_counters after
 # task here would throw away every tier's latency data over one tier's throughput,
 # and the collector and grader both treat the error row as ERROR, never as a number.
 for name in ${BENCH_THROUGHPUT:-}; do
+    if is_conformance_only "$name"; then continue; fi
     path=""
     for pair in $BENCH_MOUNTS; do [ "${pair%%=*}" = "$name" ] && path="${pair#*=}"; done
     if [ -z "$path" ]; then

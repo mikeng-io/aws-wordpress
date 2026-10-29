@@ -705,8 +705,12 @@ export class E2StorageMatrixStack extends ExperimentStack {
         BENCH_THROUGHPUT: [
           'instance_store', 'ebs', 'efs_host_plain',
           ...(props.includeFsx ? ['fsx_openzfs', 'fsx_lustre', 'fsx_ontap'] : []),
-          ...(includeFuse ? ['juicefs', 'seaweedfs', 'mountpoint_s3'] : []),
+          ...(includeFuse ? ['juicefs', 'seaweedfs'] : []),
         ].join(' '),
+        // Mountpoint is conformance-only: P4 is a POSIX-semantics prediction and
+        // its unlink path aborts the create/unlink benchmark. Keep it out of the
+        // latency and throughput sets rather than inventing a number.
+        ...(includeFuse ? { BENCH_CONFORMANCE_ONLY: 'mountpoint_s3' } : {}),
         // Second eviction step for the throughput probe: ask the privileged sidecar
         // below to drop the host page cache. Fargate has no equivalent and needs
         // none - its tier read 0.000% resident on DONTNEED alone.
