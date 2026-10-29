@@ -1,0 +1,266 @@
+{
+  "verified_utc": "2026-10-29T09:18:51.696350+00:00",
+  "region": "ap-southeast-1",
+  "stacks": [
+    {
+      "stack": {
+        "StackId": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E4-CacheAdapter-dev/c3074ac0-d377-11f1-8494-06fff9d1997b",
+        "StackName": "E4-CacheAdapter-dev",
+        "TemplateDescription": "E4 - does task-start hydration remove Fargate's EFS metadata penalty?",
+        "CreationTime": "2026-10-29T09:04:35.451000+00:00",
+        "LastUpdatedTime": "2026-10-29T09:04:42.056000+00:00",
+        "DeletionTime": "2026-10-29T09:10:26.845000+00:00",
+        "StackStatus": "DELETE_COMPLETE",
+        "DriftInformation": {
+          "StackDriftStatus": "NOT_CHECKED"
+        },
+        "LastOperations": [
+          {
+            "OperationType": "DELETE_STACK",
+            "OperationId": "c13f430d-2844-49f7-a90b-0c5cb2660303"
+          }
+        ]
+      },
+      "resources": [
+        {
+          "LogicalResourceId": "ClusterEB0386A7",
+          "PhysicalResourceId": "E4-CacheAdapter-dev-ClusterEB0386A7-lWBtUpEUIkQo",
+          "ResourceType": "AWS::ECS::Cluster",
+          "LastUpdatedTimestamp": "2026-10-29T09:10:39.844000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "FileSystem8A8E25C0",
+          "PhysicalResourceId": "fs-0d20a66ed7f9cb951",
+          "ResourceType": "AWS::EFS::FileSystem",
+          "LastUpdatedTimestamp": "2026-10-29T09:10:49.412000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "FileSystemEfsMountTarget1586453F0",
+          "PhysicalResourceId": "fsmt-024e977b4be81d774",
+          "ResourceType": "AWS::EFS::MountTarget",
+          "LastUpdatedTimestamp": "2026-10-29T09:10:44.921000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "LogGroupF5B46931",
+          "PhysicalResourceId": "E4-CacheAdapter-dev-LogGroupF5B46931-aTCRknq3I95z",
+          "ResourceType": "AWS::Logs::LogGroup",
+          "LastUpdatedTimestamp": "2026-10-29T09:10:32.117000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "ResultsBucketA95A2103",
+          "PhysicalResourceId": "e4-cacheadapter-dev-resultsbucketa95a2103-opnh9krfvxxa",
+          "ResourceType": "AWS::S3::Bucket",
+          "LastUpdatedTimestamp": "2026-10-29T09:10:33.075000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "Vpc8378EB38",
+          "PhysicalResourceId": "vpc-007fa2e4bac5d156d",
+          "ResourceType": "AWS::EC2::VPC",
+          "LastUpdatedTimestamp": "2026-10-29T09:12:33.865000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcEcrDockerEndpoint53ED547B",
+          "PhysicalResourceId": "vpce-0e0b9b330e9e91257",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:12:30.378000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcEcrEndpoint0BE46338",
+          "PhysicalResourceId": "vpce-0163c7f047d1278af",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:12:30.348000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcLogsEndpointDA7F7E44",
+          "PhysicalResourceId": "vpce-08491824ef305aa4d",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:12:30.541000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcS3Endpoint4A3DE4B5",
+          "PhysicalResourceId": "vpce-046080a18cb842c55",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:10:29.888000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        }
+      ],
+      "efs_absence": [
+        {
+          "exit_code": 254,
+          "error": "aws: [ERROR]: An error occurred (FileSystemNotFound) when calling the DescribeFileSystems operation: File system 'fs-0d20a66ed7f9cb951' does not exist.\n\nAdditional error details:\nErrorCode: FileSystemNotFound"
+        }
+      ]
+    },
+    {
+      "stack": {
+        "StackId": "arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E4-CacheAdapter-dev/e63bc8d0-d378-11f1-87c5-02ffde7f2801",
+        "StackName": "E4-CacheAdapter-dev",
+        "TemplateDescription": "E4 - does task-start hydration remove Fargate's EFS metadata penalty?",
+        "CreationTime": "2026-10-29T09:12:44.009000+00:00",
+        "LastUpdatedTime": "2026-10-29T09:12:50.665000+00:00",
+        "DeletionTime": "2026-10-29T09:15:42.041000+00:00",
+        "StackStatus": "DELETE_COMPLETE",
+        "DriftInformation": {
+          "StackDriftStatus": "NOT_CHECKED"
+        },
+        "LastOperations": [
+          {
+            "OperationType": "DELETE_STACK",
+            "OperationId": "b03546ea-9bd8-43c2-980e-5bb59d344534"
+          }
+        ]
+      },
+      "resources": [
+        {
+          "LogicalResourceId": "ClusterEB0386A7",
+          "PhysicalResourceId": "E4-CacheAdapter-dev-ClusterEB0386A7-IOM8GRc2xAoc",
+          "ResourceType": "AWS::ECS::Cluster",
+          "LastUpdatedTimestamp": "2026-10-29T09:15:54.844000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "FileSystem8A8E25C0",
+          "PhysicalResourceId": "fs-06d0b49c83e967eca",
+          "ResourceType": "AWS::EFS::FileSystem",
+          "LastUpdatedTimestamp": "2026-10-29T09:16:04.523000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "FileSystemEfsMountTarget1586453F0",
+          "PhysicalResourceId": "fsmt-04c153899bc171fd1",
+          "ResourceType": "AWS::EFS::MountTarget",
+          "LastUpdatedTimestamp": "2026-10-29T09:16:00.014000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "LogGroupF5B46931",
+          "PhysicalResourceId": "E4-CacheAdapter-dev-LogGroupF5B46931-3SwL1L1KS4gy",
+          "ResourceType": "AWS::Logs::LogGroup",
+          "LastUpdatedTimestamp": "2026-10-29T09:15:47.075000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "ResultsBucketA95A2103",
+          "PhysicalResourceId": "e4-cacheadapter-dev-resultsbucketa95a2103-h5layiau7ibw",
+          "ResourceType": "AWS::S3::Bucket",
+          "LastUpdatedTimestamp": "2026-10-29T09:15:48.156000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "Vpc8378EB38",
+          "PhysicalResourceId": "vpc-0d87b7528ba17592a",
+          "ResourceType": "AWS::EC2::VPC",
+          "LastUpdatedTimestamp": "2026-10-29T09:18:29.031000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcEcrDockerEndpoint53ED547B",
+          "PhysicalResourceId": "vpce-09e5ceb3869f52996",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:18:25.580000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcEcrEndpoint0BE46338",
+          "PhysicalResourceId": "vpce-0739d46efda56741e",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:18:25.674000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcLogsEndpointDA7F7E44",
+          "PhysicalResourceId": "vpce-0347eb7d8d5ba990a",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:17:45.280000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        },
+        {
+          "LogicalResourceId": "VpcS3Endpoint4A3DE4B5",
+          "PhysicalResourceId": "vpce-06211001641902fe4",
+          "ResourceType": "AWS::EC2::VPCEndpoint",
+          "LastUpdatedTimestamp": "2026-10-29T09:15:44.905000+00:00",
+          "ResourceStatus": "DELETE_COMPLETE",
+          "DriftInformation": {
+            "StackResourceDriftStatus": "NOT_CHECKED"
+          }
+        }
+      ],
+      "efs_absence": [
+        {
+          "exit_code": 254,
+          "error": "aws: [ERROR]: An error occurred (FileSystemNotFound) when calling the DescribeFileSystems operation: File system 'fs-06d0b49c83e967eca' does not exist.\n\nAdditional error details:\nErrorCode: FileSystemNotFound"
+        }
+      ]
+    }
+  ],
+  "stack_name_absence": {
+    "exit_code": 254,
+    "error": "aws: [ERROR]: An error occurred (ValidationError) when calling the DescribeStacks operation: Stack with id E4-CacheAdapter-dev does not exist"
+  }
+}

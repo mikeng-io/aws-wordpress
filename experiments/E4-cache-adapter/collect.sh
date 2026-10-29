@@ -150,6 +150,21 @@ for rep in $(seq 1 "$REPS"); do
     BUCKET=$(stack_output ResultsBucketName)
     FILE_SYSTEM=$(stack_output FileSystemId)
 
+    # CloudFormation completion does not guarantee EFS DNS propagation. AWS:
+    # https://docs.aws.amazon.com/efs/latest/ug/troubleshooting-efs-mounting.html
+    # Wait outside the tasks: this is apparatus readiness, not hydration time.
+    targets=$(aws efs describe-mount-targets --region "$REGION" --file-system-id "$FILE_SYSTEM" \
+        --query 'MountTargets[].LifeCycleState' --output text)
+    if [ "$targets" != "available" ]; then
+        echo "FATAL: expected one available EFS mount target, got: $targets" >&2
+        exit 1
+    fi
+    log "EFS mount target available; waiting 90s for DNS propagation"
+    for remaining in 90 60 30; do
+        log "  DNS readiness wait: ${remaining}s remaining"
+        sleep 30
+    done
+
     log "running seed task (builds the EFS origin; its timing is not a result)"
     SEED_TASK=$(run_task seed "$SEED_TD")
     grep -q 'seed tar written' "$REP_DIR/seed.task.log" || {

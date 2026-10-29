@@ -1,0 +1,101 @@
+{
+    "tasks": [
+        {
+            "attachments": [
+                {
+                    "id": "111c908d-46e4-4913-9e1a-67cda3bbfec1",
+                    "type": "ElasticNetworkInterface",
+                    "status": "DELETED",
+                    "details": [
+                        {
+                            "name": "subnetId",
+                            "value": "subnet-01d6711a873bd87ba"
+                        },
+                        {
+                            "name": "networkInterfaceId",
+                            "value": "eni-034dc6e702cd99f53"
+                        },
+                        {
+                            "name": "macAddress",
+                            "value": "02:ff:cf:5e:2b:69"
+                        },
+                        {
+                            "name": "privateDnsName",
+                            "value": "ip-10-46-0-195.ap-southeast-1.compute.internal"
+                        },
+                        {
+                            "name": "privateIPv4Address",
+                            "value": "10.46.0.195"
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "ecs.cpu-architecture",
+                    "value": "arm64"
+                }
+            ],
+            "availabilityZone": "ap-southeast-1a",
+            "clusterArn": "arn:aws:ecs:ap-southeast-1:163703054402:cluster/E4-CacheAdapter-dev-ClusterEB0386A7-IOM8GRc2xAoc",
+            "connectivity": "CONNECTED",
+            "connectivityAt": "2026-10-29T17:14:44.299000+08:00",
+            "containers": [
+                {
+                    "containerArn": "arn:aws:ecs:ap-southeast-1:163703054402:container/E4-CacheAdapter-dev-ClusterEB0386A7-IOM8GRc2xAoc/eceded85c55c4b38b39a6aff9a0408e4/29eae18a-2bd7-4775-835f-c8f47ec3e590",
+                    "taskArn": "arn:aws:ecs:ap-southeast-1:163703054402:task/E4-CacheAdapter-dev-ClusterEB0386A7-IOM8GRc2xAoc/eceded85c55c4b38b39a6aff9a0408e4",
+                    "name": "Seed",
+                    "image": "163703054402.dkr.ecr.ap-southeast-1.amazonaws.com/cdk-hnb659fds-container-assets-163703054402-ap-southeast-1:59aa64f1877124c8dc6113ca6259bdef0902a746aeaf157f6076520ed9e056f5",
+                    "imageDigest": "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc",
+                    "runtimeId": "eceded85c55c4b38b39a6aff9a0408e4-3497134284",
+                    "lastStatus": "STOPPED",
+                    "networkInterfaces": [
+                        {
+                            "attachmentId": "111c908d-46e4-4913-9e1a-67cda3bbfec1",
+                            "privateIpv4Address": "10.46.0.195"
+                        }
+                    ],
+                    "healthStatus": "UNKNOWN",
+                    "cpu": "0"
+                }
+            ],
+            "cpu": "512",
+            "createdAt": "2026-10-29T17:14:41.868000+08:00",
+            "desiredStatus": "STOPPED",
+            "enableExecuteCommand": false,
+            "executionStoppedAt": "2026-10-29T17:15:07.667000+08:00",
+            "group": "family:E4CacheAdapterdevSeedTaskDefinitionA549FEFD",
+            "healthStatus": "UNKNOWN",
+            "lastStatus": "STOPPED",
+            "launchType": "FARGATE",
+            "memory": "1024",
+            "overrides": {
+                "containerOverrides": [
+                    {
+                        "name": "Seed"
+                    }
+                ],
+                "inferenceAcceleratorOverrides": []
+            },
+            "platformVersion": "1.4.0",
+            "platformFamily": "Linux",
+            "pullStartedAt": "2026-10-29T17:14:53.168000+08:00",
+            "pullStoppedAt": "2026-10-29T17:15:04.243000+08:00",
+            "stopCode": "TaskFailedToStart",
+            "stoppedAt": "2026-10-29T17:15:30.771000+08:00",
+            "stoppedReason": "ResourceInitializationError: failed to invoke EFS utils commands to set up EFS volumes: stderr: Failed to resolve \"fs-06d0b49c83e967eca.efs.ap-southeast-1.amazonaws.com\" - check that your file system ID is correct, and ensure that the VPC has an EFS mount target for this file system ID. See https://docs.aws.amazon.com/console/efs/mount-dns-name for more detail. Attempting to lookup mount target ip address using botocore. Failed to import necessary dependency botocore, please install botocore first. : unsuccessful EFS utils command execution; code: 1",
+            "stoppingAt": "2026-10-29T17:15:17.729000+08:00",
+            "tags": [],
+            "taskArn": "arn:aws:ecs:ap-southeast-1:163703054402:task/E4-CacheAdapter-dev-ClusterEB0386A7-IOM8GRc2xAoc/eceded85c55c4b38b39a6aff9a0408e4",
+            "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevSeedTaskDefinitionA549FEFD:5",
+            "version": 4,
+            "ephemeralStorage": {
+                "sizeInGiB": 20
+            },
+            "fargateEphemeralStorage": {
+                "sizeInGiB": 20
+            }
+        }
+    ],
+    "failures": []
+}

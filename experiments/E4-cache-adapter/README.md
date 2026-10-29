@@ -174,3 +174,21 @@ are **not** a formal result. The E4 stack was destroyed manually and verified go
 To finish: `REPS=3 make e4`, then `python3 analysis/e4_stats.py results/E4/<run-id>`.
 A prior failed smoke `20261029T083342Z-fe5f631` is also archived; it failed only
 because `/tmp/hydration.csv` was not uploaded, fixed in `ec1e5b2`.
+
+## Readiness correction — 2026-10-29
+
+Run [`20261029T090427Z-3b8faf3`](../../results/E4/20261029T090427Z-3b8faf3/)
+completed rep-1 but failed at rep-2's seed task before any measured arm: the
+new EFS DNS name did not resolve (`ResourceInitializationError`). This is an
+archived incomplete campaign, not a formal result; it is not graded or pooled.
+The collector log and task failure are retained. Both stacks were destroyed.
+
+AWS [documents the mount-target DNS propagation race](https://docs.aws.amazon.com/efs/latest/ug/troubleshooting-efs-mounting.html).
+The collector now asserts one available mount target and waits 90 seconds before
+starting the seed task. This readiness wait is outside the measured tasks and
+does not change hydration timing, the workload, predictions or thresholds. A
+fresh three-replication run replaces the failed campaign; no partial run is resumed.
+Analysis also now reports operation-level median CIs, geometric means, dispersion
+and deterministic log-space clustering, plus per-rep median spread. Existing
+smoke numbers and all grades were checked unchanged on a temporary copy; the
+smoke's committed output was not regenerated.

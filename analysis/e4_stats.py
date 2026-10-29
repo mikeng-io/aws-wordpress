@@ -12,6 +12,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+from e3_clusters import analyse as cluster_analysis
+from e2_stats import median_ci95, geo_mean
+
 OPS = ("stat", "stat_enoent", "open_read")
 E0_OPS_PER_REQUEST = 4300.0
 P1_STAT_MAX = 0.10
@@ -136,17 +139,25 @@ def conformance_verdict(conf: dict[str, str]) -> tuple[str, list[str], list[str]
     return "SUPPORTED", fails, errors
 
 
-def stat_block(bench: dict[str, list[int]]) -> dict[str, dict[str, float]]:
+def distribution(vals: list[int]) -> dict:
+    p50 = pct(vals, 0.50)
     return {
-        op: {
-            "n": len(vals),
-            "p50_ns": pct(vals, 0.50),
-            "p95_ns": pct(vals, 0.95),
-            "p99_ns": pct(vals, 0.99),
-        }
-        for op, vals in ((op, bench.get(op, [])) for op in OPS)
-        if vals
+        "n": len(vals),
+        "p25_ns": pct(vals, 0.25),
+        "p50_ns": p50,
+        "p75_ns": pct(vals, 0.75),
+        "p95_ns": pct(vals, 0.95),
+        "p99_ns": pct(vals, 0.99),
+        "median_ci95_ns": list(median_ci95(vals)),
+        "geomean_ns": geo_mean(vals),
+        "iqr_over_median": (pct(vals, 0.75) - pct(vals, 0.25)) / p50,
+        "p99_over_p50": pct(vals, 0.99) / p50,
+        "clusters": cluster_analysis(vals),
     }
+
+
+def stat_block(bench: dict[str, list[int]]) -> dict[str, dict]:
+    return {op: distribution(bench[op]) for op in OPS if bench.get(op)}
 
 
 def main(root: Path) -> int:
@@ -286,12 +297,7 @@ def main(root: Path) -> int:
         vals: list[int] = []
         for rep_dir in rep_dirs:
             vals.extend(read_bench(rep_dir / arm / f"{arm_tier(rep_dir, arm)}.csv").get(op, []))
-        return {
-            "n": len(vals),
-            "p50_ns": pct(vals, 0.50),
-            "p95_ns": pct(vals, 0.95),
-            "p99_ns": pct(vals, 0.99),
-        }
+        return distribution(vals) if vals else {"n": 0, "p50_ns": float("nan")}
 
     pooled_stats = {arm: {op: pooled(op, arm) for op in OPS} for arm in ("efs", "hydrated")}
     pooled_ratio = {}
@@ -313,7 +319,7 @@ def main(root: Path) -> int:
         },
         "prediction_2": {
             "status": p2_status,
-            "rule": "hydration >= 0.5 s and hydrated-task duration exceeds EFS-task duration by at least hydration time",
+            "rule": "hydration >= 0.5 s and hydrated start-to-benchmark exceeds EFS start-to-benchmark by at least hydration time",
             "failures": p2_fail,
             "missing": p2_missing,
         },
@@ -327,6 +333,21 @@ def main(root: Path) -> int:
             "status": h2_gate,
             "reasons": h2_reasons,
             "note": "proxy: E0's 4300 ops/request times EFS stat p50; not end-to-end request latency",
+        },
+        "statistical_method": {
+            "median": "nearest rank, unchanged from pre-registered grader",
+            "median_ci95": "distribution-free order-statistic interval, normal approximation to binomial rank bounds; operation-level, not between-deployment CI",
+            "clusters": "deterministic log10 k-means, 10th/90th initialisation; separation >= 0.5 and both shares >= 2%",
+        },
+        "between_replication": {
+            arm: {
+                op: {
+                    "p50_ns": [r[arm][op]["p50_ns"] for r in reps if op in r[arm]],
+                    "max_over_min": max(r[arm][op]["p50_ns"] for r in reps if op in r[arm]) / min(r[arm][op]["p50_ns"] for r in reps if op in r[arm]),
+                }
+                for op in OPS if all(op in r[arm] for r in reps)
+            }
+            for arm in ("efs", "hydrated")
         },
         "pooled": pooled_stats,
         "pooled_ratio_hydrated_over_efs": pooled_ratio,
@@ -430,6 +451,29 @@ def main(root: Path) -> int:
             f"| {r['replication']} | {r['efs_conformance']} | {r['hydrated_conformance']} | "
             f"{', '.join(r['efs_conformance_fails']) or '—'} | {', '.join(r['hydrated_conformance_fails']) or '—'} |"
         )
+    lines += [
+        "", "## Distribution and replication diagnostics", "",
+        "CIs below are operation-level order-statistic intervals (binomial-rank normal",
+        "approximation); they do not quantify uncertainty across three deployments.", "",
+        "| Arm | op | n | p50 CI95 | geometric mean | p95 | p99 | IQR/p50 | p99/p50 | rep p50 max/min | modes |",
+        "|---|---|--:|---|--:|--:|--:|--:|--:|--:|---|",
+    ]
+    for arm in ("efs", "hydrated"):
+        for op in OPS:
+            d = pooled_stats[arm][op]
+            if not d["n"]:
+                continue
+            ci = d["median_ci95_ns"]
+            spread = summary["between_replication"][arm][op]["max_over_min"]
+            lines.append(
+                f"| {arm} | {op} | {d['n']} | {us(ci[0])}–{us(ci[1])} | "
+                f"{us(d['geomean_ns'])} | {us(d['p95_ns'])} | {us(d['p99_ns'])} | "
+                f"{d['iqr_over_median']:.3f} | {d['p99_over_p50']:.3f} | {spread:.3f} | {d['clusters']['verdict']} |"
+            )
+            if d["clusters"]["verdict"] == "bimodal":
+                for name, c in d["clusters"]["clusters"].items():
+                    lines.append(f"<!-- {arm}/{op} {name}: share={c['share']}, median_ns={c['median_ns']}, CI95_ns={c['median_ci95_ns']} -->")
+    lines += ["", "Per-replication distributions and cluster diagnostics are in summary.json.", ""]
     (root / "summary.md").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
     return 0
