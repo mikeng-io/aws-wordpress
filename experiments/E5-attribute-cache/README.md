@@ -44,10 +44,11 @@ runtime are recorded separately from its offline preparation receipts.
 
 **Next work, no paid run authorised:**
 
-- Write the P7 result into H1 and the findings docs with the three run
-  directories; do not use the frozen run's grade.
-- Investigate P4's A8/A3 instability offline. It is an instrument check that now
-  fails one replication, not evidence about P7.
+- The P7 result is written into [the E5 finding](../../docs/findings/E5-attribute-cache.md)
+  and H1; do not use the frozen run's grade.
+- Investigate P4's A8/A3 instability offline. A8 runs ten passes over the tree while
+  A3 is a single pass after idle, so the ±25% check is confounded by warming and
+  failed one replication. It is an instrument question, not evidence about P7.
 - Campaign planning total is **US$27.396** of the US$30 ceiling (an envelope, not
   an invoice). No fourth paid run fits or is authorised.
 
