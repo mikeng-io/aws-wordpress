@@ -1,7 +1,7 @@
-# Proposal — P4 checks A8's first pass, not ten pooled passes (2026-10-29)
+# Amendment — P4 checks A8's first pass, not ten pooled passes (2026-10-29)
 
-**Status:** `PROPOSED 2026-10-29; NOT BINDING; COMPLETED RUNS NOT REGRADED`.
-This is a proposal for a future E5 method version. It does **not** change the
+**Status:** `ADOPTED 2026-10-29; BINDING FOR A FUTURE isolation-formal-v4; COMPLETED v3 RUNS NOT REGRADED`.
+This rule applies only to a future E5 method version. It does **not** change the
 registered P4 grade of the three 2026-10-28 replications, which remains
 **INCONCLUSIVE**, and it authorises no run.
 
@@ -65,19 +65,21 @@ consequence of mount and timing differences, and the band is wider than all of i
 - The A8 mount, its ten passes, or the raw data. Only the read used by P4 changes.
 - Budget: no run is authorised by this proposal.
 
-## Implementation, deferred
+## Implementation
 
-No code change is made now. The v3 grader keeps the registered ±25% all-pass rule,
-which is why the completed set remains INCONCLUSIVE. If a future replication is
-authorised, the method identifier must be bumped and the new check implemented in
-`analysis/e5_stats.py` behind that identifier, with a fixture that distinguishes
-first-pass from all-pass. Re-running a v3 result under the new rule would be a
-regrade and is forbidden.
+- `analysis/e5_stats.py`: A8 now records `p50_first_pass_ns`; new
+  `p4_first_pass()` returns `first-pass-v1` with the first-pass ratios, the band and
+  the all-pass diagnostic; `P4_METHODS` is the selector for a future method.
+- The v3 `p4()` and `PREDICTIONS["4"]` are unchanged. The completed three-run P4
+  stays **INCONCLUSIVE**, and re-running v3 under `first-pass-v1` is forbidden.
+- `analysis/test_e5_formal.py`: fixtures for the band, the first-pass/pooled
+  divergence, a missing first pass, and the recorded first-pass median.
+- A future `isolation-formal-v4` selects `P4_METHODS["first-pass-v1"]`. No collector,
+  protocol schema or apparatus hash changes until that method exists.
 
 ## Limitation
 
-This is a post-hoc proposal written after seeing the failure. It is admissible only
-as a dated proposal for a future method: it leaves every completed verdict intact,
+This is a post-hoc rule written after seeing the failure. It is admissible only as a
+dated amendment for a future method: it leaves every completed verdict intact,
 changes no target threshold, and is justified by a measured pass-count effect
-(98.0 µs → 68.3 µs on OpenZFS), not by the desired outcome. It should be adopted or
-rejected before any future paid replication.
+(98.0 µs → 68.3 µs on OpenZFS), not by the desired outcome.

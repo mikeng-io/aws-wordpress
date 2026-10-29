@@ -48,10 +48,11 @@ runtime are recorded separately from its offline preparation receipts.
   and H1; do not use the frozen run's grade.
 - P4's ±25% check is confounded. On OpenZFS rep 4, A8's first pass matches A3
   exactly (98.0 µs) and the nine later passes warm to 68 µs; EFS plain and TLS
-  diverge for separate phase reasons. A
-  [proposal](method-amendments/20261029-p4-first-pass/README.md) would check A8's
-  first pass in a [0.5, 2.0] band for a future method. It is not binding, changes no
-  code, and the completed P4 stays **INCONCLUSIVE**.
+  diverge for separate phase reasons. The
+  [first-pass amendment](method-amendments/20261029-p4-first-pass/README.md) is
+  adopted for a future `isolation-formal-v4` and checks A8's first pass in a
+  [0.5, 2.0] band. The helper and tests are in place; v3 code is unchanged, so the
+  completed P4 stays **INCONCLUSIVE**.
 - Campaign planning total is **US$27.396** of the US$30 ceiling (an envelope, not
   an invoice). No fourth paid run fits or is authorised.
 

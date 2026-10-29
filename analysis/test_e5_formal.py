@@ -202,4 +202,34 @@ class FormalTests(unittest.TestCase):
         self.assertIn('restore',calls);self.assertTrue(json.loads((out/'protocol.json').read_text())['restored']['restored_bytes_match']);self.assertFalse((out/'formal-complete.json').exists())
 
 
+class P4FirstPassRule(unittest.TestCase):
+    """The future-method P4 rule adopted 2026-10-29; v3 grading is unchanged."""
+    @staticmethod
+    def world(**ratios):
+        return {t:{"A3":{"status":"OK","p50_ns":1000},
+                   "A8":{"status":"OK","p50_ns":1000,"p50_first_pass_ns":round(1000*r)}}
+                for t,r in ratios.items()}
+    def test_adopted_band_uses_first_pass(self):
+        a=self.world(efs_host_plain=0.727,efs_host_tls=1.285,fsx_openzfs=1.0,fsx_ontap=0.983)
+        r=g.legacy.p4_first_pass(a,{})
+        self.assertEqual(r['grade'],'SUPPORTED');self.assertEqual(r['rule'],'first-pass-v1')
+        self.assertEqual(r['a8_first_pass_over_a3']['fsx_openzfs'],1.0)
+        self.assertIs(g.legacy.P4_METHODS['first-pass-v1'],g.legacy.p4_first_pass)
+        self.assertIs(g.legacy.P4_METHODS['pooled-25pct'],g.legacy.p4)
+    def test_first_pass_can_fail_where_pooled_passes(self):
+        a=self.world(efs_host_plain=0.4,efs_host_tls=1.0,fsx_openzfs=1.0,fsx_ontap=1.0)
+        self.assertEqual(g.legacy.p4(a,{})['grade'],'SUPPORTED')
+        self.assertEqual(g.legacy.p4_first_pass(a,{})['grade'],'REFUTED')
+    def test_missing_first_pass_is_error(self):
+        a=self.world(efs_host_plain=1.0,efs_host_tls=1.0,fsx_openzfs=1.0,fsx_ontap=1.0)
+        del a['efs_host_plain']['A8']['p50_first_pass_ns']
+        self.assertEqual(g.legacy.p4_first_pass(a,{})['grade'],'ERROR')
+    def test_cohort_a_records_the_first_pass_median(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=build(Path(td)/'run')
+            a8=g.legacy.cohort_a(root)['efs_host_plain']['A8']
+            self.assertIn('p50_first_pass_ns',a8)
+            self.assertIsInstance(a8['p50_first_pass_ns'],int)
+
+
 if __name__=='__main__':unittest.main()

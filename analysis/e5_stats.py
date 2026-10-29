@@ -75,6 +75,10 @@ P2_EFS_MAX = 0.25
 P3_SUPPORT = (1.0, 3.0)
 P3_KILL = (0.9, 3.0)
 P4_TOL = 0.25
+# Future-method P4 (method-amendments/20261029-p4-first-pass): A8's first pass is
+# the like-for-like comparison with A3; the other nine passes warm. A manipulation
+# check needs a factor-of-two band, not ±25% equivalence.
+P4_FIRST_PASS_BAND = (0.5, 2.0)
 P5_TIERS = ["efs_host_plain", "efs_host_tls", "fsx_ontap"]
 P5_BANDS = {"0.1": (0.0, 0.005), "1": (0.010, 0.030), "10": (0.10, 0.25)}
 P5_KILL = {"0.1": 0.02, "1": 0.05}
@@ -219,6 +223,10 @@ def cohort_a(rep_dir: Path) -> dict:
                 else:
                     sig, detail = check_signature(tier, c, tdir, len(vals))
                     entry = {"signature": sig, "signature_detail": detail, **summarize(vals)}
+                    if c == "A8":
+                        # The first of ten passes is the only like-for-like
+                        # comparison with A3; later passes are warmed.
+                        entry["p50_first_pass_ns"] = int(statistics.median(vals[:N]))
                     entry["status"] = "ERROR" if sig in ("FAIL", "ERROR") else "OK"
                     if sig in ("FAIL", "ERROR"):
                         entry["reason"] = f"signature {sig}: {detail}"
@@ -548,6 +556,38 @@ def p4(a, b):
         ratios[t] = round(a8 / a3, 3)
     ok = all(abs(r - 1) <= P4_TOL for r in ratios.values())
     return {"grade": S if ok else R, "a8_over_a3": ratios}
+
+
+def p4_first_pass(a, b):
+    """Future-method P4: A8's first pass against A3, in a factor-of-two band.
+
+    The pooled form above stays the v3 rule. This helper is for a replication
+    whose method opts into `first-pass-v1`; it never regrades a v3 result.
+    """
+    ratios, pooled = {}, {}
+    for t in NFS_TIERS:
+        a8 = a.get(t, {}).get("A8", {})
+        a3 = a_median(a, t, "A3")
+        first = a8.get("p50_first_pass_ns")
+        if a8.get("status") != "OK" or first is None or a3 is None:
+            return err(why_a(a, (t, "A8"), (t, "A3")))
+        ratios[t] = round(first / a3, 3)
+        all_pass = a_median(a, t, "A8")
+        if all_pass is not None:
+            pooled[t] = round(all_pass / a3, 3)
+    ok = all(P4_FIRST_PASS_BAND[0] <= r <= P4_FIRST_PASS_BAND[1] for r in ratios.values())
+    return {
+        "grade": S if ok else R,
+        "rule": "first-pass-v1",
+        "band": list(P4_FIRST_PASS_BAND),
+        "a8_first_pass_over_a3": ratios,
+        "a8_all_pass_over_a3": pooled,
+    }
+
+
+# A future method selects its P4 rule here; v3 keeps `pooled-25pct` and is never
+# regraded under `first-pass-v1`.
+P4_METHODS = {"pooled-25pct": p4, "first-pass-v1": p4_first_pass}
 
 
 def p5(a, b):
