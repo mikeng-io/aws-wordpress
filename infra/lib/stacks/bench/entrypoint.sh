@@ -314,6 +314,9 @@ if [ -n "${BENCH_S3_BUCKET:-}" ]; then
     # A manifest the collector checks against, so a missing tier is caught at
     # collection time rather than discovered during analysis.
     aws s3 cp /tmp/mount-facts.csv "s3://$BENCH_S3_BUCKET/$arm/mount-facts.csv" --only-show-errors
+    if [ -f /tmp/hydration.csv ]; then
+        aws s3 cp /tmp/hydration.csv "s3://$BENCH_S3_BUCKET/$arm/hydration.csv" --only-show-errors
+    fi
     aws s3 cp /tmp/nfs-counters.txt "s3://$BENCH_S3_BUCKET/$arm/nfs-counters.txt" --only-show-errors || true
     for pair in $BENCH_MOUNTS; do echo "${pair%%=*}"; done \
         | aws s3 cp - "s3://$BENCH_S3_BUCKET/$arm/manifest.txt" --only-show-errors
