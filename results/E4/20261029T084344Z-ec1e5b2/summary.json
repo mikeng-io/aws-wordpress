@@ -1,0 +1,148 @@
+{
+  "experiment": "E4",
+  "run_id": "20261029T084344Z-ec1e5b2",
+  "reps": 1,
+  "measures": "per-syscall latency for an existing read-only tree + hydration wall time; not end-to-end request latency",
+  "prediction_1": {
+    "status": "SUPPORTED",
+    "rule": "hydrated stat p50 <= 0.10x EFS and open_read p50 <= 0.20x EFS, every replication",
+    "failures": [],
+    "missing": []
+  },
+  "prediction_2": {
+    "status": "REFUTED",
+    "rule": "hydration >= 0.5 s and hydrated-task duration exceeds EFS-task duration by at least hydration time",
+    "failures": [
+      "rep-1: hydration 0.214s < 0.5s",
+      "rep-1: start extra 0.021s < hydration 0.214s"
+    ],
+    "missing": []
+  },
+  "prediction_3": {
+    "status": "SUPPORTED",
+    "rule": "single-node conformance passes on both EFS and hydrated arms, every replication",
+    "failures": [],
+    "missing": []
+  },
+  "h2_gate": {
+    "status": "MET",
+    "reasons": [],
+    "note": "proxy: E0's 4300 ops/request times EFS stat p50; not end-to-end request latency"
+  },
+  "pooled": {
+    "efs": {
+      "stat": {
+        "n": 1000,
+        "p50_ns": 1601101.0,
+        "p95_ns": 2161976.0,
+        "p99_ns": 6193695.0
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 1350902.0,
+        "p95_ns": 1501286.0,
+        "p99_ns": 1567304.0
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 3591622.0,
+        "p95_ns": 4687002.0,
+        "p99_ns": 10654902.0
+      }
+    },
+    "hydrated": {
+      "stat": {
+        "n": 1000,
+        "p50_ns": 3233.0,
+        "p95_ns": 7451.0,
+        "p99_ns": 10347.0
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 11069.0,
+        "p95_ns": 18872.0,
+        "p99_ns": 33231.0
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 14015.0,
+        "p95_ns": 23516.0,
+        "p99_ns": 28875.0
+      }
+    }
+  },
+  "pooled_ratio_hydrated_over_efs": {
+    "stat": 0.00201923551356223,
+    "stat_enoent": 0.00819378459725428,
+    "open_read": 0.0039021366947858097
+  },
+  "per_replication": [
+    {
+      "replication": 1,
+      "efs_tier": "efs",
+      "hydrated_tier": "ephemeral",
+      "efs": {
+        "stat": {
+          "n": 1000,
+          "p50_ns": 1601101.0,
+          "p95_ns": 2161976.0,
+          "p99_ns": 6193695.0
+        },
+        "stat_enoent": {
+          "n": 20,
+          "p50_ns": 1350902.0,
+          "p95_ns": 1501286.0,
+          "p99_ns": 1567304.0
+        },
+        "open_read": {
+          "n": 1000,
+          "p50_ns": 3591622.0,
+          "p95_ns": 4687002.0,
+          "p99_ns": 10654902.0
+        }
+      },
+      "hydrated": {
+        "stat": {
+          "n": 1000,
+          "p50_ns": 3233.0,
+          "p95_ns": 7451.0,
+          "p99_ns": 10347.0
+        },
+        "stat_enoent": {
+          "n": 20,
+          "p50_ns": 11069.0,
+          "p95_ns": 18872.0,
+          "p99_ns": 33231.0
+        },
+        "open_read": {
+          "n": 1000,
+          "p50_ns": 14015.0,
+          "p95_ns": 23516.0,
+          "p99_ns": 28875.0
+        }
+      },
+      "ratios": {
+        "stat": 0.00201923551356223,
+        "stat_enoent": 0.00819378459725428,
+        "open_read": 0.0039021366947858097
+      },
+      "hydration_s": 0.21411767,
+      "hydration_bytes": 27412480,
+      "efs_task_s": 41.191,
+      "hydrated_task_s": 36.011,
+      "efs_start_to_benchmark_s": 1.491,
+      "hydrated_start_to_benchmark_s": 1.512,
+      "start_extra_s": 0.020999999999999908,
+      "task_extra_s": -5.18,
+      "efs_task_minus_hydrated_s": 5.18,
+      "efs_conformance": "SUPPORTED",
+      "efs_conformance_fails": [],
+      "efs_conformance_errors": [],
+      "hydrated_conformance": "SUPPORTED",
+      "hydrated_conformance_fails": [],
+      "hydrated_conformance_errors": [],
+      "one_request_efs_penalty_s": 6.8847343,
+      "breakeven_requests": 0.031163279430305998
+    }
+  ]
+}

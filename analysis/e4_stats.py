@@ -74,6 +74,16 @@ def read_hydration(path: Path) -> tuple[float, int] | None:
     return None
 
 
+def arm_tier(rep_dir: Path, arm: str) -> str:
+    """The task's arm label and its tier label differ: hydrated -> ephemeral."""
+    manifest = rep_dir / arm / "manifest.txt"
+    if manifest.exists():
+        tiers = [line.strip() for line in manifest.read_text().splitlines() if line.strip()]
+        if tiers:
+            return tiers[0]
+    return "efs" if arm == "efs" else "ephemeral"
+
+
 def task_seconds(path: Path) -> float | None:
     if not path.exists():
         return None
@@ -84,6 +94,34 @@ def task_seconds(path: Path) -> float | None:
         return (stop - start).total_seconds()
     except (KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError):
         return None
+
+
+def start_to_benchmark_seconds(path: Path) -> float | None:
+    """From the task's first log line to the line that starts the benchmark.
+
+    Total task duration includes the benchmark itself (and EFS is slower), so it is
+    not the hydration overhead. The pre-registered comparison is start-to-benchmark.
+    """
+    if not path.exists():
+        return None
+    first = None
+    benchmark = None
+    for line in path.read_text().splitlines():
+        if not line or line[0].isdigit() is False:
+            continue
+        stamp = line.split(" ", 1)[0]
+        try:
+            when = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if first is None:
+            first = when
+        if "benchmarking " in line:
+            benchmark = when
+            break
+    if first is None or benchmark is None:
+        return None
+    return (benchmark - first).total_seconds()
 
 
 def conformance_verdict(conf: dict[str, str]) -> tuple[str, list[str], list[str]]:
@@ -122,13 +160,17 @@ def main(root: Path) -> int:
 
     reps: list[dict] = []
     for rep_dir in rep_dirs:
-        efs = read_bench(rep_dir / "efs" / "efs.csv")
-        hyd = read_bench(rep_dir / "hydrated" / "hydrated.csv")
-        efs_conf = read_conformance(rep_dir / "efs" / "efs.conformance.csv")
-        hyd_conf = read_conformance(rep_dir / "hydrated" / "hydrated.conformance.csv")
+        efs_tier = arm_tier(rep_dir, "efs")
+        hyd_tier = arm_tier(rep_dir, "hydrated")
+        efs = read_bench(rep_dir / "efs" / f"{efs_tier}.csv")
+        hyd = read_bench(rep_dir / "hydrated" / f"{hyd_tier}.csv")
+        efs_conf = read_conformance(rep_dir / "efs" / f"{efs_tier}.conformance.csv")
+        hyd_conf = read_conformance(rep_dir / "hydrated" / f"{hyd_tier}.conformance.csv")
         hydration = read_hydration(rep_dir / "hydrated" / "hydration.csv")
         efs_task_s = task_seconds(rep_dir / "efs.task.json")
         hyd_task_s = task_seconds(rep_dir / "hydrated.task.json")
+        efs_start_bench_s = start_to_benchmark_seconds(rep_dir / "efs.task.log")
+        hyd_start_bench_s = start_to_benchmark_seconds(rep_dir / "hydrated.task.log")
         efs_stat = stat_block(efs)
         hyd_stat = stat_block(hyd)
 
@@ -144,6 +186,11 @@ def main(root: Path) -> int:
         # Sign: hydrated task should be LONGER. Report the difference in the
         # direction prediction 2 states, so a negative value is a failure.
         task_extra_s = (hyd_task_s - efs_task_s) if (efs_task_s is not None and hyd_task_s is not None) else None
+        start_extra_s = (
+            (hyd_start_bench_s - efs_start_bench_s)
+            if (efs_start_bench_s is not None and hyd_start_bench_s is not None)
+            else None
+        )
 
         penalty_s = None
         breakeven = None
@@ -156,6 +203,8 @@ def main(root: Path) -> int:
 
         reps.append({
             "replication": int(rep_dir.name.split("-")[1]),
+            "efs_tier": efs_tier,
+            "hydrated_tier": hyd_tier,
             "efs": efs_stat,
             "hydrated": hyd_stat,
             "ratios": ratios,
@@ -163,6 +212,9 @@ def main(root: Path) -> int:
             "hydration_bytes": hyd_bytes,
             "efs_task_s": efs_task_s,
             "hydrated_task_s": hyd_task_s,
+            "efs_start_to_benchmark_s": efs_start_bench_s,
+            "hydrated_start_to_benchmark_s": hyd_start_bench_s,
+            "start_extra_s": start_extra_s,
             "task_extra_s": task_extra_s,
             "efs_task_minus_hydrated_s": delta_s,
             "efs_conformance": conformance_verdict(efs_conf)[0],
@@ -196,11 +248,11 @@ def main(root: Path) -> int:
             p2_missing.append(f"rep-{r['replication']}: no hydration.csv")
         elif r["hydration_s"] < P2_MIN_HYDRATION_S:
             p2_fail.append(f"rep-{r['replication']}: hydration {r['hydration_s']:.3f}s < {P2_MIN_HYDRATION_S}s")
-        if r["task_extra_s"] is None:
-            p2_missing.append(f"rep-{r['replication']}: missing task timing")
-        elif r["hydration_s"] is not None and r["task_extra_s"] < r["hydration_s"]:
+        if r["start_extra_s"] is None:
+            p2_missing.append(f"rep-{r['replication']}: missing start-to-benchmark timing")
+        elif r["hydration_s"] is not None and r["start_extra_s"] < r["hydration_s"]:
             p2_fail.append(
-                f"rep-{r['replication']}: task extra {r['task_extra_s']:.3f}s < hydration {r['hydration_s']:.3f}s"
+                f"rep-{r['replication']}: start extra {r['start_extra_s']:.3f}s < hydration {r['hydration_s']:.3f}s"
             )
     p2_status = "REFUTED" if p2_fail else ("INCONCLUSIVE" if p2_missing else "SUPPORTED")
 
@@ -233,7 +285,7 @@ def main(root: Path) -> int:
     def pooled(op: str, arm: str) -> dict[str, float]:
         vals: list[int] = []
         for rep_dir in rep_dirs:
-            vals.extend(read_bench(rep_dir / arm / f"{arm}.csv").get(op, []))
+            vals.extend(read_bench(rep_dir / arm / f"{arm_tier(rep_dir, arm)}.csv").get(op, []))
         return {
             "n": len(vals),
             "p50_ns": pct(vals, 0.50),
@@ -352,7 +404,7 @@ def main(root: Path) -> int:
         "",
         "## Hydration and break-even",
         "",
-        "| Rep | bytes | hydration s | EFS task s | hydrated task s | task extra s | one-request penalty | break-even requests |",
+        "| Rep | bytes | hydration s | EFS start→bench | hydrated start→bench | start extra | one-request penalty | break-even requests |",
         "|---|--:|--:|--:|--:|--:|--:|--:|",
     ]
     for r in reps:
@@ -360,7 +412,7 @@ def main(root: Path) -> int:
             return f"{v:.{d}f}" if v is not None else "—"
         lines.append(
             f"| {r['replication']} | {r['hydration_bytes'] or '—'} | {fmt(r['hydration_s'],3)} | "
-            f"{fmt(r['efs_task_s'],1)} | {fmt(r['hydrated_task_s'],1)} | {fmt(r['task_extra_s'],1)} | "
+            f"{fmt(r['efs_start_to_benchmark_s'],2)} | {fmt(r['hydrated_start_to_benchmark_s'],2)} | {fmt(r['start_extra_s'],2)} | "
             f"{fmt(r['one_request_efs_penalty_s'],2)} | {fmt(r['breakeven_requests'],2)} |"
         )
     lines += [

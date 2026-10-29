@@ -1,9 +1,10 @@
 # E4 — task-start hydration as a read-only cache
 
-**Status:** `APPARATUS BUILD` — design replaced in place 2026-10-29. E2 gated the
-original transparent-adapter design; this experiment now measures the design that
-survives that gate. Ceiling **US$2**, approved 2026-10-29. Nothing is left running:
-each replication deploys, runs, and destroys its own stack.
+**Status:** `SMOKE PASSED` — design replaced in place 2026-10-29; one-rep smoke
+`20261029T084344Z-ec1e5b2` passed, formal three-rep collection pending. E2 gated
+the original transparent-adapter design; this experiment now measures the design
+that survives that gate. Ceiling **US$2**, approved 2026-10-29. Nothing is left
+running: each replication deploys, runs, and destroys its own stack.
 
 **Bears on:** [H2](../../hypotheses/H2-fargate-forbids-caching.md),
 [H4](../../hypotheses/H4-cold-start-is-the-metric.md),
