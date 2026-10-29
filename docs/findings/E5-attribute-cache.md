@@ -82,7 +82,10 @@ pass-selection rule makes P4 pass on all tiers.
 
 The registered ±25% check is therefore confounded by pass count on OpenZFS and by
 tier/phase behaviour on EFS. P4 is **INCONCLUSIVE**, not a P7 failure: P7 reads
-cohort-B positive `stat` cost and same-time EBS controls, not the A8/A3 ratio.
+cohort-B positive `stat` cost and same-time EBS controls, not the A8/A3 ratio. A
+[dated proposal](../../experiments/E5-attribute-cache/method-amendments/20261029-p4-first-pass/README.md)
+would make a future method check A8's first pass in a factor-of-two band; it does
+not regrade these runs and is not binding.
 
 ## What this changes for H1
 
