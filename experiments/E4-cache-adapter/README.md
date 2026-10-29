@@ -1,6 +1,9 @@
 # E4 — the cache adapter
 
-**Status:** `SPECCED` — depends on E2. Do not build before the matrix exists.
+**Status:** `GATED — NO BUILD AS SPECIFIED` (2026-10-29). E2 is complete; the
+transparent-adapter design cannot be mounted on Fargate and is redundant on EC2.
+See [Gate review after E2](#gate-review-after-e2-2026-10-29). No AWS spend has been
+authorised for E4.
 
 **Bears on:** [H2](../../hypotheses/H2-fargate-forbids-caching.md),
 [H4](../../hypotheses/H4-cold-start-is-the-metric.md),
@@ -149,3 +152,35 @@ bespoke adapter.
 
 E4 is therefore explicitly gated on E2: build only if the matrix shows a gap that
 nothing existing fills.
+
+
+## Gate review after E2 (2026-10-29)
+
+E2's FUSE arms are complete, so the prior-art gate can be read instead of guessed.
+The result is not "build it":
+
+- **On EC2**, JuiceFS and SeaweedFS already provide a conformant local-cache-over-
+  object-storage tier. JuiceFS `stat` was 104.6 µs and SeaweedFS 20.2 µs; both
+  passed single-node conformance; both are 15–76× slower than instance store on
+  `stat` but far ahead of EFS's cache-miss path. A bespoke adapter would have to
+  beat an existing, measured implementation to justify itself. That is the case the
+  prior-art gate says not to build.
+- **On Fargate**, none of the three FUSE tiers can even be mounted: the platform
+  withholds `CAP_SYS_ADMIN`. E4's "one POSIX path" adapter needs a filesystem layer
+  below the application; without mount capability, there is no transparent path to
+  put the cache on. The remaining Fargate-only mechanism is **hydration at task
+  start** (copy a code tree onto ephemeral storage, serve from there, never sync
+  back), which is [H6](../../hypotheses/H6-writeback-cannot-be-correct.md)'s
+  single-writer alternative, not the bidirectional adapter this experiment was
+  specified to build.
+
+So E4 as written is **not built**: on EC2 it is prior art, and on Fargate it is
+blocked by the isolation model. This is a result about the platform, not a missing
+measurement.
+
+If H2/H4 still need a Fargate number, the honest replacement in place is a
+**read-only task-start hydration** experiment: one arm serves from EFS, one from a
+local copy hydrated from a tarball, with cold-task and warm-task cohorts reported
+separately (H4), and no write-back path (H6). That is infrastructure-only, needs no
+`CAP_SYS_ADMIN`, and can reuse E0's WordPress instrument. It is a new apparatus and
+a new ceiling; it is not authorised by E2's US$12 FUSE approval.

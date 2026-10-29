@@ -145,7 +145,7 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
 | [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx + FUSE arms complete; P2 inconclusive, P4 supported; NFS cache confound identified** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete; fresh-file cache mix, not production steady state** |
-| [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
+| [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | **gated, not built as specified**: FUSE caches are EC2-only; Fargate needs hydration, which is a new design |
 | [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | **formal v3 3/3 complete: P7 SUPPORTED; P4 INCONCLUSIVE; no paid work pending** |
 
 The cost entries are historical apparatus estimates, not a current price quote;
@@ -174,9 +174,12 @@ evidence remains separate and frozen. The
 [formal amendment](experiments/E5-attribute-cache/method-amendments/20261027-formal-v3/README.md)
 fixes the quiet profile, complete windows and P7 reference binding.
 
-E4 remains specced. E2 narrowed its substrate question for the tested workload;
-E5 must establish the remaining cache cost before deciding whether to build an
-adapter. JuiceFS, SeaweedFS and Mountpoint-S3 remain unmeasured matrix arms.
+E4 is now **gated, not built as specified**. E2 measured the FUSE arms: JuiceFS and
+SeaweedFS are conformant local caches but need `CAP_SYS_ADMIN`, which Fargate does
+not grant; Mountpoint failed 8 of 11 conformance checks. On EC2 the existing tiers
+are prior art; on Fargate a transparent adapter has no mount path. A read-only
+task-start hydration experiment is the proposed replacement, but it needs its own
+apparatus and ceiling. See [the gate review](experiments/E4-cache-adapter/README.md#gate-review-after-e2-2026-10-29).
 
 See [docs/scope-audit.md](docs/scope-audit.md) for what each experiment and
 hypothesis is currently worth, and why some are parked.
