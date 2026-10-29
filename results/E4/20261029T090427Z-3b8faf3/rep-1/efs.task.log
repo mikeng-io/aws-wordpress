@@ -1,0 +1,18 @@
+2026-10-29T09:08:31.514000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d WARNING: no host root-dev provided; using container root (94).
+2026-10-29T09:08:31.514000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d          Bind-mounted tiers cannot be checked against the host root.
+2026-10-29T09:08:31.520000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d mount check passed:
+2026-10-29T09:08:31.527000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d   efs -> /efs (st_dev=93, fs=nfs)
+2026-10-29T09:08:31.527000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d run order: efs=/efs
+2026-10-29T09:08:31.576000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d negotiated mount facts:
+2026-10-29T09:08:31.578000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d order,efs,1
+2026-10-29T09:08:31.578000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d kernel,6.1.188
+2026-10-29T09:08:31.578000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d mtu,eth0,1500
+2026-10-29T09:08:31.578000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d mtu,eth1,9001
+2026-10-29T09:08:31.578000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d mtu,lo,65536
+2026-10-29T09:08:31.578000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d mount,efs,nfs,127.0.0.1:/,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20389,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-29T09:08:31.578000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d conformance: efs
+2026-10-29T09:08:32.972000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d   efs: POSIX conformance PASSED
+2026-10-29T09:08:32.972000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d benchmarking efs at /efs
+2026-10-29T09:08:37.563000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d efs done, 2020 ops
+2026-10-29T09:08:40.500000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d uploaded efs.csv + conformance -> s3://e4-cacheadapter-dev-resultsbucketa95a2103-opnh9krfvxxa/efs/
+2026-10-29T09:08:46.498000+00:00 efs/Efs/24b7b62382b741eca0703f900efb373d all tiers uploaded

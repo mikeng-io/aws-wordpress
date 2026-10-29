@@ -1,0 +1,483 @@
+[09:04:27] === replication 1/3 ===
+[09:04:27] deploying E4-CacheAdapter-dev
+
+✨  Synthesis time: 2.42s
+
+E4-CacheAdapter-dev: start: Building E4-CacheAdapter-dev Template
+E4-CacheAdapter-dev: success: Built E4-CacheAdapter-dev Template
+E4-CacheAdapter-dev: start: Publishing E4-CacheAdapter-dev Template (163703054402-ap-southeast-1-5a009411)
+E4-CacheAdapter-dev: success: Published E4-CacheAdapter-dev Template (163703054402-ap-southeast-1-5a009411)
+E4-CacheAdapter-dev: creating CloudFormation changeset...
+E4-CacheAdapter-dev: deploying... [1/1]
+E4-CacheAdapter-dev |  0/39 | 5:04:35 PM | REVIEW_IN_PROGRESS      | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev User Initiated
+E4-CacheAdapter-dev |  0/39 | 5:04:42 PM | CREATE_IN_PROGRESS      | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev User Initiated
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev |  0/39 | 5:04:44 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  0/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:45 PM | CREATE_COMPLETE         | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |  1/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:45 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:46 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:46 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) Eventual consistency check initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:47 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:04:47 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) Resource creation Initiated
+E4-CacheAdapter-dev |  2/39 | 5:04:49 PM | CREATE_COMPLETE         | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |  3/39 | 5:04:49 PM | CREATE_COMPLETE         | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  3/39 | 5:04:54 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) Eventual consistency check initiated
+E4-CacheAdapter-dev |  4/39 | 5:04:54 PM | CREATE_COMPLETE         | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  5/39 | 5:04:57 PM | CREATE_COMPLETE         | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  5/39 | 5:04:58 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev |  5/39 | 5:04:58 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev |  5/39 | 5:04:58 PM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  5/39 | 5:04:58 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev |  5/39 | 5:04:58 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev |  5/39 | 5:04:58 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev |  5/39 | 5:04:59 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Resource creation Initiated
+E4-CacheAdapter-dev |  5/39 | 5:04:59 PM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) Resource creation Initiated
+E4-CacheAdapter-dev |  5/39 | 5:04:59 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Eventual consistency check initiated
+E4-CacheAdapter-dev |  6/39 | 5:04:59 PM | CREATE_COMPLETE         | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  6/39 | 5:04:59 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev |  6/39 | 5:05:00 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:05:00 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:05:00 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |  6/39 | 5:05:01 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:05:01 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:05:01 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) Resource creation Initiated
+E4-CacheAdapter-dev |  7/39 | 5:05:02 PM | CREATE_COMPLETE         | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  8/39 | 5:05:02 PM | CREATE_COMPLETE         | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |  8/39 | 5:05:02 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) Resource creation Initiated
+E4-CacheAdapter-dev |  8/39 | 5:05:02 PM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev |  9/39 | 5:05:02 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev | 10/39 | 5:05:02 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev | 11/39 | 5:05:02 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev | 12/39 | 5:05:02 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev | 13/39 | 5:05:03 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev | 13/39 | 5:05:03 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev | 13/39 | 5:05:03 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev | 13/39 | 5:05:03 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev | 13/39 | 5:05:03 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev | 13/39 | 5:05:03 PM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) Resource creation Initiated
+E4-CacheAdapter-dev | 14/39 | 5:05:04 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev | 15/39 | 5:05:04 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev | 16/39 | 5:05:04 PM | CREATE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev | 16/39 | 5:05:04 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev | 16/39 | 5:05:04 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev | 16/39 | 5:05:04 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:05:04 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:05:04 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:05:05 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev | 16/39 | 5:05:05 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:05:05 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:05:06 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:05:06 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:05:06 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev | 16/39 | 5:05:06 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev | 17/39 | 5:05:07 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev | 18/39 | 5:05:07 PM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev | 18/39 | 5:05:07 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev | 19/39 | 5:05:07 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev | 19/39 | 5:05:07 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) Resource creation Initiated
+E4-CacheAdapter-dev | 20/39 | 5:05:08 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev | 20/39 | 5:05:08 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) Resource creation Initiated
+E4-CacheAdapter-dev | 20/39 | 5:05:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev | 20/39 | 5:05:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev | 20/39 | 5:05:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev | 20/39 | 5:05:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev | 20/39 | 5:05:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev | 21/39 | 5:05:08 PM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev | 22/39 | 5:05:08 PM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev | 22/39 | 5:05:09 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Resource creation Initiated
+E4-CacheAdapter-dev | 22/39 | 5:05:09 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) Resource creation Initiated
+E4-CacheAdapter-dev | 22/39 | 5:05:09 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Eventual consistency check initiated
+E4-CacheAdapter-dev | 23/39 | 5:05:09 PM | CREATE_COMPLETE         | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev | 23/39 | 5:05:09 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) Resource creation Initiated
+E4-CacheAdapter-dev | 23/39 | 5:05:10 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) Resource creation Initiated
+E4-CacheAdapter-dev | 23/39 | 5:05:10 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) Resource creation Initiated
+E4-CacheAdapter-dev | 24/39 | 5:05:10 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev | 24/39 | 5:05:10 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) Resource creation Initiated
+E4-CacheAdapter-dev | 25/39 | 5:05:11 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev | 26/39 | 5:05:17 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev | 26/39 | 5:05:18 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev | 27/39 | 5:05:20 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev | 27/39 | 5:05:20 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Resource creation Initiated
+E4-CacheAdapter-dev | 28/39 | 5:05:20 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev | 29/39 | 5:05:20 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev | 29/39 | 5:05:20 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Eventual consistency check initiated
+E4-CacheAdapter-dev | 30/39 | 5:05:20 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev | 31/39 | 5:05:21 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev | 32/39 | 5:05:21 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev | 33/39 | 5:05:26 PM | CREATE_COMPLETE         | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev | 33/39 | 5:05:26 PM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev | 34/39 | 5:05:36 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev | 35/39 | 5:05:36 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev | 35/39 | 5:05:37 PM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) Resource creation Initiated
+E4-CacheAdapter-dev | 36/39 | 5:05:38 PM | CREATE_COMPLETE         | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev | 37/39 | 5:05:44 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev | 38/39 | 5:06:40 PM | CREATE_COMPLETE         | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev | 39/39 | 5:06:42 PM | CREATE_COMPLETE         | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev 
+
+✅  E4-CacheAdapter-dev
+
+✨  Deployment time: 121.75s
+
+Outputs:
+E4-CacheAdapter-dev.ClusterName = E4-CacheAdapter-dev-ClusterEB0386A7-lWBtUpEUIkQo
+E4-CacheAdapter-dev.EfsTaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevEfsTaskDefinitionC03A2962:4
+E4-CacheAdapter-dev.FileSystemId = fs-0d20a66ed7f9cb951
+E4-CacheAdapter-dev.HydratedTaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevHydratedTaskDefinitionDFBCA683:4
+E4-CacheAdapter-dev.LogGroupName = E4-CacheAdapter-dev-LogGroupF5B46931-aTCRknq3I95z
+E4-CacheAdapter-dev.ResultsBucketName = e4-cacheadapter-dev-resultsbucketa95a2103-opnh9krfvxxa
+E4-CacheAdapter-dev.SecurityGroupId = sg-001db1218adf1486f
+E4-CacheAdapter-dev.SeedTaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevSeedTaskDefinitionA549FEFD:4
+E4-CacheAdapter-dev.SubnetId = subnet-06cbea439ae28e80d
+Stack ARN:
+arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E4-CacheAdapter-dev/c3074ac0-d377-11f1-8494-06fff9d1997b
+
+✨  Total time: 133.7s
+
+[09:06:47] running seed task (builds the EFS origin; its timing is not a result)
+[09:06:48]   seed task started, waiting
+[09:08:01]   seed exit=0 (Essential container in task exited)
+[09:08:02] running EFS arm in a fresh task
+[09:08:03]   efs task started, waiting
+[09:09:17]   efs exit=0 (Essential container in task exited)
+[09:09:19]   efs/efs: 2020 ops, conformance failures: 0
+[09:09:19] running hydrated arm in a fresh task
+[09:09:20]   hydrated task started, waiting
+[09:10:19]   hydrated exit=0 (Essential container in task exited)
+[09:10:20]   hydrated/ephemeral: 2020 ops, conformance failures: 0
+[09:10:21] destroying E4-CacheAdapter-dev
+E4-CacheAdapter-dev: destroying... [1/1]
+E4-CacheAdapter-dev |   0 | 5:10:26 PM | DELETE_IN_PROGRESS      | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev User Initiated
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev |   0 | 5:10:28 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev |   1 | 5:10:29 PM | DELETE_COMPLETE         | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |   2 | 5:10:29 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev |   3 | 5:10:29 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev |   4 | 5:10:29 PM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev |   5 | 5:10:29 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev |   6 | 5:10:29 PM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev |   7 | 5:10:29 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev |   8 | 5:10:29 PM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev |   9 | 5:10:29 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev |  10 | 5:10:29 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev |  11 | 5:10:29 PM | DELETE_COMPLETE         | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |  11 | 5:10:30 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev |  11 | 5:10:30 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev |  11 | 5:10:30 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev |  11 | 5:10:30 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev |  12 | 5:10:30 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev |  13 | 5:10:31 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev |  14 | 5:10:31 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev |  14 | 5:10:31 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev |  14 | 5:10:31 PM | DELETE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  15 | 5:10:31 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev |  15 | 5:10:31 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev |  15 | 5:10:31 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev |  15 | 5:10:31 PM | DELETE_IN_PROGRESS      | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  16 | 5:10:31 PM | DELETE_COMPLETE         | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev |  16 | 5:10:31 PM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev |  17 | 5:10:32 PM | DELETE_COMPLETE         | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  18 | 5:10:33 PM | DELETE_COMPLETE         | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  19 | 5:10:35 PM | DELETE_COMPLETE         | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev |  19 | 5:10:35 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev |  20 | 5:10:39 PM | DELETE_COMPLETE         | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |  21 | 5:10:42 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev |  22 | 5:10:44 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev |  23 | 5:10:44 PM | DELETE_COMPLETE         | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev |  24 | 5:10:44 PM | DELETE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev |  24 | 5:10:45 PM | DELETE_IN_PROGRESS      | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  24 | 5:10:45 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev |  25 | 5:10:45 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev |  25 | 5:10:45 PM | DELETE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev |  26 | 5:10:45 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev |  27 | 5:10:46 PM | DELETE_COMPLETE         | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev |  28 | 5:10:46 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev |  29 | 5:10:46 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev |  30 | 5:10:46 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev |  31 | 5:10:49 PM | DELETE_COMPLETE         | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  32 | 5:10:51 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev |  33 | 5:12:30 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev |  34 | 5:12:30 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev |  35 | 5:12:30 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev |  35 | 5:12:30 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev |  35 | 5:12:30 PM | DELETE_IN_PROGRESS      | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  36 | 5:12:31 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev |  37 | 5:12:32 PM | DELETE_COMPLETE         | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  37 | 5:12:32 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  38 | 5:12:33 PM | DELETE_COMPLETE         | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  39 | 5:12:34 PM | DELETE_COMPLETE         | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev 
+✅  E4-CacheAdapter-dev: destroyed
+[09:12:38] teardown verified: stack gone
+[09:12:38] replication 1 complete -> results/E4/20261029T090427Z-3b8faf3/rep-1
+[09:12:38] === replication 2/3 ===
+[09:12:38] deploying E4-CacheAdapter-dev
+
+✨  Synthesis time: 2.25s
+
+E4-CacheAdapter-dev: creating CloudFormation changeset...
+E4-CacheAdapter-dev: deploying... [1/1]
+E4-CacheAdapter-dev |  0/39 | 5:12:44 PM | REVIEW_IN_PROGRESS      | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev User Initiated
+E4-CacheAdapter-dev |  0/39 | 5:12:50 PM | CREATE_IN_PROGRESS      | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev User Initiated
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev |  0/39 | 5:12:53 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  0/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) Resource creation Initiated
+E4-CacheAdapter-dev |  0/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_COMPLETE         | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) Resource creation Initiated
+E4-CacheAdapter-dev |  1/39 | 5:12:54 PM | CREATE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) Eventual consistency check initiated
+E4-CacheAdapter-dev |  2/39 | 5:12:57 PM | CREATE_COMPLETE         | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  3/39 | 5:12:57 PM | CREATE_COMPLETE         | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |  3/39 | 5:13:02 PM | CREATE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) Eventual consistency check initiated
+E4-CacheAdapter-dev |  4/39 | 5:13:02 PM | CREATE_COMPLETE         | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  5/39 | 5:13:05 PM | CREATE_COMPLETE         | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  5/39 | 5:13:06 PM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  5/39 | 5:13:06 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev |  5/39 | 5:13:06 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev |  5/39 | 5:13:06 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev |  5/39 | 5:13:06 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev |  5/39 | 5:13:06 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev |  5/39 | 5:13:07 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Resource creation Initiated
+E4-CacheAdapter-dev |  5/39 | 5:13:07 PM | CREATE_IN_PROGRESS      | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:13:07 PM | CREATE_COMPLETE         | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  6/39 | 5:13:07 PM | CREATE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) Eventual consistency check initiated
+E4-CacheAdapter-dev |  6/39 | 5:13:07 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev |  6/39 | 5:13:08 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |  6/39 | 5:13:08 PM | CREATE_IN_PROGRESS      | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:13:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:13:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:13:08 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) Resource creation Initiated
+E4-CacheAdapter-dev |  6/39 | 5:13:09 PM | CREATE_IN_PROGRESS      | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) Resource creation Initiated
+E4-CacheAdapter-dev |  7/39 | 5:13:09 PM | CREATE_COMPLETE         | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |  8/39 | 5:13:09 PM | CREATE_COMPLETE         | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  8/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev |  9/39 | 5:13:10 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev | 10/39 | 5:13:10 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev | 11/39 | 5:13:10 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev | 12/39 | 5:13:10 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev | 13/39 | 5:13:10 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev | 14/39 | 5:13:10 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev | 14/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) Resource creation Initiated
+E4-CacheAdapter-dev | 14/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev | 15/39 | 5:13:10 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev | 15/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev | 15/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev | 15/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev | 15/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev | 15/39 | 5:13:10 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev | 15/39 | 5:13:11 PM | CREATE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:11 PM | CREATE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev | 16/39 | 5:13:11 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:12 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:12 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:12 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:12 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev | 16/39 | 5:13:12 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev | 16/39 | 5:13:12 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:13 PM | CREATE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:13 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev | 16/39 | 5:13:13 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) Resource creation Initiated
+E4-CacheAdapter-dev | 16/39 | 5:13:13 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) Resource creation Initiated
+E4-CacheAdapter-dev | 17/39 | 5:13:13 PM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev | 18/39 | 5:13:13 PM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev | 18/39 | 5:13:14 PM | CREATE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) Resource creation Initiated
+E4-CacheAdapter-dev | 19/39 | 5:13:14 PM | CREATE_COMPLETE         | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev | 20/39 | 5:13:14 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev | 21/39 | 5:13:15 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev | 22/39 | 5:13:15 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev | 22/39 | 5:13:15 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev | 22/39 | 5:13:15 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev | 22/39 | 5:13:15 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev | 22/39 | 5:13:15 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev | 22/39 | 5:13:15 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev | 22/39 | 5:13:16 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev | 22/39 | 5:13:16 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) Resource creation Initiated
+E4-CacheAdapter-dev | 23/39 | 5:13:16 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev | 23/39 | 5:13:16 PM | CREATE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) Resource creation Initiated
+E4-CacheAdapter-dev | 23/39 | 5:13:16 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Resource creation Initiated
+E4-CacheAdapter-dev | 24/39 | 5:13:17 PM | CREATE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev | 24/39 | 5:13:17 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) Resource creation Initiated
+E4-CacheAdapter-dev | 24/39 | 5:13:17 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) Resource creation Initiated
+E4-CacheAdapter-dev | 24/39 | 5:13:17 PM | CREATE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) Resource creation Initiated
+E4-CacheAdapter-dev | 25/39 | 5:13:17 PM | CREATE_COMPLETE         | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev | 25/39 | 5:13:17 PM | CREATE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) Eventual consistency check initiated
+E4-CacheAdapter-dev | 26/39 | 5:13:24 PM | CREATE_COMPLETE         | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev | 26/39 | 5:13:26 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev | 26/39 | 5:13:27 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Resource creation Initiated
+E4-CacheAdapter-dev | 27/39 | 5:13:27 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev | 28/39 | 5:13:27 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev | 29/39 | 5:13:27 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev | 30/39 | 5:13:27 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev | 30/39 | 5:13:28 PM | CREATE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) Eventual consistency check initiated
+E4-CacheAdapter-dev | 31/39 | 5:13:28 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev | 32/39 | 5:13:28 PM | CREATE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev | 33/39 | 5:13:32 PM | CREATE_COMPLETE         | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev | 33/39 | 5:13:33 PM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev | 33/39 | 5:13:44 PM | CREATE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) Resource creation Initiated
+E4-CacheAdapter-dev | 34/39 | 5:13:44 PM | CREATE_COMPLETE         | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev | 35/39 | 5:14:01 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev | 36/39 | 5:14:01 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev | 37/39 | 5:14:11 PM | CREATE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev | 38/39 | 5:14:32 PM | CREATE_COMPLETE         | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev | 39/39 | 5:14:34 PM | CREATE_COMPLETE         | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev 
+
+✅  E4-CacheAdapter-dev
+
+✨  Deployment time: 106.01s
+
+Outputs:
+E4-CacheAdapter-dev.ClusterName = E4-CacheAdapter-dev-ClusterEB0386A7-IOM8GRc2xAoc
+E4-CacheAdapter-dev.EfsTaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevEfsTaskDefinitionC03A2962:5
+E4-CacheAdapter-dev.FileSystemId = fs-06d0b49c83e967eca
+E4-CacheAdapter-dev.HydratedTaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevHydratedTaskDefinitionDFBCA683:5
+E4-CacheAdapter-dev.LogGroupName = E4-CacheAdapter-dev-LogGroupF5B46931-3SwL1L1KS4gy
+E4-CacheAdapter-dev.ResultsBucketName = e4-cacheadapter-dev-resultsbucketa95a2103-h5layiau7ibw
+E4-CacheAdapter-dev.SecurityGroupId = sg-0cec79c99a52461be
+E4-CacheAdapter-dev.SeedTaskDefinitionArn = arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevSeedTaskDefinitionA549FEFD:5
+E4-CacheAdapter-dev.SubnetId = subnet-01d6711a873bd87ba
+Stack ARN:
+arn:aws:cloudformation:ap-southeast-1:163703054402:stack/E4-CacheAdapter-dev/e63bc8d0-d378-11f1-87c5-02ffde7f2801
+
+✨  Total time: 116.55s
+
+[09:14:40] running seed task (builds the EFS origin; its timing is not a result)
+[09:14:42]   seed task started, waiting
+[09:15:34]   seed exit=None (ResourceInitializationError: failed to invoke EFS utils commands to set up EFS volumes: stderr: Failed to resolve "fs-06d0b49c83e967eca.efs.ap-southeast-1.amazonaws.com" - check that your file system ID is correct, and ensure that the VPC has an EFS mount target for this file system ID. See https://docs.aws.amazon.com/console/efs/mount-dns-name for more detail. Attempting to lookup mount target ip address using botocore. Failed to import necessary dependency botocore, please install botocore first. : unsuccessful EFS utils command execution; code: 1)
+seed task failed - not collecting a result
+[09:15:35] destroying E4-CacheAdapter-dev
+E4-CacheAdapter-dev: destroying... [1/1]
+E4-CacheAdapter-dev |   0 | 5:15:42 PM | DELETE_IN_PROGRESS      | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev User Initiated
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev |   0 | 5:15:43 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev |   1 | 5:15:44 PM | DELETE_COMPLETE         | AWS::CDK::Metadata                    | CDKMetadata/Default (CDKMetadata) 
+E4-CacheAdapter-dev |   2 | 5:15:44 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/ExecutionRole/DefaultPolicy (SeedTaskDefinitionExecutionRoleDefaultPolicyA3E9C9E2) 
+E4-CacheAdapter-dev |   3 | 5:15:44 PM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition              | HydratedTaskDefinition (HydratedTaskDefinition60883D4A) 
+E4-CacheAdapter-dev |   4 | 5:15:44 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | SeedTaskDefinition/TaskRole/DefaultPolicy (SeedTaskDefinitionTaskRoleDefaultPolicy1CEE5FE6) 
+E4-CacheAdapter-dev |   5 | 5:15:44 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/ExecutionRole/DefaultPolicy (EfsTaskDefinitionExecutionRoleDefaultPolicy41085422) 
+E4-CacheAdapter-dev |   6 | 5:15:44 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | EfsTaskDefinition/TaskRole/DefaultPolicy (EfsTaskDefinitionTaskRoleDefaultPolicyC571AF82) 
+E4-CacheAdapter-dev |   7 | 5:15:44 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | EndpointSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:443 (EndpointSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC443FF7C7A75) 
+E4-CacheAdapter-dev |   8 | 5:15:44 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroupIngress        | FileSystemSecurityGroup/from E4CacheAdapterdevTaskSecurityGroupAC7D72DC:2049 (FileSystemSecurityGroupfromE4CacheAdapterdevTaskSecurityGroupAC7D72DC2049B674E1DA) 
+E4-CacheAdapter-dev |   9 | 5:15:44 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/S3Endpoint (VpcS3Endpoint4A3DE4B5) 
+E4-CacheAdapter-dev |  10 | 5:15:44 PM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition              | EfsTaskDefinition (EfsTaskDefinitionBD3E4B03) 
+E4-CacheAdapter-dev |  11 | 5:15:44 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/ExecutionRole/DefaultPolicy (HydratedTaskDefinitionExecutionRoleDefaultPolicyA83AD42E) 
+E4-CacheAdapter-dev |  12 | 5:15:44 PM | DELETE_COMPLETE         | AWS::S3::BucketPolicy                 | ResultsBucket/Policy (ResultsBucketPolicy5EF3AFA7) 
+E4-CacheAdapter-dev |  12 | 5:15:45 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev |  12 | 5:15:45 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev |  12 | 5:15:45 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev |  12 | 5:15:45 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev |  13 | 5:15:45 PM | DELETE_COMPLETE         | AWS::ECS::TaskDefinition              | SeedTaskDefinition (SeedTaskDefinitionEF04539B) 
+E4-CacheAdapter-dev |  13 | 5:15:46 PM | DELETE_IN_PROGRESS      | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  13 | 5:15:46 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev |  14 | 5:15:46 PM | DELETE_COMPLETE         | AWS::IAM::Policy                      | HydratedTaskDefinition/TaskRole/DefaultPolicy (HydratedTaskDefinitionTaskRoleDefaultPolicy66BB9237) 
+E4-CacheAdapter-dev |  14 | 5:15:46 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev |  15 | 5:15:46 PM | DELETE_COMPLETE         | Custom::VpcRestrictDefaultSG          | Vpc/RestrictDefaultSecurityGroupCustomResource/Default (VpcRestrictDefaultSecurityGroupCustomResourceC73DA2BE) 
+E4-CacheAdapter-dev |  16 | 5:15:46 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup               | TaskSecurityGroup (TaskSecurityGroup2D2EA438) 
+E4-CacheAdapter-dev |  16 | 5:15:46 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev |  16 | 5:15:46 PM | DELETE_IN_PROGRESS      | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  16 | 5:15:46 PM | DELETE_IN_PROGRESS      | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev |  17 | 5:15:47 PM | DELETE_COMPLETE         | AWS::Logs::LogGroup                   | LogGroup (LogGroupF5B46931) 
+E4-CacheAdapter-dev |  18 | 5:15:48 PM | DELETE_COMPLETE         | AWS::S3::Bucket                       | ResultsBucket (ResultsBucketA95A2103) 
+E4-CacheAdapter-dev |  19 | 5:15:50 PM | DELETE_COMPLETE         | AWS::Lambda::Function                 | Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler (CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E) 
+E4-CacheAdapter-dev |  19 | 5:15:50 PM | DELETE_IN_PROGRESS      | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev |  20 | 5:15:54 PM | DELETE_COMPLETE         | AWS::ECS::Cluster                     | Cluster (ClusterEB0386A7) 
+E4-CacheAdapter-dev |  21 | 5:15:57 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/ExecutionRole (HydratedTaskDefinitionExecutionRole105A877F) 
+E4-CacheAdapter-dev |  22 | 5:15:58 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/ExecutionRole (SeedTaskDefinitionExecutionRole17269B13) 
+E4-CacheAdapter-dev |  23 | 5:15:59 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | HydratedTaskDefinition/TaskRole (HydratedTaskDefinitionTaskRole356796F1) 
+E4-CacheAdapter-dev |  24 | 5:15:59 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/ExecutionRole (EfsTaskDefinitionExecutionRole6FCC4FD1) 
+E4-CacheAdapter-dev |  25 | 5:15:59 PM | DELETE_COMPLETE         | AWS::EC2::SubnetRouteTableAssociation | Vpc/IsolatedSubnet1/RouteTableAssociation (VpcIsolatedSubnet1RouteTableAssociationD300FCBB) 
+E4-CacheAdapter-dev |  26 | 5:16:00 PM | DELETE_COMPLETE         | AWS::EFS::MountTarget                 | FileSystem/EfsMountTarget1 (FileSystemEfsMountTarget1586453F0) 
+E4-CacheAdapter-dev |  27 | 5:16:00 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | SeedTaskDefinition/TaskRole (SeedTaskDefinitionTaskRoleEC39AE74) 
+E4-CacheAdapter-dev |  27 | 5:16:00 PM | DELETE_IN_PROGRESS      | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev |  27 | 5:16:00 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev |  27 | 5:16:00 PM | DELETE_IN_PROGRESS      | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  28 | 5:16:01 PM | DELETE_COMPLETE         | AWS::EC2::RouteTable                  | Vpc/IsolatedSubnet1/RouteTable (VpcIsolatedSubnet1RouteTable4771E3E5) 
+E4-CacheAdapter-dev |  29 | 5:16:01 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup               | FileSystemSecurityGroup (FileSystemSecurityGroupBFA44C6B) 
+E4-CacheAdapter-dev |  30 | 5:16:02 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | EfsTaskDefinition/TaskRole (EfsTaskDefinitionTaskRole09A1A4A6) 
+E4-CacheAdapter-dev |  31 | 5:16:03 PM | DELETE_COMPLETE         | AWS::IAM::Role                        | Custom::VpcRestrictDefaultSGCustomResourceProvider/Role (CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0) 
+E4-CacheAdapter-dev |  32 | 5:16:04 PM | DELETE_COMPLETE         | AWS::EFS::FileSystem                  | FileSystem (FileSystem8A8E25C0) 
+E4-CacheAdapter-dev |  33 | 5:17:45 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/LogsEndpoint (VpcLogsEndpointDA7F7E44) 
+E4-CacheAdapter-dev |  34 | 5:18:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrDockerEndpoint (VpcEcrDockerEndpoint53ED547B) 
+E4-CacheAdapter-dev |  35 | 5:18:25 PM | DELETE_COMPLETE         | AWS::EC2::VPCEndpoint                 | Vpc/EcrEndpoint (VpcEcrEndpoint0BE46338) 
+E4-CacheAdapter-dev |  35 | 5:18:26 PM | DELETE_IN_PROGRESS      | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev |  35 | 5:18:26 PM | DELETE_IN_PROGRESS      | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  36 | 5:18:27 PM | DELETE_COMPLETE         | AWS::EC2::SecurityGroup               | EndpointSecurityGroup (EndpointSecurityGroupF840B798) 
+E4-CacheAdapter-dev |  37 | 5:18:27 PM | DELETE_COMPLETE         | AWS::EC2::Subnet                      | Vpc/IsolatedSubnet1/Subnet (VpcIsolatedSubnet1SubnetE48C5737) 
+E4-CacheAdapter-dev |  37 | 5:18:27 PM | DELETE_IN_PROGRESS      | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  38 | 5:18:29 PM | DELETE_COMPLETE         | AWS::EC2::VPC                         | Vpc (Vpc8378EB38) 
+E4-CacheAdapter-dev |  39 | 5:18:29 PM | DELETE_COMPLETE         | AWS::CloudFormation::Stack            | E4-CacheAdapter-dev 
+✅  E4-CacheAdapter-dev: destroyed
+[09:18:30] teardown verified: stack gone
+make: *** [e4] Error 1
