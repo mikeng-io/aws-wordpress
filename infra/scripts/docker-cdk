@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# CDK's asset publisher runs `docker login` before every push. On macOS that
+# writes through Docker Desktop's keychain helper, which fails in this
+# environment ("Keychain Error. (100001)") even when DOCKER_CONFIG is set.
+#
+# The credentials are already in DOCKER_CONFIG's config.json (ecr-auth.sh writes
+# the ECR token there), and `docker push` reads them without a login. So make the
+# login a no-op and pass every other verb to the real client.
+set -euo pipefail
+
+if [ "${1:-}" = "login" ]; then
+    exit 0
+fi
+
+REAL="${DOCKER_BIN:-/usr/local/bin/docker}"
+exec "$REAL" "$@"
