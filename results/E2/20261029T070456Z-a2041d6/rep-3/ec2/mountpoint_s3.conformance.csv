@@ -1,0 +1,15 @@
+rename,FAIL,mv did not replace
+in_place_write,FAIL,
+/usr/local/bin/conformance: line 62: /bench/mountpoint/conformance.298/append: Operation not permitted
+append,FAIL,
+truncate,FAIL,
+fsync,PASS
+hardlink,FAIL,
+symlink,FAIL,
+dir_rename,FAIL,
+flock_excludes,PASS
+root_not_squashed,PASS
+/usr/local/bin/conformance: line 130: /bench/mountpoint/conformance.298/mtime: Operation not permitted
+mtime_advances,FAIL,
+TOTAL_FAILURES,8
+TOTAL_ERRORS,0

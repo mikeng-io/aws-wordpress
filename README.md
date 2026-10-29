@@ -122,6 +122,15 @@ REFUTED with that construct caveat, and prediction 5 is PARTIALLY SUPPORTED.
 The mutating-operation results remain useful; production steady-state metadata
 cost is still open.
 
+[E2's FUSE arms](docs/findings/E2-fuse.md) completed three independent deployments
+(`results/E2/20261029T070456Z-a2041d6/`). JuiceFS's metadata engine cut `stat` to
+104.6 µs against EFS's 785.6 µs p50, but that is 0.133× EFS, short of the
+pre-registered 10× bar: **P2 INCONCLUSIVE**. The EFS p50 is a cache-mode mixture,
+so the near-miss is not mechanism support. Mountpoint for S3 failed 8 of 11
+conformance checks in every replication, including rename and in-place write:
+**P4 SUPPORTED**. All three FUSE tiers need `CAP_SYS_ADMIN`, so Fargate still
+cannot reach them.
+
 [E0's cart/checkout endpoints](docs/findings/E0-cart-checkout.md): fixed a
 catalog bug that had made every WooCommerce cart/checkout trace measure an empty
 cart since E0 was first built. Populated, both endpoints run 14–15% above
@@ -134,7 +143,7 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 |---|---|---|---|
 | [E0](experiments/E0-syscall-census/) | What does a heavy WP request actually do to the filesystem? | none (local Docker) | **done, n=10** |
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
-| [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx groups complete; FUSE arms open; NFS cache confound identified** |
+| [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx + FUSE arms complete; P2 inconclusive, P4 supported; NFS cache confound identified** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete; fresh-file cache mix, not production steady state** |
 | [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
 | [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | **formal v3 3/3 complete: P7 SUPPORTED; P4 INCONCLUSIVE; no paid work pending** |

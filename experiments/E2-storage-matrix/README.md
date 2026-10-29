@@ -1,11 +1,12 @@
 # E2 — the storage matrix
 
-**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` · `FSx GROUP COMPLETE`.
-Prediction 1 is NOT EVALUABLE, prediction 3 is REFUTED with a construct caveat,
-and prediction 5 is PARTIALLY SUPPORTED. See
-[docs/findings/E2-server-backed.md](../../docs/findings/E2-server-backed.md).
-The three FUSE arms are **planned but not built**: see
-[fuse-arms.md](fuse-arms.md). P2 and P4 remain ungraded until they run.
+**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` · `FSx GROUP COMPLETE` ·
+`FUSE ARMS COMPLETE`. Prediction 1 is NOT EVALUABLE, prediction 3 is REFUTED with a
+construct caveat, prediction 5 is PARTIALLY SUPPORTED, **prediction 2 is
+INCONCLUSIVE**, and **prediction 4 is SUPPORTED**. See
+[docs/findings/E2-server-backed.md](../../docs/findings/E2-server-backed.md) and
+[docs/findings/E2-fuse.md](../../docs/findings/E2-fuse.md). The FUSE build and
+grading rules are recorded in [fuse-arms.md](fuse-arms.md).
 
 > **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md)
 > · [figures](../../docs/charts/e2-storage-matrix.html).
@@ -71,10 +72,10 @@ E3's ~271× is a measurement of that boundary, not of "SSD vs network".
 | **FSx for NetApp ONTAP** | NFS/SMB | **no** | EC2 only. |
 | **JuiceFS** | FUSE; metadata engine (Redis/DB) + object storage for data | **no** | Needs `CAP_SYS_ADMIN`. Metadata is a *database*, not the object store, which is the whole point of testing it against a metadata-heavy load. |
 | **SeaweedFS** | FUSE; own volume servers + filer, optionally S3-backed | **no** | Needs `CAP_SYS_ADMIN`. Different split from JuiceFS: its own storage layer rather than a metadata engine over S3. |
-| **Mountpoint for S3** | FUSE over S3 | **no** | Needs `CAP_SYS_ADMIN`. Not POSIX-complete — no in-place writes, no rename. Expected to fail correctness before latency matters, which is a result, not a disqualification. |
+| **Mountpoint for S3** | FUSE over S3 | **no** | Needs `CAP_SYS_ADMIN`. Not POSIX-complete: E2 measured 8 of 11 conformance failures, including rename, in-place write, append and `mtime`. Conformance-only in the matrix. |
 
 **The availability column is itself a finding.** Everything Fargate cannot reach —
-four FUSE tiers needing `CAP_SYS_ADMIN`, all three FSx tiers, and the entire
+three FUSE tiers needing `CAP_SYS_ADMIN`, all three FSx tiers, and the entire
 instance-store row — is removed by the *compute* choice, before performance is
 discussed. That is H1's surviving claim stated as a table.
 
@@ -236,15 +237,16 @@ different permission paths — so it is checked per tier rather than assumed.
 ### The conformance gate, and what it is scoped to
 
 `analysis`-adjacent apparatus now exists (`infra/lib/stacks/bench/conformance.sh`)
-and runs on every mount **before any timing**, per H6. Ten checks, chosen for what
+and runs on every mount **before any timing**, per H6. Eleven checks, chosen for what
 actually breaks on object-store-backed FUSE rather than for coverage: rename over an
 existing file, in-place write at an offset, append, truncate, `fsync`, hardlink,
-symlink, directory rename, an `flock` that genuinely excludes a second holder, and
+symlink, directory rename, an `flock` that genuinely excludes a second holder,
 `mtime` advancing on write — the last because opcache revalidation is a
 stat-and-compare-`mtime`, so a filesystem that does not move it serves stale
-bytecode silently.
+bytecode silently — and `root_not_squashed`.
 
-It is the **single-node** gate and says so. Cross-node consistency — two hosts, one
+It is the **eleven-check** gate and says so (the ten semantic checks above plus
+`root_not_squashed`). Cross-node consistency — two hosts, one
 file, close-to-open ordering — needs a second instance and belongs to H6/E4.
 Conflating the two would let a tier fail here for a reason unrelated to whether it
 earns a latency number.

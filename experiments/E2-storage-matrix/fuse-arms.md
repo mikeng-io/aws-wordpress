@@ -1,11 +1,13 @@
 # E2 FUSE arms — build and collection plan (2026-10-29)
 
-**Status:** `IN PROGRESS` — apparatus built and smoke-tested; formal three-rep
-collection running. Ceiling **US$12**, approved 2026-10-29.
+**Status:** `COMPLETE` — three replications collected and graded. **P2
+INCONCLUSIVE**, **P4 SUPPORTED**. Result:
+[`results/E2/20261029T070456Z-a2041d6/`](../../results/E2/20261029T070456Z-a2041d6/);
+finding: [docs/findings/E2-fuse.md](../../docs/findings/E2-fuse.md). Ceiling
+**US$12**, approved 2026-10-29; actual standing cost about **US$0.30**.
 
-This is the missing half of E2. The block-backed group, EFS and the three FSx arms
-are complete; the three FUSE tiers in the matrix have never been mounted, so P2
-(JuiceFS metadata) and P4 (Mountpoint correctness) are still ungraded.
+This was the missing half of E2. The block-backed group, EFS and the three FSx arms
+were already complete; the three FUSE tiers are now mounted and graded.
 
 ## What must be measured
 
@@ -77,6 +79,21 @@ in-place-write semantics, and one failure is enough.
 5. **Grade and publish.** Extend `analysis/e2_stats.py` for P2/P4 and the FUSE rows
    in P1's ranking; write `docs/findings/E2-fuse.md`; update H1/H2 and the E2
    status. Then decide E4.
+
+## Outcome (2026-10-29)
+
+The formal run was three independent deployments, 4,020 timed operations per tier
+per replication, identical image digest `sha256:6f6202…`, `ap-southeast-1a`,
+`c7gd.large`. P2 came out at **0.133× EFS** pooled (per rep 0.125, 0.130, 0.129)
+and **76.5× local**: direction held, the 10× half did not, so the registered rule
+returns **INCONCLUSIVE**. P4 returned **SUPPORTED**: the same eight checks failed in
+all three replications, with zero `ERROR`.
+
+The P2 number has a construct caveat that the finding spells out: EFS's `stat` p50
+is a cache-mode mixture (31.8% of calls hit the client attribute cache at ~1.8 µs;
+the rest miss at ~839 µs), while JuiceFS has one mode at ~100 µs. The p50 comparison
+therefore landed in the miss mode by accident of the benchmark, not because JuiceFS
+beat EFS's fast path. Do not read the 7.5× as mechanism support.
 
 ## E4 gate
 

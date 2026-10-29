@@ -93,10 +93,12 @@ if [ -z "$AWS_BIN" ]; then
 fi
 aws() { "$AWS_BIN" "$@"; }
 
-# A dirty tree means meta.json's git_sha does not describe what ran. The protocol
-# requires the run be reconstructible from a commit, so this refuses rather than
-# recording git_dirty:true and hoping someone reads it.
-if [ -z "${ALLOW_DIRTY:-}" ] && ! git -C "$REPO" diff --quiet HEAD --; then
+# A dirty apparatus means meta.json's git_sha does not describe what ran. The
+# protocol requires the run be reconstructible from a commit, so this refuses
+# rather than recording git_dirty:true and hoping someone reads it. Results and
+# docs are excluded: regenerating an old run's summary is not an apparatus change,
+# and counting it as one is how the 2026-10-29 FUSE run got a spurious dirty flag.
+if [ -z "${ALLOW_DIRTY:-}" ] && ! git -C "$REPO" diff --quiet HEAD -- . ':!results' ':!docs' ':!experiments/E2-storage-matrix/README.md'; then
     echo "FATAL: working tree is dirty - commit first (ALLOW_DIRTY=1 to override for a non-result run)" >&2
     exit 1
 fi
@@ -424,7 +426,7 @@ for rep in $(seq "$START_REP" "$REPS"); do
   "ami_id": "$AMI",
   "stack": "$STACK",
   "git_sha": "$(git -C "$REPO" rev-parse HEAD)",
-  "git_dirty": $(git -C "$REPO" diff --quiet && echo false || echo true),
+  "git_dirty": $(git -C "$REPO" diff --quiet -- . ':!results' ':!docs' ':!experiments/E2-storage-matrix/README.md' && echo false || echo true),
   "ec2_task": "$EC2_TASK",
   "fargate_task": "$FARGATE_TASK",
   "ec2_image_digest": "$EC2_DIGEST",

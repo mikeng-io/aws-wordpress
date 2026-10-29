@@ -1,0 +1,5 @@
+instance_store
+ebs
+efs_host_plain
+juicefs
+seaweedfs

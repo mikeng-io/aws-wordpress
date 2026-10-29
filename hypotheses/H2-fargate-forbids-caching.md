@@ -100,3 +100,22 @@ local tier — it has one, and it is as fast as attached NVMe. What Fargate lack
 the ability to **share** that tier across tasks and to keep it across task restarts.
 The hypothesis stands or falls on amortisation alone, which is
 [H4](H4-cold-start-is-the-metric.md)'s territory, and not on device speed at all.
+
+## E2-FUSE confirms the reachability boundary (2026-10-29)
+
+The three FUSE tiers now have measured numbers, and they were mounted on the EC2
+host because that is where `CAP_SYS_ADMIN` exists; the unprivileged benchmark
+container bind-mounted them. Fargate still cannot mount any of them. That is the
+capability half of H2, measured rather than argued.
+
+The numbers do not rescue the Fargate branch. JuiceFS `stat` was 104.6 µs pooled
+against EFS's 785.6 µs p50, but the EFS p50 is a cache-mode mixture (31.8% of calls
+hit the client attribute cache at ~1.8 µs) and the registered 10× bar was missed:
+P2 is **INCONCLUSIVE**. SeaweedFS reached 20.2 µs and passed conformance, but still
+needs `CAP_SYS_ADMIN`. Mountpoint failed 8 of 11 conformance checks, including
+rename and in-place write.
+
+So the FUSE escape hatch from EFS is real on EC2 and absent on Fargate. H2 remains
+`PARTIALLY TESTED`; its kill condition is still the unbuilt per-task hydration
+design, not a FUSE tier. See
+[docs/findings/E2-fuse.md](../docs/findings/E2-fuse.md).
