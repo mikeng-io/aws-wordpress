@@ -17,7 +17,7 @@ TOOLS=/opt/e2-fuse
 mkdir -p "$TOOLS" /mnt/juicefs /mnt/seaweedfs /mnt/mountpoint \
   /mnt/juicefs-cache /mnt/seaweed-data /mnt/seaweed-cache
 
-dnf install -y fuse3 redis6 curl tar gzip
+dnf install -y fuse3 redis6 tar gzip
 
 # --- clients ---------------------------------------------------------------
 curl -fsSL https://github.com/juicedata/juicefs/releases/download/v1.4.2/juicefs-1.4.2-linux-arm64.tar.gz \

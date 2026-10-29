@@ -39,6 +39,23 @@ and the image digest / instance identity in `meta.json`.
 - Teardown uses E2's existing `collect.sh` trap and scoped sweep; the FUSE task has
   no FSx backups. A stack still standing is the failure case, as today.
 
+## Grading rules, fixed before the first mount
+
+P2 (JuiceFS vs EFS) uses the pooled `stat` p50 over the three replications, the same
+estimator E3/E5 use. **SUPPORTED** requires both halves of the prediction: JuiceFS is
+at least **10x faster than EFS** (ratio <= 0.10) *and* still at least **3x slower than
+instance store** (ratio >= 3.0, the study's separation threshold). **REFUTED** if it is
+not faster than EFS at all (ratio >= 1.0). Between 0.10 and 1.0, or a local tier that
+does not separate, is **INCONCLUSIVE** — the direction held but "wide margin" did not.
+SeaweedFS is reported without a verdict; it is a second design point, not a second
+chance at the same prediction.
+
+P4 (Mountpoint for S3) is graded on the conformance CSV, not latency: **SUPPORTED**
+if any of the eleven checks is `FAIL`; **REFUTED** if all eleven `PASS`; **ERROR** if
+the suite could not run and produced no verdict. This is the pre-registered reading:
+the prediction is that an object-store-backed FUSE mount cannot hold POSIX rename /
+in-place-write semantics, and one failure is enough.
+
 ## Run plan
 
 1. **Offline build.** Add `includeFuse` to the stack, the FUSE image/entrypoint,
