@@ -1,0 +1,12 @@
+{
+  "experiment": "E5-formal-isolation",
+  "study_replication": true,
+  "run_id": "20261028T160106Z-dd5fce0",
+  "source_commit": "dd5fce044306bfccbf309f63c3d9d44567c364a3",
+  "utc": "2026-10-28T17:47:38.395760+00:00",
+  "task_failed": false,
+  "protocol_method": "isolation-formal-v3",
+  "image_digest": "sha256:c42cef080f1637ef57f8417a7cf5efaf595de345de4492b305e43bccfeaf8ec6",
+  "deployment_id": "c26d9babbd569a549cdc7ccfb46271c59e04493d705969b64c7cc09b858c8f84",
+  "protocol": "See formal/protocol.json for the exact profile, schedule and windows"
+}
