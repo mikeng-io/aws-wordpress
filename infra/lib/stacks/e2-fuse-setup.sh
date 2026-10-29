@@ -63,7 +63,7 @@ nohup weed mount -filer=127.0.0.1:8888 -dir=/mnt/seaweedfs \
 for i in $(seq 1 60); do mountpoint -q /mnt/seaweedfs && break || sleep 1; done
 
 # --- Mountpoint for S3 -----------------------------------------------------
-nohup mount-s3 "$FUSE_BUCKET" /mnt/mountpoint --prefix mountpoint \
+nohup mount-s3 "$FUSE_BUCKET" /mnt/mountpoint --prefix mountpoint/ \
   --allow-other >/var/log/mountpoint.log 2>&1 &
 for i in $(seq 1 60); do mountpoint -q /mnt/mountpoint && break || sleep 1; done
 
