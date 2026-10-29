@@ -1,8 +1,16 @@
 # H6 — Bidirectional write-back caching cannot be made correct
 
-**Status:** `UNTESTED — CENTRAL TO E4`
+**Status:** `UNTESTED — PARKED`
 
-> Promoted. A cache adapter placing local storage in front of a shared origin
+**Priority change (2026-10-29):** E4 was replaced in place with read-only hydration
+and completed without a reverse sync/write path. It does not test this claim.
+The former CENTRAL TO E4 qualifier belonged to the original transparent adapter;
+no write-back work is required to close the current phase. The original argument
+below is retained as a future hypothesis, not evidence of an implemented design.
+See [E4 results](../results/E4/20261029T091909Z-842d596/) and the
+[closeout scope](../docs/study-status.md).
+
+> Historical rationale for the original adapter: a cache adapter placing local storage in front of a shared origin
 > (E4) has exactly the write-back problem this hypothesis describes. E4 either
 > refutes this by exhibiting a correct design, or is disqualified by it — which
 > makes this hypothesis the gate on that experiment rather than a side claim.

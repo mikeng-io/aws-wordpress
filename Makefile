@@ -183,3 +183,12 @@ results: ## List recorded runs
 .PHONY: status
 status: ## Show the hypothesis register at a glance
 	@sed -n '/^| ID/,/^$$/p' hypotheses/README.md
+
+# Offline publication checks. Never deploy, query AWS, or rewrite frozen input runs.
+.PHONY: study-index study-verify
+study-index: ## Render the reviewed E0-E5 evidence index; no AWS
+	@PYTHONDONTWRITEBYTECODE=1 python3 analysis/study_index.py
+
+study-verify: ## Replay reference analysis in scratch; OUT must be a new receipt directory; no AWS
+	@test -n "$(OUT)" || { echo 'Set OUT to a new receipt directory, e.g. OUT=/tmp/study-replay-1' >&2; exit 2; }
+	@PYTHONDONTWRITEBYTECODE=1 python3 analysis/study_verify.py --output "$(OUT)"

@@ -1,6 +1,19 @@
 # H2 — Fargate's isolation model forbids every effective cache tier
 
-**Status:** `PARTIALLY TESTED` — E3 resolved the gating unknown in H2's favour
+**Status:** `INCONCLUSIVE` — read-only proxy met; broader kill condition unresolved
+
+**Closeout clarification (2026-10-29).** The previous header said PARTIALLY TESTED
+while the register still said UNTESTED. This normalises that partial-evidence
+state to the protocol vocabulary; it is not whole-H2 support or refutation.
+[E3](../results/E3/20260910T113000Z-6016f58/) established the fast substrate;
+[E4's three-replication result](../results/E4/20261029T091909Z-842d596/summary.json)
+met its read-only proxy, with P1/P3 SUPPORTED and P2 REFUTED. Acceptable full
+application startup, refresh, mutable state and comparison to EC2 remain untested.
+E2 ran the FUSE tiers on EC2; the Fargate capability boundary was a platform
+constraint used in the design, not a separately executed privileged-Fargate
+failure experiment. The original claim, prediction and kill condition below are unchanged. Historical
+“unbuilt hydration” statements refer to the broader design, not denial of E4's
+completed synthetic read-only experiment. See [the E4 finding](../docs/findings/E4-hydration.md).
 
 ## Claim
 

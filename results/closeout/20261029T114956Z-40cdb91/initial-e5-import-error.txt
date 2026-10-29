@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<scratch>/graders/966105f0454e02c6815257f560904f74ce9260c5/e5_formal_stats.py", line 15, in <module>
+    import e5_stats as legacy
+  File "<scratch>/graders/966105f0454e02c6815257f560904f74ce9260c5/e5_stats.py", line 39, in <module>
+    from e2_stats import summarize  # noqa: E402  same summary statistics as E2/E3
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'e2_stats'

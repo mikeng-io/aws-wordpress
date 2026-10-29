@@ -2,10 +2,16 @@
 
 **Status:** `UNTESTED — PROMOTED`
 
-> More central under the reframed study, not less: a cache tier's warming cost
+> Historical priority rationale, before E4 collection: more central under the reframed study, not less: a cache tier's warming cost
 > *is* a cold-start cost, so E4 cannot be evaluated without settling this. E0 already
 > supplies the relevant magnitude — a cold request issues ~15,400 syscalls against
 > ~4,300 warm.
+
+**Closeout clarification (2026-10-29):** E4's registered syscall/hydration
+predictions can be graded without settling this broader request-ranking claim.
+The current phase closes with this hypothesis UNTESTED; a first-200-OK study is
+future research, not a hidden requirement to make the completed E4 result valid.
+See [study closeout](../docs/study-status.md).
 
 ## Claim
 

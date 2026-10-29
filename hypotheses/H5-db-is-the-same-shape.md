@@ -20,7 +20,11 @@ pool and query cache *live* follows the same locality logic as the filesystem ca
 
 ## Scope note
 
-The database engine is a **control**, not a variable. The main matrix runs on a
+**Closeout clarification (2026-10-29):** the Aurora baseline and ProxySQL matrix
+below are proposed future apparatus. E0–E5 did not deploy or measure this DB
+comparison. Closing the filesystem phase does not require this parked work.
+
+In that future design, the database engine would be a **control**, not a variable. The proposed DB matrix would use a
 fixed-capacity, oversized Aurora MySQL on Graviton, deliberately never the
 bottleneck, so DB scaling never contaminates storage or compute signals.
 

@@ -1,5 +1,7 @@
 # E2 — the device does not matter, and neither does the mount; the protocol boundary is everything
 
+**Interpretation update (2026-10-29):** see the [closeout clarification](#closeout-clarification--2026-10-29) for the distinction between mechanical P5 PARTIALLY SUPPORTED and the failed separation interpretation.
+
 **Result:** `results/E2/20260910T163206Z-66dcff8/` (3 replications, 3 independent
 deployments, 60,300 timed ops)
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md),
@@ -316,3 +318,16 @@ the remaining matrix cells are, and why they are worth the money.
   the mount is established before the benchmark runs, so nothing here includes mount
   establishment cost.
 - The block-backed caveats from the first run carry over unchanged.
+
+## Closeout clarification — 2026-10-29
+
+The mechanical P5 grade is **PARTIALLY SUPPORTED (1/4)** in
+[`summary.json`](../../results/E2/20260910T163206Z-66dcff8/summary.json).
+“Read it as refuted” above is the author's interpretation of the failed predicted
+separation, not the grader's returned status. The blanket “within 1.5× on every
+op” language is too broad: unlink's reported 1.52× already lies outside that tie
+bar. The useful conclusion is the absence of the predicted ≥3× separation for
+this workload, not universal device equivalence. Fresh-file NFS comparisons also
+inherit the [later cache-window correction](E2-server-backed.md). Grades and raw
+observations remain frozen; the [run index](../evidence-index.md) scopes each
+campaign separately.

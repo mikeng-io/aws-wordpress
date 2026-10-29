@@ -47,12 +47,12 @@ Three measurements now support this shape:
 So the product of a fixed count and a tier-determined cost is the whole story, and
 the only lever that moves it is which tier serves the ops.
 
-**The platform decides that before performance is discussed.** Four of the tiers in
+**The platform decides that before performance is discussed.** The three FUSE tiers tested in
 E2's matrix need FUSE, which needs `CAP_SYS_ADMIN`, which Fargate does not grant.
 That is the claim's sharpest form: choosing Fargate removes most of the storage
 matrix, silently, as a capability constraint rather than a performance one.
 
-## Evidence from E2's FSx group (2026-10-15): verdict unchanged, review due
+## Historical evidence note — 2026-10-15 (superseded collection status, verdict unchanged)
 
 From [the E2 server-backed finding](../docs/findings/E2-server-backed.md),
 `results/E2/20261015T000959Z-85382cc`. Two results bear on the restated claim, and
@@ -71,9 +71,12 @@ neither is folded into the verdict yet:
    not the server. The production-relevant cost (misses × miss rate, on files
    older than the window) has not been measured.
 
-A verdict change needs the cold-cache measurement. That is the next experiment
-this result calls for. It is specified, not yet run, as
-[E5](../experiments/E5-attribute-cache/), whose prediction 9 grades this reframing.
+At the date of this note, the cold-cache follow-up was still specified rather
+than run. **Collection status update, 2026-10-29:**
+[E5](../experiments/E5-attribute-cache/) has since completed three formal-v3
+deployments; the current qualification at the top of this file governs. Its
+synthetic repeated-access evidence does not itself validate a production request
+cost model. This historical note is not an instruction to launch another run.
 
 ## Kill condition, restated
 

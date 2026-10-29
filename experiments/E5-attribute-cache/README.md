@@ -42,7 +42,11 @@ quiet profile, full A/D phases, sequential Lustre/EBS binding and unchanged hard
 thresholds. Its execution source is `b5b480f`; the full live evidence and actual
 runtime are recorded separately from its offline preparation receipts.
 
-**Next work, no paid run authorised:**
+**Closeout decision (2026-10-29):** this formal-v3 collection closes with P4
+INCONCLUSIVE. The prepared first-pass method is deferred research, not a missing
+replication required to publish. [Study closeout](../../docs/study-status.md).
+
+**Deferred work, no paid run authorised:**
 
 - The P7 result is written into [the E5 finding](../../docs/findings/E5-attribute-cache.md)
   and H1; do not use the frozen run's grade.

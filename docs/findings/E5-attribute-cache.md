@@ -1,5 +1,7 @@
 # E5 — NFS attribute cache: Lustre repeats are free, EFS repeats are not
 
+**Closeout qualification (2026-10-29):** “free” in the historical title does not mean zero latency/cost or direct proof of lock state. [Scope note](#closeout-scope--2026-10-29).
+
 **Result:** three independent `isolation-formal-v3` replications, 2026-10-28:
 [rep 2](../../results/E5-formal/20261028T103017Z-342d6b4/review.md),
 [rep 3](../../results/E5-formal/20261028T125412Z-f6659e0/review.md),
@@ -111,3 +113,12 @@ python3 analysis/e5_formal_stats.py \
 
 make e5-p4-passes   # A3 vs A8's first and later passes
 ```
+
+## Closeout scope — 2026-10-29
+
+This campaign closes with P4 INCONCLUSIVE. Future-v4 preparation is deferred
+research, not an unfinished obligation to make v3 pass. The historical title's
+“free” is shorthand for the observed absence of a slow per-stat round trip at the
+tested cadences, not zero latency, zero compute cost or a direct lock-state
+measurement. The formal-v3 pool and its prediction statuses are unchanged.
+See [study closeout](../study-status.md) and [offline verification](../closeout-verification.md).

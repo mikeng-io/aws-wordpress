@@ -1,11 +1,17 @@
 # E3 — Fargate ephemeral storage: small-file metadata latency
 
+**Collection status (2026-10-29): COMPLETE, three independent Fargate tasks.**
+[Results](../../results/E3/20260910T113000Z-6016f58/) and
+[finding](../../docs/findings/E3-fargate-ephemeral.md). The “next experiment” text
+below is the original design rationale, not today's queue. E4 has since completed
+read-only hydration; no new run is queued. [Current scope](../../docs/study-status.md).
+
 **Bears on:** [H2](../../hypotheses/H2-fargate-forbids-caching.md) — gates the
 entire branch. If ephemeral storage is itself slow, the "hydrate onto local disk"
 family of Fargate designs collapses before it's even worth building.
 
-**Cost:** a single short-lived Fargate task, no fleet, no NAT. Estimated
-under $0.05 for the whole run — see stack for the exact figure once specced.
+**Cost:** a single short-lived Fargate task, no fleet, no NAT. UNVERIFIED historical planning estimate:
+under $0.05 for the whole run; not an actual cost receipt.
 
 ## Question
 

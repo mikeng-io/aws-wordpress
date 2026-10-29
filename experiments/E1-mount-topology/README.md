@@ -1,13 +1,21 @@
 # E1 — EFS mount topology on ECS
 
+**Collection status (2026-10-29): COMPLETE for the recorded topology question.**
+The [host inspection](../../results/E1/20260902T060000Z-24d9bb9/) measured two tasks
+on one t4g.small. The expanded five-arm design/cost below is not evidence that
+five arms were measured. No new run is queued; [closeout](../../docs/study-status.md).
+Workload teardown does not remove every retained log/image/artifact; see
+[retention](../../docs/retention-and-cost.md).
+
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md) — decides whether its
 mechanism physically exists.
 
-**Cost:** ~$0.48/hr while up for the current five-arm apparatus — four EC2 instances
+**Cost:** UNVERIFIED historical planning estimate, ~$0.48/hr while up for the five-arm apparatus — four EC2 instances
 (`t4g.small`, `m7g.large`, `c7g.large`, `r7g.large`), two Fargate tasks, ten VPC
 endpoints (nine interface + the free S3 gateway), EFS at near-zero usage. The first
 round cost ~$0.14/hr on one instance. Torn down in the same command that runs it.
-Nothing persists.
+Retained diagnostics, bootstrap artifacts and service-created logs are outside
+that workload-destroy statement; do not read it as account-wide zero storage.
 
 Most of that is the endpoints. Running the instances in a public subnet with public
 IPs would cost less, and was the original design here. It was the wrong trade: a

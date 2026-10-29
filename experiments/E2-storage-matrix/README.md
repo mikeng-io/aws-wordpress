@@ -1,19 +1,24 @@
 # E2 — the storage matrix
 
-**Status:** `BLOCK-BACKED GROUP + EFS MOUNT MATRIX COMPLETE` · `FSx GROUP COMPLETE` ·
-`FUSE ARMS COMPLETE`. Prediction 1 is NOT EVALUABLE, prediction 3 is REFUTED with a
-construct caveat, prediction 5 is PARTIALLY SUPPORTED, **prediction 2 is
-INCONCLUSIVE**, and **prediction 4 is SUPPORTED**. See
-[docs/findings/E2-server-backed.md](../../docs/findings/E2-server-backed.md) and
-[docs/findings/E2-fuse.md](../../docs/findings/E2-fuse.md). The FUSE build and
-grading rules are recorded in [fuse-arms.md](fuse-arms.md).
+**Collection status (2026-10-29): BLOCK / MOUNT / FSx / FUSE COMPLETE.**
+No additional paid run is queued. Grades belong to the campaigns below, not to a
+single combined “all E2” result. See [the complete run index](../../docs/evidence-index.md).
 
-> **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md)
-> · [figures](../../docs/charts/e2-storage-matrix.html).
-> Prediction 5 **failed**: instance store and Fargate ephemeral tied on every op,
-> and EBS tied with them to within 3%. The device is irrelevant for this workload
-> shape; the tier boundary is a protocol boundary. Block-backed → EFS is 638× on
-> `stat`. E3's EFS bimodality replicated on independent hardware.
+| Campaign | Result | Mechanical prediction status |
+|---|---|---|
+| Block group | [three deployments](../../results/E2/20260910T163206Z-66dcff8/) | P5 PARTIALLY SUPPORTED (1/4); predicted device-operation separation did not hold |
+| EFS mount/TLS matrix | [three deployments](../../results/E2/20260910T182051Z-53b5423/) | P5 PARTIALLY SUPPORTED |
+| FSx group | [three deployments](../../results/E2/20261015T000959Z-85382cc/) | P1 NOT EVALUABLE; P3 REFUTED with NFS-cache construct caveat; P5 PARTIALLY SUPPORTED |
+| FUSE group | [three deployments](../../results/E2/20261029T070456Z-a2041d6/) | P2 INCONCLUSIVE; P4 SUPPORTED; later reapplication of P5 is REFUTED |
+
+The [block finding](../../docs/findings/E2-block-backed.md) interprets the failed
+separation as a negative result while retaining the mechanical 1/4 grade;
+[FSx](../../docs/findings/E2-server-backed.md) explains the NFS cache confound;
+[FUSE](../../docs/findings/E2-fuse.md) records the missed JuiceFS threshold and
+Mountpoint conformance failures. [Figures](../../docs/charts/e2-storage-matrix.html)
+show their declared source collection, not an unrestricted production leaderboard.
+FUSE rules are in [fuse-arms.md](fuse-arms.md). Historical execution commands and
+attempt notes below are not authorisation for a new deployment.
 
 **Bears on:** [H1](../../hypotheses/H1-cache-locality.md) (which tier is reachable
 decides performance), [H7](../../hypotheses/H7-cheapest-storage-loses.md) (cost at

@@ -140,6 +140,12 @@ rate.
 break-even request count from E0's op count. Every published statistic is
 recomputable with `python3 analysis/e4_stats.py results/E4/<run-id>`.
 
+## Closeout scope — 2026-10-29
+
+Collection is closed. No new paid run is queued. Replay the current formal result
+in scratch via [the closeout verifier](../../docs/closeout-verification.md);
+H2's whole claim remains open and H6 is parked, not tested by this experiment.
+
 ## Reproduce
 
 ```sh

@@ -1,6 +1,11 @@
 # H7 — At equal p95, the cheapest storage line item does not win
 
-**Status:** `UNTESTED`
+**Status:** `UNTESTED — PARKED`
+
+**Priority clarification (2026-10-29):** this phase measured filesystem behaviour,
+not configurations at an equal request-p95 target. Pricing snapshots and campaign
+cost proxies cannot grade this claim. The method below remains proposed future
+work; no additional paid collection is queued. See [closeout scope](../docs/study-status.md).
 
 ## Claim
 

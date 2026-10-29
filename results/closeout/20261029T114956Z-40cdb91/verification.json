@@ -1,0 +1,250 @@
+{
+  "utc": "2026-10-29T11:48:59.830232+00:00",
+  "source_head": "40cdb912c12b51d63dac731529d61ab1689cf482",
+  "mode": "offline replay of Git-tracked evidence in disposable copies; no AWS or collector calls",
+  "analysis_sha256": {
+    "analysis/aws_pricing.py": "6480956fb020553ffe893115a956efc8e79794ca6924b8abfce090efc69a1eae",
+    "analysis/e0_aggregate.py": "88655d61f7bbac1638760e0776779846ce2b37e630def94910f41f9d1c42942d",
+    "analysis/e0_census.py": "799c31d72be55d2ea7a8290f9d39fa58e50af550aa725b54ba9cbdfc296485c7",
+    "analysis/e2_chart.py": "03df796458cabda6cb064e148149f3ba5b8edc7595902a552d8e3055ab9a7d39",
+    "analysis/e2_stats.py": "2387f828c11bacb221914524da4fc78c559272e8fd15ff8d5ce2a45c7adda2a5",
+    "analysis/e3_clusters.py": "8e293b4f7d1ea98b87b57bb88ca22f7bd717a509198324fe4304d8c1b8506849",
+    "analysis/e3_percentiles.py": "ddc57bfdd24ced2696d281162820465664f2f56e5a3d06ab1e1c35760092a398",
+    "analysis/e3_stats.py": "458fe9d736a6d75026bf9e050132f219ae6e9d731e0beb328d7d7c8fce347233",
+    "analysis/e4_campaign.py": "660c5ec100a841925f82ea27aa39371737f99814b3f3a9297c6a04c4ccd34519",
+    "analysis/e4_stats.py": "c43ac29da3041e83ae2c16a6e3e3e1b1201a00a6d6fe5a22def8ef9a2cc8eec9",
+    "analysis/e5_diagnostic_stats.py": "13f835dbc3967bcc0a6c4b0eb35b36681c9ba1bfc5b724fa068aad8c20cde723",
+    "analysis/e5_formal_stats.py": "ac5b5c24d08a9ea2a4c59304ad4e2522807b7129661b0813572459164856bae2",
+    "analysis/e5_p4_passes.py": "43b836f1a99b2bc7bbb62dd0fc3152f2174c2ec4b680ed9fd0b3acc63a7a50dd",
+    "analysis/e5_p7_control_review.py": "f1ef2ecd013f5a8d88771f171d4873aad4b90b1e5bdc8a48a8100104c668c741",
+    "analysis/e5_pilot_diagnose.py": "96971f6c7a7d39941184c6898c713040e58987bae0979b0787e73ee7677b2319",
+    "analysis/e5_selftest.py": "11d3d88e7eca75e07308c3c2c99dfeb0fa3d945054dfc1a5a1b5c548e0c0d668",
+    "analysis/e5_stats.py": "dc52a305d3a7cb8dca2dc9673aea93cefbf0267370cf594223ffe489b53fb9b9",
+    "analysis/study_index.py": "2221c3f1e6aaad7e31ec3ced3d303b2621d59bd6a27582ae56f026369b4df6a8",
+    "analysis/study_verify.py": "861b620fbf258993a404803331f2cf0ea9af36d0641ca950137ed3cc17f5991c",
+    "analysis/test_e5_attribution.py": "e3e41f8b5c7b7824b8ccfab8ddd9a52db7da4d17ca95047b22c84a6ebcb1a2f9",
+    "analysis/test_e5_diagnostic_control.py": "526fd2bc75ab5376bd534dcb63b2e27d48787aa4ff6e72d8e91c596be2de879b",
+    "analysis/test_e5_diagnostic_stats.py": "650670af8b3f1f3e6440d5bf130503bf8a5efc11fe8f92c0d55693076f7e390c",
+    "analysis/test_e5_formal.py": "5155f62bbda036b1e59a47e2865a3f11525236eb44e7ac938964a3dbf7d73556",
+    "analysis/test_e5_instrument.py": "737f45964b188308b490897545494a71667684f9aec7f57b9eae77e79131c6de",
+    "analysis/test_e5_isolation_acceptance.py": "b08180b7be74ee909584c5d5eb71512bb7588055bf94b6310d2acae5dd4beb0a",
+    "analysis/test_e5_pilot_diagnose.py": "146728fbd4ac38b263b9abd0a30f9a6c718ee3e0c2b45d899a609eec267768e9",
+    "analysis/test_e5_preflight.py": "811abf2c59bebb424218d40995c0ea9b0de9d85f9d76d51017e4e27843f6b849",
+    "analysis/test_e5_watchdog.py": "b13aaf93d61ce178ddd37a0317cea91174602eecbd585b849eaa874131959961"
+  },
+  "frozen_input_files": 5082,
+  "frozen_inputs_unchanged": true,
+  "checks": [
+    {
+      "check": "e0-20260827T185901Z-bff2d22",
+      "input": "results/E0/20260827T185901Z-bff2d22",
+      "status": "PASS",
+      "census_files": 264,
+      "differences": [],
+      "reused_from_report_sha256": "486e30b6d81b2f2b129996fa7d8d4bc573650ee40901382900cad3b68cc57233"
+    },
+    {
+      "check": "e0-20260902T105746Z-f62a686",
+      "input": "results/E0/20260902T105746Z-f62a686",
+      "status": "PASS",
+      "census_files": 330,
+      "differences": [],
+      "reused_from_report_sha256": "486e30b6d81b2f2b129996fa7d8d4bc573650ee40901382900cad3b68cc57233"
+    },
+    {
+      "check": "e1-topology",
+      "status": "PASS",
+      "nfs_mounts": 2,
+      "tls_proxies": 2
+    },
+    {
+      "check": "e2-20260910T163206Z-66dcff8",
+      "input": "results/E2/20260910T163206Z-66dcff8",
+      "status": "PASS",
+      "comparison": "all recorded JSON fields; extra current diagnostics allowed",
+      "differences": []
+    },
+    {
+      "check": "e2-20260910T182051Z-53b5423",
+      "input": "results/E2/20260910T182051Z-53b5423",
+      "status": "PASS",
+      "comparison": "all recorded JSON fields; extra current diagnostics allowed",
+      "differences": []
+    },
+    {
+      "check": "e2-20261015T000959Z-85382cc",
+      "input": "results/E2/20261015T000959Z-85382cc",
+      "status": "PASS",
+      "comparison": "all recorded JSON fields; extra current diagnostics allowed",
+      "differences": []
+    },
+    {
+      "check": "e2-20261029T070456Z-a2041d6",
+      "input": "results/E2/20261029T070456Z-a2041d6",
+      "status": "PASS",
+      "comparison": "all recorded JSON fields; extra current diagnostics allowed",
+      "differences": []
+    },
+    {
+      "check": "e3_stats",
+      "input": "results/E3/20260910T113000Z-6016f58",
+      "status": "PASS",
+      "comparison": "all recorded JSON fields; extra current diagnostics allowed",
+      "differences": []
+    },
+    {
+      "check": "e3_clusters",
+      "input": "results/E3/20260910T113000Z-6016f58",
+      "status": "PASS",
+      "comparison": "all recorded JSON fields; extra current diagnostics allowed",
+      "differences": []
+    },
+    {
+      "check": "e4-formal",
+      "input": "results/E4/20261029T091909Z-842d596",
+      "status": "PASS",
+      "comparison": "all recorded JSON fields; extra current diagnostics allowed",
+      "differences": []
+    },
+    {
+      "check": "e4-cost-20261029T090427Z-3b8faf3",
+      "status": "PASS",
+      "differences": []
+    },
+    {
+      "check": "e4-cost-20261029T091909Z-842d596",
+      "status": "PASS",
+      "differences": []
+    },
+    {
+      "check": "e5-20261027T093314Z-b5b480f",
+      "status": "PASS",
+      "grader_revision": "32410a774e84ff5a0061a61c1a4d9a9208582de0",
+      "grader_helper_sha256": {
+        "e2_stats.py": "5a6970216d1901fc0e80d03833cb2d903fba71edaf3b109feb95c8ba5256237c",
+        "e3_clusters.py": "8e293b4f7d1ea98b87b57bb88ca22f7bd717a509198324fe4304d8c1b8506849"
+      },
+      "predictions": {
+        "1": "NOT EVALUABLE",
+        "2": "NOT EVALUABLE",
+        "3": "NOT EVALUABLE",
+        "4": "NOT EVALUABLE",
+        "5": "NOT EVALUABLE",
+        "6": "NOT EVALUABLE",
+        "7": "NOT EVALUABLE",
+        "8": "NOT EVALUABLE",
+        "9": "NOT EVALUABLE",
+        "10": "NOT EVALUABLE"
+      },
+      "differences": []
+    },
+    {
+      "check": "e5-20261028T103017Z-342d6b4",
+      "status": "PASS",
+      "grader_revision": "966105f0454e02c6815257f560904f74ce9260c5",
+      "grader_helper_sha256": {
+        "e2_stats.py": "5a6970216d1901fc0e80d03833cb2d903fba71edaf3b109feb95c8ba5256237c",
+        "e3_clusters.py": "8e293b4f7d1ea98b87b57bb88ca22f7bd717a509198324fe4304d8c1b8506849"
+      },
+      "predictions": {
+        "1": "NOT EVALUABLE",
+        "2": "NOT EVALUABLE",
+        "3": "NOT EVALUABLE",
+        "4": "NOT EVALUABLE",
+        "5": "NOT EVALUABLE",
+        "6": "NOT EVALUABLE",
+        "7": "NOT EVALUABLE",
+        "8": "NOT EVALUABLE",
+        "9": "NOT EVALUABLE",
+        "10": "NOT EVALUABLE"
+      },
+      "differences": []
+    },
+    {
+      "check": "e5-20261028T125412Z-f6659e0",
+      "status": "PASS",
+      "grader_revision": "966105f0454e02c6815257f560904f74ce9260c5",
+      "grader_helper_sha256": {
+        "e2_stats.py": "5a6970216d1901fc0e80d03833cb2d903fba71edaf3b109feb95c8ba5256237c",
+        "e3_clusters.py": "8e293b4f7d1ea98b87b57bb88ca22f7bd717a509198324fe4304d8c1b8506849"
+      },
+      "predictions": {
+        "1": "NOT EVALUABLE",
+        "2": "NOT EVALUABLE",
+        "3": "NOT EVALUABLE",
+        "4": "NOT EVALUABLE",
+        "5": "NOT EVALUABLE",
+        "6": "NOT EVALUABLE",
+        "7": "NOT EVALUABLE",
+        "8": "NOT EVALUABLE",
+        "9": "NOT EVALUABLE",
+        "10": "NOT EVALUABLE"
+      },
+      "differences": []
+    },
+    {
+      "check": "e5-20261028T160106Z-dd5fce0",
+      "status": "PASS",
+      "grader_revision": "966105f0454e02c6815257f560904f74ce9260c5",
+      "grader_helper_sha256": {
+        "e2_stats.py": "5a6970216d1901fc0e80d03833cb2d903fba71edaf3b109feb95c8ba5256237c",
+        "e3_clusters.py": "8e293b4f7d1ea98b87b57bb88ca22f7bd717a509198324fe4304d8c1b8506849"
+      },
+      "predictions": {
+        "1": "NOT EVALUABLE",
+        "2": "NOT EVALUABLE",
+        "3": "NOT EVALUABLE",
+        "4": "NOT EVALUABLE",
+        "5": "NOT EVALUABLE",
+        "6": "NOT EVALUABLE",
+        "7": "NOT EVALUABLE",
+        "8": "NOT EVALUABLE",
+        "9": "NOT EVALUABLE",
+        "10": "NOT EVALUABLE"
+      },
+      "differences": []
+    },
+    {
+      "check": "e5-pooled-three",
+      "status": "PASS",
+      "grader_revision": "966105f0454e02c6815257f560904f74ce9260c5",
+      "grader_helper_sha256": {
+        "e2_stats.py": "5a6970216d1901fc0e80d03833cb2d903fba71edaf3b109feb95c8ba5256237c",
+        "e3_clusters.py": "8e293b4f7d1ea98b87b57bb88ca22f7bd717a509198324fe4304d8c1b8506849"
+      },
+      "predictions": {
+        "1": "REFUTED",
+        "2": "REFUTED",
+        "3": "REFUTED",
+        "4": "INCONCLUSIVE",
+        "5": "SUPPORTED",
+        "6": "SUPPORTED",
+        "7": "SUPPORTED",
+        "8": "SUPPORTED",
+        "9": "SUPPORTED",
+        "10": "SUPPORTED"
+      },
+      "differences": []
+    },
+    {
+      "check": "e5-p4-passes",
+      "status": "PASS",
+      "diagnostic_rows": 12,
+      "note": "diagnostic only; no v3 threshold changes or regrading"
+    },
+    {
+      "check": "e2-published-chart",
+      "status": "PASS",
+      "input_run": "20260910T182051Z-53b5423",
+      "comparison": "byte-for-byte HTML",
+      "exit_code": 0
+    }
+  ],
+  "e0_reuse_provenance": {
+    "prior_report_sha256": "486e30b6d81b2f2b129996fa7d8d4bc573650ee40901382900cad3b68cc57233",
+    "prior_inputs_sha256": "06dcd549279a8be49b96fedc206d01d926c79d098628bca562fb173b5b4e3372",
+    "scope": "only two E0 checks; all frozen inputs and both analysis module hashes unchanged"
+  },
+  "status": "PASS",
+  "excluded": "failed/partial campaigns and smoke/pilot/diagnostic methods are indexed, not pooled or regraded"
+}

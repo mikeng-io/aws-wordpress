@@ -1,5 +1,10 @@
 # E0 — Syscall census
 
+**Collection status (2026-10-29): COMPLETE.** The [corrected n=10 census](../../results/E0/20260902T105746Z-f62a686/)
+(aged n=3) is the current endpoint reference; the earlier baseline is retained
+with its empty-cart caveat. No new collection is queued. See the
+[run index](../../docs/evidence-index.md) and [closeout](../../docs/study-status.md).
+
 **Bears on:** [H3](../../hypotheses/H3-opcache-dominates.md), and supplies the
 op-count multiplier that [H1](../../hypotheses/H1-cache-locality.md) scales by.
 
@@ -19,10 +24,9 @@ appears to have published the figure for a realistic plugin-heavy install.
 E0 measures **op counts, not op latency.** Docker volumes on a laptop say nothing
 about EFS, and no timing from this experiment should ever be quoted.
 
-Latency is E1–E3's job, on real infrastructure. E0 produces the multiplier that
-those measured latencies get multiplied by. Keeping the two separate is deliberate:
-counts are cheap, portable, and reproducible anywhere; latencies are none of those
-things.
+Filesystem latency is measured by E2/E3 and the later cohorts; E1 measures
+mount topology. Composing E0's demand with latency requires matching cache and
+access behaviour and is an extrapolation, not a measured request latency.
 
 ## Prediction
 

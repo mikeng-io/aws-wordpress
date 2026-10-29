@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "check": "frozen-run-output",
+      "status": "PASS",
+      "exit_code": 2
+    },
+    {
+      "check": "existing-receipt",
+      "status": "PASS",
+      "exit_code": 2
+    },
+    {
+      "check": "E0-reuse-rejects-parser-drift",
+      "status": "PASS",
+      "exit_code": 2
+    },
+    {
+      "check": "evidence-index-byte-reproduction",
+      "status": "PASS"
+    }
+  ]
+}

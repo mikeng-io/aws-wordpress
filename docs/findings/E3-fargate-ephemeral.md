@@ -1,5 +1,7 @@
 # E3 — Fargate ephemeral storage is genuinely fast, and the gap is metadata-shaped
 
+**Interpretation update (2026-10-29):** the [closeout correction](#closeout-correction--2026-10-29) withdraws the production “bound”/“floor” interpretation below; raw distributions are unchanged.
+
 **Result:** `results/E3/20260910T113000Z-6016f58/` (3 reps, 4,020 ops per mount per rep)
 **Bears on:** [H2](../../hypotheses/H2-fargate-forbids-caching.md)
 
@@ -147,3 +149,16 @@ task failure, not a retry-able warning.
 
 Every figure above is recomputable from the committed CSVs by re-running the three
 analysis scripts. Nothing is hand-transcribed.
+
+## Closeout correction — 2026-10-29
+
+The historical “illustrative bound”, “upper bound” and production cache-hit
+“floor” wording above is withdrawn. The calculation composes measurements from
+different workloads and substitutes a synthetic cluster mix for application
+cache behaviour; it establishes neither a production upper bound nor a lower
+bound on hit rate. Treat it as an **illustrative extrapolation only**. The
+historical ~271× weighted-cluster calculation is not a measured production ratio
+or a substitute for the raw distributions. No raw data, cluster result or
+prediction was changed. See [methodology](../measurement-methodology.md) and
+[E5's later evidence](E5-attribute-cache.md). The E3 source remains
+[`results/E3/20260910T113000Z-6016f58/`](../../results/E3/20260910T113000Z-6016f58/).

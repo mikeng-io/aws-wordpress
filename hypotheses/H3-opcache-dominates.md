@@ -6,6 +6,12 @@
 > and WordPress is the study's instrument rather than its subject. It stays because
 > E0's data already bears on it, but it is not a priority.
 
+**Closeout clarification (2026-10-29):** E2's completed synthetic filesystem
+matrix is not the cross-backend WordPress/PHP-profile comparison this hypothesis
+requires. E0 did not exercise actual preloading. The older “only E2 can settle it”
+wording refers to that proposed application comparison, not an unreported result
+of the completed microbenchmark. This claim remains INCONCLUSIVE and peripheral.
+
 ## Claim
 
 With `opcache.validate_timestamps=0`, a large realpath cache, and preloading, a warm

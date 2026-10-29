@@ -1,0 +1,33 @@
+{
+  "note": "Per-rep grades and n<3 aggregate eligibility are separate; values read from the hash-replayed frozen reports",
+  "e5_p7": [
+    {
+      "source": "results/E5-formal/20261027T093314Z-b5b480f/analysis-v3.json",
+      "aggregate_status": "NOT EVALUABLE",
+      "per_replication_p7": {
+        "20261027T093314Z-b5b480f/rep-1": "ERROR"
+      }
+    },
+    {
+      "source": "results/E5-formal/20261028T103017Z-342d6b4/analysis-v3.json",
+      "aggregate_status": "NOT EVALUABLE",
+      "per_replication_p7": {
+        "20261028T103017Z-342d6b4/rep-1": "SUPPORTED"
+      }
+    },
+    {
+      "source": "results/E5-formal/20261028T125412Z-f6659e0/analysis-v3.json",
+      "aggregate_status": "NOT EVALUABLE",
+      "per_replication_p7": {
+        "20261028T125412Z-f6659e0/rep-1": "SUPPORTED"
+      }
+    },
+    {
+      "source": "results/E5-formal/20261028T160106Z-dd5fce0/analysis-v3.json",
+      "aggregate_status": "NOT EVALUABLE",
+      "per_replication_p7": {
+        "20261028T160106Z-dd5fce0/rep-1": "SUPPORTED"
+      }
+    }
+  ]
+}

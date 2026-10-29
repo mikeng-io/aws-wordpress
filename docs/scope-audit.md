@@ -1,5 +1,15 @@
 # Scope audit
 
+**Current scope (2026-10-29):** the E0–E5 collection phase is closed; no new paid
+run is queued. E4 finished as read-only hydration, not a write-back adapter. H6
+was not tested and is parked. E5 formal-v3 has three eligible deployments, with
+P4 INCONCLUSIVE; future-v4 preparation is not a completed experiment. See the
+[study closeout](study-status.md) and [run index](evidence-index.md).
+
+The rest of this file is the **historical reframing record**, not the current
+experiment queue. Its original “New”, “promoted” and “worth running” labels are
+preserved to explain decisions; the governing numbering rule is in CLAUDE.md.
+
 Written when the study's framing changed: WordPress stopped being the subject and
 became the instrument. What follows is what survives that change, what is retired,
 and why.
