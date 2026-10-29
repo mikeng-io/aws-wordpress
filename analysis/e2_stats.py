@@ -67,6 +67,15 @@ DECLARED_COMPARISONS = [
     ("NFS server, OpenZFS vs ONTAP", "ec2/fsx_openzfs", "ec2/fsx_ontap"),
 ]
 
+# --- prediction 2 (FUSE arms) --------------------------------------------------------
+# Fixed in experiments/E2-storage-matrix/fuse-arms.md before the first mount:
+# JuiceFS must be >=10x faster than EFS on stat AND still >=3x slower than local.
+P2_MIN_EFS_FACTOR = 10.0
+P2_MIN_LOCAL_SEPARATION = 3.0
+P2_EFS_TIER = "ec2/efs_host_plain"
+P2_LOCAL_TIER = "ec2/instance_store"
+P2_JUICE_TIER = "ec2/juicefs"
+
 # --- prediction 3 -------------------------------------------------------------------
 BLOCK_TIERS = ["ec2/instance_store", "ec2/ebs", "fargate/ephemeral"]
 P3_MIN_FACTOR = 10.0   # "within one order of magnitude" refutes
@@ -242,6 +251,79 @@ def grade_prediction_5(stats: dict) -> dict:
         "total": len(checks),
         "uniform_across_ops": uniform,
         "thresholds": {"tie_max_ratio": TIE_MAX_RATIO, "separation_min_ratio": SEPARATION_MIN_RATIO},
+    }
+
+
+def grade_prediction_2(stats: dict) -> dict:
+    """P2: JuiceFS beats EFS by a wide margin and still loses to local storage."""
+    jfs = stats.get(P2_JUICE_TIER)
+    efs = stats.get(P2_EFS_TIER)
+    local = stats.get(P2_LOCAL_TIER)
+    if not jfs or not efs or not local or not all("stat" in t for t in (jfs, efs, local)):
+        return {"status": "NOT EVALUABLE", "reason": "missing juicefs, EFS or local stat"}
+    j = jfs["stat"]["p50_ns"]
+    e = efs["stat"]["p50_ns"]
+    l = local["stat"]["p50_ns"]
+    if not j or not e or not l:
+        return {"status": "NOT EVALUABLE", "reason": "zero median"}
+    efs_ratio = j / e
+    local_ratio = j / l
+    if efs_ratio >= 1.0:
+        status = "REFUTED"
+        reason = "JuiceFS is not faster than EFS"
+    elif efs_ratio <= 1.0 / P2_MIN_EFS_FACTOR and local_ratio >= P2_MIN_LOCAL_SEPARATION:
+        status = "SUPPORTED"
+        reason = ">=10x faster than EFS and still >=3x slower than local"
+    else:
+        status = "INCONCLUSIVE"
+        reason = "direction held but the wide-margin / local-separation test did not"
+    return {
+        "status": status,
+        "reason": reason,
+        "juicefs_stat_p50_ns": j,
+        "efs_stat_p50_ns": e,
+        "local_stat_p50_ns": l,
+        "juicefs_over_efs": efs_ratio,
+        "juicefs_over_local": local_ratio,
+        "min_efs_factor": P2_MIN_EFS_FACTOR,
+        "min_local_separation": P2_MIN_LOCAL_SEPARATION,
+    }
+
+
+def grade_prediction_4(run_dir: Path) -> dict:
+    """P4: Mountpoint for S3 fails the single-node POSIX conformance suite.
+
+    Any FAIL is enough - the prediction is about semantics, not the number of
+    failures. ERROR means the suite could not run and must not be read as a pass.
+    """
+    rows: list[tuple[str, str, str]] = []
+    for rep in sorted(run_dir.glob("rep-*")):
+        path = rep / "ec2" / "mountpoint_s3.conformance.csv"
+        if not path.exists():
+            continue
+        with path.open() as fh:
+            for row in csv.reader(fh):
+                if len(row) >= 2:
+                    rows.append((row[0].strip(), row[1].strip(), row[2].strip() if len(row) > 2 else ""))
+    if not rows:
+        return {"status": "NOT EVALUABLE", "reason": "no Mountpoint conformance CSV"}
+    fails = [r for r in rows if r[1] == "FAIL"]
+    errors = [r for r in rows if r[1] == "ERROR"]
+    if fails:
+        status = "SUPPORTED"
+        reason = f"{len(fails)} conformance check(s) failed"
+    elif errors:
+        status = "ERROR"
+        reason = f"{len(errors)} check(s) could not run; no PASS/FAIL verdict"
+    else:
+        status = "REFUTED"
+        reason = "all conformance checks passed"
+    return {
+        "status": status,
+        "reason": reason,
+        "checks": len(rows),
+        "fails": [{"check": c, "detail": d} for c, s, d in fails],
+        "errors": [{"check": c, "detail": d} for c, s, d in errors],
     }
 
 
@@ -611,11 +693,25 @@ def fmt_ns(ns: int) -> str:
     return f"{ns} ns"
 
 
+def render_pred2_4(pred2: dict, pred4: dict) -> str:
+    lines = ["## Predictions 2 and 4 (FUSE arms)", "",
+             f"- **P2 JuiceFS vs EFS:** `{pred2['status']}` — {pred2['reason']}"]
+    if "juicefs_over_efs" in pred2:
+        lines.append(f"  - JuiceFS/EFS stat p50: {pred2['juicefs_over_efs']:.3f}x; "
+                     f"JuiceFS/local: {pred2['juicefs_over_local']:.2f}x")
+    lines.append(f"- **P4 Mountpoint conformance:** `{pred4['status']}` — {pred4['reason']}")
+    for f in pred4.get("fails", []):
+        lines.append(f"  - FAIL `{f['check']}` {f['detail']}".rstrip())
+    return "\n".join(lines) + "\n"
+
+
 def main(run_dir: Path) -> int:
     pooled = collect(run_dir)
     stats = {tier: {op: summarize(v) for op, v in ops.items()} for tier, ops in pooled.items()}
     agreement = per_rep_medians(run_dir)
     pred5 = grade_prediction_5(stats)
+    pred2 = grade_prediction_2(stats)
+    pred4 = grade_prediction_4(run_dir)
     pred3 = grade_prediction_3(stats)
     pred1 = grade_prediction_1(run_dir)
     pred1_explore = explore_prediction_1_bound(run_dir)
@@ -633,13 +729,16 @@ def main(run_dir: Path) -> int:
         "comparisons": comps,
         "clusters": clus,
         "prediction_5": pred5,
+        "prediction_2": pred2,
+        "prediction_4": pred4,
         "prediction_3": pred3,
         "prediction_1": pred1,
         "prediction_1_exploratory_bound": pred1_explore,
     }
     (run_dir / "summary.json").write_text(json.dumps(out, indent=2) + "\n")
     table = (render(stats, agreement, pred5, comps, clus) + "\n"
-             + "\n".join(render_p1_p3({**pred1, "_explore": pred1_explore}, pred3)))
+             + "\n".join(render_p1_p3({**pred1, "_explore": pred1_explore}, pred3))
+             + "\n\n" + render_pred2_4(pred2, pred4))
     (run_dir / "summary.md").write_text(table + "\n")
     print(table)
     return 0
