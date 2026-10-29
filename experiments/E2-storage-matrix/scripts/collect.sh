@@ -356,6 +356,8 @@ for rep in $(seq "$START_REP" "$REPS"); do
     ASG=$(stack_output AsgName)
     INSTANCE_TYPE=$(stack_output InstanceType)
     BUCKET=$(stack_output ResultsBucketName)
+    FUSE_BUCKET=$(stack_output FuseDataBucketName)
+    [ "$FUSE_BUCKET" = "None" ] && FUSE_BUCKET=""
 
     # What FSx actually built, from the API at run time rather than the CDK source:
     # type version, throughput, capacity, deployment type. The source says what was
@@ -428,6 +430,8 @@ for rep in $(seq "$START_REP" "$REPS"); do
   "ec2_image_digest": "$EC2_DIGEST",
   "fargate_image_digest": "$FARGATE_DIGEST",
   "fsx_source_ids": "$(echo $FSX_SOURCE_IDS)",
+  "fuse_mode": $([ "${E2_FUSE:-0}" = 1 ] && echo true || echo false),
+  "fuse_data_bucket": "$FUSE_BUCKET",
   "cdk_cli_version": "$(cd "$REPO/infra" && ./node_modules/.bin/cdk --version 2>/dev/null | head -1)",
   "aws_cdk_lib_version": "$(node -p "require('$REPO/infra/node_modules/aws-cdk-lib/package.json').version")",
   "aws_cli_version": "$(aws --version 2>&1 | head -1)",

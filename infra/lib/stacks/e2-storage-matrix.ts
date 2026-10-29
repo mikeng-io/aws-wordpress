@@ -8,6 +8,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Platform } from 'aws-cdk-lib/aws-ecr-assets';
+import { readFileSync } from 'node:fs';
 import * as path from 'node:path';
 import { Construct } from 'constructs';
 import { ExperimentStack, ExperimentStackProps } from '../experiment-stack.js';
@@ -22,6 +23,17 @@ export interface E2StorageMatrixProps extends ExperimentStackProps {
    * ~45. Iterating on the apparatus without them is much faster.
    */
   readonly includeFsx?: boolean;
+  /**
+   * Include the three FUSE arms: JuiceFS, SeaweedFS and Mountpoint for S3. Their
+   * clients need CAP_SYS_ADMIN, so they are mounted on the EC2 HOST and bind-mounted
+   * into the unprivileged bench container. That keeps the measured syscall path
+   * identical to every other tier; a privileged container would change seccomp and
+   * make the comparison measure the harness.
+   *
+   * FUSE mode also needs a NAT gateway for the client downloads. That adds
+   * ~$0.045/hr and is deliberately not used for the non-FUSE runs.
+   */
+  readonly includeFuse?: boolean;
 }
 
 /**
@@ -60,15 +72,26 @@ export class E2StorageMatrixStack extends ExperimentStack {
       ec2.InstanceSize.LARGE,
     );
 
+    const includeFuse = props.includeFuse ?? false;
     const vpc = new ec2.Vpc(this, 'Vpc', {
       ipAddresses: ec2.IpAddresses.cidr('10.44.0.0/16'),
       maxAzs: 1,
-      natGateways: 0,
-      subnetConfiguration: [
-        { name: 'Isolated', subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 24 },
-      ],
+      // FUSE clients come from GitHub/AWS release URLs, which the isolated VPC
+      // cannot reach. Everything else stays isolated; this is the only reason the
+      // FUSE campaign pays for a NAT gateway.
+      natGateways: includeFuse ? 1 : 0,
+      subnetConfiguration: includeFuse
+        ? [
+            { name: 'Public', subnetType: ec2.SubnetType.PUBLIC, cidrMask: 24 },
+            { name: 'Private', subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS, cidrMask: 24 },
+          ]
+        : [
+            { name: 'Isolated', subnetType: ec2.SubnetType.PRIVATE_ISOLATED, cidrMask: 24 },
+          ],
     });
-    const workloadSubnets: ec2.SubnetSelection = { subnetType: ec2.SubnetType.PRIVATE_ISOLATED };
+    const workloadSubnets: ec2.SubnetSelection = {
+      subnetType: includeFuse ? ec2.SubnetType.PRIVATE_WITH_EGRESS : ec2.SubnetType.PRIVATE_ISOLATED,
+    };
 
     const workloadSecurityGroup = new ec2.SecurityGroup(this, 'WorkloadSecurityGroup', {
       vpc,
@@ -165,6 +188,19 @@ export class E2StorageMatrixStack extends ExperimentStack {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       enforceSSL: true,
     });
+
+    // JuiceFS writes chunks here; Mountpoint for S3 uses it as its backing store.
+    // SeaweedFS keeps its own volumes on the instance. The bucket exists only in a
+    // FUSE deployment and is destroyed with it.
+    const fuseDataBucket = includeFuse
+      ? new s3.Bucket(this, 'FuseDataBucket', {
+          removalPolicy: RemovalPolicy.DESTROY,
+          autoDeleteObjects: true,
+          blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+          enforceSSL: true,
+          lifecycleRules: [{ expiration: Duration.days(1) }],
+        })
+      : undefined;
 
     // --- FSx arms: the server-backed tiers AWS manages for you ----------------
     //
@@ -441,7 +477,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
       requireImdsv2: true,
       // CloudFormation reports ASG CREATE_COMPLETE as soon as the API call
       // succeeds, not when an instance exists. E1 paid for this one.
-      signals: autoscaling.Signals.waitForMinCapacity({ timeout: Duration.minutes(10) }),
+      signals: autoscaling.Signals.waitForMinCapacity({
+        timeout: Duration.minutes(includeFuse ? 20 : 10),
+      }),
     });
     asg.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'));
 
@@ -556,6 +594,16 @@ export class E2StorageMatrixStack extends ExperimentStack {
 
     }
 
+    if (includeFuse && fuseDataBucket) {
+      fuseDataBucket.grantReadWrite(asg.role);
+      asg.addUserData(
+        `FUSE_BUCKET=${fuseDataBucket.bucketName}`,
+        `AWS_REGION=${Stack.of(this).region}`,
+        `AWS_DEFAULT_REGION=${Stack.of(this).region}`,
+        readFileSync(path.join(__dirname, 'e2-fuse-setup.sh'), 'utf8'),
+      );
+    }
+
     // cfn-signal must be the LAST user-data line: addAsgCapacityProvider appends
     // the ECS_CLUSTER config, and signalling earlier would report success before
     // the instance knows which cluster to join. aws-cfn-bootstrap is not
@@ -620,6 +668,25 @@ export class E2StorageMatrixStack extends ExperimentStack {
       }
     }
 
+    // FUSE clients are mounted on the host by e2-fuse-setup.sh; these are plain
+    // bind mounts of the result. The bench container never gets CAP_SYS_ADMIN.
+    const fuseMounts = includeFuse
+      ? [
+          'juicefs=/bench/juicefs',
+          'seaweedfs=/bench/seaweedfs',
+          'mountpoint_s3=/bench/mountpoint',
+        ]
+      : [];
+    for (const [volName, hostPath] of [
+      ['juicefs', '/mnt/juicefs/bench'],
+      ['seaweedfs', '/mnt/seaweedfs/bench'],
+      ['mountpoint-s3', '/mnt/mountpoint/bench'],
+    ] as const) {
+      if (includeFuse) {
+        ec2TaskDefinition.addVolume({ name: volName, host: { sourcePath: hostPath } });
+      }
+    }
+
     const ec2Container = ec2TaskDefinition.addContainer('bench', {
       image: benchImage,
       memoryReservationMiB: 512,
@@ -630,6 +697,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
           'efs=/bench/efs', 'efs_plain=/bench/efs-plain',
           'efs_host_tls=/bench/efs-host-tls', 'efs_host_plain=/bench/efs-host-plain',
           ...fsxMounts,
+          ...fuseMounts,
         ].join(' '),
         // The seven tiers prediction 1 ranks, minus Fargate's one. efs_host_plain
         // is the EFS configuration on the same client path as FSx: host mount, no
@@ -637,6 +705,7 @@ export class E2StorageMatrixStack extends ExperimentStack {
         BENCH_THROUGHPUT: [
           'instance_store', 'ebs', 'efs_host_plain',
           ...(props.includeFsx ? ['fsx_openzfs', 'fsx_lustre', 'fsx_ontap'] : []),
+          ...(includeFuse ? ['juicefs', 'seaweedfs', 'mountpoint_s3'] : []),
         ].join(' '),
         // Second eviction step for the throughput probe: ask the privileged sidecar
         // below to drop the host page cache. Fargate has no equivalent and needs
@@ -692,6 +761,15 @@ export class E2StorageMatrixStack extends ExperimentStack {
         ec2Container.addMountPoints({ containerPath, sourceVolume, readOnly: false });
       }
     }
+    if (includeFuse) {
+      for (const [containerPath, sourceVolume] of [
+        ['/bench/juicefs', 'juicefs'],
+        ['/bench/seaweedfs', 'seaweedfs'],
+        ['/bench/mountpoint', 'mountpoint-s3'],
+      ] as const) {
+        ec2Container.addMountPoints({ containerPath, sourceVolume, readOnly: false });
+      }
+    }
 
     // --- Fargate arm: task ephemeral + the same EFS --------------------------
     const fargateTaskDefinition = new ecs.FargateTaskDefinition(this, 'FargateTaskDefinition', {
@@ -737,6 +815,9 @@ export class E2StorageMatrixStack extends ExperimentStack {
 
     resultsBucket.grantWrite(ec2TaskDefinition.taskRole);
     resultsBucket.grantWrite(fargateTaskDefinition.taskRole);
+    if (fuseDataBucket) {
+      fuseDataBucket.grantReadWrite(ec2TaskDefinition.taskRole);
+    }
 
     // Both arms are one-shot RunTasks, not services: this produces a comparison,
     // not a fleet. Nothing here restarts, so nothing here needs a circuit breaker
@@ -746,11 +827,14 @@ export class E2StorageMatrixStack extends ExperimentStack {
     new CfnOutput(this, 'FargateTaskDefinitionArn', { value: fargateTaskDefinition.taskDefinitionArn });
     new CfnOutput(this, 'CapacityProviderName', { value: capacityProvider.capacityProviderName });
     new CfnOutput(this, 'LogGroupName', { value: logGroup.logGroupName });
-    new CfnOutput(this, 'SubnetId', { value: vpc.isolatedSubnets[0].subnetId });
+    new CfnOutput(this, 'SubnetId', { value: (includeFuse ? vpc.privateSubnets[0] : vpc.isolatedSubnets[0]).subnetId });
     new CfnOutput(this, 'SecurityGroupId', { value: workloadSecurityGroup.securityGroupId });
     new CfnOutput(this, 'FileSystemId', { value: fileSystem.fileSystemId });
     new CfnOutput(this, 'AsgName', { value: asg.autoScalingGroupName });
     new CfnOutput(this, 'InstanceType', { value: instanceType.toString() });
     new CfnOutput(this, 'ResultsBucketName', { value: resultsBucket.bucketName });
+    if (fuseDataBucket) {
+      new CfnOutput(this, 'FuseDataBucketName', { value: fuseDataBucket.bucketName });
+    }
   }
 }

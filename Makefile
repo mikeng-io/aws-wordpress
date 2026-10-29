@@ -53,6 +53,10 @@ e0: ## E0 syscall census - local Docker, no AWS, no cost
 e2: ## E2 storage matrix - deploys, runs both arms, collects, DESTROYS. ~$0.96/hr while up
 	@set -a; . ./.env; set +a; ./experiments/E2-storage-matrix/scripts/collect.sh $(REPS)
 
+.PHONY: e2-fuse
+e2-fuse: ## E2 FUSE arms only - JuiceFS/SeaweedFS/Mountpoint on EC2, no FSx. ~$0.32/hr
+	@set -a; . ./.env; set +a; E2_FUSE=1 E2_FSX=0 ./experiments/E2-storage-matrix/scripts/collect.sh $(REPS)
+
 # The same collection, from the pinned runner image rather than the workstation's
 # toolchain. infra/node_modules is shadowed by a named volume so the container's
 # Linux dependencies never overwrite the host's macOS ones. Runs detached, so it
