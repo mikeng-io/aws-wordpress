@@ -1,0 +1,19 @@
+2026-10-29T09:42:56.980000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 WARNING: no host root-dev provided; using container root (94).
+2026-10-29T09:42:56.980000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3          Bind-mounted tiers cannot be checked against the host root.
+2026-10-29T09:42:56.986000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 mount check passed:
+2026-10-29T09:42:56.993000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3   efs -> /efs (st_dev=93, fs=nfs)
+2026-10-29T09:42:56.993000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 run order: efs=/efs
+2026-10-29T09:42:57.048000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 negotiated mount facts:
+2026-10-29T09:42:57.050000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 order,efs,1
+2026-10-29T09:42:57.050000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 kernel,6.1.188
+2026-10-29T09:42:57.050000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 mtu,eth0,1500
+2026-10-29T09:42:57.050000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 mtu,eth1,9001
+2026-10-29T09:42:57.050000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 mtu,lo,65536
+2026-10-29T09:42:57.050000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 mount,efs,nfs,127.0.0.1:/,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20685,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-29T09:42:57.050000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 conformance: efs
+2026-10-29T09:42:58.485000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3   efs: POSIX conformance PASSED
+2026-10-29T09:42:58.485000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 benchmarking efs at /efs
+2026-10-29T09:43:09.294000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 efs done, 3020 ops
+2026-10-29T09:43:10.595000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 seed tar written: /efs/tree.tar (27412480 bytes)
+2026-10-29T09:43:13.575000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 uploaded efs.csv + conformance -> s3://e4-cacheadapter-dev-resultsbucketa95a2103-9zowkusap2vi/seed/
+2026-10-29T09:43:19.343000+00:00 seed/Seed/2130a977ab254c2391a75f259dc3afc3 all tiers uploaded

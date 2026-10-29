@@ -1,0 +1,274 @@
+{
+  "run_id": "20261029T091909Z-842d596",
+  "provenance": [
+    {
+      "replication": "rep-1",
+      "meta": {
+        "experiment": "E4",
+        "run_id": "20261029T091909Z-842d596",
+        "replication": 1,
+        "utc": "2026-10-29T09:26:29Z",
+        "region": "ap-southeast-1",
+        "platform": "Fargate",
+        "cpu_architecture": "ARM64",
+        "cpu": "0.5 vCPU",
+        "memory_mib": 1024,
+        "availability_zone": "single-AZ (isolated subnet)",
+        "stack": "E4-CacheAdapter-dev",
+        "file_system_id": "fs-026e92eba51a74255",
+        "efs_configuration": "elastic throughput, general purpose, encrypted, one-zone",
+        "service_configuration": "one-shot Fargate tasks; no Service, ALB or NAT",
+        "git_sha": "842d596e8e36ba7381e6d109dc7ebd35aafc93f5",
+        "git_dirty": false,
+        "seed_task": "b09ed373ff5941089f3251f862b98b5c",
+        "efs_task": "6918adde0db74bba8ce2a0fb7a6b486a",
+        "hydrated_task": "489ab33df30047949f3641d160812851",
+        "image_digest": "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc",
+        "workload_shape": "20 dirs x 50 files, 2-50 KB, WordPress-shaped tree; read-only existing-tree benchmark",
+        "measures": "per-syscall latency and hydration wall time, not end-to-end WordPress request latency",
+        "reps": 3,
+        "pricing_snapshot": "20261028T125335Z-5bb312a",
+        "aws_cli_version": "aws-cli/2.35.19 Python/3.14.6 Darwin/27.0.0 exe/arm64"
+      },
+      "tasks": {
+        "seed": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 69.221
+        },
+        "efs": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 57.775
+        },
+        "hydrated": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 61.641
+        }
+      }
+    },
+    {
+      "replication": "rep-2",
+      "meta": {
+        "experiment": "E4",
+        "run_id": "20261029T091909Z-842d596",
+        "replication": 2,
+        "utc": "2026-10-29T09:36:13Z",
+        "region": "ap-southeast-1",
+        "platform": "Fargate",
+        "cpu_architecture": "ARM64",
+        "cpu": "0.5 vCPU",
+        "memory_mib": 1024,
+        "availability_zone": "single-AZ (isolated subnet)",
+        "stack": "E4-CacheAdapter-dev",
+        "file_system_id": "fs-021aeaf7269ee7d91",
+        "efs_configuration": "elastic throughput, general purpose, encrypted, one-zone",
+        "service_configuration": "one-shot Fargate tasks; no Service, ALB or NAT",
+        "git_sha": "842d596e8e36ba7381e6d109dc7ebd35aafc93f5",
+        "git_dirty": false,
+        "seed_task": "3dcdfd2b1fb045039bafee7f614be14b",
+        "efs_task": "7dd363477c1c4b6b9917a5e990953ec3",
+        "hydrated_task": "1171d1ca91a84eb0883a9459a8bd0fb3",
+        "image_digest": "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc",
+        "workload_shape": "20 dirs x 50 files, 2-50 KB, WordPress-shaped tree; read-only existing-tree benchmark",
+        "measures": "per-syscall latency and hydration wall time, not end-to-end WordPress request latency",
+        "reps": 3,
+        "pricing_snapshot": "20261028T125335Z-5bb312a",
+        "aws_cli_version": "aws-cli/2.35.19 Python/3.14.6 Darwin/27.0.0 exe/arm64"
+      },
+      "tasks": {
+        "seed": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 77.129
+        },
+        "efs": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 64.369
+        },
+        "hydrated": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 65.199
+        }
+      }
+    },
+    {
+      "replication": "rep-3",
+      "meta": {
+        "experiment": "E4",
+        "run_id": "20261029T091909Z-842d596",
+        "replication": 3,
+        "utc": "2026-10-29T09:46:10Z",
+        "region": "ap-southeast-1",
+        "platform": "Fargate",
+        "cpu_architecture": "ARM64",
+        "cpu": "0.5 vCPU",
+        "memory_mib": 1024,
+        "availability_zone": "single-AZ (isolated subnet)",
+        "stack": "E4-CacheAdapter-dev",
+        "file_system_id": "fs-0f3e0b5fd54509e5f",
+        "efs_configuration": "elastic throughput, general purpose, encrypted, one-zone",
+        "service_configuration": "one-shot Fargate tasks; no Service, ALB or NAT",
+        "git_sha": "842d596e8e36ba7381e6d109dc7ebd35aafc93f5",
+        "git_dirty": false,
+        "seed_task": "2130a977ab254c2391a75f259dc3afc3",
+        "efs_task": "6595db4d77234769a7137d4d3b1f6ea7",
+        "hydrated_task": "a4e7b777a2fd48449954c247fe8a3bba",
+        "image_digest": "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc",
+        "workload_shape": "20 dirs x 50 files, 2-50 KB, WordPress-shaped tree; read-only existing-tree benchmark",
+        "measures": "per-syscall latency and hydration wall time, not end-to-end WordPress request latency",
+        "reps": 3,
+        "pricing_snapshot": "20261028T125335Z-5bb312a",
+        "aws_cli_version": "aws-cli/2.35.19 Python/3.14.6 Darwin/27.0.0 exe/arm64"
+      },
+      "tasks": {
+        "seed": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 83.302
+        },
+        "efs": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 57.205
+        },
+        "hydrated": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 62.154
+        }
+      }
+    }
+  ],
+  "pricing_snapshot": "results/pricing/20261028T125335Z-5bb312a/pricing.json",
+  "cost_estimate": {
+    "status": "estimate, not invoice; ancillary usage excluded",
+    "task_duration_proxy_s": 603.0150000000001,
+    "task_rate_usd_per_hour": 0.024645,
+    "task_cost_proxy_usd": 0.0041281401875000005,
+    "stack_observed_lifetimes_hours": [
+      0.15775,
+      0.1593238888888889,
+      0.16313027777777778
+    ],
+    "endpoint_rate_usd_per_hour": 0.013,
+    "endpoint_prorated_proxy_usd": 0.018727962499999997,
+    "endpoint_whole_hour_reserve_usd": 0.11699999999999999,
+    "task_plus_endpoint_reserve_usd": 0.1211281401875,
+    "excluded": [
+      "EFS storage and elastic-throughput IO",
+      "S3 requests and storage",
+      "CloudWatch ingestion",
+      "endpoint data processing",
+      "shared CDK/ECR asset storage"
+    ],
+    "assumptions": [
+      "three interface endpoints per deployment",
+      "0.5 ARM vCPU and 1 GiB per task",
+      "task created-to-stopped with 60s minimum is a conservative duration proxy",
+      "endpoint reserve rounds each deployment up to whole hours; not a billing assertion"
+    ]
+  }
+}

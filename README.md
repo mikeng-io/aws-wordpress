@@ -55,11 +55,13 @@ not production steady-state estimates. See
 [the server-backed finding](docs/findings/E2-server-backed.md), based on
 `results/E2/20261015T000959Z-85382cc/`.
 
-E4 then asks the conditional follow-up: if the fast tier is local and the durable
-tier is remote, can a **cache adapter** sit between them — local ephemeral in
-front of S3/EFS, the way Redis sits in front of Postgres? E3 measured both ends
-of that gap on the same task (3.1 µs vs 0.84 ms), which is what makes the
-question worth asking rather than assuming.
+E4 tested the Fargate-reachable follow-up: hydrate a read-only code tree from an
+EFS tar onto task ephemeral storage at startup, then serve reads locally.
+The [three-replication finding](docs/findings/E4-hydration.md)
+(`results/E4/20261029T091909Z-842d596/`) supports the registered read-latency and
+conformance predictions, but **refutes the startup-cost prediction**. Its H2
+kill-condition proxy is met for the read-only path only; it does not measure
+request latency, write-back, or a complete production hydration design.
 
 ## Method
 
@@ -80,7 +82,8 @@ that would falsify it, recorded before any experiment runs.
 ## Status
 
 E0, E1 and E3 have completed runs; E2 has completed block-backed, EFS mount and
-FSx groups, with the FUSE-backed arms still open. E5's formal v3 now has **three
+FSx and FUSE groups. E4 has completed three formal read-only hydration
+replications (2026-10-29), with all workload resources torn down. E5's formal v3 now has **three
 protocol-eligible replications** (2026-10-28). Pooled P7 is **SUPPORTED (3/3)**;
 P1–P3 are REFUTED; P4 is **INCONCLUSIVE** (two supported, one refuted); P5, P6 and
 P8–P10 are SUPPORTED. The frozen 2026-10-27 run remains `P7 ERROR` under its
@@ -145,7 +148,7 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E1](experiments/E1-mount-topology/) | Does ECS on EC2 mount EFS per host or per task? | ~$0.15/hr, torn down | **complete: per task, not per host** |
 | [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx + FUSE arms complete; P2 inconclusive, P4 supported; NFS cache confound identified** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete; fresh-file cache mix, not production steady state** |
-| [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | **gated, not built as specified**: FUSE caches are EC2-only; Fargate needs hydration, which is a new design |
+| [E4](experiments/E4-cache-adapter/) | Does read-only task-start hydration capture the EFS metadata gap, and at what startup cost? | US$0.1211 task/endpoint estimate; ancillary usage excluded, torn down | **complete, 3/3: P1/P3 SUPPORTED; P2 REFUTED; read-only H2 proxy MET** ([finding](docs/findings/E4-hydration.md), `results/E4/20261029T091909Z-842d596/`) |
 | [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | **formal v3 3/3 complete: P7 SUPPORTED; P4 INCONCLUSIVE; no paid work pending** |
 
 The cost entries are historical apparatus estimates, not a current price quote;
@@ -174,12 +177,21 @@ evidence remains separate and frozen. The
 [formal amendment](experiments/E5-attribute-cache/method-amendments/20261027-formal-v3/README.md)
 fixes the quiet profile, complete windows and P7 reference binding.
 
-E4 is now **gated, not built as specified**. E2 measured the FUSE arms: JuiceFS and
-SeaweedFS are conformant local caches but need `CAP_SYS_ADMIN`, which Fargate does
-not grant; Mountpoint failed 8 of 11 conformance checks. On EC2 the existing tiers
-are prior art; on Fargate a transparent adapter has no mount path. A read-only
-task-start hydration experiment is the proposed replacement, but it needs its own
-apparatus and ceiling. See [the gate review](experiments/E4-cache-adapter/README.md#gate-review-after-e2-2026-10-29).
+**E4's read-only hydration campaign is complete (2026-10-29).** The original
+transparent adapter was gated by E2: conformant FUSE caches are EC2-only, while
+Fargate cannot grant `CAP_SYS_ADMIN`. E4 was replaced in place with task-start
+hydration. Across [three fresh deployments](results/E4/20261029T091909Z-842d596/),
+pooled `stat` p50 was 1.39 ms on EFS versus 3.1 µs hydrated; `open_read` was
+2.71 ms versus 11.7 µs. P1 and P3 are SUPPORTED in every rep. Hydration took
+0.218–0.444 s for 27,412,480 bytes, and both startup clauses failed in every rep:
+**P2 REFUTED**, without revising its 0.5-s floor or timing-delta requirement.
+The H2 proxy is MET for the read-only code path only. EFS cache-mode composition,
+the synthetic workload and the first-log timing boundary limit interpretation;
+these are syscall measurements, not end-to-end request latency. H2's broader
+verdict and H4's first-200-OK/ranking question remain open; H6 is untested.
+See [the finding](docs/findings/E4-hydration.md) for per-rep spread, distributions,
+extrapolated break-even and teardown evidence. The initial DNS-readiness failure
+is archived and excluded, with its cost reported separately.
 
 See [docs/scope-audit.md](docs/scope-audit.md) for what each experiment and
 hypothesis is currently worth, and why some are parked.

@@ -1,0 +1,135 @@
+{
+  "run_id": "20261029T090427Z-3b8faf3",
+  "provenance": [
+    {
+      "replication": "rep-1",
+      "meta": {
+        "experiment": "E4",
+        "run_id": "20261029T090427Z-3b8faf3",
+        "replication": 1,
+        "utc": "2026-10-29T09:10:21Z",
+        "region": "ap-southeast-1",
+        "platform": "Fargate",
+        "cpu_architecture": "ARM64",
+        "cpu": "0.5 vCPU",
+        "memory_mib": 1024,
+        "availability_zone": "single-AZ (isolated subnet)",
+        "stack": "E4-CacheAdapter-dev",
+        "file_system_id": "fs-0d20a66ed7f9cb951",
+        "efs_configuration": "elastic throughput, general purpose, encrypted, one-zone",
+        "service_configuration": "one-shot Fargate tasks; no Service, ALB or NAT",
+        "git_sha": "3b8faf30d119ffe1b2916deb6ffb8c28717b02a1",
+        "git_dirty": false,
+        "seed_task": "7b8901c35cb64c199952fc9745464043",
+        "efs_task": "24b7b62382b741eca0703f900efb373d",
+        "hydrated_task": "7ed22edc226e4939bc2a70d48b80257f",
+        "image_digest": "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc",
+        "workload_shape": "20 dirs x 50 files, 2-50 KB, WordPress-shaped tree; read-only existing-tree benchmark",
+        "measures": "per-syscall latency and hydration wall time, not end-to-end WordPress request latency",
+        "reps": 3,
+        "pricing_snapshot": "20261028T125335Z-5bb312a",
+        "aws_cli_version": "aws-cli/2.35.19 Python/3.14.6 Darwin/27.0.0 exe/arm64"
+      },
+      "tasks": {
+        "seed": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 65.315
+        },
+        "efs": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 68.232
+        },
+        "hydrated": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            0
+          ],
+          "created_to_stopped_s": 54.389
+        }
+      }
+    },
+    {
+      "replication": "rep-2",
+      "meta": {},
+      "tasks": {
+        "seed": {
+          "availability_zone": "ap-southeast-1a",
+          "platform_version": "1.4.0",
+          "cpu": "512",
+          "memory": "1024",
+          "ephemeral_storage": {
+            "sizeInGiB": 20
+          },
+          "image_digests": [
+            "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc"
+          ],
+          "exit_codes": [
+            null
+          ],
+          "created_to_stopped_s": 48.903
+        }
+      }
+    }
+  ],
+  "pricing_snapshot": "results/pricing/20261028T125335Z-5bb312a/pricing.json",
+  "cost_estimate": {
+    "status": "estimate, not invoice; ancillary usage excluded",
+    "task_duration_proxy_s": 253.547,
+    "task_rate_usd_per_hour": 0.024645,
+    "task_cost_proxy_usd": 0.001735740504166667,
+    "stack_observed_lifetimes_hours": [
+      0.13289277777777778,
+      0.09583944444444444
+    ],
+    "endpoint_rate_usd_per_hour": 0.013,
+    "endpoint_prorated_proxy_usd": 0.008920556666666666,
+    "endpoint_whole_hour_reserve_usd": 0.078,
+    "task_plus_endpoint_reserve_usd": 0.07973574050416667,
+    "excluded": [
+      "EFS storage and elastic-throughput IO",
+      "S3 requests and storage",
+      "CloudWatch ingestion",
+      "endpoint data processing",
+      "shared CDK/ECR asset storage"
+    ],
+    "assumptions": [
+      "three interface endpoints per deployment",
+      "0.5 ARM vCPU and 1 GiB per task",
+      "task created-to-stopped with 60s minimum is a conservative duration proxy",
+      "endpoint reserve rounds each deployment up to whole hours; not a billing assertion"
+    ]
+  }
+}

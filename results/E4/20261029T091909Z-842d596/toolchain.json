@@ -1,0 +1,10 @@
+{
+  "node_version": "v22.17.0",
+  "node_archive_url": "https://nodejs.org/dist/v22.17.0/node-v22.17.0-darwin-arm64.tar.gz",
+  "node_archive_sha256": "615dda58b5fb41fad2be43940b6398ca56554cbe05800953afadc724729cb09e",
+  "published_checksums_url": "https://nodejs.org/dist/v22.17.0/SHASUMS256.txt",
+  "published_checksum_line": "615dda58b5fb41fad2be43940b6398ca56554cbe05800953afadc724729cb09e  node-v22.17.0-darwin-arm64.tar.gz",
+  "nvm_script_exists": false,
+  "collection_entrypoint": "REPS=3 make e4",
+  "aws_cli": "/usr/local/bin/aws"
+}

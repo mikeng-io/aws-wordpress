@@ -1,0 +1,296 @@
+=== nfs counters (before) ===
+Client rpc stats:
+calls      retrans    authrefrsh
+14         0          14      
+
+Client nfs v4:
+null             read             write            commit           open             
+1         7%     0         0%     0         0%     0         0%     0         0%     
+open_conf        open_noat        open_dgrd        close            setattr          
+0         0%     0         0%     0         0%     0         0%     0         0%     
+fsinfo           renew            setclntid        confirm          lock             
+2        14%     0         0%     0         0%     0         0%     0         0%     
+lockt            locku            access           getattr          lookup           
+0         0%     0         0%     0         0%     1         7%     0         0%     
+lookup_root      remove           rename           link             symlink          
+1         7%     0         0%     0         0%     0         0%     0         0%     
+create           pathconf         statfs           readlink         readdir          
+0         0%     1         7%     0         0%     0         0%     0         0%     
+server_caps      delegreturn      getacl           setacl           fs_locations     
+3        21%     0         0%     0         0%     0         0%     0         0%     
+rel_lkowner      secinfo          fsid_present     exchange_id      create_session   
+0         0%     0         0%     0         0%     2        14%     1         7%     
+destroy_session  sequence         get_lease_time   reclaim_comp     layoutget        
+0         0%     0         0%     0         0%     1         7%     0         0%     
+getdevinfo       layoutcommit     layoutreturn     secinfo_no       test_stateid     
+0         0%     0         0%     0         0%     1         7%     0         0%     
+free_stateid     getdevicelist    bind_conn_to_ses destroy_clientid seek             
+0         0%     0         0%     0         0%     0         0%     0         0%     
+allocate         deallocate       layoutstats      clone            
+0         0%     0         0%     0         0%     0         0%     
+
+device overlay mounted on / with fstype overlay
+device proc mounted on /proc with fstype proc
+device tmpfs mounted on /dev with fstype tmpfs
+device devpts mounted on /dev/pts with fstype devpts
+device shm mounted on /dev/shm with fstype tmpfs
+device mqueue mounted on /dev/mqueue with fstype mqueue
+device sysfs mounted on /sys with fstype sysfs
+device tmpfs mounted on /sys/fs/cgroup with fstype tmpfs
+device cgroup mounted on /sys/fs/cgroup/systemd with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpu,cpuacct with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/memory with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/perf_event with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/misc with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/devices with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpuset with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/net_cls,net_prio with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/pids with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/hugetlb with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/freezer with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/blkio with fstype cgroup
+device 127.0.0.1:/ mounted on /efs-origin with fstype nfs4 statvers=1.1
+	opts:	rw,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=3,acregmax=60,acdirmin=30,acdirmax=60,hard,noresvport,proto=tcp,port=20470,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none
+	age:	0
+	impl_id:	name='Amazon EFS',domain='aws.amazon.com',date='0,0'
+	caps:	caps=0x8003c0b7,wtmult=512,dtsize=1048576,bsize=0,namlen=255
+	nfsv4:	bm0=0xfe1fafff,bm1=0xfdfe3e,bm2=0x800,acl=0x0,sessions,pnfs=not configured,lease_time=90,lease_expired=0
+	sec:	flavor=1,pseudoflavor=1
+	events:	0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+	bytes:	0 0 0 0 0 0 0 0 
+	RPC iostats version: 1.1  p/v: 100003/4 (nfs)
+	xprt:	tcp 0 0 2 0 0 14 14 0 14 0 2 0 0
+	per-op statistics
+	        NULL: 1 1 0 44 24 0 121 121 0
+	        READ: 0 0 0 0 0 0 0 0 0
+	       WRITE: 0 0 0 0 0 0 0 0 0
+	      COMMIT: 0 0 0 0 0 0 0 0 0
+	        OPEN: 0 0 0 0 0 0 0 0 0
+	OPEN_CONFIRM: 0 0 0 0 0 0 0 0 0
+	 OPEN_NOATTR: 0 0 0 0 0 0 0 0 0
+	OPEN_DOWNGRADE: 0 0 0 0 0 0 0 0 0
+	       CLOSE: 0 0 0 0 0 0 0 0 0
+	     SETATTR: 0 0 0 0 0 0 0 0 0
+	      FSINFO: 2 2 0 632 304 0 1 1 0
+	       RENEW: 0 0 0 0 0 0 0 0 0
+	 SETCLIENTID: 0 0 0 0 0 0 0 0 0
+	SETCLIENTID_CONFIRM: 0 0 0 0 0 0 0 0 0
+	        LOCK: 0 0 0 0 0 0 0 0 0
+	       LOCKT: 0 0 0 0 0 0 0 0 0
+	       LOCKU: 0 0 0 0 0 0 0 0 0
+	      ACCESS: 0 0 0 0 0 0 0 0 0
+	     GETATTR: 1 1 0 316 240 0 0 0 0
+	      LOOKUP: 0 0 0 0 0 0 0 0 0
+	 LOOKUP_ROOT: 1 1 0 188 380 0 0 0 0
+	      REMOVE: 0 0 0 0 0 0 0 0 0
+	      RENAME: 0 0 0 0 0 0 0 0 0
+	        LINK: 0 0 0 0 0 0 0 0 0
+	     SYMLINK: 0 0 0 0 0 0 0 0 0
+	      CREATE: 0 0 0 0 0 0 0 0 0
+	    PATHCONF: 1 1 0 312 116 0 0 0 0
+	      STATFS: 0 0 0 0 0 0 0 0 0
+	    READLINK: 0 0 0 0 0 0 0 0 0
+	     READDIR: 0 0 0 0 0 0 0 0 0
+	 SERVER_CAPS: 3 3 0 960 516 0 1 1 0
+	 DELEGRETURN: 0 0 0 0 0 0 0 0 0
+	      GETACL: 0 0 0 0 0 0 0 0 0
+	      SETACL: 0 0 0 0 0 0 0 0 0
+	FS_LOCATIONS: 0 0 0 0 0 0 0 0 0
+	RELEASE_LOCKOWNER: 0 0 0 0 0 0 0 0 0
+	     SECINFO: 0 0 0 0 0 0 0 0 0
+	FSID_PRESENT: 0 0 0 0 0 0 0 0 0
+	 EXCHANGE_ID: 2 2 0 608 560 0 0 0 0
+	CREATE_SESSION: 1 1 0 280 124 0 0 0 0
+	DESTROY_SESSION: 0 0 0 0 0 0 0 0 0
+	    SEQUENCE: 0 0 0 0 0 0 0 0 0
+	GET_LEASE_TIME: 0 0 0 0 0 0 0 0 0
+	RECLAIM_COMPLETE: 1 1 0 168 88 0 0 0 0
+	   LAYOUTGET: 0 0 0 0 0 0 0 0 0
+	GETDEVICEINFO: 0 0 0 0 0 0 0 0 0
+	LAYOUTCOMMIT: 0 0 0 0 0 0 0 0 0
+	LAYOUTRETURN: 0 0 0 0 0 0 0 0 0
+	SECINFO_NO_NAME: 1 1 0 176 104 0 0 0 0
+	TEST_STATEID: 0 0 0 0 0 0 0 0 0
+	FREE_STATEID: 0 0 0 0 0 0 0 0 0
+	GETDEVICELIST: 0 0 0 0 0 0 0 0 0
+	BIND_CONN_TO_SESSION: 0 0 0 0 0 0 0 0 0
+	DESTROY_CLIENTID: 0 0 0 0 0 0 0 0 0
+	        SEEK: 0 0 0 0 0 0 0 0 0
+	    ALLOCATE: 0 0 0 0 0 0 0 0 0
+	  DEALLOCATE: 0 0 0 0 0 0 0 0 0
+	 LAYOUTSTATS: 0 0 0 0 0 0 0 0 0
+	       CLONE: 0 0 0 0 0 0 0 0 0
+	        COPY: 0 0 0 0 0 0 0 0 0
+	OFFLOAD_CANCEL: 0 0 0 0 0 0 0 0 0
+	     LOOKUPP: 0 0 0 0 0 0 0 0 0
+	 LAYOUTERROR: 0 0 0 0 0 0 0 0 0
+	 COPY_NOTIFY: 0 0 0 0 0 0 0 0 0
+	    GETXATTR: 0 0 0 0 0 0 0 0 0
+	    SETXATTR: 0 0 0 0 0 0 0 0 0
+	  LISTXATTRS: 0 0 0 0 0 0 0 0 0
+	 REMOVEXATTR: 0 0 0 0 0 0 0 0 0
+	   READ_PLUS: 0 0 0 0 0 0 0 0 0
+
+device /dev/nvme1n1 mounted on /etc/hosts with fstype ext4
+device /dev/nvme1n1 mounted on /etc/resolv.conf with fstype ext4
+device /dev/nvme1n1 mounted on /etc/hostname with fstype ext4
+device proc mounted on /proc/bus with fstype proc
+device proc mounted on /proc/fs with fstype proc
+device proc mounted on /proc/irq with fstype proc
+device proc mounted on /proc/sys with fstype proc
+device proc mounted on /proc/sysrq-trigger with fstype proc
+device tmpfs mounted on /proc/acpi with fstype tmpfs
+device tmpfs mounted on /proc/kcore with fstype tmpfs
+device tmpfs mounted on /proc/keys with fstype tmpfs
+device tmpfs mounted on /proc/latency_stats with fstype tmpfs
+device tmpfs mounted on /proc/timer_list with fstype tmpfs
+device tmpfs mounted on /sys/firmware with fstype tmpfs
+device tmpfs mounted on /proc/scsi with fstype tmpfs
+=== nfs counters (after) ===
+Client rpc stats:
+calls      retrans    authrefrsh
+47         0          47      
+
+Client nfs v4:
+null             read             write            commit           open             
+1         2%     28       59%     0         0%     0         0%     0         0%     
+open_conf        open_noat        open_dgrd        close            setattr          
+0         0%     1         2%     0         0%     1         2%     0         0%     
+fsinfo           renew            setclntid        confirm          lock             
+2         4%     0         0%     0         0%     0         0%     0         0%     
+lockt            locku            access           getattr          lookup           
+0         0%     0         0%     1         2%     2         4%     1         2%     
+lookup_root      remove           rename           link             symlink          
+1         2%     0         0%     0         0%     0         0%     0         0%     
+create           pathconf         statfs           readlink         readdir          
+0         0%     1         2%     0         0%     0         0%     0         0%     
+server_caps      delegreturn      getacl           setacl           fs_locations     
+3         6%     0         0%     0         0%     0         0%     0         0%     
+rel_lkowner      secinfo          fsid_present     exchange_id      create_session   
+0         0%     0         0%     0         0%     2         4%     1         2%     
+destroy_session  sequence         get_lease_time   reclaim_comp     layoutget        
+0         0%     0         0%     0         0%     1         2%     0         0%     
+getdevinfo       layoutcommit     layoutreturn     secinfo_no       test_stateid     
+0         0%     0         0%     0         0%     1         2%     0         0%     
+free_stateid     getdevicelist    bind_conn_to_ses destroy_clientid seek             
+0         0%     0         0%     0         0%     0         0%     0         0%     
+allocate         deallocate       layoutstats      clone            
+0         0%     0         0%     0         0%     0         0%     
+
+device overlay mounted on / with fstype overlay
+device proc mounted on /proc with fstype proc
+device tmpfs mounted on /dev with fstype tmpfs
+device devpts mounted on /dev/pts with fstype devpts
+device shm mounted on /dev/shm with fstype tmpfs
+device mqueue mounted on /dev/mqueue with fstype mqueue
+device sysfs mounted on /sys with fstype sysfs
+device tmpfs mounted on /sys/fs/cgroup with fstype tmpfs
+device cgroup mounted on /sys/fs/cgroup/systemd with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpu,cpuacct with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/memory with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/perf_event with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/misc with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/devices with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/cpuset with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/net_cls,net_prio with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/pids with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/hugetlb with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/freezer with fstype cgroup
+device cgroup mounted on /sys/fs/cgroup/blkio with fstype cgroup
+device 127.0.0.1:/ mounted on /efs-origin with fstype nfs4 statvers=1.1
+	opts:	rw,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,acregmin=3,acregmax=60,acdirmin=30,acdirmax=60,hard,noresvport,proto=tcp,port=20470,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none
+	age:	2
+	impl_id:	name='Amazon EFS',domain='aws.amazon.com',date='0,0'
+	caps:	caps=0x8003c0b7,wtmult=512,dtsize=1048576,bsize=0,namlen=255
+	nfsv4:	bm0=0xfe1fafff,bm1=0xfdfe3e,bm2=0x800,acl=0x0,sessions,pnfs=not configured,lease_time=90,lease_expired=0
+	sec:	flavor=1,pseudoflavor=1
+	events:	1 1 0 0 0 1 5 0 0 7 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 
+	bytes:	27412480 0 0 0 27412480 0 6693 0 
+	RPC iostats version: 1.1  p/v: 100003/4 (nfs)
+	xprt:	tcp 0 0 2 0 1 47 47 0 244 0 19 35 169
+	per-op statistics
+	        NULL: 1 1 0 44 24 0 121 121 0
+	        READ: 28 28 0 9296 27415392 36 1021 1059 0
+	       WRITE: 0 0 0 0 0 0 0 0 0
+	      COMMIT: 0 0 0 0 0 0 0 0 0
+	        OPEN: 0 0 0 0 0 0 0 0 0
+	OPEN_CONFIRM: 0 0 0 0 0 0 0 0 0
+	 OPEN_NOATTR: 1 1 0 384 320 0 0 0 0
+	OPEN_DOWNGRADE: 0 0 0 0 0 0 0 0 0
+	       CLOSE: 1 1 0 340 188 0 0 0 0
+	     SETATTR: 0 0 0 0 0 0 0 0 0
+	      FSINFO: 2 2 0 632 304 0 1 1 0
+	       RENEW: 0 0 0 0 0 0 0 0 0
+	 SETCLIENTID: 0 0 0 0 0 0 0 0 0
+	SETCLIENTID_CONFIRM: 0 0 0 0 0 0 0 0 0
+	        LOCK: 0 0 0 0 0 0 0 0 0
+	       LOCKT: 0 0 0 0 0 0 0 0 0
+	       LOCKU: 0 0 0 0 0 0 0 0 0
+	      ACCESS: 1 1 0 324 168 0 1 1 0
+	     GETATTR: 2 2 0 632 480 0 1 1 0
+	      LOOKUP: 1 1 0 336 388 0 1 1 0
+	 LOOKUP_ROOT: 1 1 0 188 380 0 0 0 0
+	      REMOVE: 0 0 0 0 0 0 0 0 0
+	      RENAME: 0 0 0 0 0 0 0 0 0
+	        LINK: 0 0 0 0 0 0 0 0 0
+	     SYMLINK: 0 0 0 0 0 0 0 0 0
+	      CREATE: 0 0 0 0 0 0 0 0 0
+	    PATHCONF: 1 1 0 312 116 0 0 0 0
+	      STATFS: 0 0 0 0 0 0 0 0 0
+	    READLINK: 0 0 0 0 0 0 0 0 0
+	     READDIR: 0 0 0 0 0 0 0 0 0
+	 SERVER_CAPS: 3 3 0 960 516 0 1 1 0
+	 DELEGRETURN: 0 0 0 0 0 0 0 0 0
+	      GETACL: 0 0 0 0 0 0 0 0 0
+	      SETACL: 0 0 0 0 0 0 0 0 0
+	FS_LOCATIONS: 0 0 0 0 0 0 0 0 0
+	RELEASE_LOCKOWNER: 0 0 0 0 0 0 0 0 0
+	     SECINFO: 0 0 0 0 0 0 0 0 0
+	FSID_PRESENT: 0 0 0 0 0 0 0 0 0
+	 EXCHANGE_ID: 2 2 0 608 560 0 0 0 0
+	CREATE_SESSION: 1 1 0 280 124 0 0 0 0
+	DESTROY_SESSION: 0 0 0 0 0 0 0 0 0
+	    SEQUENCE: 0 0 0 0 0 0 0 0 0
+	GET_LEASE_TIME: 0 0 0 0 0 0 0 0 0
+	RECLAIM_COMPLETE: 1 1 0 168 88 0 0 0 0
+	   LAYOUTGET: 0 0 0 0 0 0 0 0 0
+	GETDEVICEINFO: 0 0 0 0 0 0 0 0 0
+	LAYOUTCOMMIT: 0 0 0 0 0 0 0 0 0
+	LAYOUTRETURN: 0 0 0 0 0 0 0 0 0
+	SECINFO_NO_NAME: 1 1 0 176 104 0 0 0 0
+	TEST_STATEID: 0 0 0 0 0 0 0 0 0
+	FREE_STATEID: 0 0 0 0 0 0 0 0 0
+	GETDEVICELIST: 0 0 0 0 0 0 0 0 0
+	BIND_CONN_TO_SESSION: 0 0 0 0 0 0 0 0 0
+	DESTROY_CLIENTID: 0 0 0 0 0 0 0 0 0
+	        SEEK: 0 0 0 0 0 0 0 0 0
+	    ALLOCATE: 0 0 0 0 0 0 0 0 0
+	  DEALLOCATE: 0 0 0 0 0 0 0 0 0
+	 LAYOUTSTATS: 0 0 0 0 0 0 0 0 0
+	       CLONE: 0 0 0 0 0 0 0 0 0
+	        COPY: 0 0 0 0 0 0 0 0 0
+	OFFLOAD_CANCEL: 0 0 0 0 0 0 0 0 0
+	     LOOKUPP: 0 0 0 0 0 0 0 0 0
+	 LAYOUTERROR: 0 0 0 0 0 0 0 0 0
+	 COPY_NOTIFY: 0 0 0 0 0 0 0 0 0
+	    GETXATTR: 0 0 0 0 0 0 0 0 0
+	    SETXATTR: 0 0 0 0 0 0 0 0 0
+	  LISTXATTRS: 0 0 0 0 0 0 0 0 0
+	 REMOVEXATTR: 0 0 0 0 0 0 0 0 0
+	   READ_PLUS: 0 0 0 0 0 0 0 0 0
+
+device /dev/nvme1n1 mounted on /etc/hosts with fstype ext4
+device /dev/nvme1n1 mounted on /etc/resolv.conf with fstype ext4
+device /dev/nvme1n1 mounted on /etc/hostname with fstype ext4
+device proc mounted on /proc/bus with fstype proc
+device proc mounted on /proc/fs with fstype proc
+device proc mounted on /proc/irq with fstype proc
+device proc mounted on /proc/sys with fstype proc
+device proc mounted on /proc/sysrq-trigger with fstype proc
+device tmpfs mounted on /proc/acpi with fstype tmpfs
+device tmpfs mounted on /proc/kcore with fstype tmpfs
+device tmpfs mounted on /proc/keys with fstype tmpfs
+device tmpfs mounted on /proc/latency_stats with fstype tmpfs
+device tmpfs mounted on /proc/timer_list with fstype tmpfs
+device tmpfs mounted on /sys/firmware with fstype tmpfs
+device tmpfs mounted on /proc/scsi with fstype tmpfs

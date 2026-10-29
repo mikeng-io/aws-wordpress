@@ -143,6 +143,8 @@ def distribution(vals: list[int]) -> dict:
     p50 = pct(vals, 0.50)
     return {
         "n": len(vals),
+        "min_ns": min(vals),
+        "max_ns": max(vals),
         "p25_ns": pct(vals, 0.25),
         "p50_ns": p50,
         "p75_ns": pct(vals, 0.75),

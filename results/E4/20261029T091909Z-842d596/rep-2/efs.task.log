@@ -1,0 +1,18 @@
+2026-10-29T09:34:15.126000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 WARNING: no host root-dev provided; using container root (94).
+2026-10-29T09:34:15.127000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3          Bind-mounted tiers cannot be checked against the host root.
+2026-10-29T09:34:15.133000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 mount check passed:
+2026-10-29T09:34:15.142000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3   efs -> /efs (st_dev=93, fs=nfs)
+2026-10-29T09:34:15.142000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 run order: efs=/efs
+2026-10-29T09:34:15.195000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 negotiated mount facts:
+2026-10-29T09:34:15.197000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 order,efs,1
+2026-10-29T09:34:15.197000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 kernel,6.1.188
+2026-10-29T09:34:15.197000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 mtu,eth0,1500
+2026-10-29T09:34:15.197000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 mtu,eth1,9001
+2026-10-29T09:34:15.197000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 mtu,lo,65536
+2026-10-29T09:34:15.197000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 mount,efs,nfs,127.0.0.1:/,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20341,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
+2026-10-29T09:34:15.197000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 conformance: efs
+2026-10-29T09:34:16.613000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3   efs: POSIX conformance PASSED
+2026-10-29T09:34:16.613000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 benchmarking efs at /efs
+2026-10-29T09:34:20.976000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 efs done, 2020 ops
+2026-10-29T09:34:23.880000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 uploaded efs.csv + conformance -> s3://e4-cacheadapter-dev-resultsbucketa95a2103-4p1zqj9mcto1/efs/
+2026-10-29T09:34:29.562000+00:00 efs/Efs/7dd363477c1c4b6b9917a5e990953ec3 all tiers uploaded

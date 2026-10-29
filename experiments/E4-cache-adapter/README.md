@@ -1,12 +1,14 @@
 # E4 — task-start hydration as a read-only cache
 
-**Status:** `SMOKE PASSED; FORMAL INTERRUPTED` — design replaced in place
-2026-10-29. One-rep smoke `20261029T084344Z-ec1e5b2` passed; the formal three-rep
-run `20261029T085327Z-31e9fa2` was interrupted after rep-1's EFS task for a clean
-handoff. Its stack was destroyed and verified gone; no AWS resources remain. E2
-gated the original transparent-adapter design; this experiment now measures the
-design that survives that gate. Ceiling **US$2**, approved 2026-10-29. Nothing is
-left running: each replication deploys, runs, and destroys its own stack.
+**Status:** `COMPLETE — 3/3 formal replications` (2026-10-29).
+Formal result [`20261029T091909Z-842d596`](../../results/E4/20261029T091909Z-842d596/):
+**P1 SUPPORTED, P2 REFUTED, P3 SUPPORTED; H2 read-only proxy MET**.
+See [the finding](../../docs/findings/E4-hydration.md) for per-rep/pooled results,
+cache-mode and request-extrapolation caveats, cost estimates and teardown receipts.
+All three stacks and EFS filesystems are verified gone. Design replaced in place
+2026-10-29 after E2 gated the original transparent adapter. Ceiling **US$2**,
+approved 2026-10-29; the failed DNS-readiness attempt is archived separately.
+H2's broader verdict is unchanged; H6 is not tested.
 
 **Bears on:** [H2](../../hypotheses/H2-fargate-forbids-caching.md),
 [H4](../../hypotheses/H4-cold-start-is-the-metric.md),
@@ -130,9 +132,9 @@ rate.
 
 - `seed/` — seed task log/S3 artefacts (timing ignored)
 - `efs/efs.csv`, `efs/efs.conformance.csv`, `efs/mount-facts.csv`
-- `hydrated/hydrated.csv`, `hydrated/hydrated.conformance.csv`,
+- `hydrated/ephemeral.csv`, `hydrated/ephemeral.conformance.csv`,
   `hydrated/mount-facts.csv`, `hydrated/hydration.csv`
-- `meta.json` per run, plus `summary.json` / `summary.md`
+- `meta.json` per replication, plus `summary.json` / `summary.md`
 
 `hydration.csv` is `hydrate,<ns>,<bytes>`; analysis computes seconds and the
 break-even request count from E0's op count. Every published statistic is
@@ -157,7 +159,7 @@ Fargate has no mount path. The full old text is in git history; the surviving
 question is the one above. H6 remains `UNTESTED` and is not claimed by this run.
 
 
-## Current state — 2026-10-29 handoff
+## Historical handoff — before formal completion
 
 The smoke (`20261029T084344Z-ec1e5b2`, one replication) already shows the shape:
 EFS `stat` p50 1.60 ms vs hydrated 3.2 µs (ratio 0.002); `open_read` 3.59 ms vs
@@ -192,3 +194,20 @@ Analysis also now reports operation-level median CIs, geometric means, dispersio
 and deterministic log-space clustering, plus per-rep median spread. Existing
 smoke numbers and all grades were checked unchanged on a temporary copy; the
 smoke's committed output was not regenerated.
+
+## Formal completion — 2026-10-29
+
+[`20261029T091909Z-842d596`](../../results/E4/20261029T091909Z-842d596/) has three complete,
+independent replications with `git_dirty: false`. Both latency thresholds and both
+conformance gates hold in every rep. Hydration is 0.218–0.444 s for the same
+27,412,480 bytes, and the first-log-to-benchmark deltas are 0.051–0.265 s: **both
+P2 clauses fail in every rep**. Neither threshold was changed. The H2 proxy is
+MET for the read-only code path; it is not a whole-H2 verdict or measured request
+latency. Detailed distributions, replication spread, startup limitations and
+cost/teardown evidence are in [the finding](../../docs/findings/E4-hydration.md).
+
+The successful campaign's task-plus-endpoint estimate is US$0.1211; adding the
+failed readiness attempt gives US$0.2009, excluding ancillary usage and not an
+invoice ([cost evidence](../../results/E4/20261029T091909Z-842d596/campaign-summary.json),
+[failed-attempt cost](../../results/E4/20261029T090427Z-3b8faf3/campaign-summary.json)).
+Reproduce that estimate with `python3 analysis/e4_campaign.py results/E4/20261029T091909Z-842d596`.

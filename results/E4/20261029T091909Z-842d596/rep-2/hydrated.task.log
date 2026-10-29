@@ -1,0 +1,19 @@
+2026-10-29T09:35:28.050000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 WARNING: no host root-dev provided; using container root (94).
+2026-10-29T09:35:28.051000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3          Bind-mounted tiers cannot be checked against the host root.
+2026-10-29T09:35:28.057000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 mount check passed:
+2026-10-29T09:35:28.061000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3   ephemeral -> /local-bench (st_dev=94, fs=overlayfs)
+2026-10-29T09:35:28.061000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 run order: ephemeral=/local-bench
+2026-10-29T09:35:28.105000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 negotiated mount facts:
+2026-10-29T09:35:28.107000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 order,ephemeral,1
+2026-10-29T09:35:28.107000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 kernel,6.1.188
+2026-10-29T09:35:28.107000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 mtu,eth0,1500
+2026-10-29T09:35:28.107000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 mtu,eth1,9001
+2026-10-29T09:35:28.107000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 mtu,lo,65536
+2026-10-29T09:35:28.107000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 mount,ephemeral,overlayfs,overlay,rw,relatime,context=system_u:object_r:data_t:s0,lowerdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/80/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/79/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/78/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/77/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/76/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/75/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/74/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/73/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/72/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/71/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/70/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/69/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/68/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/67/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/66/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/65/fs,upperdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/83/fs,workdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/83/work
+2026-10-29T09:35:28.561000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 hydrated 27412480 bytes into /local-bench/tree in 443 ms
+2026-10-29T09:35:28.561000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 conformance: ephemeral
+2026-10-29T09:35:29.728000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3   ephemeral: POSIX conformance PASSED
+2026-10-29T09:35:29.729000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 benchmarking ephemeral at /local-bench
+2026-10-29T09:35:29.752000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 ephemeral done, 2020 ops
+2026-10-29T09:35:32.646000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 uploaded ephemeral.csv + conformance -> s3://e4-cacheadapter-dev-resultsbucketa95a2103-4p1zqj9mcto1/hydrated/
+2026-10-29T09:35:39.383000+00:00 hydrated/Hydrated/1171d1ca91a84eb0883a9459a8bd0fb3 all tiers uploaded

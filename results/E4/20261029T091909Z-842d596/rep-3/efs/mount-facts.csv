@@ -1,0 +1,6 @@
+order,efs,1
+kernel,6.1.188
+mtu,eth0,1500
+mtu,eth1,9001
+mtu,lo,65536
+mount,efs,nfs,127.0.0.1:/,rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,noresvport,proto=tcp,port=20264,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1
