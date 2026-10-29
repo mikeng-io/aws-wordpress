@@ -1,10 +1,12 @@
 # E4 — task-start hydration as a read-only cache
 
-**Status:** `SMOKE PASSED` — design replaced in place 2026-10-29; one-rep smoke
-`20261029T084344Z-ec1e5b2` passed, formal three-rep collection pending. E2 gated
-the original transparent-adapter design; this experiment now measures the design
-that survives that gate. Ceiling **US$2**, approved 2026-10-29. Nothing is left
-running: each replication deploys, runs, and destroys its own stack.
+**Status:** `SMOKE PASSED; FORMAL INTERRUPTED` — design replaced in place
+2026-10-29. One-rep smoke `20261029T084344Z-ec1e5b2` passed; the formal three-rep
+run `20261029T085327Z-31e9fa2` was interrupted after rep-1's EFS task for a clean
+handoff. Its stack was destroyed and verified gone; no AWS resources remain. E2
+gated the original transparent-adapter design; this experiment now measures the
+design that survives that gate. Ceiling **US$2**, approved 2026-10-29. Nothing is
+left running: each replication deploys, runs, and destroys its own stack.
 
 **Bears on:** [H2](../../hypotheses/H2-fargate-forbids-caching.md),
 [H4](../../hypotheses/H4-cold-start-is-the-metric.md),
@@ -153,3 +155,22 @@ durable mount, with read-only, write-through, single-writer and multi-writer
 variants. E2's FUSE result removed its target: the existing caches are EC2-only and
 Fargate has no mount path. The full old text is in git history; the surviving
 question is the one above. H6 remains `UNTESTED` and is not claimed by this run.
+
+
+## Current state — 2026-10-29 handoff
+
+The smoke (`20261029T084344Z-ec1e5b2`, one replication) already shows the shape:
+EFS `stat` p50 1.60 ms vs hydrated 3.2 µs (ratio 0.002); `open_read` 3.59 ms vs
+14.0 µs (0.004); both conformance gates PASSED; hydration was 27,412,480 bytes in
+0.214 s. P1 SUPPORTED, P3 SUPPORTED, H2 kill-condition proxy MET. P2 is REFUTED
+mechanically because 0.214 s is below the pre-registered 0.5 s floor and the
+start-to-benchmark delta (0.021 s) is below the hydration time; the floor was a
+guess about bundle size, and the task-time comparison is dominated by scheduling.
+Do not change the prediction retroactively.
+
+Formal run `20261029T085327Z-31e9fa2` stopped after rep-1's EFS task, before the
+hydrated task and before its `meta.json`. Its partial raw files are archived but
+are **not** a formal result. The E4 stack was destroyed manually and verified gone.
+To finish: `REPS=3 make e4`, then `python3 analysis/e4_stats.py results/E4/<run-id>`.
+A prior failed smoke `20261029T083342Z-fe5f631` is also archived; it failed only
+because `/tmp/hydration.csv` was not uploaded, fixed in `ec1e5b2`.

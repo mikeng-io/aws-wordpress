@@ -129,6 +129,10 @@ e5-preflight-selftest: ## Verify readiness and read-only guards without AWS call
 e5-local: ## E5 apparatus check against a local kernel NFS server - no AWS, no cost. MODE="fast", "fast-probe" and/or "leases-off"
 	./experiments/E5-attribute-cache/scripts/local-nfs-check.sh $(or $(OUT),/tmp/e5-local) $(MODE)
 
+.PHONY: e4-stats
+e4-stats: ## Grade E4 from the latest committed run (or RUN=results/E4/<run-id>)
+	@python3 analysis/e4_stats.py $(or $(RUN),$$(ls -d results/E4/*/ | tail -1))
+
 .PHONY: e5-stats
 e5-stats: ## Grade E5 from the latest committed run (or RUN=results/E5/<run-id>)
 	@python3 analysis/e5_stats.py $(or $(RUN),$$(ls -d results/E5/*/ | tail -1))

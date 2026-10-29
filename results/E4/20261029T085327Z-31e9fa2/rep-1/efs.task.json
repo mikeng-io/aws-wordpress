@@ -1,0 +1,104 @@
+{
+    "tasks": [
+        {
+            "attachments": [
+                {
+                    "id": "38ec4e7d-f35a-4e3a-af7e-b2674e22a0e6",
+                    "type": "ElasticNetworkInterface",
+                    "status": "DELETED",
+                    "details": [
+                        {
+                            "name": "subnetId",
+                            "value": "subnet-0dbbdfe90d0eed37c"
+                        },
+                        {
+                            "name": "networkInterfaceId",
+                            "value": "eni-06615e649b110f7fd"
+                        },
+                        {
+                            "name": "macAddress",
+                            "value": "02:ff:d8:ba:4a:99"
+                        },
+                        {
+                            "name": "privateDnsName",
+                            "value": "ip-10-46-0-251.ap-southeast-1.compute.internal"
+                        },
+                        {
+                            "name": "privateIPv4Address",
+                            "value": "10.46.0.251"
+                        }
+                    ]
+                }
+            ],
+            "attributes": [
+                {
+                    "name": "ecs.cpu-architecture",
+                    "value": "arm64"
+                }
+            ],
+            "availabilityZone": "ap-southeast-1a",
+            "clusterArn": "arn:aws:ecs:ap-southeast-1:163703054402:cluster/E4-CacheAdapter-dev-ClusterEB0386A7-w1L1wuRM80Oz",
+            "connectivity": "CONNECTED",
+            "connectivityAt": "2026-10-29T16:57:07.702000+08:00",
+            "containers": [
+                {
+                    "containerArn": "arn:aws:ecs:ap-southeast-1:163703054402:container/E4-CacheAdapter-dev-ClusterEB0386A7-w1L1wuRM80Oz/07f766cd93284317b173c11b60d9404e/5ff194a6-4c70-4d91-b8c3-6cee8feaa5f8",
+                    "taskArn": "arn:aws:ecs:ap-southeast-1:163703054402:task/E4-CacheAdapter-dev-ClusterEB0386A7-w1L1wuRM80Oz/07f766cd93284317b173c11b60d9404e",
+                    "name": "Efs",
+                    "image": "163703054402.dkr.ecr.ap-southeast-1.amazonaws.com/cdk-hnb659fds-container-assets-163703054402-ap-southeast-1:59aa64f1877124c8dc6113ca6259bdef0902a746aeaf157f6076520ed9e056f5",
+                    "imageDigest": "sha256:f3606d18d7b5d18faa45da57c1e17857834c33e443a06606d98891fede8357dc",
+                    "runtimeId": "07f766cd93284317b173c11b60d9404e-3397379763",
+                    "lastStatus": "STOPPED",
+                    "exitCode": 0,
+                    "networkBindings": [],
+                    "networkInterfaces": [
+                        {
+                            "attachmentId": "38ec4e7d-f35a-4e3a-af7e-b2674e22a0e6",
+                            "privateIpv4Address": "10.46.0.251"
+                        }
+                    ],
+                    "healthStatus": "UNKNOWN",
+                    "cpu": "0"
+                }
+            ],
+            "cpu": "512",
+            "createdAt": "2026-10-29T16:57:04.344000+08:00",
+            "desiredStatus": "STOPPED",
+            "enableExecuteCommand": false,
+            "executionStoppedAt": "2026-10-29T16:57:47.160000+08:00",
+            "group": "family:E4CacheAdapterdevEfsTaskDefinitionC03A2962",
+            "healthStatus": "UNKNOWN",
+            "lastStatus": "STOPPED",
+            "launchType": "FARGATE",
+            "memory": "1024",
+            "overrides": {
+                "containerOverrides": [
+                    {
+                        "name": "Efs"
+                    }
+                ],
+                "inferenceAcceleratorOverrides": []
+            },
+            "platformVersion": "1.4.0",
+            "platformFamily": "Linux",
+            "pullStartedAt": "2026-10-29T16:57:15.664000+08:00",
+            "pullStoppedAt": "2026-10-29T16:57:26.185000+08:00",
+            "startedAt": "2026-10-29T16:57:32.779000+08:00",
+            "stopCode": "EssentialContainerExited",
+            "stoppedAt": "2026-10-29T16:58:11.640000+08:00",
+            "stoppedReason": "Essential container in task exited",
+            "stoppingAt": "2026-10-29T16:57:57.380000+08:00",
+            "tags": [],
+            "taskArn": "arn:aws:ecs:ap-southeast-1:163703054402:task/E4-CacheAdapter-dev-ClusterEB0386A7-w1L1wuRM80Oz/07f766cd93284317b173c11b60d9404e",
+            "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:163703054402:task-definition/E4CacheAdapterdevEfsTaskDefinitionC03A2962:3",
+            "version": 5,
+            "ephemeralStorage": {
+                "sizeInGiB": 20
+            },
+            "fargateEphemeralStorage": {
+                "sizeInGiB": 20
+            }
+        }
+    ],
+    "failures": []
+}
