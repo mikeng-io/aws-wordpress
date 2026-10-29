@@ -193,6 +193,24 @@ if [ "${BENCH_MODE:-}" = "e5" ]; then
     exec /usr/local/bin/e5-run
 fi
 
+# E4 hydration: copy the read-only tree onto the task's local storage and time the
+# download+extract. This runs BEFORE conformance and benchmarking, so both see the
+# hydrated tree. The EFS arm does not set this and is a fresh task, not a warmed one.
+if [ -n "${BENCH_HYDRATE_FROM:-}" ]; then
+    : "${BENCH_HYDRATE_TO:?BENCH_HYDRATE_TO must name the local tree directory}"
+    [ -f "$BENCH_HYDRATE_FROM" ] || {
+        echo "FATAL: hydration source $BENCH_HYDRATE_FROM is not a file" >&2
+        exit 1
+    }
+    bytes=$(stat -c %s "$BENCH_HYDRATE_FROM")
+    mkdir -p "$BENCH_HYDRATE_TO"
+    t0=$(date +%s%N)
+    tar -xf "$BENCH_HYDRATE_FROM" -C "$BENCH_HYDRATE_TO"
+    t1=$(date +%s%N)
+    printf 'hydrate,%s,%s\n' "$((t1 - t0))" "$bytes" > /tmp/hydration.csv
+    echo "hydrated $bytes bytes into $BENCH_HYDRATE_TO in $(( (t1 - t0) / 1000000 )) ms"
+fi
+
 for pair in $BENCH_MOUNTS; do
     name="${pair%%=*}"; path="${pair#*=}"
     echo "conformance: $name"
@@ -225,6 +243,16 @@ for pair in $BENCH_MOUNTS; do
     bench "$path/tree" > "/tmp/$name.csv"
     echo "$name done, $(wc -l < "/tmp/$name.csv") ops"
 done
+
+# E4 seed: leave the built tree on the origin and tar it for the hydrated arm. The
+# seed task's own latency CSV is not a result; it measured a tree it just created.
+if [ -n "${BENCH_SEED_ONLY:-}" ]; then
+    : "${BENCH_SEED_TAR:?BENCH_SEED_TAR must name the tarball path}"
+    pair=${BENCH_MOUNTS%% *}
+    path=${pair#*=}
+    tar -C "$path/tree" -cf "$BENCH_SEED_TAR" .
+    echo "seed tar written: $BENCH_SEED_TAR ($(stat -c %s "$BENCH_SEED_TAR") bytes)"
+fi
 
 snapshot_nfs_counters after
 

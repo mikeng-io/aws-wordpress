@@ -11,6 +11,7 @@ import { App, Tags } from 'aws-cdk-lib';
 import { E1MountTopologyStack } from '../lib/stacks/e1-mount-topology.js';
 import { E2StorageMatrixStack } from '../lib/stacks/e2-storage-matrix.js';
 import { E3FargateEphemeralLatencyStack } from '../lib/stacks/e3-fargate-ephemeral-latency.js';
+import { E4CacheAdapterStack } from '../lib/stacks/e4-cache-adapter.js';
 import { E5AttributeCacheStack } from '../lib/stacks/e5-attribute-cache.js';
 import { NatStrategy, natPlanningHourlyUsd } from '../lib/nat-strategy.js';
 
@@ -110,8 +111,18 @@ if (watchdogToken) {
   Tags.of(e5).add('E5WatchdogRun', watchdogToken);
 }
 
-// E4 - cache adapter. Specced and deliberately unbuilt: gated on E2, since there is
-// no point building a cache tier if an off-the-shelf one already delivers it.
+// E4 - read-only hydration on Fargate. The original transparent adapter was gated
+// by E2: FUSE tiers are EC2-only, so on Fargate the surviving mechanism is a
+// task-start copy of the code tree. No NAT, no ALB, one-shot tasks only.
+new E4CacheAdapterStack(app, 'E4-CacheAdapter-dev', {
+  env,
+  experimentId: 'E4',
+  topology: 'dev',
+  // 3 interface endpoints (~0.04/hr) + EFS at ~26 MB + nine short Fargate tasks
+  // across the 3-rep campaign. Well under the US$2 ceiling; see the README.
+  estimatedHourlyUsd: 0.04,
+  description: 'E4 - does task-start hydration remove Fargate\'s EFS metadata penalty?',
+});
 
 Tags.of(app).add('Study', 'aws-wordpress');
 

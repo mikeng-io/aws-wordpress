@@ -62,6 +62,17 @@ e2-fuse: ## E2 FUSE arms only - JuiceFS/SeaweedFS/Mountpoint on EC2, no FSx. ~$0
 	 DOCKER_BIN="$$(command -v docker)" CDK_DOCKER="$$PWD/infra/scripts/docker-cdk" \
 	 E2_FUSE=1 E2_FSX=0 ./experiments/E2-storage-matrix/scripts/collect.sh $(REPS)
 
+# E4 read-only hydration on Fargate: seed -> fresh EFS task -> fresh hydrated task,
+# then destroy. Three short one-shot tasks, no NAT/ALB/FSx; ceiling US$2.
+.PHONY: e4
+e4: ## E4 hydration - seed + EFS + hydrated Fargate tasks, DESTROYS. <US$0.20/run
+	@mkdir -p "$${DOCKER_CONFIG:-/tmp/e4-docker-config}"; \
+	 set -a; . ./.env; set +a; \
+	 export DOCKER_CONFIG="$${DOCKER_CONFIG:-/tmp/e4-docker-config}"; \
+	 ./infra/scripts/ecr-auth.sh; \
+	 DOCKER_BIN="$$(command -v docker)" CDK_DOCKER="$$PWD/infra/scripts/docker-cdk" \
+	 ./experiments/E4-cache-adapter/collect.sh $(REPS)
+
 # The same collection, from the pinned runner image rather than the workstation's
 # toolchain. infra/node_modules is shadowed by a named volume so the container's
 # Linux dependencies never overwrite the host's macOS ones. Runs detached, so it

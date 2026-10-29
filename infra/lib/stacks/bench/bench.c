@@ -47,8 +47,14 @@ int main(int argc, char **argv) {
     char *buf = malloc(51200);
     memset(buf, 'e', 51200);
 
+    /* E4 hydration: benchmark a tree that already exists. The seed task builds it
+     * with BENCH_KEEP=1; the EFS and hydrated arms must not create or unlink it, or
+     * they would measure their own writes and destroy the origin for the next arm. */
+    const int existing = getenv("BENCH_EXISTING") != NULL;
+    const int keep = getenv("BENCH_KEEP") != NULL;
+
     /* --- build the tree, timing each create --- */
-    for (int d = 0; d < DIRS; d++) {
+    if (!existing) for (int d = 0; d < DIRS; d++) {
         snprintf(path, sizeof(path), "%s/plugin-%03d/includes", root, d);
         /* mkdir -p by hand: two levels, ignore EEXIST */
         char parent[MAX_PATH];
@@ -110,7 +116,7 @@ int main(int argc, char **argv) {
     }
 
     /* --- unlink pass --- */
-    for (int d = 0; d < DIRS; d++) {
+    if (!existing && !keep) for (int d = 0; d < DIRS; d++) {
         for (int f = 0; f < FILES_PER_DIR; f++) {
             snprintf(path, sizeof(path), "%s/plugin-%03d/includes/class-%03d.php", root, d, f);
             clock_gettime(CLOCK_MONOTONIC, &t0);

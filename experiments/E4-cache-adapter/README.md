@@ -1,186 +1,154 @@
-# E4 — the cache adapter
+# E4 — task-start hydration as a read-only cache
 
-**Status:** `GATED — NO BUILD AS SPECIFIED` (2026-10-29). E2 is complete; the
-transparent-adapter design cannot be mounted on Fargate and is redundant on EC2.
-See [Gate review after E2](#gate-review-after-e2-2026-10-29). No AWS spend has been
-authorised for E4.
+**Status:** `APPARATUS BUILD` — design replaced in place 2026-10-29. E2 gated the
+original transparent-adapter design; this experiment now measures the design that
+survives that gate. Ceiling **US$2**, approved 2026-10-29. Nothing is left running:
+each replication deploys, runs, and destroys its own stack.
 
 **Bears on:** [H2](../../hypotheses/H2-fargate-forbids-caching.md),
 [H4](../../hypotheses/H4-cold-start-is-the-metric.md),
 [H6](../../hypotheses/H6-writeback-cannot-be-correct.md).
 
-## The idea
+## Question
 
-Applications solved this problem once already, one layer up. Nobody puts Postgres
-on the request path for every read; they put Redis in front of it and accept an
-explicit consistency contract in exchange for the latency. The filesystem layer
-never got that treatment — the choice is still "mount the slow shared thing" or
-"don't share."
+On Fargate, does serving an application's read-only code tree from a task-start
+local copy capture most of the metadata-latency gap to EFS, and what does the
+hydration cost in cold-start time?
 
-E3 measured the two numbers that make the analogy concrete:
+This is narrower than the original E4. It does **not** build a cache adapter and
+does **not** test write-back. It tests the single-writer alternative H6 already
+names: hydrate code once at task start from a durable origin, serve reads locally,
+never sync back. The application remains unmodified; the task definition chooses
+the path.
 
-| tier | `stat` | role in the analogy |
-|---|--:|---|
-| Fargate ephemeral | **3.1 µs** | the Redis |
-| EFS | **0.84 ms** | the Postgres |
+## Why the design changed
 
-**~271× apart, on the same task, at the same moment.** That is a wider gap than
-most application-layer cache/database pairs, which is what makes a filesystem cache
-tier worth building rather than merely describing.
+The original E4 was a transparent read-through/write-back adapter presenting one
+POSIX path. E2 completed the FUSE matrix on 2026-10-29:
 
-One caveat carried from E3: Fargate ephemeral is itself network-backed, so that
-3.1 µs is the kernel answering from its dentry cache, not a disk being fast. The
-cache tier being proposed here is therefore *the kernel's own caches over a block
-device* — which is precisely why it works, and also why E2 must check whether a
-physically attached NVMe (EC2 instance store) does any better before this is
-built.
+- On EC2, JuiceFS and SeaweedFS already provide conformant local caches; a bespoke
+  adapter would be prior art.
+- On Fargate, all three FUSE tiers require `CAP_SYS_ADMIN`, which the platform does
+  not grant. There is no transparent filesystem layer to put a cache on.
 
-## What would be built
+So the adapter is not buildable on the target platform. Hydration is the remaining
+Fargate-only, infrastructure-only mechanism. The old design is preserved in git
+history and summarised at the bottom of this file.
 
-A read-through cache adapter: **local ephemeral storage as the cache tier, a
-durable mountable backend (S3, EFS, or whichever tier E2 selects) as the origin.**
-The application sees one POSIX path and is not modified — which is the study's
-governing constraint, and the whole reason this has to live below the application
-rather than in it.
+## Method
 
-Fargate is the interesting target precisely because of H2's finding: it *has* a
-fast local tier and cannot share it. A cache adapter does not need to share it. Each
-task keeps its own cache, and the origin is the only shared thing — which is exactly
-the isolation model a per-task cache wants.
+One synthetic WordPress-shaped code tree, three one-shot Fargate tasks per
+replication, all in one isolated VPC with an EFS file system:
 
-### Two substrates — and E2 showed they are interchangeable after all
+1. **Seed** — a task builds the tree on EFS (`20` directories × `50` files,
+   2–50 KB, deterministic sizes) with the shared `bench` instrument, then writes a
+   tar of the tree to the EFS root. Its timing output is ignored; this task only
+   creates the origin.
+2. **EFS arm** — a **fresh** task mounts the same EFS and runs the benchmark in
+   `BENCH_EXISTING` mode against the seeded tree. No create pass, so this measures
+   reads of files the client did not just write. No unlink pass.
+3. **Hydrated arm** — a **fresh** task mounts EFS, downloads the tar to its own
+   ephemeral storage, extracts it to `/local-bench/tree`, records download+extract
+   wall time, then runs the same `BENCH_EXISTING` benchmark against the local copy.
 
-> **Superseded by measurement, 2026-09-10.** The table below was written expecting
-> attached NVMe to outperform a network-backed ephemeral volume.
-> [E2 measured it](../../docs/findings/E2-block-backed.md) and they are the same
-> tier: instance store, EBS and Fargate ephemeral fall within 1.5× of each other on
-> every op, while EFS sits 638× away on `stat`. So the substrate question is
-> **closed** — a cache adapter needs no `d`-class instance and no special device,
-> just a block device with a local filesystem, which every platform already has.
->
-> What survives is the right-hand column only: **sharing and persistence**, not
-> speed. Instance store is a host resource that outlives a task; Fargate ephemeral
-> is per-task and does not. That is an amortisation question, and it is the whole
-> of what E4 still has to answer.
+Each task runs in its own Fargate task and reports its own CloudWatch stream, so
+the EFS arm is not contaminated by the seed task's writes or the hydrated arm's
+copy. The controlled variable is **which storage serves the read**; the tree,
+instrument, CPU architecture, kernel, AZ, and time window are held as constant as
+separate one-shot tasks allow. The hydration cost is the treatment, not noise.
 
-### The original two-substrate table, kept as the audit record
+The tree is deliberately the same shape as E2/E3's instrument rather than a real
+WordPress install. That keeps the comparison to E2/E3 exact and makes the
+extrapolation to a request explicit: E0 measured ~4,300 filesystem syscalls for a
+warm request, so the per-request saving is an E0-multiplier estimate, not an
+end-to-end measurement. A future app-level experiment would be needed to turn it
+into request latency; this experiment does not pretend to.
 
-The cache tier has two candidate substrates, and [E2](../E2-storage-matrix/) exists
-partly to tell them apart:
+### Read-only, by construction
 
-| | Fargate task ephemeral | EC2 instance store |
-|---|---|---|
-| what it is | network-backed volume, per task | NVMe physically attached to the host |
-| capacity | 20 GiB default, 200 GiB max | 118 GB on `*.large` |
-| shared across tasks | **no**, by construction | **yes**, it is a host resource |
-| hydration cost | paid **once per task** | paid **once per host** |
-| survives task restart | no | yes, until the instance goes |
-| cost for 118 GB | +$0.0130/hr **per task** | +$0.0225/hr **flat** |
-| cost if the working set fits in 20 GiB | **free** | still +$0.0225/hr |
+The hydrated arm never writes back. Writes, uploads, and mutable state are out of
+scope and would stay on the durable tier in a real deployment. This means H6 is
+**not tested** here; the experiment deliberately chooses the branch H6 says is
+correct (single writer, hydration only), rather than trying to refute H6 with a
+bidirectional design on a platform that cannot mount one.
 
-(Prices: `results/pricing/20260918T080950Z-c94ac10/`, on-demand, `ap-southeast-1`.)
+## Pre-registered predictions
 
-That third and fourth row change the economics rather than the design. A per-task
-cache pays the full cold-hydration cost every time a task starts, which is why
-[H4](../../hypotheses/H4-cold-start-is-the-metric.md) is a gate on this experiment
-and not a side issue — E0 measured a cold request at ~15,400 syscalls against
-~4,300 warm. A per-host cache amortises that across every task on the instance and
-survives task churn, so the same adapter has a materially different hit rate
-depending on which substrate it sits on.
+Written before the first deployment:
 
-It also inverts the usual reading of the compute choice. Fargate is the *harder*
-target for a cache adapter, not the easier one: the platform that most needs a
-local cache tier is the one that can least amortise it. If that turns out to
-dominate, the honest finding is that the cache adapter is an argument for EC2 —
-which would be a result about the platform, not about the adapter.
+1. **Hydration removes the metadata penalty.** In every replication, hydrated
+   `stat` p50 is ≤ **0.10×** the EFS arm's `stat` p50, and hydrated `open_read`
+   p50 is ≤ **0.20×** EFS's.
+2. **Hydration is not free.** Download+extract takes at least **0.5 s**, and the
+   hydrated task's start-to-benchmark time exceeds the EFS task's by at least the
+   measured hydration time. Report the break-even number of requests using E0's
+   ~4,300 ops/request.
+3. **The read-only tree is conformant on both arms.** The shared conformance gate
+   passes on EFS and on the local copy (it may create its own probe files); no
+   benchmark number counts if it fails.
+4. **H2's kill condition is evaluated, not assumed.** If prediction 1 holds and
+   hydration costs less than the EFS metadata penalty of a single E0-sized request,
+   then a Fargate-only, infrastructure-only design closes most of the gap at a
+   start-latency cost below one request; that meets H2's kill condition for the
+   read-only code path. If not, H2's surviving claim stands.
 
-## The hard part is correctness, not speed
-
-[H6](../../hypotheses/H6-writeback-cannot-be-correct.md) pre-registers the claim
-that bidirectional write-back between a local cache and a shared origin cannot be
-made correct without a single-writer assumption: two tasks write locally, both
-flush, last writer wins silently.
-
-**E4 either refutes H6 by exhibiting a correct design, or is disqualified by it.**
-That is the experiment. A cache adapter that is fast and loses writes is not a
-result worth having, and the correctness suite runs before any latency number is
-recorded.
-
-The design space to test, in rough order of how much they concede:
-
-| design | write path | correctness cost |
-|---|---|---|
-| read-only cache | writes bypass cache, go straight to origin | none — but no write acceleration |
-| write-through | write to both, ack on origin | none — write latency stays at origin speed |
-| single-writer write-back | one designated writer per path | correct *if* the assumption holds |
-| multi-writer write-back | any task writes locally, flushes async | H6 says this is where it breaks |
-
-The read-only variant is the honest baseline: for a workload like WordPress's,
-where the ~3,900 `stat` calls per request hit read-mostly *code* rather than
-mutable state, a read-only cache may capture nearly all the benefit at zero
-correctness cost. That would be the useful finding, and it is deliberately the
-cheapest thing to test first.
-
-## Predictions
-
-Pre-registered before any build:
-
-1. **A read-only cache captures most of the available gain** for a
-   WordPress-shaped workload, because the metadata storm is overwhelmingly against
-   read-mostly paths.
-2. **Cache warming dominates the cost model**, not steady-state latency — which is
-   why this depends on H4. A per-task cache is cold on every scale-out event, and
-   E0 measured a cold request at ~15,400 syscalls against ~4,300 warm.
-3. **Multi-writer write-back fails the correctness suite** (H6 holds).
+Prediction 4 is deliberately conditional: "acceptable start latency" is not
+defined by this experiment, so the result reports the crossover and lets H4's
+task-lifetime question decide the operational reading.
 
 ## Kill conditions
 
-- Prediction 1 refuted if a read-only cache captures less than half the gap
-  between origin and local.
-- The whole approach is refuted if warming cost exceeds the steady-state saving
-  across realistic task lifetimes — i.e. if tasks never live long enough to amortise
-  a cold cache. That would make this a worse answer than simply baking the code into
-  the image, which needs no adapter at all.
+- **Prediction 1 fails** if the hydrated/EFS `stat` ratio is > 0.10 in any
+  replication, or `open_read` > 0.20. Then local hydration does not remove the
+  metadata penalty and E4 has no result worth extrapolating.
+- **Prediction 2 fails** if hydration is under 0.5 s (the tree is too small to
+  represent a code bundle) or if the task-time difference is smaller than the
+  measured hydration time (the measurement is not attributable).
+- **Prediction 3 fails** if conformance fails on either arm; latency is then
+  reported as disqualified rather than averaged.
 
-## Prior art to check before building
+## Cost and teardown
 
-Not to be built in ignorance of: JuiceFS and SeaweedFS both already implement local
-caching over object storage, and E2 measures them. **If an existing tier already
-delivers this, E4 should not be built** — the finding would be "this problem is
-solved, use JuiceFS," which is a perfectly good result and much cheaper than a
-bespoke adapter.
+Three Fargate tasks per replication (`0.5` vCPU / `1 GiB`, ARM64), one EFS file
+system with ~26 MB, three interface endpoints, and a small S3 results bucket. No
+NAT gateway, no FSx, no ALB, no EC2 instance. Fargate on-demand at the study's
+pricing snapshot is a few cents per task-minute; the whole 3-replication campaign
+is estimated **under US$0.20**, with a hard ceiling of **US$2**.
 
-E4 is therefore explicitly gated on E2: build only if the matrix shows a gap that
-nothing existing fills.
+The collector deploys one stack, runs the three tasks sequentially, empties the S3
+bucket, destroys the stack, and refuses to continue if the stack or EFS survives.
+If a task fails, the collector still destroys the stack before exiting non-zero.
+The stack's `EstimatedHourlyUsd` is `0.04` so a forgotten stack has a known burn
+rate.
 
+## Output
 
-## Gate review after E2 (2026-10-29)
+`results/E4/<run-id>/rep-<k>/` with:
 
-E2's FUSE arms are complete, so the prior-art gate can be read instead of guessed.
-The result is not "build it":
+- `seed/` — seed task log/S3 artefacts (timing ignored)
+- `efs/efs.csv`, `efs/efs.conformance.csv`, `efs/mount-facts.csv`
+- `hydrated/hydrated.csv`, `hydrated/hydrated.conformance.csv`,
+  `hydrated/mount-facts.csv`, `hydrated/hydration.csv`
+- `meta.json` per run, plus `summary.json` / `summary.md`
 
-- **On EC2**, JuiceFS and SeaweedFS already provide a conformant local-cache-over-
-  object-storage tier. JuiceFS `stat` was 104.6 µs and SeaweedFS 20.2 µs; both
-  passed single-node conformance; both are 15–76× slower than instance store on
-  `stat` but far ahead of EFS's cache-miss path. A bespoke adapter would have to
-  beat an existing, measured implementation to justify itself. That is the case the
-  prior-art gate says not to build.
-- **On Fargate**, none of the three FUSE tiers can even be mounted: the platform
-  withholds `CAP_SYS_ADMIN`. E4's "one POSIX path" adapter needs a filesystem layer
-  below the application; without mount capability, there is no transparent path to
-  put the cache on. The remaining Fargate-only mechanism is **hydration at task
-  start** (copy a code tree onto ephemeral storage, serve from there, never sync
-  back), which is [H6](../../hypotheses/H6-writeback-cannot-be-correct.md)'s
-  single-writer alternative, not the bidirectional adapter this experiment was
-  specified to build.
+`hydration.csv` is `hydrate,<ns>,<bytes>`; analysis computes seconds and the
+break-even request count from E0's op count. Every published statistic is
+recomputable with `python3 analysis/e4_stats.py results/E4/<run-id>`.
 
-So E4 as written is **not built**: on EC2 it is prior art, and on Fargate it is
-blocked by the isolation model. This is a result about the platform, not a missing
-measurement.
+## Reproduce
 
-If H2/H4 still need a Fargate number, the honest replacement in place is a
-**read-only task-start hydration** experiment: one arm serves from EFS, one from a
-local copy hydrated from a tarball, with cold-task and warm-task cohorts reported
-separately (H4), and no write-back path (H6). That is infrastructure-only, needs no
-`CAP_SYS_ADMIN`, and can reuse E0's WordPress instrument. It is a new apparatus and
-a new ceiling; it is not authorised by E2's US$12 FUSE approval.
+```sh
+REPS=3 make e4
+python3 analysis/e4_stats.py results/E4/<run-id>
+```
+
+A one-replication smoke must pass before the formal three; the smoke is committed
+separately and is not part of the formal statistic.
+
+## History — the original adapter design
+
+The experiment was originally specced as a transparent local cache in front of a
+durable mount, with read-only, write-through, single-writer and multi-writer
+variants. E2's FUSE result removed its target: the existing caches are EC2-only and
+Fargate has no mount path. The full old text is in git history; the surviving
+question is the one above. H6 remains `UNTESTED` and is not claimed by this run.
