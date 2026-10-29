@@ -1,0 +1,9 @@
+6.1.189-236.399.amzn2023.aarch64
+{"Cluster":"E2-StorageMatrix-dev-ClusterEB0386A7-ahy0xsPt0XZb","ContainerInstanceArn":"arn:aws:ecs:ap-southeast-1:163703054402:container-instance/E2-StorageMatrix-dev-ClusterEB0386A7-ahy0xsPt0XZb/d17915a22fe3472dba1e4cf2d760db17","Version":"Amazon ECS Agent - v1.108.1 (*e5e43bd9)"}NAME            SIZE FSTYPE MOUNTPOINT
+nvme0n1          30G        
+├─nvme0n1p1      30G xfs    /
+└─nvme0n1p128    10M vfat   /boot/efi
+nvme1n1       109.9G xfs    /mnt/instance-store
+TARGET              SOURCE       FSTYPE
+/mnt/instance-store /dev/nvme1n1 xfs
+

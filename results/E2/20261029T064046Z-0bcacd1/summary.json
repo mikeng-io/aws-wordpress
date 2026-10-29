@@ -1,0 +1,1787 @@
+{
+  "experiment": "E2",
+  "run_id": "20261029T064046Z-0bcacd1",
+  "replications": 1,
+  "tiers": {
+    "ec2/ebs": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 20922,
+        "p90_ns": 28203,
+        "p99_ns": 43713,
+        "median_ci95_ns": [
+          20458,
+          21491
+        ],
+        "geomean_ns": 21049.0,
+        "geomean_over_median": 1.006,
+        "tail_p99_over_p50": 2.09
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 1352,
+        "p90_ns": 1567,
+        "p99_ns": 1953,
+        "median_ci95_ns": [
+          1337,
+          1360
+        ],
+        "geomean_ns": 1355.6,
+        "geomean_over_median": 1.003,
+        "tail_p99_over_p50": 1.44
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 6680,
+        "p90_ns": 10323,
+        "p99_ns": 12289,
+        "median_ci95_ns": [
+          6503,
+          6851
+        ],
+        "geomean_ns": 6672.9,
+        "geomean_over_median": 0.999,
+        "tail_p99_over_p50": 1.84
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 3910,
+        "p90_ns": 4862,
+        "p99_ns": 12775,
+        "median_ci95_ns": [
+          3451,
+          4271
+        ],
+        "geomean_ns": 4061.7,
+        "geomean_over_median": 1.039,
+        "tail_p99_over_p50": 3.27
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 8375,
+        "p90_ns": 10681,
+        "p99_ns": 152038,
+        "median_ci95_ns": [
+          8264,
+          8523
+        ],
+        "geomean_ns": 9094.2,
+        "geomean_over_median": 1.086,
+        "tail_p99_over_p50": 18.15
+      }
+    },
+    "ec2/efs": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 6998180,
+        "p90_ns": 8876880,
+        "p99_ns": 13972712,
+        "median_ci95_ns": [
+          6949621,
+          7043123
+        ],
+        "geomean_ns": 7269066.4,
+        "geomean_over_median": 1.039,
+        "tail_p99_over_p50": 2.0
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 905230,
+        "p90_ns": 1030097,
+        "p99_ns": 1312637,
+        "median_ci95_ns": [
+          899357,
+          911793
+        ],
+        "geomean_ns": 134823.1,
+        "geomean_over_median": 0.149,
+        "tail_p99_over_p50": 1.45
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 724537,
+        "p90_ns": 1370656,
+        "p99_ns": 1610862,
+        "median_ci95_ns": [
+          716084,
+          734954
+        ],
+        "geomean_ns": 863265.5,
+        "geomean_over_median": 1.191,
+        "tail_p99_over_p50": 2.22
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 1012350,
+        "p90_ns": 1091162,
+        "p99_ns": 1230596,
+        "median_ci95_ns": [
+          973593,
+          1072682
+        ],
+        "geomean_ns": 1017609.2,
+        "geomean_over_median": 1.005,
+        "tail_p99_over_p50": 1.22
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 2888267,
+        "p90_ns": 3274107,
+        "p99_ns": 6020052,
+        "median_ci95_ns": [
+          2873352,
+          2896910
+        ],
+        "geomean_ns": 2974638.9,
+        "geomean_over_median": 1.03,
+        "tail_p99_over_p50": 2.08
+      }
+    },
+    "ec2/efs_host_plain": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 6574597,
+        "p90_ns": 8025580,
+        "p99_ns": 12925079,
+        "median_ci95_ns": [
+          6527708,
+          6617066
+        ],
+        "geomean_ns": 6783053.7,
+        "geomean_over_median": 1.032,
+        "tail_p99_over_p50": 1.97
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 806380,
+        "p90_ns": 934135,
+        "p99_ns": 1066647,
+        "median_ci95_ns": [
+          797048,
+          815847
+        ],
+        "geomean_ns": 100428.7,
+        "geomean_over_median": 0.125,
+        "tail_p99_over_p50": 1.32
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 597153,
+        "p90_ns": 1261339,
+        "p99_ns": 1496891,
+        "median_ci95_ns": [
+          590424,
+          611926
+        ],
+        "geomean_ns": 746557.2,
+        "geomean_over_median": 1.25,
+        "tail_p99_over_p50": 2.51
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 933329,
+        "p90_ns": 999892,
+        "p99_ns": 1096826,
+        "median_ci95_ns": [
+          903930,
+          967112
+        ],
+        "geomean_ns": 940463.5,
+        "geomean_over_median": 1.008,
+        "tail_p99_over_p50": 1.18
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 2862808,
+        "p90_ns": 3353310,
+        "p99_ns": 7547723,
+        "median_ci95_ns": [
+          2849490,
+          2888561
+        ],
+        "geomean_ns": 2984717.3,
+        "geomean_over_median": 1.043,
+        "tail_p99_over_p50": 2.64
+      }
+    },
+    "ec2/efs_host_tls": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 7000857,
+        "p90_ns": 8714921,
+        "p99_ns": 13397246,
+        "median_ci95_ns": [
+          6935741,
+          7054094
+        ],
+        "geomean_ns": 7247164.3,
+        "geomean_over_median": 1.035,
+        "tail_p99_over_p50": 1.91
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 919747,
+        "p90_ns": 1040046,
+        "p99_ns": 1162093,
+        "median_ci95_ns": [
+          911832,
+          927556
+        ],
+        "geomean_ns": 146992.5,
+        "geomean_over_median": 0.16,
+        "tail_p99_over_p50": 1.26
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 759425,
+        "p90_ns": 1464840,
+        "p99_ns": 1727203,
+        "median_ci95_ns": [
+          748630,
+          773797
+        ],
+        "geomean_ns": 905175.5,
+        "geomean_over_median": 1.192,
+        "tail_p99_over_p50": 2.27
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 1032384,
+        "p90_ns": 1192803,
+        "p99_ns": 1330719,
+        "median_ci95_ns": [
+          1006673,
+          1131616
+        ],
+        "geomean_ns": 1063802.7,
+        "geomean_over_median": 1.03,
+        "tail_p99_over_p50": 1.29
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 2908809,
+        "p90_ns": 3459979,
+        "p99_ns": 7029714,
+        "median_ci95_ns": [
+          2894234,
+          2923174
+        ],
+        "geomean_ns": 3042900.2,
+        "geomean_over_median": 1.046,
+        "tail_p99_over_p50": 2.42
+      }
+    },
+    "ec2/efs_plain": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 6749431,
+        "p90_ns": 8596723,
+        "p99_ns": 12954205,
+        "median_ci95_ns": [
+          6698594,
+          6807352
+        ],
+        "geomean_ns": 7012278.6,
+        "geomean_over_median": 1.039,
+        "tail_p99_over_p50": 1.92
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 876304,
+        "p90_ns": 1005515,
+        "p99_ns": 1180883,
+        "median_ci95_ns": [
+          869014,
+          883778
+        ],
+        "geomean_ns": 115348.8,
+        "geomean_over_median": 0.132,
+        "tail_p99_over_p50": 1.35
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 677202,
+        "p90_ns": 1342474,
+        "p99_ns": 1530908,
+        "median_ci95_ns": [
+          667723,
+          687108
+        ],
+        "geomean_ns": 823926.0,
+        "geomean_over_median": 1.217,
+        "tail_p99_over_p50": 2.26
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 902575,
+        "p90_ns": 969072,
+        "p99_ns": 1001626,
+        "median_ci95_ns": [
+          877098,
+          931702
+        ],
+        "geomean_ns": 905567.1,
+        "geomean_over_median": 1.003,
+        "tail_p99_over_p50": 1.11
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 2813942,
+        "p90_ns": 3108325,
+        "p99_ns": 5196040,
+        "median_ci95_ns": [
+          2801738,
+          2827298
+        ],
+        "geomean_ns": 2873082.1,
+        "geomean_over_median": 1.021,
+        "tail_p99_over_p50": 1.85
+      }
+    },
+    "ec2/instance_store": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 20093,
+        "p90_ns": 26976,
+        "p99_ns": 42752,
+        "median_ci95_ns": [
+          19647,
+          20493
+        ],
+        "geomean_ns": 20199.7,
+        "geomean_over_median": 1.005,
+        "tail_p99_over_p50": 2.13
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 1371,
+        "p90_ns": 1599,
+        "p99_ns": 2053,
+        "median_ci95_ns": [
+          1363,
+          1376
+        ],
+        "geomean_ns": 1392.6,
+        "geomean_over_median": 1.016,
+        "tail_p99_over_p50": 1.5
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 6480,
+        "p90_ns": 10571,
+        "p99_ns": 12640,
+        "median_ci95_ns": [
+          6285,
+          6648
+        ],
+        "geomean_ns": 6565.8,
+        "geomean_over_median": 1.013,
+        "tail_p99_over_p50": 1.95
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 3710,
+        "p90_ns": 4615,
+        "p99_ns": 11930,
+        "median_ci95_ns": [
+          3395,
+          4086
+        ],
+        "geomean_ns": 3813.6,
+        "geomean_over_median": 1.028,
+        "tail_p99_over_p50": 3.22
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 8052,
+        "p90_ns": 10273,
+        "p99_ns": 133847,
+        "median_ci95_ns": [
+          7914,
+          8187
+        ],
+        "geomean_ns": 8740.1,
+        "geomean_over_median": 1.085,
+        "tail_p99_over_p50": 16.62
+      }
+    },
+    "ec2/juicefs": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 29593791,
+        "p90_ns": 36278354,
+        "p99_ns": 70138768,
+        "median_ci95_ns": [
+          29346508,
+          29872617
+        ],
+        "geomean_ns": 30532136.9,
+        "geomean_over_median": 1.032,
+        "tail_p99_over_p50": 2.37
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 94523,
+        "p90_ns": 125534,
+        "p99_ns": 248078,
+        "median_ci95_ns": [
+          92098,
+          97614
+        ],
+        "geomean_ns": 96507.4,
+        "geomean_over_median": 1.021,
+        "tail_p99_over_p50": 2.62
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 400588,
+        "p90_ns": 505738,
+        "p99_ns": 693711,
+        "median_ci95_ns": [
+          396402,
+          404818
+        ],
+        "geomean_ns": 404039.9,
+        "geomean_over_median": 1.009,
+        "tail_p99_over_p50": 1.73
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 89194,
+        "p90_ns": 122078,
+        "p99_ns": 170966,
+        "median_ci95_ns": [
+          78229,
+          111199
+        ],
+        "geomean_ns": 93649.1,
+        "geomean_over_median": 1.05,
+        "tail_p99_over_p50": 1.92
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 477936,
+        "p90_ns": 966032,
+        "p99_ns": 2205886,
+        "median_ci95_ns": [
+          462136,
+          497608
+        ],
+        "geomean_ns": 532042.6,
+        "geomean_over_median": 1.113,
+        "tail_p99_over_p50": 4.62
+      }
+    },
+    "ec2/mountpoint_s3": {
+      "skipped": {
+        "n": 1,
+        "p50_ns": 0,
+        "p90_ns": 0,
+        "p99_ns": 0,
+        "median_ci95_ns": [
+          0,
+          0
+        ],
+        "geomean_ns": 0.0,
+        "geomean_over_median": null,
+        "tail_p99_over_p50": null
+      }
+    },
+    "ec2/seaweedfs": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 2268124,
+        "p90_ns": 2585643,
+        "p99_ns": 3960719,
+        "median_ci95_ns": [
+          2253847,
+          2279957
+        ],
+        "geomean_ns": 2295099.4,
+        "geomean_over_median": 1.012,
+        "tail_p99_over_p50": 1.75
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 20606,
+        "p90_ns": 26968,
+        "p99_ns": 70762,
+        "median_ci95_ns": [
+          20374,
+          20820
+        ],
+        "geomean_ns": 21975.5,
+        "geomean_over_median": 1.066,
+        "tail_p99_over_p50": 3.43
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 459258,
+        "p90_ns": 566491,
+        "p99_ns": 1891249,
+        "median_ci95_ns": [
+          453478,
+          464676
+        ],
+        "geomean_ns": 475352.2,
+        "geomean_over_median": 1.035,
+        "tail_p99_over_p50": 4.12
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 17318,
+        "p90_ns": 19543,
+        "p99_ns": 37246,
+        "median_ci95_ns": [
+          16832,
+          18401
+        ],
+        "geomean_ns": 18006.3,
+        "geomean_over_median": 1.04,
+        "tail_p99_over_p50": 2.15
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 793471,
+        "p90_ns": 990975,
+        "p99_ns": 1730569,
+        "median_ci95_ns": [
+          784478,
+          804277
+        ],
+        "geomean_ns": 813844.9,
+        "geomean_over_median": 1.026,
+        "tail_p99_over_p50": 2.18
+      }
+    },
+    "fargate/efs": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 7098426,
+        "p90_ns": 9062585,
+        "p99_ns": 14321209,
+        "median_ci95_ns": [
+          7047513,
+          7147410
+        ],
+        "geomean_ns": 7381291.9,
+        "geomean_over_median": 1.04,
+        "tail_p99_over_p50": 2.02
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 945592,
+        "p90_ns": 1052143,
+        "p99_ns": 1152230,
+        "median_ci95_ns": [
+          938273,
+          952705
+        ],
+        "geomean_ns": 161418.4,
+        "geomean_over_median": 0.171,
+        "tail_p99_over_p50": 1.22
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 828964,
+        "p90_ns": 1464048,
+        "p99_ns": 1610494,
+        "median_ci95_ns": [
+          818593,
+          842749
+        ],
+        "geomean_ns": 964860.0,
+        "geomean_over_median": 1.164,
+        "tail_p99_over_p50": 1.94
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 1043077,
+        "p90_ns": 1135212,
+        "p99_ns": 1213825,
+        "median_ci95_ns": [
+          1028882,
+          1128246
+        ],
+        "geomean_ns": 1060922.3,
+        "geomean_over_median": 1.017,
+        "tail_p99_over_p50": 1.16
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 2967581,
+        "p90_ns": 3479096,
+        "p99_ns": 7919266,
+        "median_ci95_ns": [
+          2949923,
+          2983121
+        ],
+        "geomean_ns": 3126172.7,
+        "geomean_over_median": 1.053,
+        "tail_p99_over_p50": 2.67
+      }
+    },
+    "fargate/efs_plain": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 6998512,
+        "p90_ns": 9430232,
+        "p99_ns": 14492032,
+        "median_ci95_ns": [
+          6940912,
+          7058418
+        ],
+        "geomean_ns": 7365263.1,
+        "geomean_over_median": 1.052,
+        "tail_p99_over_p50": 2.07
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 906264,
+        "p90_ns": 1001567,
+        "p99_ns": 1089083,
+        "median_ci95_ns": [
+          900069,
+          911860
+        ],
+        "geomean_ns": 142234.5,
+        "geomean_over_median": 0.157,
+        "tail_p99_over_p50": 1.2
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 780201,
+        "p90_ns": 1410559,
+        "p99_ns": 1617903,
+        "median_ci95_ns": [
+          771585,
+          790876
+        ],
+        "geomean_ns": 918218.9,
+        "geomean_over_median": 1.177,
+        "tail_p99_over_p50": 2.07
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 981776,
+        "p90_ns": 1190449,
+        "p99_ns": 1245767,
+        "median_ci95_ns": [
+          952049,
+          1067832
+        ],
+        "geomean_ns": 1006548.9,
+        "geomean_over_median": 1.025,
+        "tail_p99_over_p50": 1.27
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 2844676,
+        "p90_ns": 3192065,
+        "p99_ns": 6154443,
+        "median_ci95_ns": [
+          2830202,
+          2858354
+        ],
+        "geomean_ns": 2938453.1,
+        "geomean_over_median": 1.033,
+        "tail_p99_over_p50": 2.16
+      }
+    },
+    "fargate/ephemeral": {
+      "create": {
+        "n": 1000,
+        "p50_ns": 37382,
+        "p90_ns": 48557,
+        "p99_ns": 58634,
+        "median_ci95_ns": [
+          36430,
+          38309
+        ],
+        "geomean_ns": 36759.2,
+        "geomean_over_median": 0.983,
+        "tail_p99_over_p50": 1.57
+      },
+      "stat": {
+        "n": 1000,
+        "p50_ns": 2856,
+        "p90_ns": 3307,
+        "p99_ns": 5440,
+        "median_ci95_ns": [
+          2831,
+          2880
+        ],
+        "geomean_ns": 2881.6,
+        "geomean_over_median": 1.009,
+        "tail_p99_over_p50": 1.9
+      },
+      "open_read": {
+        "n": 1000,
+        "p50_ns": 9854,
+        "p90_ns": 12217,
+        "p99_ns": 17337,
+        "median_ci95_ns": [
+          9699,
+          10010
+        ],
+        "geomean_ns": 9988.6,
+        "geomean_over_median": 1.014,
+        "tail_p99_over_p50": 1.76
+      },
+      "stat_enoent": {
+        "n": 20,
+        "p50_ns": 5735,
+        "p90_ns": 6392,
+        "p99_ns": 14072,
+        "median_ci95_ns": [
+          5407,
+          6162
+        ],
+        "geomean_ns": 5861.8,
+        "geomean_over_median": 1.022,
+        "tail_p99_over_p50": 2.45
+      },
+      "unlink": {
+        "n": 1000,
+        "p50_ns": 17698,
+        "p90_ns": 21038,
+        "p99_ns": 26724,
+        "median_ci95_ns": [
+          17460,
+          17970
+        ],
+        "geomean_ns": 17737.8,
+        "geomean_over_median": 1.002,
+        "tail_p99_over_p50": 1.51
+      }
+    }
+  },
+  "between_rep_medians": {
+    "ec2/ebs": {
+      "create": [
+        20919
+      ],
+      "stat": [
+        1351
+      ],
+      "open_read": [
+        6680
+      ],
+      "stat_enoent": [
+        3897
+      ],
+      "unlink": [
+        8372
+      ]
+    },
+    "ec2/efs": {
+      "create": [
+        6996843
+      ],
+      "stat": [
+        905170
+      ],
+      "open_read": [
+        724058
+      ],
+      "stat_enoent": [
+        1009973
+      ],
+      "unlink": [
+        2888190
+      ]
+    },
+    "ec2/efs_host_plain": {
+      "create": [
+        6574448
+      ],
+      "stat": [
+        806029
+      ],
+      "open_read": [
+        597118
+      ],
+      "stat_enoent": [
+        926010
+      ],
+      "unlink": [
+        2862606
+      ]
+    },
+    "ec2/efs_host_tls": {
+      "create": [
+        6999740
+      ],
+      "stat": [
+        919709
+      ],
+      "open_read": [
+        759369
+      ],
+      "stat_enoent": [
+        1028593
+      ],
+      "unlink": [
+        2908772
+      ]
+    },
+    "ec2/efs_plain": {
+      "create": [
+        6749146
+      ],
+      "stat": [
+        876282
+      ],
+      "open_read": [
+        677120
+      ],
+      "stat_enoent": [
+        898220
+      ],
+      "unlink": [
+        2813791
+      ]
+    },
+    "ec2/instance_store": {
+      "create": [
+        20089
+      ],
+      "stat": [
+        1371
+      ],
+      "open_read": [
+        6473
+      ],
+      "stat_enoent": [
+        3675
+      ],
+      "unlink": [
+        8051
+      ]
+    },
+    "ec2/juicefs": {
+      "create": [
+        29590562
+      ],
+      "stat": [
+        94444
+      ],
+      "open_read": [
+        400392
+      ],
+      "stat_enoent": [
+        88615
+      ],
+      "unlink": [
+        477827
+      ]
+    },
+    "ec2/mountpoint_s3": {
+      "skipped": [
+        0
+      ]
+    },
+    "ec2/seaweedfs": {
+      "create": [
+        2268089
+      ],
+      "stat": [
+        20602
+      ],
+      "open_read": [
+        459252
+      ],
+      "stat_enoent": [
+        17199
+      ],
+      "unlink": [
+        793366
+      ]
+    },
+    "fargate/efs": {
+      "create": [
+        7098274
+      ],
+      "stat": [
+        945579
+      ],
+      "open_read": [
+        828693
+      ],
+      "stat_enoent": [
+        1040344
+      ],
+      "unlink": [
+        2967351
+      ]
+    },
+    "fargate/efs_plain": {
+      "create": [
+        6998307
+      ],
+      "stat": [
+        906202
+      ],
+      "open_read": [
+        780102
+      ],
+      "stat_enoent": [
+        978621
+      ],
+      "unlink": [
+        2844569
+      ]
+    },
+    "fargate/ephemeral": {
+      "create": [
+        37378
+      ],
+      "stat": [
+        2855
+      ],
+      "open_read": [
+        9846
+      ],
+      "stat_enoent": [
+        5718
+      ],
+      "unlink": [
+        17682
+      ]
+    }
+  },
+  "noise_floor": {},
+  "comparisons": [
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "stat",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.014,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "open_read",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.031,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "create",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.041,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "device: attached NVMe vs network block",
+      "op": "unlink",
+      "a": "ec2/instance_store",
+      "b": "ec2/ebs",
+      "ratio": 1.04,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "stat",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.033,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "open_read",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.07,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "create",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.037,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (EC2)",
+      "op": "unlink",
+      "a": "ec2/efs",
+      "b": "ec2/efs_plain",
+      "ratio": 1.026,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "stat",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.141,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "open_read",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.272,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "create",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.065,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, host mount (EC2)",
+      "op": "unlink",
+      "a": "ec2/efs_host_tls",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.016,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "stat",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.043,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "open_read",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.063,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "create",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.014,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "TLS cost, container-direct (Fargate)",
+      "op": "unlink",
+      "a": "fargate/efs",
+      "b": "fargate/efs_plain",
+      "ratio": 1.043,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "stat",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.016,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "open_read",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.048,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "create",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.0,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, TLS held",
+      "op": "unlink",
+      "a": "ec2/efs",
+      "b": "ec2/efs_host_tls",
+      "ratio": 1.007,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "stat",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.087,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "open_read",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.134,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "create",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.027,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "mount topology, plain held",
+      "op": "unlink",
+      "a": "ec2/efs_plain",
+      "b": "ec2/efs_host_plain",
+      "ratio": 1.017,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "stat",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.045,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "open_read",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.144,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "create",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.014,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    },
+    {
+      "comparison": "compute type, direct+TLS held",
+      "op": "unlink",
+      "a": "ec2/efs",
+      "b": "fargate/efs",
+      "ratio": 1.027,
+      "verdict": "TIE",
+      "noise_floor_spread": 1.0,
+      "inside_noise_floor": false
+    }
+  ],
+  "clusters": {
+    "ec2/ebs": {
+      "stat": {
+        "fast_share": 0.701,
+        "fast_median_ns": 1272,
+        "slow_median_ns": 1517,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.495,
+        "fast_median_ns": 5205,
+        "slow_median_ns": 8399,
+        "centroid_separation": 1.7,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs": {
+      "stat": {
+        "fast_share": 0.314,
+        "fast_median_ns": 1811,
+        "slow_median_ns": 942831,
+        "centroid_separation": 516.3,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.672,
+        "fast_median_ns": 690117,
+        "slow_median_ns": 1329017,
+        "centroid_separation": 1.9,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs_host_plain": {
+      "stat": {
+        "fast_share": 0.349,
+        "fast_median_ns": 1805,
+        "slow_median_ns": 856504,
+        "centroid_separation": 469.6,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.647,
+        "fast_median_ns": 563102,
+        "slow_median_ns": 1210178,
+        "centroid_separation": 2.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs_host_tls": {
+      "stat": {
+        "fast_share": 0.301,
+        "fast_median_ns": 1840,
+        "slow_median_ns": 959843,
+        "centroid_separation": 510.8,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.677,
+        "fast_median_ns": 724001,
+        "slow_median_ns": 1402621,
+        "centroid_separation": 2.0,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/efs_plain": {
+      "stat": {
+        "fast_share": 0.334,
+        "fast_median_ns": 1780,
+        "slow_median_ns": 916936,
+        "centroid_separation": 511.7,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.658,
+        "fast_median_ns": 642534,
+        "slow_median_ns": 1287056,
+        "centroid_separation": 2.0,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/instance_store": {
+      "stat": {
+        "fast_share": 0.711,
+        "fast_median_ns": 1309,
+        "slow_median_ns": 1538,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.57,
+        "fast_median_ns": 5250,
+        "slow_median_ns": 8789,
+        "centroid_separation": 1.7,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/juicefs": {
+      "stat": {
+        "fast_share": 0.533,
+        "fast_median_ns": 77932,
+        "slow_median_ns": 115080,
+        "centroid_separation": 1.5,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.606,
+        "fast_median_ns": 370211,
+        "slow_median_ns": 463516,
+        "centroid_separation": 1.3,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "ec2/seaweedfs": {
+      "stat": {
+        "fast_share": 0.957,
+        "fast_median_ns": 20423,
+        "slow_median_ns": 53550,
+        "centroid_separation": 3.0,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.986,
+        "fast_median_ns": 457904,
+        "slow_median_ns": 2810041,
+        "centroid_separation": 10.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/efs": {
+      "stat": {
+        "fast_share": 0.306,
+        "fast_median_ns": 2605,
+        "slow_median_ns": 974798,
+        "centroid_separation": 367.1,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.683,
+        "fast_median_ns": 792402,
+        "slow_median_ns": 1421046,
+        "centroid_separation": 1.8,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/efs_plain": {
+      "stat": {
+        "fast_share": 0.322,
+        "fast_median_ns": 2576,
+        "slow_median_ns": 936947,
+        "centroid_separation": 356.7,
+        "bimodal": true,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.672,
+        "fast_median_ns": 745776,
+        "slow_median_ns": 1373029,
+        "centroid_separation": 1.8,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    },
+    "fargate/ephemeral": {
+      "stat": {
+        "fast_share": 0.652,
+        "fast_median_ns": 2715,
+        "slow_median_ns": 3167,
+        "centroid_separation": 1.2,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      },
+      "open_read": {
+        "fast_share": 0.591,
+        "fast_median_ns": 8984,
+        "slow_median_ns": 11233,
+        "centroid_separation": 1.3,
+        "bimodal": false,
+        "gates": {
+          "min_cluster_share": 0.02,
+          "min_log10_separation": 0.5
+        }
+      }
+    }
+  },
+  "prediction_5": {
+    "status": "REFUTED",
+    "checks": [
+      {
+        "op": "stat",
+        "expected": "TIE",
+        "observed": "INCONCLUSIVE",
+        "ratio": 2.08
+      },
+      {
+        "op": "create",
+        "expected": "SEPARATED",
+        "observed": "INCONCLUSIVE",
+        "ratio": 1.86
+      },
+      {
+        "op": "unlink",
+        "expected": "SEPARATED",
+        "observed": "INCONCLUSIVE",
+        "ratio": 2.2
+      },
+      {
+        "op": "open_read",
+        "expected": "SEPARATED",
+        "observed": "INCONCLUSIVE",
+        "ratio": 1.52
+      }
+    ],
+    "met": 0,
+    "total": 4,
+    "uniform_across_ops": true,
+    "thresholds": {
+      "tie_max_ratio": 1.5,
+      "separation_min_ratio": 3.0
+    }
+  },
+  "prediction_2": {
+    "status": "INCONCLUSIVE",
+    "reason": "direction held but the wide-margin / local-separation test did not",
+    "juicefs_stat_p50_ns": 94523,
+    "efs_stat_p50_ns": 806380,
+    "local_stat_p50_ns": 1371,
+    "juicefs_over_efs": 0.11721892904089883,
+    "juicefs_over_local": 68.94456601021153,
+    "min_efs_factor": 10.0,
+    "min_local_separation": 3.0
+  },
+  "prediction_4": {
+    "status": "SUPPORTED",
+    "reason": "8 conformance check(s) failed",
+    "checks": 13,
+    "fails": [
+      {
+        "check": "rename",
+        "detail": "mv did not replace"
+      },
+      {
+        "check": "in_place_write",
+        "detail": ""
+      },
+      {
+        "check": "append",
+        "detail": ""
+      },
+      {
+        "check": "truncate",
+        "detail": ""
+      },
+      {
+        "check": "hardlink",
+        "detail": ""
+      },
+      {
+        "check": "symlink",
+        "detail": ""
+      },
+      {
+        "check": "dir_rename",
+        "detail": ""
+      },
+      {
+        "check": "mtime_advances",
+        "detail": ""
+      }
+    ],
+    "errors": []
+  },
+  "prediction_3": {
+    "status": "SUPPORTED",
+    "block_group_stat_p50_ns": 1371,
+    "bar_ns": 13710.0,
+    "server_tiers": {
+      "ec2/efs": {
+        "stat_p50_ns": 905230,
+        "factor": 660.3
+      },
+      "ec2/efs_host_plain": {
+        "stat_p50_ns": 806380,
+        "factor": 588.2
+      },
+      "ec2/efs_host_tls": {
+        "stat_p50_ns": 919747,
+        "factor": 670.9
+      },
+      "ec2/efs_plain": {
+        "stat_p50_ns": 876304,
+        "factor": 639.2
+      },
+      "ec2/juicefs": {
+        "stat_p50_ns": 94523,
+        "factor": 68.9
+      },
+      "fargate/efs": {
+        "stat_p50_ns": 945592,
+        "factor": 689.7
+      },
+      "fargate/efs_plain": {
+        "stat_p50_ns": 906264,
+        "factor": 661.0
+      }
+    },
+    "within_one_order": [],
+    "fsx_tiers_present": []
+  },
+  "prediction_1": {
+    "status": "NOT EVALUABLE",
+    "lustre_clause": "NOT EVALUABLE",
+    "evaluable_reps": 0,
+    "replications": [
+      {
+        "rep": "rep-1",
+        "tiers": {
+          "ec2/instance_store": {
+            "throughput": {
+              "write_4": {
+                "bytes": 4294967296,
+                "ns": 56085994748,
+                "mb_per_s": 76.6,
+                "resident_pct": -1.0
+              },
+              "read_4": {
+                "bytes": 4294967296,
+                "ns": 25413865067,
+                "mb_per_s": 169.0,
+                "resident_pct": 0.0
+              },
+              "read_1": {
+                "bytes": 4294967296,
+                "ns": 27181317342,
+                "mb_per_s": 158.0,
+                "resident_pct": 0.0
+              }
+            },
+            "stat_p50_ns": 1371.0
+          },
+          "ec2/ebs": {
+            "throughput": {
+              "write_4": {
+                "bytes": 4294967296,
+                "ns": 31838633590,
+                "mb_per_s": 134.9,
+                "resident_pct": -1.0
+              },
+              "read_4": {
+                "bytes": 4294967296,
+                "ns": 32507073542,
+                "mb_per_s": 132.1,
+                "resident_pct": 0.0
+              },
+              "read_1": {
+                "bytes": 4294967296,
+                "ns": 32744283664,
+                "mb_per_s": 131.2,
+                "resident_pct": 0.0
+              }
+            },
+            "stat_p50_ns": 1351.5
+          },
+          "fargate/ephemeral": {
+            "throughput": {
+              "write_4": {
+                "bytes": 4294967296,
+                "ns": 31164802954,
+                "mb_per_s": 137.8,
+                "resident_pct": -1.0
+              },
+              "read_4": {
+                "bytes": 4294967296,
+                "ns": 31612685490,
+                "mb_per_s": 135.9,
+                "resident_pct": 0.0
+              },
+              "read_1": {
+                "bytes": 4294967296,
+                "ns": 31695748399,
+                "mb_per_s": 135.5,
+                "resident_pct": 0.0
+              }
+            },
+            "stat_p50_ns": 2855.5
+          },
+          "ec2/efs_host_plain": {
+            "throughput": {
+              "write_4": {
+                "bytes": 4294967296,
+                "ns": 8806401485,
+                "mb_per_s": 487.7,
+                "resident_pct": -1.0
+              },
+              "read_4": {
+                "bytes": 4294967296,
+                "ns": 7203120960,
+                "mb_per_s": 596.3,
+                "resident_pct": 0.0
+              },
+              "read_1": {
+                "bytes": 4294967296,
+                "ns": 7692762452,
+                "mb_per_s": 558.3,
+                "resident_pct": 0.0
+              }
+            },
+            "stat_p50_ns": 806029.0
+          },
+          "ec2/fsx_openzfs": {
+            "throughput": {
+              "error": "missing"
+            }
+          },
+          "ec2/fsx_lustre": {
+            "throughput": {
+              "error": "missing"
+            }
+          },
+          "ec2/fsx_ontap": {
+            "throughput": {
+              "error": "missing"
+            }
+          }
+        },
+        "evaluable": false,
+        "problems": [
+          "ec2/fsx_openzfs: no stat data",
+          "ec2/fsx_openzfs: throughput ERROR (missing)",
+          "ec2/fsx_lustre: no stat data",
+          "ec2/fsx_lustre: throughput ERROR (missing)",
+          "ec2/fsx_ontap: no stat data",
+          "ec2/fsx_ontap: throughput ERROR (missing)"
+        ]
+      }
+    ],
+    "rules": {
+      "tiers": [
+        "ec2/instance_store",
+        "ec2/ebs",
+        "fargate/ephemeral",
+        "ec2/efs_host_plain",
+        "ec2/fsx_openzfs",
+        "ec2/fsx_lustre",
+        "ec2/fsx_ontap"
+      ],
+      "streams": 4,
+      "agree_min_rho": 0.7,
+      "differ_max_rho": 0.3,
+      "max_resident_pct": 1.0,
+      "min_evaluable_reps": 3,
+      "lustre_min_rank_gap": 2
+    }
+  },
+  "prediction_1_exploratory_bound": {
+    "status": "EXPLORATORY - NOT A VERDICT",
+    "robust_in_every_replication": false,
+    "readings": [],
+    "replications": [
+      {
+        "rep": "rep-1",
+        "usable": false,
+        "problems": [
+          "ec2/fsx_openzfs: no stat data",
+          "ec2/fsx_lustre: no stat data",
+          "ec2/fsx_ontap: no stat data"
+        ]
+      }
+    ]
+  }
+}
