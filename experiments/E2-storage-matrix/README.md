@@ -4,6 +4,8 @@
 Prediction 1 is NOT EVALUABLE, prediction 3 is REFUTED with a construct caveat,
 and prediction 5 is PARTIALLY SUPPORTED. See
 [docs/findings/E2-server-backed.md](../../docs/findings/E2-server-backed.md).
+The three FUSE arms are **planned but not built**: see
+[fuse-arms.md](fuse-arms.md). P2 and P4 remain ungraded until they run.
 
 > **Result:** [docs/findings/E2-block-backed.md](../../docs/findings/E2-block-backed.md)
 > · [figures](../../docs/charts/e2-storage-matrix.html).
