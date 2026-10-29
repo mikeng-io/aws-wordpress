@@ -1,12 +1,15 @@
 # P7 control review — the 10s noise gate is the first stat of the request
 
-**Status:** `REVIEW COMPLETE; PROPOSAL ADOPTED 2026-10-28; FUTURE RUNS ONLY`.
+**Status:** `REVIEW COMPLETE; PROPOSAL ADOPTED AND EXECUTED 2026-10-28; P7 SUPPORTED 3/3`.
 Mike chose option 2 on 2026-10-28 and raised the study ceiling to **US$30**. The
 dated [control-rate amendment](../../method-amendments/20261028-p7-control-rate/README.md)
-is now on record and is the binding rule for replications 2–4. This review still
-does **not** regrade the formal-v3 run, drop any operation, warm the benchmark, or
-change a target threshold. P7 stays **ERROR** for
-`results/E5-formal/20261027T093314Z-b5b480f/`, and no aggregate verdict exists.
+became the binding rule for replications 2–4. Those three runs were protocol-eligible
+and passed full-method validation; pooled P7 is **SUPPORTED**, with control rates
+0.0075–0.0243%, 0.0000–0.0117% and 0.0000–0.0067% at 0.1/1/10 s. This review still
+does **not** regrade the frozen formal-v3 run, drop any operation, warm the
+benchmark, or change a target threshold. P7 stays **ERROR** for
+`results/E5-formal/20261027T093314Z-b5b480f/`, and that run is not pooled with the
+three new ones.
 
 **Reproduce:** `python3 analysis/e5_p7_control_review.py` (no AWS, reads committed
 raw data). Output: [review.json](review.json).

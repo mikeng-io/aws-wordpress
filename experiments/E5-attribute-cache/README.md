@@ -1,33 +1,34 @@
 # E5 — what an NFS `stat` costs once the file is old
 
-**Status:** `FORMAL V3 COLLECTED; CELL VALIDITY PASS; P7 ATTRIBUTION ERROR; n=1` (2026-10-27 HKT).
-The first full formal-v3 run has eligible protocol inputs, 46 valid A cells,
-18 valid B targets and three valid matched EBS references. P7 remains ERROR on
-its 10s matched-reference noise gate. All ten aggregate predictions remain
-NOT EVALUABLE; no H1 verdict changes. Earlier methods stay frozen and separate.
+**Status:** `FORMAL V3 3/3 COMPLETE; P7 SUPPORTED; P4 INCONCLUSIVE` (2026-10-28 HKT).
+Three protocol-eligible full-method replications passed the gate and cell-validity
+checks. Pooled P7 is SUPPORTED; P1–P3 are REFUTED, P4 is INCONCLUSIVE, and P5, P6
+and P8–P10 are SUPPORTED. The earlier frozen run remains `P7 ERROR` under its
+original rule and is not pooled. Earlier methods stay frozen and separate.
 
-## Current status and handoff (2026-10-27)
+## Current status and handoff (2026-10-28)
 
-**Latest full-method validation:** [formal v3 live review](../../results/E5-formal/20261027T093314Z-b5b480f/review.md).
-The complete A/D method and 300s/600s B grids pass their cell-validity checks.
-Quiet idle spans 360.013169466 seconds with zero selected TLS root RPCs and traced
-root stat calls. All measured NFS phase/window counters reconcile exactly;
-worst target lateness is 1/6000 (0.0167%). Original helper bytes/config are restored.
-Independent teardown verifies 18 regions /198 inventories, zero API errors and
-no E5 workload resources or retained diagnostics bucket. Benchmark/collector exit 0.
+**Three-run formal set complete.** Three protocol-eligible `isolation-formal-v3`
+deployments (10:30, 12:54 and 16:01 UTC on 2026-10-28) all pass the protocol gate
+and full-method validation. The pooled output is
+`results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json`.
 
-P7's 10s EBS slow centroid (14601ns) reaches the Lustre classification threshold
-(14208ns), triggering the unchanged noise rule. Its slow share is 0.1100%, below
-the separate 1% share gate. The [raw-tail review](../../results/E5-formal/20261027T093314Z-b5b480f/p7-noise-review.json)
-finds 27 of 30 EBS operations reaching that boundary are first stats in requests;
-this is a diagnostic clue, not a causal explanation or permission to remove them.
-The [P7 control review](p7-review/20261028/README.md) (2026-10-28) follows that clue:
-the control's slow cluster is 60/66 first operations, the first `stat` after a sleep
-costs 9.2× the next one on EBS (a tier with no server), and the same run's other EBS
-control falls below the boundary. The grade is unchanged; the review proposes a
-rate-based control test for future replications, not yet in force.
-Per-run P1-P3 are REFUTED, P4-P6/P8-P10 SUPPORTED and P7 ERROR. These are not
-aggregate verdicts or a general filesystem ranking.
+- **P7 SUPPORTED (3/3).** Control rates at or above the boundary were
+  0.0075/0.0243/0.0017%, 0.0108/0.0030/0.0000% and 0.0121/0.0117/0.0067% at
+  0.1/1/10 s; target slow shares were 0.157–0.335%, all below the 1% bound. The
+  0.2% control veto never bound.
+- P1–P3 are REFUTED; **P4 is INCONCLUSIVE** (SUPPORTED in the first two runs,
+  REFUTED in the third: A8/A3 0.716 on EFS plain and 0.701 on OpenZFS); P5, P6 and
+  P8–P10 are SUPPORTED.
+- The frozen 2026-10-27 run remains `P7 ERROR` under its original centroid rule.
+  It was not regraded and is not in the pool.
+
+The [control-rate amendment](method-amendments/20261028-p7-control-rate/README.md)
+was adopted before these runs; the [P7 control review](p7-review/20261028/README.md)
+is its pre-registered basis. The
+[launch correction](#launch-correction--2026-10-28) records the off-protocol
+legacy run from the first attempt: retained at
+`results/E5/20261028T090923Z-d39d4d5/`, not graded and not pooled.
 
 Earlier evidence: [original pilot](../../results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
 [A1 counter follow-up](pilot-followup/20261027/README.md),
@@ -39,19 +40,16 @@ candidate and diagnostic do not count toward the formal-v3 replication count.
 The [formal v3 amendment](method-amendments/20261027-formal-v3/README.md) fixes the
 quiet profile, full A/D phases, sequential Lustre/EBS binding and unchanged hard
 thresholds. Its execution source is `b5b480f`; the full live evidence and actual
-runtime are now recorded separately from its offline preparation receipts.
+runtime are recorded separately from its offline preparation receipts.
 
-**Next work, before another paid run:**
+**Next work, no paid run authorised:**
 
-- **P7 review and rule: decided (2026-10-28).** [Review](p7-review/20261028/README.md)
-  preserved the existing rule for this run; Mike then adopted the
-  [control-rate amendment](method-amendments/20261028-p7-control-rate/README.md) for
-  future replications and raised the ceiling to US$30. This run was not regraded.
-- Refresh allocation/pricing and remaining budget under the US$30 total ceiling.
-  The preflight constants now carry the US$16.996 proxy instead of $1.55.
-- Three sequential replications are authorised under the amendment; no automatic
-  retries. Review each run before starting the next, and stop on protocol ERROR,
-  teardown failure or a budget breach.
+- Write the P7 result into H1 and the findings docs with the three run
+  directories; do not use the frozen run's grade.
+- Investigate P4's A8/A3 instability offline. It is an instrument check that now
+  fails one replication, not evidence about P7.
+- Campaign planning total is **US$27.396** of the US$30 ceiling (an envelope, not
+  an invoice). No fourth paid run fits or is authorised.
 
 The local NFS checks, phase-attributed RPC amendment, conservative expiry probes
 and host watchdog remain integrated. Historical attempts and protocol decisions
@@ -960,3 +958,24 @@ The first launch used the default `study` collector instead of
 slot. The formal series restarts with one
 `E5_RUN_KIND=formal-isolation make e5-container REPS=1` deployment per replication,
 writing to `results/E5-formal/<run>/rep-1/formal/`.
+
+### Three-replication result — 2026-10-28
+
+All three formal replications completed with `cleanup_verified: true` and passed the
+protocol gate and full-method validation:
+
+- `results/E5-formal/20261028T103017Z-342d6b4/`
+- `results/E5-formal/20261028T125412Z-f6659e0/`
+- `results/E5-formal/20261028T160106Z-dd5fce0/`
+
+The pooled output is
+[`analysis-pooled-3.json`](../../results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json).
+**P7 is SUPPORTED (3/3)**: control rates 0.0075–0.0243%, 0.0000–0.0117% and
+0.0000–0.0067% at 0.1/1/10 s, against the 0.2% veto; target slow shares 0.157–0.335%,
+against the 1% bound. P1–P3 are REFUTED; **P4 is INCONCLUSIVE** (the third run's
+A8/A3 fell to 0.716 on EFS plain and 0.701 on OpenZFS after two SUPPORTED runs);
+P5, P6 and P8–P10 are SUPPORTED. The frozen 2026-10-27 run remains `P7 ERROR` and is
+not pooled.
+
+Campaign planning total is **US$27.396** of the US$30 ceiling (an envelope, not an
+invoice); no fourth paid run is authorised.

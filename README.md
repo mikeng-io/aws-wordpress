@@ -80,11 +80,13 @@ that would falsify it, recorded before any experiment runs.
 ## Status
 
 E0, E1 and E3 have completed runs; E2 has completed block-backed, EFS mount and
-FSx groups, with the FUSE-backed arms still open. E5 formal v3 has one full-method
-valid run; P7 remains ERROR on its matched-reference noise gate, and all aggregate
-predictions remain NOT EVALUABLE. Earlier pilot/diagnostic evidence stays frozen.
-Status reconciled on 2026-10-27 HKT; historical findings remain available with their
-original measurements.
+FSx groups, with the FUSE-backed arms still open. E5's formal v3 now has **three
+protocol-eligible replications** (2026-10-28). Pooled P7 is **SUPPORTED (3/3)**;
+P1–P3 are REFUTED; P4 is **INCONCLUSIVE** (two supported, one refuted); P5, P6 and
+P8–P10 are SUPPORTED. The frozen 2026-10-27 run remains `P7 ERROR` under its
+original rule and is not pooled. Earlier pilot/diagnostic evidence stays frozen.
+Status reconciled on 2026-10-29 HKT; historical findings remain available with
+their original measurements.
 
 [E0 at n=10](docs/findings/E0-n10.md): syscall counts are deterministic; a warm
 WordPress request issues ~4,300 filesystem syscalls that `php.ini` cannot reduce.
@@ -135,31 +137,33 @@ the earlier findings — fixed and pushed; see that doc for the correction recor
 | [E2](experiments/E2-storage-matrix/) | What does each storage tier charge per metadata op, and which are reachable at all? | ~$0.96/hr FSx apparatus, torn down | **block-backed + EFS mount + FSx groups complete; FUSE arms open; NFS cache confound identified** |
 | [E3](experiments/E3-fargate-ephemeral-latency/) | Fargate ephemeral storage metadata latency | ~$0.04/hr, torn down | **complete; fresh-file cache mix, not production steady state** |
 | [E4](experiments/E4-cache-adapter/) | Can local ephemeral act as a cache tier over a durable origin? | not costed | specced; substrate question **answered by E2**, amortisation still open |
-| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | formal v3 n=1: all A/B/reference cells valid; P7 attribution ERROR; no aggregate verdict |
+| [E5](experiments/E5-attribute-cache/) | What does an NFS `stat` cost on old files: miss cost, and steady-state hit rate? | ~$0.96/hr, torn down | **formal v3 3/3 complete: P7 SUPPORTED; P4 INCONCLUSIVE; no paid work pending** |
 
 The cost entries are historical apparatus estimates, not a current price quote;
-E5's refreshed standing subtotal is $0.95475/hr from `results/pricing/20261027T092919Z-32410a7/`; ancillary usage/minimum billing excluded.
+E5's refreshed standing subtotal is $0.95475/hr from `results/pricing/20261028T125335Z-5bb312a/`; ancillary usage/minimum billing excluded.
 
-**Next: review E5 P7 noise attribution before further replications.**
-The [first full formal-v3 validation](results/E5-formal/20261027T093314Z-b5b480f/review.md)
-collects complete A/D phases and 300s/600s B grids: 46 A cells, 18 B targets and
-three same-time EBS references are valid. TLS root attribution reconciles exactly;
-worst target lateness is 1/6000. P7 still returns ERROR because the 10s EBS slow
-centroid reaches the Lustre classification boundary. No threshold was relaxed.
-All ten aggregate predictions remain NOT EVALUABLE at n=1; H1 is unchanged.
-Benchmark and collector exited 0. Independent 18-region /198-inventory teardown
-verified no E5 workload resources or retained diagnostics bucket.
+**E5's three-replication campaign is complete (2026-10-28).** The
+[frozen 2026-10-27 run](results/E5-formal/20261027T093314Z-b5b480f/review.md)
+remains `P7 ERROR` under the original centroid rule and is not pooled. The three
+new [formal](results/E5-formal/20261028T103017Z-342d6b4/review.md)
+[replications](results/E5-formal/20261028T125412Z-f6659e0/review.md)
+[all](results/E5-formal/20261028T160106Z-dd5fce0/review.md) pass the protocol gate
+and full-method validation. Pooled P7 is SUPPORTED on all three deltas (control
+rates 0.0075–0.0121%, far below the 0.2% veto); P4 is INCONCLUSIVE because the last
+run's A8/A3 ratio fell to 0.716 on EFS plain and 0.701 on OpenZFS after two
+SUPPORTED runs. That P4 divergence is a replication-stability finding, not a P7
+one. The [P7 control-rate amendment](experiments/E5-attribute-cache/method-amendments/20261028-p7-control-rate/README.md)
+governed these runs only; the frozen run was not regraded and no threshold was
+relaxed. The campaign planning total is US$27.396 of the US$30 ceiling (an
+envelope, not an invoice); no fourth paid run is authorised.
 
-The [original pilot](results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
+Earlier [pilot](results/E5/20261026T152946Z-b1efcb2/pilot-review.md),
 [counter follow-up](experiments/E5-attribute-cache/pilot-followup/20261027/README.md),
 [helper/concurrency diagnostic](results/E5-diagnostic/20261027T042037Z-7d9be14/review.md)
 and [accepted short candidate](results/E5-isolation-validation/20261027T073803Z-647a811/review.md)
-remain separate, frozen evidence. They are not pooled with formal v3. The
+evidence remains separate and frozen. The
 [formal amendment](experiments/E5-attribute-cache/method-amendments/20261027-formal-v3/README.md)
-predeclares the quiet profile, complete windows and P7 reference binding.
-Further paid runs need a separate go-ahead and refreshed budget under US$30; the
-[P7 control-rate amendment](experiments/E5-attribute-cache/method-amendments/20261028-p7-control-rate/README.md)
-governs P7 for those runs only and the 2026-10-27 result stays frozen.
+fixes the quiet profile, complete windows and P7 reference binding.
 
 E4 remains specced. E2 narrowed its substrate question for the tested workload;
 E5 must establish the remaining cache cost before deciding whether to build an

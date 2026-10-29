@@ -2,18 +2,23 @@
 
 **Status:** `MECHANISM REFUTED, CLAIM REFRAMED — SUPPORTED` — see E1, E2, and the rewrite below
 
-**Current qualification (2026-10-27):** the SUPPORTED label above is the retained
+**Current qualification (2026-10-28):** the SUPPORTED label above is the retained
 E1/E2-era verdict, not acceptance of a production steady-state cost model. The
 2026-10-15 evidence note below records the cache confound and contradictory
-within-tier effects. E5 formal v3 now has one protocol-eligible full-method run
-with valid A/B/reference inputs, but P7 remains ERROR on its 10s matched-EBS noise
-gate and all aggregate predictions remain NOT EVALUABLE at n=1. Earlier pilot,
-diagnostic and short-candidate methods are not pooled with it. This changes no H1
-verdict. Read the original restatement below as the claim under review, including
-"the whole story", rather than a settled conclusion. Sources:
-`results/E2/20261015T000959Z-85382cc/`, the
-[formal-v3 review](../results/E5-formal/20261027T093314Z-b5b480f/review.md) and
-[E5 handoff](../experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-27).
+within-tier effects. E5 formal v3 now has **three protocol-eligible full-method
+replications**. Pooled P7 is **SUPPORTED (3/3)**: control overlap rates stayed at
+0.0000–0.0243%, far below the 0.2% veto. P1–P3 are REFUTED; **P4 is INCONCLUSIVE**
+(two supported, one refuted); P5, P6 and P8–P10 are SUPPORTED. The frozen
+2026-10-27 run remains `P7 ERROR` under its original rule and is not pooled. The
+P4 divergence is a replication-stability caveat, not a P7 result. Earlier pilot,
+diagnostic and short-candidate methods are not pooled. This changes no H1 verdict.
+Read the original restatement below as the claim under review, including "the whole
+story", rather than a settled conclusion. Sources:
+`results/E2/20261015T000959Z-85382cc/`, the three
+[formal](../results/E5-formal/20261028T103017Z-342d6b4/review.md)
+[replication](../results/E5-formal/20261028T125412Z-f6659e0/review.md)
+[reviews](../results/E5-formal/20261028T160106Z-dd5fce0/review.md) and the
+[E5 handoff](../experiments/E5-attribute-cache/README.md#current-status-and-handoff-2026-10-28).
 
 > **Rewritten** after E1 and E3. The original claim was that co-located tasks share
 > a warm NFS cache, so *placement* determines performance. E1 refuted that

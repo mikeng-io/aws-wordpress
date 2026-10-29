@@ -1,10 +1,17 @@
 # Amendment — P7 control overlap as a rate (2026-10-28)
 
-**Status:** `ADOPTED 2026-10-28 BY MIKE; APPLIES TO REPLICATIONS 2–4 ONLY`.
+**Status:** `EXECUTED 2026-10-28; APPLIED TO REPLICATIONS 2–4; P7 SUPPORTED 3/3`.
 This amendment replaces the control-side centroid veto in P7 with a direct overlap
 rate. It does **not** apply to
 `results/E5-formal/20261027T093314Z-b5b480f/`, which stays `P7 ERROR`, and it does
-not change any target-side threshold. No replication has been run under it yet.
+not change any target-side threshold.
+
+**Outcome:** all three replications were protocol-eligible and passed full-method
+validation. Pooled P7 is SUPPORTED on every delta; control rates were
+0.0075–0.0243%, 0.0000–0.0117% and 0.0000–0.0067% at 0.1/1/10 s, far below the 0.2%
+veto. See [replication 2](../../../results/E5-formal/20261028T103017Z-342d6b4/review.md),
+[replication 3](../../../results/E5-formal/20261028T125412Z-f6659e0/review.md) and
+[replication 4](../../../results/E5-formal/20261028T160106Z-dd5fce0/review.md).
 
 **Authority:** Mike, 2026-10-28: chose option 2 from the
 [P7 control review](../../p7-review/20261028/README.md) and raised the E5 study
