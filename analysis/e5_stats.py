@@ -735,11 +735,10 @@ def analyse(run_dir: Path) -> dict:
                 cell.pop("rpc_ops_per_request", None)
     return {"method": "rpc-phases-v2", "run_dir": str(run_dir), "replications": list(per_rep), "predictions": verdicts,
             "cohorts": {r: {"a": v["a"], "b": v["b"]} for r, v in per_rep.items()},
-            # PREDICTIONS is uppercase but maps to functions, so it is not a constant;
-            # including it made json.dumps raise on every real run (found by the local
-            # NFS check, 2026-10-17; the self-test calls analyse(), never main()).
+            # PREDICTIONS and P4_METHODS are uppercase but map to functions, so they
+            # are not constants; including either made json.dumps raise.
             "constants": {k: v for k, v in globals().items()
-                          if k.isupper() and len(k) > 1 and k != "PREDICTIONS"
+                          if k.isupper() and len(k) > 1 and k not in ("PREDICTIONS", "P4_METHODS")
                           and isinstance(v, (int, float, tuple, list, dict))}}
 
 
