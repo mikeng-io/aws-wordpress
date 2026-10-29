@@ -1,7 +1,7 @@
 # E2 FUSE arms — build and collection plan (2026-10-29)
 
-**Status:** `PLANNED` — no apparatus exists yet; no AWS spend authorised by this
-document alone.
+**Status:** `IN PROGRESS` — apparatus built and smoke-tested; formal three-rep
+collection running. Ceiling **US$12**, approved 2026-10-29.
 
 This is the missing half of E2. The block-backed group, EFS and the three FSx arms
 are complete; the three FUSE tiers in the matrix have never been mounted, so P2
@@ -22,13 +22,18 @@ and the image digest / instance identity in `meta.json`.
 
 ## Apparatus shape
 
-- EC2 `c7g.large` (arm64), one fresh deployment per replication, as E2 does today.
-- A privileged ECS container with `/dev/fuse` and `CAP_SYS_ADMIN`; the existing
-  bench container deliberately is **not** privileged, so FUSE gets its own task
-  definition rather than weakening the latency measurement's seccomp profile.
+- EC2 `c7g.large` (arm64), one fresh deployment per campaign, as E2's
+  `collect.sh` already does; the three replications are three sequential task runs
+  inside that deployment. The stack is destroyed once, after the third.
+- FUSE clients run on the **EC2 host**, where the container has `CAP_SYS_ADMIN`.
+  The unprivileged bench container bind-mounts the resulting host directories, so
+  the per-syscall path and seccomp profile stay identical to the other tiers. The
+  earlier idea of a privileged FUSE task was rejected: it would have changed the
+  thing being measured.
 - One image with the three clients pinned by version and the existing `bench`
-  binary. The entrypoint mounts exactly one arm, seeds the same tree, runs
-  conformance first, then latency, then the throughput probe, and uploads.
+  binary. The host script mounts all three arms and fail-closes if any mount or
+  `st_dev` check fails; the task entrypoint then runs conformance, latency and the
+  throughput probe against the bind-mounted paths.
 - JuiceFS metadata runs in a local Redis in the same task, so the comparison is
   "metadata engine on the same host" not "ElastiCache network hop". That is the
   strongest case for JuiceFS and is recorded as such; a network Redis would be a
@@ -67,7 +72,8 @@ in-place-write semantics, and one failure is enough.
 3. **Replication 1, all three arms.** Stop and review before 2 and 3. Check
    `mount-facts.csv` (FUSE `st_dev`, mount options), conformance verdicts and
    throughput residency.
-4. **Replications 2 and 3.** Only if step 3 is clean. Three independent deployments.
+4. **Replications 2 and 3.** Only if step 3 is clean; sequential task runs in the
+   same deployment, matching E2's existing replication shape.
 5. **Grade and publish.** Extend `analysis/e2_stats.py` for P2/P4 and the FUSE rows
    in P1's ranking; write `docs/findings/E2-fuse.md`; update H1/H2 and the E2
    status. Then decide E4.
@@ -84,6 +90,23 @@ the cache tier E4 would build. After E2-FUSE:
 - If not, E4 builds the read-only cache first (zero write-back correctness cost),
   then the write-through / single-writer / multi-writer variants only if H6 is
   still open. That is a separate apparatus and a separate approval.
+
+## Apparatus notes from the smoke
+
+The final smoke (`results/E2/20261029T064046Z-0bcacd1`, one rep, not the formal
+sample) mounted JuiceFS, SeaweedFS and Mountpoint on the host, bound all three into
+the unprivileged task, and uploaded both arms. It also exposed three apparatus
+facts now pinned in code:
+
+- AL2023 already supplies `curl-minimal`; adding `curl` during host setup fails the
+  whole boot with a package conflict.
+- Mountpoint requires `--prefix` to end in `/`; `mountpoint` alone never mounts.
+- Mountpoint's `unlink` path aborts `bench`'s create/unlink loop. P4 is therefore
+  conformance-only: it writes a `skipped,0` latency marker and is excluded from the
+  throughput set, rather than turning a semantic failure into a task failure.
+- CDK's ECR `docker login` cannot write the macOS keychain here; the FUSE target
+  seeds a file-based `DOCKER_CONFIG` and uses a `CDK_DOCKER` wrapper that skips the
+  login, because `docker push` reads the same token from the file.
 
 ## Cost and stop conditions
 
