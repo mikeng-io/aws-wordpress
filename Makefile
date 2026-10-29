@@ -123,6 +123,10 @@ e5-selftest: ## Run E5's grader against synthetic runs that must reach every gra
 e5-p7-review: ## Recompute the P7 control review from committed raw data; no AWS
 	@PYTHONDONTWRITEBYTECODE=1 python3 analysis/e5_p7_control_review.py
 
+.PHONY: e5-p4-passes
+e5-p4-passes: ## Compare A3 with A8's first and later passes; no AWS
+	@PYTHONDONTWRITEBYTECODE=1 python3 analysis/e5_p4_passes.py
+
 .PHONY: e5-instrument-selftest
 e5-instrument-selftest: ## Linux integration checks for opt-in telemetry; no privileges/NFS/AWS
 	docker build -q -t e5-bench-local infra/lib/stacks/bench

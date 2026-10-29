@@ -56,11 +56,6 @@ lock state.
 P4 is a manipulation check: A8 (forced-miss mount) should be within ±25% of A3
 (real revalidation) on each NFS tier. It passed in reps 2 and 3 and failed in rep 4:
 
-The check also mixes two things. A8 runs **ten passes** over the 1,000-file tree
-(`E5_A8_PASSES=10`, signature Δ=10000), while A3 is a **single pass** after 75 s
-idle. Repeated passes can warm server-side caches, so A8/A3 below 1 is expected,
-and the ±25% window does not isolate the mount configuration from the pass count.
-
 | tier | A3 p50, reps 2/3/4 | A8 p50, reps 2/3/4 | A8/A3, rep 4 |
 |---|---|---:|---:|
 | EFS plain | 263 / 274 / **357 µs** | 233 / 258 / 255 µs | 0.716 |
@@ -68,12 +63,26 @@ and the ±25% window does not isolate the mount configuration from the pass coun
 | OpenZFS | 69 / 97 / **98 µs** | 70 / 98 / 69 µs | 0.701 |
 | ONTAP | 109 / 111 / 110 µs | 108 / 111 / 107 µs | 0.969 |
 
-A3 moved on two tiers and A8 moved on one, with tight per-cell confidence intervals;
-this is not sampling noise. The forced-miss mount looks stable on EFS plain and
-ONTAP, so the failure is not a broken A8. The registered ±25% check is too tight for
-the observed A3 spread and is confounded by A8's extra passes. P4 is therefore
-**INCONCLUSIVE**, not a P7 failure: P7 reads cohort-B positive `stat` cost and
-same-time EBS controls, not the A8/A3 ratio.
+A8 runs **ten passes** over the tree (`E5_A8_PASSES=10`, Δ=10000) while A3 is a
+**single pass** after 75 s idle, so pooling all A8 passes is not a like-for-like
+comparison. Splitting rep 4 by pass makes the problem explicit:
+
+| tier, rep 4 | A3 | A8 pass 1 | A8 passes 2–10 | A8 all / A3 |
+|---|---:|---:|---:|---:|
+| EFS plain | 356.5 µs | 259.1 µs | 254.9 µs | 0.716 |
+| EFS TLS | 335.7 µs | 431.5 µs | 432.1 µs | 1.287 |
+| OpenZFS | 98.0 µs | **98.0 µs** | 68.3 µs | 0.701 |
+
+On OpenZFS the first A8 pass matches A3 exactly (98.0 vs 98.0); the 0.701 failure is
+the nine warmed passes, not a different measurement. That correction does not rescue
+the other tiers: on EFS plain A8 is ~255 µs on every pass while A3 is 357 µs (A3
+elevated against 263/274 µs in reps 2/3), and on EFS TLS A8 is ~432 µs while A3 is
+336 µs. Reps 2 and 3 show the same directions at smaller amplitude. No single
+pass-selection rule makes P4 pass on all tiers.
+
+The registered ±25% check is therefore confounded by pass count on OpenZFS and by
+tier/phase behaviour on EFS. P4 is **INCONCLUSIVE**, not a P7 failure: P7 reads
+cohort-B positive `stat` cost and same-time EBS controls, not the A8/A3 ratio.
 
 ## What this changes for H1
 
@@ -96,4 +105,6 @@ python3 analysis/e5_formal_stats.py \
   results/E5-formal/20261028T103017Z-342d6b4 \
   results/E5-formal/20261028T125412Z-f6659e0 \
   results/E5-formal/20261028T160106Z-dd5fce0
+
+make e5-p4-passes   # A3 vs A8's first and later passes
 ```

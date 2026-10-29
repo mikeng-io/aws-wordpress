@@ -46,9 +46,10 @@ runtime are recorded separately from its offline preparation receipts.
 
 - The P7 result is written into [the E5 finding](../../docs/findings/E5-attribute-cache.md)
   and H1; do not use the frozen run's grade.
-- Investigate P4's A8/A3 instability offline. A8 runs ten passes over the tree while
-  A3 is a single pass after idle, so the ±25% check is confounded by warming and
-  failed one replication. It is an instrument question, not evidence about P7.
+- P4's ±25% check is confounded. On OpenZFS rep 4, A8's first pass matches A3
+  exactly (98.0 µs) and the nine later passes warm to 68 µs; EFS plain and TLS
+  diverge for separate phase reasons. Recorded in the finding; offline only, not a
+  P7 issue.
 - Campaign planning total is **US$27.396** of the US$30 ceiling (an envelope, not
   an invoice). No fourth paid run fits or is authorised.
 
