@@ -295,23 +295,42 @@ def grade_prediction_4(run_dir: Path) -> dict:
 
     Any FAIL is enough - the prediction is about semantics, not the number of
     failures. ERROR means the suite could not run and must not be read as a pass.
+    The same checks repeat in every replication; report the distinct checks, not
+    three copies of each.
     """
-    rows: list[tuple[str, str, str]] = []
+    by_rep: dict[str, list[tuple[str, str, str]]] = {}
     for rep in sorted(run_dir.glob("rep-*")):
         path = rep / "ec2" / "mountpoint_s3.conformance.csv"
         if not path.exists():
             continue
+        rows: list[tuple[str, str, str]] = []
         with path.open() as fh:
             for row in csv.reader(fh):
                 if len(row) >= 2 and not row[0].strip().startswith("TOTAL_"):
-                    rows.append((row[0].strip(), row[1].strip(), row[2].strip() if len(row) > 2 else ""))
-    if not rows:
+                    rows.append((row[0].strip(), row[1].strip(),
+                                 row[2].strip() if len(row) > 2 else ""))
+        by_rep[rep.name] = rows
+    if not by_rep:
         return {"status": "NOT EVALUABLE", "reason": "no Mountpoint conformance CSV"}
-    fails = [r for r in rows if r[1] == "FAIL"]
-    errors = [r for r in rows if r[1] == "ERROR"]
+
+    fails: dict[str, str] = {}
+    errors: dict[str, str] = {}
+    checks: set[str] = set()
+    per_rep: dict[str, dict[str, int]] = {}
+    for rep, rows in by_rep.items():
+        checks.update(c for c, _, _ in rows)
+        rep_fails = [c for c, st, _ in rows if st == "FAIL"]
+        rep_errors = [c for c, st, _ in rows if st == "ERROR"]
+        for c, st, d in rows:
+            if st == "FAIL":
+                fails.setdefault(c, d)
+            elif st == "ERROR":
+                errors.setdefault(c, d)
+        per_rep[rep] = {"fails": len(rep_fails), "errors": len(rep_errors)}
+
     if fails:
         status = "SUPPORTED"
-        reason = f"{len(fails)} conformance check(s) failed"
+        reason = f"{len(fails)} distinct conformance check(s) failed"
     elif errors:
         status = "ERROR"
         reason = f"{len(errors)} check(s) could not run; no PASS/FAIL verdict"
@@ -321,11 +340,12 @@ def grade_prediction_4(run_dir: Path) -> dict:
     return {
         "status": status,
         "reason": reason,
-        "checks": len(rows),
-        "fails": [{"check": c, "detail": d} for c, s, d in fails],
-        "errors": [{"check": c, "detail": d} for c, s, d in errors],
+        "checks": len(checks),
+        "replications": len(by_rep),
+        "per_rep": per_rep,
+        "fails": [{"check": c, "detail": d} for c, d in fails.items()],
+        "errors": [{"check": c, "detail": d} for c, d in errors.items()],
     }
-
 
 def grade_prediction_3(stats: dict) -> dict:
     """No server-backed tier within one order of magnitude of the block group on stat."""
