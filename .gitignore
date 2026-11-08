@@ -21,3 +21,6 @@ __pycache__/
 
 # Private host watchdog state and boot evidence
 .e5-watchdog/
+
+# generated figure datasets (consumed by the site repo)
+analysis/out/
