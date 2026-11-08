@@ -59,10 +59,11 @@ class ExportFiguresTests(unittest.TestCase):
                          {"0.1": 0.001735, "1": 0.01735, "10": 0.1607})
         self.assertEqual(selectors["e5.rpc_per_stat.tls"]["raw"]["value"]["/efs_host_tls@1"],
                          0.017348333333333334)
-        # Derived shares and ratios present at three significant figures; raw keeps the exact value.
-        self.assertEqual(selectors["e5.lustre.slow_share"]["value"], [0.335, 0.285, 0.157])
-        self.assertEqual(selectors["e2.efs_over_block.stat"]["value"], exporter.sig3(814301 / 1276))
-        self.assertEqual(selectors["e2.efs_over_block.open_read"]["value"], exporter.sig3(903603 / 5203))
+        # Presentation follows the study's own documents: below 1 keeps four significant
+        # digits, 1-10 two decimals, 10 and up one decimal. Raw keeps the exact value.
+        self.assertEqual(selectors["e5.lustre.slow_share"]["value"], [0.3347, 0.2848, 0.1567])
+        self.assertEqual(selectors["e2.efs_over_block.stat"]["value"], 638.2)
+        self.assertEqual(selectors["e2.efs_over_block.open_read"]["value"], 173.7)
         self.assertEqual({name for name, s in selectors.items() if s.get("derived")},
                          {"e2.efs_over_block.stat", "e2.efs_over_block.open_read"})
 

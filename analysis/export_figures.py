@@ -191,23 +191,21 @@ def load_json(root: Path, path: str):
         raise ExportError(f"{path}: {exc}") from exc
 
 
-def sig3(value: float) -> float:
-    """Presentation for derived ratios and shares: three significant figures, which is
-    how the study's own prose reports them (638x, 174x, 0.335%). The exact quotient
-    stays recoverable from raw. Measured values are unaffected — those keep the
-    latency formatter's precision."""
+def present(value: float) -> float:
+    """Presentation rule for ratios and shares, measured from the study's own documents
+    rather than chosen: below 1 three significant figures (0.335%), from 1 to 10 two
+    decimals (1.03x), from 10 up one decimal (163.1x, 637.2x, 32.7%). The exact quotient
+    stays recoverable from raw; latency keeps the latency formatter instead."""
     if value == 0:
         return 0.0
-    return float(f"{value:.3g}")
-
-
-def sig4(value: float) -> float:
-    """Reported rate ratios (RPC per stat, amortised multipliers) present at four
-    significant figures: enough to keep a plain-vs-TLS pair separable, few enough that
-    a table never shows a float artefact like 0.017348333333333334."""
-    if value == 0:
-        return 0.0
-    return float(f"{value:.4g}")
+    if abs(value) < 1:
+        # No sub-1 sample exists in the study's documents to measure against, so this band
+        # keeps all four significant digits the artifact carries: it preserves 0.003347 as
+        # 0.3347 and keeps a plain-vs-TLS pair distinguishable at 1 s.
+        return float(f"{value:.4g}")
+    if abs(value) < 10:
+        return round(value, 2)
+    return round(value, 1)
 
 
 def number(value):
@@ -243,15 +241,15 @@ def export_selector(spec: Figure, document) -> dict:
     elif spec.transform == "divide":
         if values[1] == 0:
             raise ExportError("ratio denominator is zero")
-        values = [sig3(number(values[0] / values[1]))]
+        values = [present(number(values[0] / values[1]))]
         unit = "ratio"
     elif spec.transform == "percent":
         if any(value > 1 for value in values):
             raise ExportError("share is outside [0, 1]")
-        values = [sig3(float(Decimal(str(value)) * 100)) for value in values]
+        values = [present(float(Decimal(str(value)) * 100)) for value in values]
         unit = "percent"
     elif spec.transform == "identity" and unit == "ratio":
-        values = [sig4(value) for value in values]
+        values = [present(value) for value in values]
     elif spec.transform != "identity":
         raise ExportError(f"unknown transform {spec.transform}")
 
