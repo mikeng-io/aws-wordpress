@@ -1,0 +1,214 @@
+{
+  "id": "e2-cache-window",
+  "inputs": {
+    "results/E2/20261015T000959Z-85382cc/rep-1/ec2/efs_host_plain.csv": "c9d7070fabffe4b9cf4ec5dcad6c5a9eec8a6e8dce4b0065020d3b5f17a8439f",
+    "results/E2/20261015T000959Z-85382cc/rep-1/ec2/fsx_lustre.csv": "ebbc900b9f2bc75a78245f905f2dacff1d60c3da92bbff8b881c819387cf24b0",
+    "results/E2/20261015T000959Z-85382cc/rep-1/ec2/fsx_ontap.csv": "92b74b5f64b92470629357126325b01e7ae0a502d260f1237597b5ce70459756",
+    "results/E2/20261015T000959Z-85382cc/rep-1/ec2/fsx_openzfs.csv": "7e9ff442fcfeec1e17fd30cda39c3d9f4bf113a2e63fd79dfff0aa99f9768227",
+    "results/E2/20261015T000959Z-85382cc/rep-2/ec2/efs_host_plain.csv": "ca98d5e844f73a60344d53d691d137219a4b5019b84919d888bff7dbf4f3c26f",
+    "results/E2/20261015T000959Z-85382cc/rep-2/ec2/fsx_lustre.csv": "98143e6c068a93f0b70e2a729bc25bae6a828a4a971c30a69b9842a482ad2c64",
+    "results/E2/20261015T000959Z-85382cc/rep-2/ec2/fsx_ontap.csv": "07d7eae027c6b89cafc0c92b7c2c7d3538377175fb3e710ac9207506200303f4",
+    "results/E2/20261015T000959Z-85382cc/rep-2/ec2/fsx_openzfs.csv": "19e1e0b389a113968151a9248e54bf94c07738d2e2b4339d107270f1e7a449e0",
+    "results/E2/20261015T000959Z-85382cc/rep-3/ec2/efs_host_plain.csv": "309224e7981777800ebbceb7f2ece67d41affe726022967d72782d7f6aefc28c",
+    "results/E2/20261015T000959Z-85382cc/rep-3/ec2/fsx_lustre.csv": "5d4107b8f20d3d7fbfdf0b57a0982a4627ec04290d5e83082975d24907aded73",
+    "results/E2/20261015T000959Z-85382cc/rep-3/ec2/fsx_ontap.csv": "2479bef58bb5c0b702fd4d1c029b555beb72ffa9745a452daed82884e82304a2",
+    "results/E2/20261015T000959Z-85382cc/rep-3/ec2/fsx_openzfs.csv": "bb1796d75ccdb3d06d7a0d401b150f095d00c92ec4b691ed5fdb62c348ca6e4e"
+  },
+  "produced_by": {
+    "command": "python3 analysis/e2_cache_window.py",
+    "commit": "c239059",
+    "repo": "mikeng-io/aws-wordpress"
+  },
+  "rule": {
+    "boundary_age_s": "sum of the create latencies strictly after the oldest fast file's index, in seconds - that file's age when the create pass ended",
+    "create_pass_s": "sum of the create latencies, in seconds; create rows are in file order so the sum is the create pass",
+    "fast_cluster": "lower-centroid cluster of e3_clusters.kmeans2_log (deterministic 1-D k-means on log10 latency, initialised at the 10th and 90th percentiles)",
+    "fast_stat_share": "fraction of stat rows in the fast cluster, 0..1",
+    "gates": {
+      "min_cluster_share": 0.02,
+      "min_log10_separation": 0.5
+    },
+    "slow_in_tail": "stat rows at or after oldest_fast_index that are NOT in the fast cluster; violations of the contiguous-tail structure, recorded not corrected",
+    "unimodal": "when the gates fail the population is one cluster and no fast share is defined; fast_stat_share, oldest_fast_index, boundary_age_s and slow_in_tail are null"
+  },
+  "run": "results/E2/20261015T000959Z-85382cc",
+  "schema": "derived/0",
+  "tiers": {
+    "efs": {
+      "arm_tier": "ec2/efs_host_plain",
+      "replications": {
+        "rep-1": {
+          "bimodal": true,
+          "boundary_age_s": 2.382691644,
+          "centroid_separation_log10": 2.671137273924079,
+          "create_pass_s": 7.173373038,
+          "fast_stat_share": 0.335,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": 665,
+          "slow_in_tail": 0,
+          "undefined_reason": null,
+          "ungated_lower_cluster_share": 0.335
+        },
+        "rep-2": {
+          "bimodal": true,
+          "boundary_age_s": 2.483769297,
+          "centroid_separation_log10": 2.6140726197832813,
+          "create_pass_s": 6.502353136,
+          "fast_stat_share": 0.378,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": 622,
+          "slow_in_tail": 0,
+          "undefined_reason": null,
+          "ungated_lower_cluster_share": 0.378
+        },
+        "rep-3": {
+          "bimodal": true,
+          "boundary_age_s": 2.29914479,
+          "centroid_separation_log10": 2.7117888756404263,
+          "create_pass_s": 7.122481579,
+          "fast_stat_share": 0.309,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": 691,
+          "slow_in_tail": 0,
+          "undefined_reason": null,
+          "ungated_lower_cluster_share": 0.309
+        }
+      }
+    },
+    "fsx_lustre": {
+      "arm_tier": "ec2/fsx_lustre",
+      "replications": {
+        "rep-1": {
+          "bimodal": false,
+          "boundary_age_s": null,
+          "centroid_separation_log10": 0.1355447327789383,
+          "create_pass_s": 0.644504489,
+          "fast_stat_share": null,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": null,
+          "slow_in_tail": null,
+          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.4x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+          "ungated_lower_cluster_share": 0.957
+        },
+        "rep-2": {
+          "bimodal": false,
+          "boundary_age_s": null,
+          "centroid_separation_log10": 0.10412292761415731,
+          "create_pass_s": 0.708268757,
+          "fast_stat_share": null,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": null,
+          "slow_in_tail": null,
+          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.3x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+          "ungated_lower_cluster_share": 0.932
+        },
+        "rep-3": {
+          "bimodal": false,
+          "boundary_age_s": null,
+          "centroid_separation_log10": 0.1255693676636147,
+          "create_pass_s": 0.754391936,
+          "fast_stat_share": null,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": null,
+          "slow_in_tail": null,
+          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.3x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+          "ungated_lower_cluster_share": 0.867
+        }
+      }
+    },
+    "fsx_ontap": {
+      "arm_tier": "ec2/fsx_ontap",
+      "replications": {
+        "rep-1": {
+          "bimodal": false,
+          "boundary_age_s": null,
+          "centroid_separation_log10": 0.08893025116920139,
+          "create_pass_s": 0.993817219,
+          "fast_stat_share": null,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": null,
+          "slow_in_tail": null,
+          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.2x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+          "ungated_lower_cluster_share": 0.77
+        },
+        "rep-2": {
+          "bimodal": false,
+          "boundary_age_s": null,
+          "centroid_separation_log10": 0.2530459558675413,
+          "create_pass_s": 0.968152305,
+          "fast_stat_share": null,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": null,
+          "slow_in_tail": null,
+          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.8x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+          "ungated_lower_cluster_share": 0.967
+        },
+        "rep-3": {
+          "bimodal": false,
+          "boundary_age_s": null,
+          "centroid_separation_log10": 0.09165467400772842,
+          "create_pass_s": 0.987541256,
+          "fast_stat_share": null,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": null,
+          "slow_in_tail": null,
+          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.2x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+          "ungated_lower_cluster_share": 0.762
+        }
+      }
+    },
+    "fsx_openzfs": {
+      "arm_tier": "ec2/fsx_openzfs",
+      "replications": {
+        "rep-1": {
+          "bimodal": true,
+          "boundary_age_s": 2.906314354,
+          "centroid_separation_log10": 1.7262726096277143,
+          "create_pass_s": 3.384581744,
+          "fast_stat_share": 0.696,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": 303,
+          "slow_in_tail": 1,
+          "undefined_reason": null,
+          "ungated_lower_cluster_share": 0.696
+        },
+        "rep-2": {
+          "bimodal": true,
+          "boundary_age_s": 2.921866894,
+          "centroid_separation_log10": 1.740278123184266,
+          "create_pass_s": 3.407812081,
+          "fast_stat_share": 0.689,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": 311,
+          "slow_in_tail": 0,
+          "undefined_reason": null,
+          "ungated_lower_cluster_share": 0.689
+        },
+        "rep-3": {
+          "bimodal": true,
+          "boundary_age_s": 2.921042424,
+          "centroid_separation_log10": 1.7074484153121778,
+          "create_pass_s": 3.415981417,
+          "fast_stat_share": 0.679,
+          "n_create": 1000,
+          "n_stat": 1000,
+          "oldest_fast_index": 321,
+          "slow_in_tail": 0,
+          "undefined_reason": null,
+          "ungated_lower_cluster_share": 0.679
+        }
+      }
+    }
+  }
+}
