@@ -25,7 +25,7 @@ class ExportFiguresTests(unittest.TestCase):
         dataset = exporter.build_dataset()
         selectors = dataset["selectors"]
         self.assertEqual(len(selectors), len(exporter.figures()))
-        self.assertEqual(len(selectors), 21)
+        self.assertEqual(len(selectors), 45)
         self.assertEqual(list(selectors), sorted(selectors))
         self.assertEqual(dataset["produced_at"], "2026-10-29T09:46:10Z")
         for selector in selectors.values():
@@ -73,7 +73,24 @@ class ExportFiguresTests(unittest.TestCase):
         self.assertEqual(selectors["e2.efs_over_block.stat"]["value"], 638.2)
         self.assertEqual(selectors["e2.efs_over_block.open_read"]["value"], 173.7)
         self.assertEqual({name for name, s in selectors.items() if s.get("derived")},
-                         {"e2.efs_over_block.stat", "e2.efs_over_block.open_read"})
+                         {"e2.efs_over_block.stat", "e2.efs_over_block.open_read",
+                          "e5.efs_over_ebs.median", "e5.efs_over_ebs.p99",
+                          *{f"e2.cache_window.{tier}.{metric}"
+                            for tier in exporter.CACHE_WINDOW_TIERS
+                            for metric in ("create_pass_s", "fast_stat_share",
+                                           "boundary_age_s")}})
+
+    def test_pre_existing_selectors_are_byte_identical_to_golden(self):
+        """The 21 selectors that existed before the cache-window/ladder additions
+        must not move: value, unit, raw provenance and definition all pinned by a
+        golden snapshot taken from the pre-change exporter."""
+        golden = json.loads((exporter.ROOT /
+                             "analysis/testdata/export-golden-21.json").read_text())
+        self.assertEqual(len(golden), 21)
+        selectors = exporter.build_dataset()["selectors"]
+        for name, expected in golden.items():
+            with self.subTest(selector=name):
+                self.assertEqual(selectors[name], expected)
 
     def test_ineligible_and_unlisted_runs_are_rejected(self):
         base = next(spec for spec in exporter.figures() if spec.name == "e0.warm.syscalls")
@@ -93,7 +110,8 @@ class ExportFiguresTests(unittest.TestCase):
         selectors = exporter.build_dataset()["selectors"]
         for name, selector in selectors.items():
             if isinstance(selector["value"], (list, dict)):
-                self.assertIn(selector.get("series_axis"), {"replication", "cadence"}, name)
+                self.assertIn(selector.get("series_axis"),
+                              {"replication", "cadence", "percentile"}, name)
         base = next(spec for spec in exporter.figures()
                     if spec.name == "e5.efs.request.median")
         document = exporter.load_json(exporter.ROOT, base.path)
@@ -145,7 +163,7 @@ class ExportFiguresTests(unittest.TestCase):
                 exporter.build_dataset(Path(directory))
         message = str(caught.exception)
         for spec in exporter.figures():
-            self.assertIn(f"{spec.name}: {spec.path} {spec.pointer}", message)
+            self.assertIn(f"{spec.name}: {spec.document_path} {spec.pointer}", message)
 
     def test_missing_nested_pointers_fail_together_without_touching_outputs(self):
         original = exporter.load_json
@@ -214,6 +232,162 @@ class ExportFiguresTests(unittest.TestCase):
             with self.assertRaises(exporter.ExportError):
                 exporter.write_outputs({}, out, root)
             self.assertEqual(list(results.iterdir()), [])
+
+    def test_e5_derived_ratios_computed_independently(self):
+        selectors = exporter.build_dataset()["selectors"]
+        document = exporter.load_json(
+            exporter.ROOT, f"{exporter.E5}/analysis-pooled-3.json")
+        per_rep = document["predictions"]["9"]["per_replication"]
+        for leaf, expected in (("median", [1.21, 1.29, 1.25]),
+                               ("p99", [88.7, 125.9, 87.6])):
+            quotients = [per_rep[rep]["efs_per_request_ns"][leaf]
+                         / per_rep[rep]["ebs_per_request_ns"][leaf]
+                         for rep in exporter.E5_REPS]
+            rounded = [round(q, 2) if q < 10 else round(q, 1) for q in quotients]
+            self.assertEqual(rounded, expected)
+            selector = selectors[f"e5.efs_over_ebs.{leaf}"]
+            self.assertEqual(selector["value"], expected)
+            self.assertEqual(selector["unit"], "ratio")
+            self.assertEqual(selector["series_axis"], "replication")
+            self.assertTrue(selector["derived"])
+            self.assertEqual(list(selector["raw"]["value"].values()),
+                             [per_rep[rep][f"{arm}_per_request_ns"][leaf]
+                              for rep in exporter.E5_REPS
+                              for arm in ("efs", "ebs")])
+
+    def test_request_ladder_values_labels_and_raw_ns(self):
+        selectors = exporter.build_dataset()["selectors"]
+        document = exporter.load_json(
+            exporter.ROOT, f"{exporter.E5}/analysis-pooled-3.json")
+        per_rep = document["predictions"]["9"]["per_replication"]
+        for index, rep in enumerate(exporter.E5_REPS, start=1):
+            for arm in ("efs", "ebs"):
+                raw = [per_rep[rep][f"{arm}_per_request_ns"][leaf]
+                       for leaf in ("median", "amortised", "p99", "max")]
+                expected = [float(f"{ns / 1000:.4g}") for ns in raw]
+                selector = selectors[f"e5.{arm}.request.ladder@{index}"]
+                with self.subTest(selector=selector):
+                    self.assertEqual(selector["value"], expected)
+                    self.assertEqual(selector["unit"], "us")
+                    self.assertEqual(selector["series_axis"], "percentile")
+                    self.assertEqual(selector["series_labels"],
+                                     ["median", "mean (amortised)", "p99", "max"])
+                    self.assertEqual(list(selector["raw"]["value"].values()), raw)
+
+    def test_e4_stat_ladders_and_hydration(self):
+        selectors = exporter.build_dataset()["selectors"]
+        document = exporter.load_json(exporter.ROOT, f"{exporter.E4}/summary.json")
+        for arm in ("efs", "hydrated"):
+            raw = [document["pooled"][arm]["stat"][leaf]
+                   for leaf in ("p50_ns", "p95_ns", "p99_ns")]
+            selector = selectors[f"e4.{arm}.stat.ladder"]
+            self.assertEqual(selector["value"],
+                             [float(f"{ns / 1000:.4g}") for ns in raw])
+            self.assertEqual(selector["series_axis"], "percentile")
+            self.assertEqual(selector["series_labels"], ["p50", "p95", "p99"])
+            self.assertEqual(selector["unit"], "us")
+        self.assertEqual(selectors["e4.hydrated.stat.ladder"]["value"],
+                         [3.061, 3.938, 6.023])
+        self.assertEqual(selectors["e4.efs.stat.ladder"]["value"],
+                         [1388, 1745, 5106])
+        hydration = [rep["hydration_s"] for rep in document["per_replication"]]
+        self.assertEqual(selectors["e4.hydration.seconds"]["value"],
+                         [float(f"{v:.4g}") for v in hydration])
+        self.assertEqual(selectors["e4.hydration.seconds"]["value"],
+                         [0.2177, 0.4437, 0.4293])
+        self.assertEqual(selectors["e4.hydration.seconds"]["series_axis"],
+                         "replication")
+        self.assertEqual(selectors["e4.hydration.bytes"]["value"], 27412480)
+        self.assertEqual(selectors["e4.hydration.bytes"]["unit"], "bytes")
+
+    def test_uniform_scalar_fails_closed_when_replications_disagree(self):
+        spec = next(s for s in exporter.figures()
+                    if s.name == "e4.hydration.bytes")
+        document = exporter.load_json(exporter.ROOT, spec.document_path)
+        document["per_replication"][1]["hydration_bytes"] += 1
+        with self.assertRaises(exporter.ExportError):
+            exporter.export_selector(spec, document)
+
+    def test_cache_window_selectors_match_independent_derivation(self):
+        import e2_cache_window
+        selectors = exporter.build_dataset()["selectors"]
+        derived = e2_cache_window.derive()
+        for tier in exporter.CACHE_WINDOW_TIERS:
+            reps = derived["tiers"][tier]["replications"]
+            expected = {
+                "create_pass_s": [float(f"{reps[r]['create_pass_s']:.4g}")
+                                  for r in exporter.E2_FSX_REPS],
+                "fast_stat_share": [
+                    None if reps[r]["fast_stat_share"] is None
+                    else round(reps[r]["fast_stat_share"] * 100, 1)
+                    for r in exporter.E2_FSX_REPS],
+                "boundary_age_s": [
+                    None if reps[r]["boundary_age_s"] is None
+                    else float(f"{reps[r]['boundary_age_s']:.4g}")
+                    for r in exporter.E2_FSX_REPS],
+            }
+            for metric, values in expected.items():
+                selector = selectors[f"e2.cache_window.{tier}.{metric}"]
+                with self.subTest(selector=selector["definition"][:60]):
+                    self.assertEqual(selector["value"], values)
+                    self.assertEqual(selector["series_axis"], "replication")
+                    self.assertTrue(selector["derived"])
+                    self.assertEqual(
+                        selector["raw"]["path"], exporter.CACHE_WINDOW_DOC)
+        self.assertEqual(
+            selectors["e2.cache_window.efs.create_pass_s"]["value"],
+            [7.173, 6.502, 7.122])
+        self.assertEqual(
+            selectors["e2.cache_window.efs.fast_stat_share"]["value"],
+            [33.5, 37.8, 30.9])
+        self.assertEqual(
+            selectors["e2.cache_window.efs.boundary_age_s"]["value"],
+            [2.383, 2.484, 2.299])
+        for tier in ("fsx_ontap", "fsx_lustre"):
+            for metric in ("fast_stat_share", "boundary_age_s"):
+                selector = selectors[f"e2.cache_window.{tier}.{metric}"]
+                self.assertEqual(selector["value"], [None, None, None])
+                self.assertFalse(selector["defined"])
+                self.assertIn("unimodal", selector["undefined_reason"])
+
+    def test_derived_document_verification_fails_closed(self):
+        original = exporter.load_json
+        spec = next(s for s in exporter.figures()
+                    if s.name == "e2.cache_window.efs.create_pass_s")
+        base = original(exporter.ROOT, spec.document_path)
+        bad_sha = copy.deepcopy(base)
+        bad_sha["inputs"][next(iter(bad_sha["inputs"]))] = "0" * 64
+        wrong_run = copy.deepcopy(base)
+        wrong_run["run"] = "results/E2/20260910T163206Z-66dcff8"
+        missing_input = copy.deepcopy(base)
+        missing_input["inputs"]["results/E2/none.csv"] = "0" * 64
+        renamed_reps = copy.deepcopy(base)
+        for tier in renamed_reps["tiers"].values():
+            tier["replications"] = {
+                key.replace("rep-", "run-"): value
+                for key, value in tier["replications"].items()}
+        for variant, expected in (
+            (bad_sha, "sha256"),
+            (wrong_run, "does not match"),
+            (missing_input, "none.csv"),
+            (renamed_reps, "missing JSON pointer"),
+        ):
+            with self.subTest(expected=expected), patch.object(
+                exporter, "load_json",
+                side_effect=lambda root, path, v=variant: (
+                    v if path == exporter.CACHE_WINDOW_DOC else original(root, path))
+            ), self.assertRaises(exporter.ExportError) as caught:
+                exporter.build_dataset()
+            self.assertIn(expected, str(caught.exception))
+
+    def test_untampered_raw_csv_still_matches_derived_manifest(self):
+        """Guard that the committed manifest really does pin the raw CSVs: every
+        recorded sha256 resolves to a file that hashes identically right now."""
+        document = exporter.load_json(exporter.ROOT, exporter.CACHE_WINDOW_DOC)
+        self.assertEqual(len(document["inputs"]), 12)
+        spec = next(s for s in exporter.figures()
+                    if s.name == "e2.cache_window.efs.create_pass_s")
+        exporter.verify_derived_document(exporter.ROOT, document, spec)
 
 
 if __name__ == "__main__":

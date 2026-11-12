@@ -11,7 +11,10 @@ raw points to their common ancestor and raw.value preserves that entire subtree.
 The definition enumerates the exact leaf pointers in output order; raw.unit
 describes those selected leaves (the subtree can also contain other metadata).
 E5 arrays follow the three explicitly pinned eligible replications, not JSON object
-order. Each array or keyed map declares series_axis as replication or cadence.
+order. Each array or keyed map declares series_axis as replication, cadence or
+percentile; percentile ladders carry series_labels for their fixed element order.
+Selectors may also read a committed derived document (analysis/derived/*.json);
+its recorded input sha256s are re-verified against the raw files before export.
 
 produced_at uses SOURCE_DATE_EPOCH, or E4's last replication's recorded /utc.
 All selectors are validated before either output file is touched. Existing
@@ -40,6 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]
 E0 = "results/E0/20260902T105746Z-f62a686"
 E0_SINGLE = E0
 E2 = "results/E2/20260910T163206Z-66dcff8"
+E2_FSX = "results/E2/20261015T000959Z-85382cc"
 E4 = "results/E4/20261029T091909Z-842d596"
 E5_RUNS = (
     "results/E5-formal/20261028T103017Z-342d6b4",
@@ -48,9 +52,13 @@ E5_RUNS = (
 )
 E5 = E5_RUNS[-1]
 E5_REPS = tuple(f"{run.rsplit('/', 1)[-1]}/rep-1" for run in E5_RUNS)
+E2_FSX_REPS = ("rep-1", "rep-2", "rep-3")
+CACHE_WINDOW_DOC = (f"analysis/derived/"
+                    f"e2-cache-window-{E2_FSX.rsplit('/', 1)[-1]}.json")
+CACHE_WINDOW_TIERS = ("efs", "fsx_openzfs", "fsx_ontap", "fsx_lustre")
 STUDY_RUNS_PATH = "docs/study-runs.json"
 ELIGIBLE_ROLES = frozenset(("reference", "formal-v3"))
-SERIES_AXES = frozenset(("replication", "cadence"))
+SERIES_AXES = frozenset(("replication", "cadence", "percentile"))
 TIMESTAMP_PATH = f"{E4}/rep-3/meta.json"
 DATASET_ID = "aws-fs.summary"
 DATASET_FILE = f"{DATASET_ID}.json"
@@ -103,10 +111,25 @@ class Figure:
     dimension: str = "metadata"
     keys: tuple[str, ...] = ()
     series_axis: str = ""
+    # A committed derived document outside results/ (e.g. analysis/derived/*.json).
+    # When set it is the document read and the raw.path recorded, and its inputs
+    # manifest is sha256-verified against the raw files before any value is emitted.
+    document: str | None = None
+    # Marks the selector derived even when the transform is not a ratio.
+    derived: bool = False
+    # null leaves are meaningful (an undefined metric), not a validation failure.
+    nullable: bool = False
+    undefined_reason: str | None = None
+    # Element names for a series_axis="percentile" ladder, in output order.
+    series_labels: tuple[str, ...] = ()
 
     @property
     def path(self) -> str:
         return f"{self.run}/{self.file}"
+
+    @property
+    def document_path(self) -> str:
+        return self.document or self.path
 
 
 def figures() -> tuple[Figure, ...]:
@@ -186,6 +209,87 @@ def figures() -> tuple[Figure, ...]:
             leaves=tuple(f"/{escape(rep)}/slow_share/{delta}" for rep in E5_REPS),
             transform="percent", series_axis="replication",
         ))
+    for leaf in ("median", "p99"):
+        specs.append(Figure(
+            f"e5.efs_over_ebs.{leaf}", E5, "analysis-pooled-3.json",
+            "/predictions/9/per_replication",
+            f"EFS plain per-request summed stat time {leaf} / matched-EBS {leaf}, "
+            "delta=1 s. Leaves are numerator, denominator pairs per replication in "
+            "chronological order of the three eligible formal-v3 replications. "
+            "Formula: raw numerator / raw denominator in ns, before display "
+            "rounding; no ratio field exists in the pinned summary.", "ns",
+            leaves=tuple(f"/{escape(rep)}/{arm}_per_request_ns/{leaf}"
+                         for rep in E5_REPS for arm in ("efs", "ebs")),
+            transform="divide_pairs", series_axis="replication",
+        ))
+    for index, rep in enumerate(E5_REPS, start=1):
+        for arm in ("efs", "ebs"):
+            specs.append(Figure(
+                f"e5.{arm}.request.ladder@{index}", E5, "analysis-pooled-3.json",
+                f"/predictions/9/per_replication/{escape(rep)}",
+                f"Per-request summed stat time on "
+                f"{'EFS plain' if arm == 'efs' else 'the matched-EBS control'}, "
+                f"delta=1 s, eligible formal-v3 replication {index} in "
+                "chronological order. Percentile ladder, element order median, "
+                "mean (amortised), p99, max; every element ns/1000 at four "
+                "significant figures, exact ns in raw.", "ns",
+                leaves=tuple(f"/{arm}_per_request_ns/{leaf}"
+                             for leaf in ("median", "amortised", "p99", "max")),
+                transform="us_4sf", series_axis="percentile",
+                series_labels=("median", "mean (amortised)", "p99", "max"),
+            ))
+    for arm, label in (("efs", "EFS"), ("hydrated", "Hydrated code-tree")):
+        specs.append(Figure(
+            f"e4.{arm}.stat.ladder", E4, "summary.json", f"/pooled/{arm}/stat",
+            f"{label} stat percentile ladder, pooled across three deployments; "
+            "element order p50, p95, p99; every element ns/1000 at four "
+            "significant figures, exact ns in raw.", "ns",
+            leaves=("/p50_ns", "/p95_ns", "/p99_ns"),
+            transform="us_4sf", series_axis="percentile",
+            series_labels=("p50", "p95", "p99"),
+        ))
+    specs.append(Figure(
+        "e4.hydration.seconds", E4, "summary.json", "/per_replication",
+        "Task-start hydration seconds for the identical 27,412,480-byte code-tree "
+        "tar; the array is the three replications in order; values at four "
+        "significant figures, artifact precision in raw.", "s",
+        leaves=("/0/hydration_s", "/1/hydration_s", "/2/hydration_s"),
+        transform="sig4", series_axis="replication", dimension="bytes",
+    ))
+    specs.append(Figure(
+        "e4.hydration.bytes", E4, "summary.json", "/per_replication",
+        "Uncompressed bytes hydrated at task start; the artifact records the "
+        "same value in every replication and the export fails unless all three "
+        "leaves agree.", "bytes",
+        leaves=("/0/hydration_bytes", "/1/hydration_bytes", "/2/hydration_bytes"),
+        transform="uniform", dimension="bytes",
+    ))
+    for tier in CACHE_WINDOW_TIERS:
+        for metric, unit, transform, description in (
+            ("create_pass_s", "s", "sig4",
+             "duration of the 1,000-file create pass"),
+            ("fast_stat_share", "ratio", "percent",
+             "share of the 1,000 stat calls in the fast NFS attribute-cache "
+             "cluster"),
+            ("boundary_age_s", "s", "sig4",
+             "age of the oldest fast file when the create pass ended"),
+        ):
+            specs.append(Figure(
+                f"e2.cache_window.{tier}.{metric}", E2_FSX,
+                f"e2-cache-window-{E2_FSX.rsplit('/', 1)[-1]}.json",
+                f"/tiers/{tier}/replications",
+                f"{description}, per replication; derived by "
+                "analysis/e2_cache_window.py from the pinned FSx run's raw CSVs "
+                "(E3 gated k-means fast cluster on per-file stat order); the "
+                "array is the three replications.", unit,
+                leaves=tuple(f"/{rep}/{metric}" for rep in E2_FSX_REPS),
+                transform=transform, series_axis="replication",
+                document=CACHE_WINDOW_DOC, derived=True, nullable=True,
+                undefined_reason=(
+                    "stat is unimodal under the E3 gates; the study defines no "
+                    "fast cluster for a single population"
+                    if metric != "create_pass_s" else None),
+            ))
     return tuple(sorted(specs, key=lambda spec: spec.name))
 
 
@@ -234,10 +338,43 @@ def present(value: float) -> float:
     return round(value, 1)
 
 
+def sig4(value: float) -> float:
+    """Four significant figures: the single rounding rule for values the dataset
+    presents in a converted unit (ns -> us) or trimmed from artifact precision."""
+    if value == 0:
+        return 0.0
+    return float(f"{value:.4g}")
+
+
 def number(value):
     if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
         raise ExportError(f"expected a finite, nonnegative number, got {value!r}")
     return value
+
+
+def verify_derived_document(root: Path, document, spec: Figure) -> None:
+    """A selector sourced from a derived document verifies the document's own
+    provenance before reading a value: the run it claims, and the recorded sha256
+    of every raw input it was derived from. Any mismatch fails closed."""
+    claimed_run = document.get("run")
+    if claimed_run != spec.run:
+        raise ExportError(
+            f"{spec.document}: run {claimed_run!r} does not match {spec.run}")
+    inputs = document.get("inputs")
+    if not isinstance(inputs, dict) or not inputs or not all(
+            isinstance(path, str) and isinstance(digest, str)
+            and re.fullmatch(r"[0-9a-f]{64}", digest)
+            for path, digest in inputs.items()):
+        raise ExportError(f"{spec.document}: missing or invalid inputs manifest")
+    for path, expected in sorted(inputs.items()):
+        try:
+            actual = hashlib.sha256((root / path).read_bytes()).hexdigest()
+        except OSError as exc:
+            raise ExportError(f"{spec.document}: input {path}: {exc}") from exc
+        if actual != expected:
+            raise ExportError(
+                f"{spec.document}: input {path} sha256 changed; the derived "
+                "file is stale or the raw artifact was tampered with")
 
 
 def export_selector(spec: Figure, document, run_role: str | None = None) -> dict:
@@ -247,7 +384,11 @@ def export_selector(spec: Figure, document, run_role: str | None = None) -> dict
     for leaf in spec.leaves:
         pointer = spec.pointer + leaf
         try:
-            values.append(number(resolve_pointer(document, pointer)))
+            leaf_value = resolve_pointer(document, pointer)
+            if leaf_value is None and spec.nullable:
+                values.append(None)
+            else:
+                values.append(number(leaf_value))
         except ExportError as exc:
             errors.append(f"{pointer}: {exc}")
     if errors:
@@ -269,11 +410,35 @@ def export_selector(spec: Figure, document, run_role: str | None = None) -> dict
             raise ExportError("ratio denominator is zero")
         values = [present(number(values[0] / values[1]))]
         unit = "ratio"
+    elif spec.transform == "divide_pairs":
+        if len(values) % 2:
+            raise ExportError("divide_pairs requires numerator/denominator leaf pairs")
+        paired = []
+        for offset in range(0, len(values), 2):
+            numerator, denominator = values[offset], values[offset + 1]
+            if denominator == 0:
+                raise ExportError("ratio denominator is zero")
+            paired.append(present(number(numerator / denominator)))
+        values = paired
+        unit = "ratio"
     elif spec.transform == "percent":
-        if any(value > 1 for value in values):
+        if any(value is not None and value > 1 for value in values):
             raise ExportError("share is outside [0, 1]")
-        values = [present(float(Decimal(str(value)) * 100)) for value in values]
+        values = [None if value is None
+                  else present(float(Decimal(str(value)) * 100))
+                  for value in values]
         unit = "percent"
+    elif spec.transform == "us_4sf":
+        # Ladder elements share one unit, so every ns leaf converts individually:
+        # ns/1000 at four significant figures; the exact ns stays in raw.
+        values = [None if value is None else sig4(value / 1000) for value in values]
+        unit = "us"
+    elif spec.transform == "sig4":
+        values = [None if value is None else sig4(value) for value in values]
+    elif spec.transform == "uniform":
+        if len(set(values)) != 1:
+            raise ExportError("leaves expected to be identical differ")
+        values = values[:1]
     elif spec.transform == "identity_exact":
         pass
     elif spec.transform == "identity" and unit == "ratio":
@@ -292,21 +457,30 @@ def export_selector(spec: Figure, document, run_role: str | None = None) -> dict
         raise ExportError(f"{spec.name}: multi-element selector requires series_axis")
     definition = spec.definition
     if spec.leaves != ("",):
-        order = "numerator, denominator" if spec.transform == "divide" else "output order"
+        order = ("numerator, denominator"
+                 if spec.transform in ("divide", "divide_pairs") else "output order")
         definition += f" Source JSON pointers ({order}): " + "; ".join(
             spec.pointer + leaf for leaf in spec.leaves
         ) + "."
     result = {
         "value": value, "unit": unit, "dimension": spec.dimension,
         "definition": definition, "run": spec.run,
-        "raw": {"path": spec.path, "pointer": spec.pointer,
+        "raw": {"path": spec.document_path, "pointer": spec.pointer,
                 "value": raw_leaves, "unit": spec.raw_unit},
     }
     if run_role is not None:
         result["run_role"] = run_role
     if isinstance(value, (list, dict)):
         result["series_axis"] = spec.series_axis
-    if spec.transform == "divide":
+    if spec.series_labels:
+        if not spec.series_axis:
+            raise ExportError(f"{spec.name}: series_labels without series_axis")
+        result["series_labels"] = list(spec.series_labels)
+    if any(element is None for element in values):
+        result["defined"] = False
+        if spec.undefined_reason:
+            result["undefined_reason"] = spec.undefined_reason
+    if spec.transform in ("divide", "divide_pairs") or spec.derived:
         result["derived"] = True
     return result
 
@@ -335,6 +509,7 @@ def build_dataset(root: Path = ROOT) -> dict:
     selectors = {}
     errors = []
     documents = {}
+    verified_documents = set()
     try:
         run_roles = load_run_roles(root)
     except ExportError as exc:
@@ -360,11 +535,16 @@ def build_dataset(root: Path = ROOT) -> dict:
                     f"run {spec.run} has ineligible role {record['role']}; "
                     f"eligible roles are {', '.join(sorted(ELIGIBLE_ROLES))}"
                 )
-            if spec.path not in documents:
-                documents[spec.path] = load_json(root, spec.path)
-            selectors[spec.name] = export_selector(spec, documents[spec.path], record["role"])
+            doc_path = spec.document_path
+            if doc_path not in documents:
+                documents[doc_path] = load_json(root, doc_path)
+            if spec.document and doc_path not in verified_documents:
+                verify_derived_document(root, documents[doc_path], spec)
+                verified_documents.add(doc_path)
+            selectors[spec.name] = export_selector(
+                spec, documents[doc_path], record["role"])
         except ExportError as exc:
-            errors.append(f"{spec.name}: {spec.path} {spec.pointer}: {exc}")
+            errors.append(f"{spec.name}: {spec.document_path} {spec.pointer}: {exc}")
     try:
         timestamp = produced_at(root)
     except ExportError as exc:
