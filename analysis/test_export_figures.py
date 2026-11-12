@@ -435,3 +435,26 @@ class SelectorNameGrammar(unittest.TestCase):
             with self.assertRaises(exporter.ExportError) as ctx:
                 exporter.build_dataset()
         self.assertIn("e5.bad@0.1", str(ctx.exception))
+
+
+class ProducingCommit(unittest.TestCase):
+    """produced_by.commit names the last commit touching the dataset's inputs, not HEAD."""
+
+    def test_a_docs_only_commit_does_not_change_the_dataset_bytes(self):
+        import subprocess
+        with tempfile.TemporaryDirectory() as tmp:
+            clone = Path(tmp) / "clone"
+            git = lambda *a: subprocess.run(["git", "-C", str(clone), *a], check=True,
+                                            capture_output=True, text=True).stdout.strip()
+            subprocess.run(["git", "clone", "-q", "--local", str(exporter.ROOT), str(clone)], check=True)
+            git("config", "user.email", "test@example.invalid"); git("config", "user.name", "test")
+            before = exporter.encode(exporter.build_dataset(clone))
+            (clone / "docs" / "scratch-note.md").write_text("a docs-only change\n")
+            git("add", "docs/scratch-note.md"); git("commit", "-q", "-m", "docs only")
+            after_docs = exporter.encode(exporter.build_dataset(clone))
+            self.assertEqual(before, after_docs)
+            # and a change to a dataset input DOES change it
+            (clone / "analysis" / "scratch-input.txt").write_text("an analysis change\n")
+            git("add", "analysis/scratch-input.txt"); git("commit", "-q", "-m", "analysis change")
+            after_analysis = exporter.encode(exporter.build_dataset(clone))
+            self.assertNotEqual(before, after_analysis)

@@ -583,15 +583,21 @@ def build_dataset(root: Path = ROOT) -> dict:
                     raise ExportError(f"{name}: raw leaf {leaf} does not resolve to {recorded!r}")
         elif resolve_pointer(document, raw["pointer"]) != raw["value"]:
             raise ExportError(f"{name}: raw provenance does not resolve to raw.value")
+    # The commit that last changed anything the dataset is computed from: the analysis code
+    # and its derived artifacts, the frozen results, and the run classification. Not HEAD: a
+    # docs-only commit or a merge commit must not change the dataset's bytes, or the site's
+    # `figures verify --against` would report drift that is not drift. History simplification
+    # skips a merge that adds nothing of its own, so a merged branch reports its real commit.
     try:
-        commit = subprocess.check_output(
-            ["git", "-C", str(root), "rev-parse", "--short", "HEAD"], text=True,
-            stderr=subprocess.PIPE,
+        full = subprocess.check_output(
+            ["git", "-C", str(root), "log", "-1", "--format=%H", "--",
+             "analysis", "results", STUDY_RUNS_PATH], text=True, stderr=subprocess.PIPE,
         ).strip()
     except (OSError, subprocess.CalledProcessError) as exc:
-        raise ExportError(f"cannot determine repository HEAD: {exc}") from exc
-    if not re.fullmatch(r"[0-9a-f]{4,40}", commit):
-        raise ExportError(f"invalid repository HEAD: {commit!r}")
+        raise ExportError(f"cannot determine the producing commit: {exc}") from exc
+    commit = full[:7]
+    if not re.fullmatch(r"[0-9a-f]{7}", commit):
+        raise ExportError(f"no commit found for the dataset's inputs: {full!r}")
     run_selection = {run: run_roles[run] for run in sorted(selected_runs)}
     return {
         "id": DATASET_ID, "schema": "dataset/0",
