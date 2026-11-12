@@ -10,8 +10,8 @@ JSON Pointer cannot select disjoint leaves. For arrays, maps and derived ratios,
 raw points to their common ancestor and raw.value preserves that entire subtree.
 The definition enumerates the exact leaf pointers in output order; raw.unit
 describes those selected leaves (the subtree can also contain other metadata).
-E5 arrays follow the three explicitly pinned replications, not JSON object order.
-The RPC series uses EFS plain from the named run, consistently with P9.
+E5 arrays follow the three explicitly pinned eligible replications, not JSON object
+order. Each array or keyed map declares series_axis as replication or cadence.
 
 produced_at uses SOURCE_DATE_EPOCH, or E4's last replication's recorded /utc.
 All selectors are validated before either output file is touched. Existing
@@ -37,16 +37,20 @@ from e2_chart import fmt
 
 
 ROOT = Path(__file__).resolve().parents[1]
-E0 = "results/E0/20260827T185901Z-bff2d22"
-E0_SINGLE = "results/E0/20260826T105956Z-c16d429"
+E0 = "results/E0/20260902T105746Z-f62a686"
+E0_SINGLE = E0
 E2 = "results/E2/20260910T163206Z-66dcff8"
 E4 = "results/E4/20261029T091909Z-842d596"
-E5 = "results/E5-formal/20261028T160106Z-dd5fce0"
-E5_REPS = (
-    "20261028T103017Z-342d6b4/rep-1",
-    "20261028T125412Z-f6659e0/rep-1",
-    "20261028T160106Z-dd5fce0/rep-1",
+E5_RUNS = (
+    "results/E5-formal/20261028T103017Z-342d6b4",
+    "results/E5-formal/20261028T125412Z-f6659e0",
+    "results/E5-formal/20261028T160106Z-dd5fce0",
 )
+E5 = E5_RUNS[-1]
+E5_REPS = tuple(f"{run.rsplit('/', 1)[-1]}/rep-1" for run in E5_RUNS)
+STUDY_RUNS_PATH = "docs/study-runs.json"
+ELIGIBLE_ROLES = frozenset(("reference", "formal-v3"))
+SERIES_AXES = frozenset(("replication", "cadence"))
 TIMESTAMP_PATH = f"{E4}/rep-3/meta.json"
 DATASET_ID = "aws-fs.summary"
 DATASET_FILE = f"{DATASET_ID}.json"
@@ -98,6 +102,7 @@ class Figure:
     transform: str = "identity"
     dimension: str = "metadata"
     keys: tuple[str, ...] = ()
+    series_axis: str = ""
 
     @property
     def path(self) -> str:
@@ -114,9 +119,9 @@ def figures() -> tuple[Figure, ...]:
                "/max~1home~1warm/stat_median",
                "Stat-family calls per warm home request, max profile "
                "(validate_timestamps=0); median of ten replications.", "count"),
-        Figure("e0.warm.enoent", E0_SINGLE, "max/home.warm.census.json",
+        Figure("e0.warm.enoent", E0_SINGLE, "rep-1/max/home.warm.census.json",
                "/errno/ENOENT", "Filesystem calls returning ENOENT on a warm home "
-               "request, max profile, single run.", "count"),
+               "request, max profile, reference run rep-1.", "count"),
         Figure("e2.block.stat.p50", E2, "summary.json",
                "/tiers/ec2~1instance_store/stat/p50_ns",
                "EC2 instance-store stat p50, pooled across three replications; "
@@ -153,34 +158,34 @@ def figures() -> tuple[Figure, ...]:
     ):
         specs.append(Figure(
             name, E5, "analysis-pooled-3.json", "/predictions/9/per_replication",
-            f"{description}, delta=1 s; three replications in chronological order.",
+            f"{description}, delta=1 s; the array is the three eligible formal-v3 "
+            "replications in chronological order.",
             unit, leaves=tuple(f"/{escape(rep)}/{field}" for rep in E5_REPS),
-            transform=transform,
+            transform=transform, series_axis="replication",
         ))
-    rep = escape(E5_REPS[-1])
-    deltas = ("0.1", "1", "10")
-    specs.extend((
-        *tuple(
-            Figure(f"e5.rpc_per_stat.{variant}", E5, "analysis-pooled-3.json",
-                   f"/predictions/5/per_replication/{rep}/rpc_ops_per_stat",
-                   ("Reported NFS RPC operations per positive stat on the EFS mount "
-                    "without TLS (plain) at delta=0.1, 1, 10 s in the named run's rep-1; "
-                    "one mount variant and replication throughout." if variant == "plain" else
-                    "Reported NFS RPC operations per positive stat on the EFS mount with "
-                    "TLS at delta=0.1, 1, 10 s in the named run's rep-1; one mount variant "
-                    "and replication throughout."),
-                   "ratio",
-                   leaves=tuple(f"/efs_host_{variant}@{delta}" for delta in deltas),
-                   keys=deltas)
-            for variant in ("plain", "tls")
-        ),
-        Figure("e5.lustre.slow_share", E5, "analysis-pooled-3.json",
-               f"/predictions/7/per_replication/{rep}/slow_share",
-               "Lustre repeat-stat slow-cluster share at delta=0.1, 1, 10 s "
-               "in the named run's rep-1; percent = recorded fraction * 100, "
-               "without further rounding.", "ratio",
-               leaves=tuple(f"/{delta}" for delta in deltas), transform="percent"),
-    ))
+    for variant in ("plain", "tls"):
+        mount = "without TLS (plain)" if variant == "plain" else "with TLS"
+        for delta in ("0.1", "1", "10"):
+            specs.append(Figure(
+                f"e5.rpc_per_stat.{variant}@{delta}", E5, "analysis-pooled-3.json",
+                "/predictions/5/per_replication",
+                f"Reported NFS RPC operations per positive stat on the EFS mount {mount} "
+                f"at delta={delta} s; the array is the three eligible formal-v3 "
+                "replications in chronological order.", "ratio",
+                leaves=tuple(f"/{escape(rep)}/rpc_ops_per_stat/efs_host_{variant}@{delta}"
+                             for rep in E5_REPS),
+                transform="identity_exact", series_axis="replication",
+            ))
+    for delta in ("0.1", "1", "10"):
+        specs.append(Figure(
+            f"e5.lustre.slow_share@{delta}", E5, "analysis-pooled-3.json",
+            "/predictions/7/per_replication",
+            f"Lustre repeat-stat slow-cluster share at delta={delta} s; the array is "
+            "the three eligible formal-v3 replications in chronological order; "
+            "percent = recorded fraction * 100, without further rounding.", "ratio",
+            leaves=tuple(f"/{escape(rep)}/slow_share/{delta}" for rep in E5_REPS),
+            transform="percent", series_axis="replication",
+        ))
     return tuple(sorted(specs, key=lambda spec: spec.name))
 
 
@@ -189,6 +194,27 @@ def load_json(root: Path, path: str):
         return json.loads((root / path).read_text(encoding="utf-8"))
     except (OSError, ValueError) as exc:
         raise ExportError(f"{path}: {exc}") from exc
+
+
+def load_run_roles(root: Path) -> dict:
+    document = load_json(root, STUDY_RUNS_PATH)
+    try:
+        runs = document["runs"]
+        if not isinstance(runs, list):
+            raise TypeError("runs is not a list")
+        roles = {}
+        for entry in runs:
+            path = entry["path"]
+            role = entry["role"]
+            note = entry["note"]
+            if not all(isinstance(value, str) and value for value in (path, role, note)):
+                raise TypeError("run path, role and note must be nonempty strings")
+            if path in roles:
+                raise ExportError(f"{STUDY_RUNS_PATH}: duplicate run path {path}")
+            roles[path] = {"role": role, "note": note}
+    except (KeyError, TypeError) as exc:
+        raise ExportError(f"{STUDY_RUNS_PATH}: invalid run classification: {exc}") from exc
+    return roles
 
 
 def present(value: float) -> float:
@@ -214,7 +240,7 @@ def number(value):
     return value
 
 
-def export_selector(spec: Figure, document) -> dict:
+def export_selector(spec: Figure, document, run_role: str | None = None) -> dict:
     raw_value = resolve_pointer(document, spec.pointer)
     values = []
     errors = []
@@ -248,6 +274,8 @@ def export_selector(spec: Figure, document) -> dict:
             raise ExportError("share is outside [0, 1]")
         values = [present(float(Decimal(str(value)) * 100)) for value in values]
         unit = "percent"
+    elif spec.transform == "identity_exact":
+        pass
     elif spec.transform == "identity" and unit == "ratio":
         values = [present(value) for value in values]
     elif spec.transform != "identity":
@@ -258,6 +286,10 @@ def export_selector(spec: Figure, document) -> dict:
         if len(spec.keys) != len(values):
             raise ExportError("map keys and source leaves differ in length")
         value = dict(zip(spec.keys, values))
+    if spec.series_axis and spec.series_axis not in SERIES_AXES:
+        raise ExportError(f"{spec.name}: invalid series_axis {spec.series_axis!r}")
+    if isinstance(value, (list, dict)) and not spec.series_axis:
+        raise ExportError(f"{spec.name}: multi-element selector requires series_axis")
     definition = spec.definition
     if spec.leaves != ("",):
         order = "numerator, denominator" if spec.transform == "divide" else "output order"
@@ -270,6 +302,10 @@ def export_selector(spec: Figure, document) -> dict:
         "raw": {"path": spec.path, "pointer": spec.pointer,
                 "value": raw_leaves, "unit": spec.raw_unit},
     }
+    if run_role is not None:
+        result["run_role"] = run_role
+    if isinstance(value, (list, dict)):
+        result["series_axis"] = spec.series_axis
     if spec.transform == "divide":
         result["derived"] = True
     return result
@@ -299,11 +335,34 @@ def build_dataset(root: Path = ROOT) -> dict:
     selectors = {}
     errors = []
     documents = {}
-    for spec in figures():
+    try:
+        run_roles = load_run_roles(root)
+    except ExportError as exc:
+        run_roles = {}
+        errors.append(f"run selection: {exc}")
+    specs = figures()
+    selected_runs = {spec.run for spec in specs}
+    if E5 in selected_runs:
+        selected_runs.update(E5_RUNS)
+    for run in sorted(selected_runs - {spec.run for spec in specs}):
+        record = run_roles.get(run)
+        if record is None:
+            errors.append(f"run selection: run {run} is not listed in {STUDY_RUNS_PATH}")
+        elif record["role"] not in ELIGIBLE_ROLES:
+            errors.append(f"run selection: run {run} has ineligible role {record['role']}")
+    for spec in specs:
         try:
+            record = run_roles.get(spec.run)
+            if record is None:
+                raise ExportError(f"run {spec.run} is not listed in {STUDY_RUNS_PATH}")
+            if record["role"] not in ELIGIBLE_ROLES:
+                raise ExportError(
+                    f"run {spec.run} has ineligible role {record['role']}; "
+                    f"eligible roles are {', '.join(sorted(ELIGIBLE_ROLES))}"
+                )
             if spec.path not in documents:
                 documents[spec.path] = load_json(root, spec.path)
-            selectors[spec.name] = export_selector(spec, documents[spec.path])
+            selectors[spec.name] = export_selector(spec, documents[spec.path], record["role"])
         except ExportError as exc:
             errors.append(f"{spec.name}: {spec.path} {spec.pointer}: {exc}")
     try:
@@ -333,11 +392,12 @@ def build_dataset(root: Path = ROOT) -> dict:
         raise ExportError(f"cannot determine repository HEAD: {exc}") from exc
     if not re.fullmatch(r"[0-9a-f]{4,40}", commit):
         raise ExportError(f"invalid repository HEAD: {commit!r}")
+    run_selection = {run: run_roles[run] for run in sorted(selected_runs)}
     return {
         "id": DATASET_ID, "schema": "dataset/0",
         "produced_by": {"repo": "mikeng-io/aws-wordpress", "commit": commit,
                         "command": "python3 analysis/export_figures.py"},
-        "produced_at": timestamp, "selectors": selectors,
+        "produced_at": timestamp, "run_selection": run_selection, "selectors": selectors,
     }
 
 
