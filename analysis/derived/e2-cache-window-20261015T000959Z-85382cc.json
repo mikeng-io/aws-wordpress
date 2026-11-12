@@ -19,61 +19,122 @@
     "repo": "mikeng-io/aws-wordpress"
   },
   "rule": {
-    "boundary_age_s": "sum of the create latencies strictly after the oldest fast file's index, in seconds - that file's age when the create pass ended",
+    "answered_local_share": "fraction of stat rows answered in client memory, 0..1",
+    "boundary_age_s": "sum of the create latencies strictly after oldest_local_index, in seconds - that file's age when the create pass ended; null when no stat row was answered locally",
+    "cache_hit_ns": 20000,
+    "classification": "answered in client memory: stat latency < cache_hit_ns",
     "create_pass_s": "sum of the create latencies, in seconds; create rows are in file order so the sum is the create pass",
-    "fast_cluster": "lower-centroid cluster of e3_clusters.kmeans2_log (deterministic 1-D k-means on log10 latency, initialised at the 10th and 90th percentiles)",
-    "fast_stat_share": "fraction of stat rows in the fast cluster, 0..1",
-    "gates": {
-      "min_cluster_share": 0.02,
-      "min_log10_separation": 0.5
+    "oldest_local_index": "file-order index of the oldest stat row answered in client memory; null when none was",
+    "post_hoc": true,
+    "post_hoc_reason": "declared after inspecting the run's stat samples, not pre-registered; not a tuned value - only 4 of the run's stat samples lie between 10 and 60 us, so every absolute threshold in 15-30 us produces identical shares, and 20 us is the round midpoint of that empty gap",
+    "registered_rule": {
+      "boundary_age_s": "sum of the create latencies strictly after the oldest fast file's index, in seconds - that file's age when the create pass ended",
+      "fast_cluster": "lower-centroid cluster of e3_clusters.kmeans2_log (deterministic 1-D k-means on log10 latency, initialised at the 10th and 90th percentiles)",
+      "fast_stat_share": "fraction of stat rows in the fast cluster, 0..1",
+      "gates": {
+        "min_cluster_share": 0.02,
+        "min_log10_separation": 0.5
+      },
+      "note": "the repo's registered clustering rule, kept as diagnostics; it disagrees with the exported rule on ONTAP and Lustre - it leaves both undefined where the absolute rule reports ONTAP 1.0 and Lustre 0.0",
+      "slow_in_tail": "stat rows at or after oldest_fast_index that are NOT in the fast cluster; violations of the contiguous-tail structure, recorded not corrected",
+      "unimodal": "when the gates fail the population is one cluster and no fast share is defined; its fast_stat_share, oldest_fast_index, boundary_age_s and slow_in_tail are null"
     },
-    "slow_in_tail": "stat rows at or after oldest_fast_index that are NOT in the fast cluster; violations of the contiguous-tail structure, recorded not corrected",
-    "unimodal": "when the gates fail the population is one cluster and no fast share is defined; fast_stat_share, oldest_fast_index, boundary_age_s and slow_in_tail are null"
+    "sensitivity": "per rep, share_at_threshold_us is answered_local_share recomputed at each absolute threshold in us, and samples_between_10_and_60us counts that rep's stat rows in the 10-60 us band",
+    "slow_in_tail": "stat rows at or after oldest_local_index that were NOT answered in client memory; violations of the contiguous-tail structure, recorded not corrected; null when no local row exists"
   },
   "run": "results/E2/20261015T000959Z-85382cc",
+  "samples_between_10_and_60us": 4,
   "schema": "derived/0",
   "tiers": {
     "efs": {
       "arm_tier": "ec2/efs_host_plain",
       "replications": {
         "rep-1": {
-          "bimodal": true,
+          "answered_local_share": 0.335,
           "boundary_age_s": 2.382691644,
-          "centroid_separation_log10": 2.671137273924079,
           "create_pass_s": 7.173373038,
-          "fast_stat_share": 0.335,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": 665,
+          "oldest_local_index": 665,
+          "registered_rule": {
+            "bimodal": true,
+            "boundary_age_s": 2.382691644,
+            "centroid_separation_log10": 2.671137273924079,
+            "fast_stat_share": 0.335,
+            "oldest_fast_index": 665,
+            "slow_in_tail": 0,
+            "undefined_reason": null,
+            "ungated_lower_cluster_share": 0.335
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.335,
+              "20": 0.335,
+              "25": 0.335,
+              "30": 0.335
+            }
+          },
           "slow_in_tail": 0,
-          "undefined_reason": null,
-          "ungated_lower_cluster_share": 0.335
+          "undefined_reason": null
         },
         "rep-2": {
-          "bimodal": true,
+          "answered_local_share": 0.378,
           "boundary_age_s": 2.483769297,
-          "centroid_separation_log10": 2.6140726197832813,
           "create_pass_s": 6.502353136,
-          "fast_stat_share": 0.378,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": 622,
+          "oldest_local_index": 622,
+          "registered_rule": {
+            "bimodal": true,
+            "boundary_age_s": 2.483769297,
+            "centroid_separation_log10": 2.6140726197832813,
+            "fast_stat_share": 0.378,
+            "oldest_fast_index": 622,
+            "slow_in_tail": 0,
+            "undefined_reason": null,
+            "ungated_lower_cluster_share": 0.378
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.378,
+              "20": 0.378,
+              "25": 0.378,
+              "30": 0.378
+            }
+          },
           "slow_in_tail": 0,
-          "undefined_reason": null,
-          "ungated_lower_cluster_share": 0.378
+          "undefined_reason": null
         },
         "rep-3": {
-          "bimodal": true,
+          "answered_local_share": 0.309,
           "boundary_age_s": 2.29914479,
-          "centroid_separation_log10": 2.7117888756404263,
           "create_pass_s": 7.122481579,
-          "fast_stat_share": 0.309,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": 691,
+          "oldest_local_index": 691,
+          "registered_rule": {
+            "bimodal": true,
+            "boundary_age_s": 2.29914479,
+            "centroid_separation_log10": 2.7117888756404263,
+            "fast_stat_share": 0.309,
+            "oldest_fast_index": 691,
+            "slow_in_tail": 0,
+            "undefined_reason": null,
+            "ungated_lower_cluster_share": 0.309
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.309,
+              "20": 0.309,
+              "25": 0.309,
+              "30": 0.309
+            }
+          },
           "slow_in_tail": 0,
-          "undefined_reason": null,
-          "ungated_lower_cluster_share": 0.309
+          "undefined_reason": null
         }
       }
     },
@@ -81,43 +142,91 @@
       "arm_tier": "ec2/fsx_lustre",
       "replications": {
         "rep-1": {
-          "bimodal": false,
+          "answered_local_share": 0.0,
           "boundary_age_s": null,
-          "centroid_separation_log10": 0.1355447327789383,
           "create_pass_s": 0.644504489,
-          "fast_stat_share": null,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": null,
+          "oldest_local_index": null,
+          "registered_rule": {
+            "bimodal": false,
+            "boundary_age_s": null,
+            "centroid_separation_log10": 0.1355447327789383,
+            "fast_stat_share": null,
+            "oldest_fast_index": null,
+            "slow_in_tail": null,
+            "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.4x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+            "ungated_lower_cluster_share": 0.957
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.0,
+              "20": 0.0,
+              "25": 0.0,
+              "30": 0.0
+            }
+          },
           "slow_in_tail": null,
-          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.4x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
-          "ungated_lower_cluster_share": 0.957
+          "undefined_reason": "no stat row under 20000 ns; nothing was answered in client memory, so there is no local tail and no boundary"
         },
         "rep-2": {
-          "bimodal": false,
+          "answered_local_share": 0.0,
           "boundary_age_s": null,
-          "centroid_separation_log10": 0.10412292761415731,
           "create_pass_s": 0.708268757,
-          "fast_stat_share": null,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": null,
+          "oldest_local_index": null,
+          "registered_rule": {
+            "bimodal": false,
+            "boundary_age_s": null,
+            "centroid_separation_log10": 0.10412292761415731,
+            "fast_stat_share": null,
+            "oldest_fast_index": null,
+            "slow_in_tail": null,
+            "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.3x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+            "ungated_lower_cluster_share": 0.932
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.0,
+              "20": 0.0,
+              "25": 0.0,
+              "30": 0.0
+            }
+          },
           "slow_in_tail": null,
-          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.3x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
-          "ungated_lower_cluster_share": 0.932
+          "undefined_reason": "no stat row under 20000 ns; nothing was answered in client memory, so there is no local tail and no boundary"
         },
         "rep-3": {
-          "bimodal": false,
+          "answered_local_share": 0.0,
           "boundary_age_s": null,
-          "centroid_separation_log10": 0.1255693676636147,
           "create_pass_s": 0.754391936,
-          "fast_stat_share": null,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": null,
+          "oldest_local_index": null,
+          "registered_rule": {
+            "bimodal": false,
+            "boundary_age_s": null,
+            "centroid_separation_log10": 0.1255693676636147,
+            "fast_stat_share": null,
+            "oldest_fast_index": null,
+            "slow_in_tail": null,
+            "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.3x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+            "ungated_lower_cluster_share": 0.867
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.0,
+              "20": 0.0,
+              "25": 0.0,
+              "30": 0.0
+            }
+          },
           "slow_in_tail": null,
-          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.3x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
-          "ungated_lower_cluster_share": 0.867
+          "undefined_reason": "no stat row under 20000 ns; nothing was answered in client memory, so there is no local tail and no boundary"
         }
       }
     },
@@ -125,43 +234,91 @@
       "arm_tier": "ec2/fsx_ontap",
       "replications": {
         "rep-1": {
-          "bimodal": false,
-          "boundary_age_s": null,
-          "centroid_separation_log10": 0.08893025116920139,
+          "answered_local_share": 1.0,
+          "boundary_age_s": 0.992580136,
           "create_pass_s": 0.993817219,
-          "fast_stat_share": null,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": null,
-          "slow_in_tail": null,
-          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.2x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
-          "ungated_lower_cluster_share": 0.77
+          "oldest_local_index": 0,
+          "registered_rule": {
+            "bimodal": false,
+            "boundary_age_s": null,
+            "centroid_separation_log10": 0.08893025116920139,
+            "fast_stat_share": null,
+            "oldest_fast_index": null,
+            "slow_in_tail": null,
+            "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.2x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+            "ungated_lower_cluster_share": 0.77
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 1.0,
+              "20": 1.0,
+              "25": 1.0,
+              "30": 1.0
+            }
+          },
+          "slow_in_tail": 0,
+          "undefined_reason": null
         },
         "rep-2": {
-          "bimodal": false,
-          "boundary_age_s": null,
-          "centroid_separation_log10": 0.2530459558675413,
+          "answered_local_share": 1.0,
+          "boundary_age_s": 0.965373642,
           "create_pass_s": 0.968152305,
-          "fast_stat_share": null,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": null,
-          "slow_in_tail": null,
-          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.8x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
-          "ungated_lower_cluster_share": 0.967
+          "oldest_local_index": 0,
+          "registered_rule": {
+            "bimodal": false,
+            "boundary_age_s": null,
+            "centroid_separation_log10": 0.2530459558675413,
+            "fast_stat_share": null,
+            "oldest_fast_index": null,
+            "slow_in_tail": null,
+            "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.8x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+            "ungated_lower_cluster_share": 0.967
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 2,
+            "share_at_threshold_us": {
+              "15": 1.0,
+              "20": 1.0,
+              "25": 1.0,
+              "30": 1.0
+            }
+          },
+          "slow_in_tail": 0,
+          "undefined_reason": null
         },
         "rep-3": {
-          "bimodal": false,
-          "boundary_age_s": null,
-          "centroid_separation_log10": 0.09165467400772842,
+          "answered_local_share": 1.0,
+          "boundary_age_s": 0.986287585,
           "create_pass_s": 0.987541256,
-          "fast_stat_share": null,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": null,
-          "slow_in_tail": null,
-          "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.2x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
-          "ungated_lower_cluster_share": 0.762
+          "oldest_local_index": 0,
+          "registered_rule": {
+            "bimodal": false,
+            "boundary_age_s": null,
+            "centroid_separation_log10": 0.09165467400772842,
+            "fast_stat_share": null,
+            "oldest_fast_index": null,
+            "slow_in_tail": null,
+            "undefined_reason": "stat is unimodal under the E3 gates (centroid separation 1.2x < 3.2x, or a cluster below 2%); the study defines no fast cluster for a single population",
+            "ungated_lower_cluster_share": 0.762
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 1,
+            "share_at_threshold_us": {
+              "15": 1.0,
+              "20": 1.0,
+              "25": 1.0,
+              "30": 1.0
+            }
+          },
+          "slow_in_tail": 0,
+          "undefined_reason": null
         }
       }
     },
@@ -169,43 +326,91 @@
       "arm_tier": "ec2/fsx_openzfs",
       "replications": {
         "rep-1": {
-          "bimodal": true,
+          "answered_local_share": 0.696,
           "boundary_age_s": 2.906314354,
-          "centroid_separation_log10": 1.7262726096277143,
           "create_pass_s": 3.384581744,
-          "fast_stat_share": 0.696,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": 303,
+          "oldest_local_index": 303,
+          "registered_rule": {
+            "bimodal": true,
+            "boundary_age_s": 2.906314354,
+            "centroid_separation_log10": 1.7262726096277143,
+            "fast_stat_share": 0.696,
+            "oldest_fast_index": 303,
+            "slow_in_tail": 1,
+            "undefined_reason": null,
+            "ungated_lower_cluster_share": 0.696
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 1,
+            "share_at_threshold_us": {
+              "15": 0.696,
+              "20": 0.696,
+              "25": 0.696,
+              "30": 0.696
+            }
+          },
           "slow_in_tail": 1,
-          "undefined_reason": null,
-          "ungated_lower_cluster_share": 0.696
+          "undefined_reason": null
         },
         "rep-2": {
-          "bimodal": true,
+          "answered_local_share": 0.689,
           "boundary_age_s": 2.921866894,
-          "centroid_separation_log10": 1.740278123184266,
           "create_pass_s": 3.407812081,
-          "fast_stat_share": 0.689,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": 311,
+          "oldest_local_index": 311,
+          "registered_rule": {
+            "bimodal": true,
+            "boundary_age_s": 2.921866894,
+            "centroid_separation_log10": 1.740278123184266,
+            "fast_stat_share": 0.689,
+            "oldest_fast_index": 311,
+            "slow_in_tail": 0,
+            "undefined_reason": null,
+            "ungated_lower_cluster_share": 0.689
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.689,
+              "20": 0.689,
+              "25": 0.689,
+              "30": 0.689
+            }
+          },
           "slow_in_tail": 0,
-          "undefined_reason": null,
-          "ungated_lower_cluster_share": 0.689
+          "undefined_reason": null
         },
         "rep-3": {
-          "bimodal": true,
+          "answered_local_share": 0.679,
           "boundary_age_s": 2.921042424,
-          "centroid_separation_log10": 1.7074484153121778,
           "create_pass_s": 3.415981417,
-          "fast_stat_share": 0.679,
           "n_create": 1000,
           "n_stat": 1000,
-          "oldest_fast_index": 321,
+          "oldest_local_index": 321,
+          "registered_rule": {
+            "bimodal": true,
+            "boundary_age_s": 2.921042424,
+            "centroid_separation_log10": 1.7074484153121778,
+            "fast_stat_share": 0.679,
+            "oldest_fast_index": 321,
+            "slow_in_tail": 0,
+            "undefined_reason": null,
+            "ungated_lower_cluster_share": 0.679
+          },
+          "sensitivity": {
+            "samples_between_10_and_60us": 0,
+            "share_at_threshold_us": {
+              "15": 0.679,
+              "20": 0.679,
+              "25": 0.679,
+              "30": 0.679
+            }
+          },
           "slow_in_tail": 0,
-          "undefined_reason": null,
-          "ungated_lower_cluster_share": 0.679
+          "undefined_reason": null
         }
       }
     }
