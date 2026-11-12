@@ -264,11 +264,11 @@ class ExportFiguresTests(unittest.TestCase):
             for arm in ("efs", "ebs"):
                 raw = [per_rep[rep][f"{arm}_per_request_ns"][leaf]
                        for leaf in ("median", "amortised", "p99", "max")]
-                expected = [float(f"{ns / 1000:.4g}") for ns in raw]
+                expected = [float(f"{ns / 1e6:.4g}") for ns in raw]
                 selector = selectors[f"e5.{arm}.request.ladder.rep{index}"]
                 with self.subTest(selector=selector):
                     self.assertEqual(selector["value"], expected)
-                    self.assertEqual(selector["unit"], "us")
+                    self.assertEqual(selector["unit"], "ms")
                     self.assertEqual(selector["series_axis"], "percentile")
                     self.assertEqual(selector["series_labels"],
                                      ["median", "mean (amortised)", "p99", "max"])

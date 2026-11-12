@@ -52,7 +52,7 @@ dataset.
 - **percent** (`transform="percent"`): recorded fraction × 100 via exact decimal
   conversion, then `present()`.
 - **four significant figures** (`sig4`): the rule for every ladder element
-  (`us_4sf`, ns/1000 then 4 s.f.) and for seconds trimmed from artifact
+  (`us_4sf`: ns/1000, used for the E4 ladders whose elements run from µs to ms; `ms_4sf`: ns/1e6, used for the E5 per-request ladders whose elements are all ≥ 1 ms — 4 s.f. in both) and for seconds trimmed from artifact
   precision (`sig4`). The exact ns / full-precision value stays in `raw.value`.
 - **counts, bytes, exact ratios** (`identity`, `identity_exact`): artifact
   precision, no rounding.
@@ -101,13 +101,13 @@ dataset.
 | `e4.hydrated.stat.p50` | us | metadata | — | `results/E4/20261029T091909Z-842d596/summary.json` `/pooled/hydrated/stat/p50_ns` | no |
 | `e4.hydration.bytes` | bytes | bytes | — | `results/E4/20261029T091909Z-842d596/summary.json` `/per_replication` | no |
 | `e4.hydration.seconds` | s | bytes | replication | `results/E4/20261029T091909Z-842d596/summary.json` `/per_replication` | no |
-| `e5.ebs.request.ladder.rep1` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
-| `e5.ebs.request.ladder.rep2` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
-| `e5.ebs.request.ladder.rep3` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
+| `e5.ebs.request.ladder.rep1` | ms | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
+| `e5.ebs.request.ladder.rep2` | ms | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
+| `e5.ebs.request.ladder.rep3` | ms | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
 | `e5.ebs.request.median` | ms | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |
-| `e5.efs.request.ladder.rep1` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
-| `e5.efs.request.ladder.rep2` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
-| `e5.efs.request.ladder.rep3` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
+| `e5.efs.request.ladder.rep1` | ms | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
+| `e5.efs.request.ladder.rep2` | ms | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
+| `e5.efs.request.ladder.rep3` | ms | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
 | `e5.efs.request.median` | ms | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |
 | `e5.efs.request.p99` | ms | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |
 | `e5.efs_over_ebs.amortised` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |

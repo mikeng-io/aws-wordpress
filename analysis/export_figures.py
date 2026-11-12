@@ -242,11 +242,12 @@ def figures() -> tuple[Figure, ...]:
                 f"{'EFS plain' if arm == 'efs' else 'the matched-EBS control'}, "
                 f"delta=1 s, eligible formal-v3 replication {index} in "
                 "chronological order. Percentile ladder, element order median, "
-                "mean (amortised), p99, max; every element ns/1000 at four "
-                "significant figures, exact ns in raw.", "ns",
+                "mean (amortised), p99, max; every element ns/1e6 (milliseconds) at "
+                "four significant figures, exact ns in raw. Milliseconds because a "
+                "request's summed stat time runs from ~1.5 ms to ~260 ms.", "ns",
                 leaves=tuple(f"/{arm}_per_request_ns/{leaf}"
                              for leaf in ("median", "amortised", "p99", "max")),
-                transform="us_4sf", series_axis="percentile",
+                transform="ms_4sf", series_axis="percentile",
                 series_labels=("median", "mean (amortised)", "p99", "max"),
             ))
     for arm, label in (("efs", "EFS"), ("hydrated", "Hydrated code-tree")):
@@ -443,6 +444,10 @@ def export_selector(spec: Figure, document, run_role: str | None = None) -> dict
         # ns/1000 at four significant figures; the exact ns stays in raw.
         values = [None if value is None else sig4(value / 1000) for value in values]
         unit = "us"
+    elif spec.transform == "ms_4sf":
+        # Same rule as us_4sf with a millisecond unit; used where every element is >= 1 ms.
+        values = [None if value is None else sig4(value / 1e6) for value in values]
+        unit = "ms"
     elif spec.transform == "sig4":
         values = [None if value is None else sig4(value) for value in values]
     elif spec.transform == "uniform":
