@@ -101,27 +101,27 @@ dataset.
 | `e4.hydrated.stat.p50` | us | metadata | — | `results/E4/20261029T091909Z-842d596/summary.json` `/pooled/hydrated/stat/p50_ns` | no |
 | `e4.hydration.bytes` | bytes | bytes | — | `results/E4/20261029T091909Z-842d596/summary.json` `/per_replication` | no |
 | `e4.hydration.seconds` | s | bytes | replication | `results/E4/20261029T091909Z-842d596/summary.json` `/per_replication` | no |
-| `e5.ebs.request.ladder@1` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
-| `e5.ebs.request.ladder@2` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
-| `e5.ebs.request.ladder@3` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
+| `e5.ebs.request.ladder.rep1` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
+| `e5.ebs.request.ladder.rep2` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
+| `e5.ebs.request.ladder.rep3` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
 | `e5.ebs.request.median` | ms | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |
-| `e5.efs.request.ladder@1` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
-| `e5.efs.request.ladder@2` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
-| `e5.efs.request.ladder@3` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
+| `e5.efs.request.ladder.rep1` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T103017Z-342d6b4~1rep-1` | no |
+| `e5.efs.request.ladder.rep2` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T125412Z-f6659e0~1rep-1` | no |
+| `e5.efs.request.ladder.rep3` | us | metadata | percentile | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication/20261028T160106Z-dd5fce0~1rep-1` | no |
 | `e5.efs.request.median` | ms | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |
 | `e5.efs.request.p99` | ms | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |
 | `e5.efs_over_ebs.amortised` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | no |
 | `e5.efs_over_ebs.median` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | yes |
 | `e5.efs_over_ebs.p99` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/9/per_replication` | yes |
-| `e5.lustre.slow_share@0.1` | percent | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/7/per_replication` | no |
-| `e5.lustre.slow_share@1` | percent | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/7/per_replication` | no |
-| `e5.lustre.slow_share@10` | percent | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/7/per_replication` | no |
-| `e5.rpc_per_stat.plain@0.1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
-| `e5.rpc_per_stat.plain@1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
-| `e5.rpc_per_stat.plain@10` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
-| `e5.rpc_per_stat.tls@0.1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
-| `e5.rpc_per_stat.tls@1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
-| `e5.rpc_per_stat.tls@10` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
+| `e5.lustre.slow_share.d0_1` | percent | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/7/per_replication` | no |
+| `e5.lustre.slow_share.d1` | percent | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/7/per_replication` | no |
+| `e5.lustre.slow_share.d10` | percent | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/7/per_replication` | no |
+| `e5.rpc_per_stat.plain.d0_1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
+| `e5.rpc_per_stat.plain.d1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
+| `e5.rpc_per_stat.plain.d10` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
+| `e5.rpc_per_stat.tls.d0_1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
+| `e5.rpc_per_stat.tls.d1` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
+| `e5.rpc_per_stat.tls.d10` | ratio | metadata | replication | `results/E5-formal/20261028T160106Z-dd5fce0/analysis-pooled-3.json` `/predictions/5/per_replication` | no |
 
 ## The cache-window derived file
 

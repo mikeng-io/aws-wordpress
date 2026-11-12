@@ -201,7 +201,7 @@ def figures() -> tuple[Figure, ...]:
         mount = "without TLS (plain)" if variant == "plain" else "with TLS"
         for delta in ("0.1", "1", "10"):
             specs.append(Figure(
-                f"e5.rpc_per_stat.{variant}@{delta}", E5, "analysis-pooled-3.json",
+                f"e5.rpc_per_stat.{variant}.d{delta.replace('.', '_')}", E5, "analysis-pooled-3.json",
                 "/predictions/5/per_replication",
                 f"Reported NFS RPC operations per positive stat on the EFS mount {mount} "
                 f"at delta={delta} s; the array is the three eligible formal-v3 "
@@ -212,7 +212,7 @@ def figures() -> tuple[Figure, ...]:
             ))
     for delta in ("0.1", "1", "10"):
         specs.append(Figure(
-            f"e5.lustre.slow_share@{delta}", E5, "analysis-pooled-3.json",
+            f"e5.lustre.slow_share.d{delta.replace('.', '_')}", E5, "analysis-pooled-3.json",
             "/predictions/7/per_replication",
             f"Lustre repeat-stat slow-cluster share at delta={delta} s; the array is "
             "the three eligible formal-v3 replications in chronological order; "
@@ -236,7 +236,7 @@ def figures() -> tuple[Figure, ...]:
     for index, rep in enumerate(E5_REPS, start=1):
         for arm in ("efs", "ebs"):
             specs.append(Figure(
-                f"e5.{arm}.request.ladder@{index}", E5, "analysis-pooled-3.json",
+                f"e5.{arm}.request.ladder.rep{index}", E5, "analysis-pooled-3.json",
                 f"/predictions/9/per_replication/{escape(rep)}",
                 f"Per-request summed stat time on "
                 f"{'EFS plain' if arm == 'efs' else 'the matched-EBS control'}, "
@@ -526,6 +526,11 @@ def build_dataset(root: Path = ROOT) -> dict:
         run_roles = {}
         errors.append(f"run selection: {exc}")
     specs = figures()
+    # The site addresses a selector as `@name` and its reference grammar is [a-z0-9_.-]+.
+    # A name outside it exports fine here and is then unaddressable there, so refuse it here.
+    bad = sorted(spec.name for spec in specs if not re.fullmatch(r"[a-z0-9_.-]+", spec.name))
+    if bad:
+        raise ExportError("selector names the site cannot reference (allowed: [a-z0-9_.-]+): " + ", ".join(bad))
     selected_runs = {spec.run for spec in specs}
     if E5 in selected_runs:
         selected_runs.update(E5_RUNS)

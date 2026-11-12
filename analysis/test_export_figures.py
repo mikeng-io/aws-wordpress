@@ -60,15 +60,15 @@ class ExportFiguresTests(unittest.TestCase):
         self.assertEqual(selectors["e5.efs.request.p99"]["value"], [164.07, 216.55, 151.33])
         self.assertEqual(selectors["e5.ebs.request.median"]["value"], [1.77, 1.63, 1.5])
         self.assertEqual(selectors["e5.efs_over_ebs.amortised"]["value"], [3.91, 4.43, 5.19])
-        self.assertEqual(selectors["e5.rpc_per_stat.plain@1"]["value"],
+        self.assertEqual(selectors["e5.rpc_per_stat.plain.d1"]["value"],
                          [0.017195, 0.017335, 0.0173])
-        self.assertEqual(selectors["e5.rpc_per_stat.tls@1"]["value"],
+        self.assertEqual(selectors["e5.rpc_per_stat.tls.d1"]["value"],
                          [0.017275, 0.01732, 0.017348333333333334])
-        self.assertEqual(selectors["e5.lustre.slow_share@0.1"]["value"],
+        self.assertEqual(selectors["e5.lustre.slow_share.d0_1"]["value"],
                          [0.256, 0.2314, 0.3347])
-        self.assertEqual(selectors["e5.lustre.slow_share@1"]["value"],
+        self.assertEqual(selectors["e5.lustre.slow_share.d1"]["value"],
                          [0.2377, 0.231, 0.2848])
-        self.assertEqual(selectors["e5.lustre.slow_share@10"]["value"],
+        self.assertEqual(selectors["e5.lustre.slow_share.d10"]["value"],
                          [0.275, 0.2733, 0.1567])
         self.assertEqual(selectors["e2.efs_over_block.stat"]["value"], 638.2)
         self.assertEqual(selectors["e2.efs_over_block.open_read"]["value"], 173.7)
@@ -120,7 +120,7 @@ class ExportFiguresTests(unittest.TestCase):
                 exporter.export_selector(replace(base, series_axis=axis), document)
 
     def test_rpc_replications_match_raw_leaves_in_pinned_order(self):
-        selector = exporter.build_dataset()["selectors"]["e5.rpc_per_stat.plain@1"]
+        selector = exporter.build_dataset()["selectors"]["e5.rpc_per_stat.plain.d1"]
         document = exporter.load_json(
             exporter.ROOT, f"{exporter.E5}/analysis-pooled-3.json"
         )
@@ -265,7 +265,7 @@ class ExportFiguresTests(unittest.TestCase):
                 raw = [per_rep[rep][f"{arm}_per_request_ns"][leaf]
                        for leaf in ("median", "amortised", "p99", "max")]
                 expected = [float(f"{ns / 1000:.4g}") for ns in raw]
-                selector = selectors[f"e5.{arm}.request.ladder@{index}"]
+                selector = selectors[f"e5.{arm}.request.ladder.rep{index}"]
                 with self.subTest(selector=selector):
                     self.assertEqual(selector["value"], expected)
                     self.assertEqual(selector["unit"], "us")
@@ -417,3 +417,21 @@ class ExportFiguresTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SelectorNameGrammar(unittest.TestCase):
+    """The site references a selector as @name with grammar [a-z0-9_.-]+."""
+
+    def test_every_exported_name_is_addressable(self):
+        import re
+        names = [spec.name for spec in exporter.figures()]
+        self.assertTrue(names)
+        self.assertEqual([n for n in names if not re.fullmatch(r"[a-z0-9_.-]+", n)], [])
+
+    def test_a_name_the_site_cannot_reference_fails_closed(self):
+        real = exporter.figures
+        renamed = replace(real()[0], name="e5.bad@0.1")
+        with patch.object(exporter, "figures", lambda: (renamed,) + real()[1:]):
+            with self.assertRaises(exporter.ExportError) as ctx:
+                exporter.build_dataset()
+        self.assertIn("e5.bad@0.1", str(ctx.exception))

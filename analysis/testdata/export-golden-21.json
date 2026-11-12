@@ -211,7 +211,7 @@
       5.19
     ]
   },
-  "e5.lustre.slow_share@0.1": {
+  "e5.lustre.slow_share.d0_1": {
     "definition": "Lustre repeat-stat slow-cluster share at delta=0.1 s; the array is the three eligible formal-v3 replications in chronological order; percent = recorded fraction * 100, without further rounding. Source JSON pointers (output order): /predictions/7/per_replication/20261028T103017Z-342d6b4~1rep-1/slow_share/0.1; /predictions/7/per_replication/20261028T125412Z-f6659e0~1rep-1/slow_share/0.1; /predictions/7/per_replication/20261028T160106Z-dd5fce0~1rep-1/slow_share/0.1.",
     "dimension": "metadata",
     "raw": {
@@ -234,7 +234,7 @@
       0.3347
     ]
   },
-  "e5.lustre.slow_share@1": {
+  "e5.lustre.slow_share.d1": {
     "definition": "Lustre repeat-stat slow-cluster share at delta=1 s; the array is the three eligible formal-v3 replications in chronological order; percent = recorded fraction * 100, without further rounding. Source JSON pointers (output order): /predictions/7/per_replication/20261028T103017Z-342d6b4~1rep-1/slow_share/1; /predictions/7/per_replication/20261028T125412Z-f6659e0~1rep-1/slow_share/1; /predictions/7/per_replication/20261028T160106Z-dd5fce0~1rep-1/slow_share/1.",
     "dimension": "metadata",
     "raw": {
@@ -257,7 +257,7 @@
       0.2848
     ]
   },
-  "e5.lustre.slow_share@10": {
+  "e5.lustre.slow_share.d10": {
     "definition": "Lustre repeat-stat slow-cluster share at delta=10 s; the array is the three eligible formal-v3 replications in chronological order; percent = recorded fraction * 100, without further rounding. Source JSON pointers (output order): /predictions/7/per_replication/20261028T103017Z-342d6b4~1rep-1/slow_share/10; /predictions/7/per_replication/20261028T125412Z-f6659e0~1rep-1/slow_share/10; /predictions/7/per_replication/20261028T160106Z-dd5fce0~1rep-1/slow_share/10.",
     "dimension": "metadata",
     "raw": {
@@ -280,7 +280,7 @@
       0.1567
     ]
   },
-  "e5.rpc_per_stat.plain@0.1": {
+  "e5.rpc_per_stat.plain.d0_1": {
     "definition": "Reported NFS RPC operations per positive stat on the EFS mount without TLS (plain) at delta=0.1 s; the array is the three eligible formal-v3 replications in chronological order. Source JSON pointers (output order): /predictions/5/per_replication/20261028T103017Z-342d6b4~1rep-1/rpc_ops_per_stat/efs_host_plain@0.1; /predictions/5/per_replication/20261028T125412Z-f6659e0~1rep-1/rpc_ops_per_stat/efs_host_plain@0.1; /predictions/5/per_replication/20261028T160106Z-dd5fce0~1rep-1/rpc_ops_per_stat/efs_host_plain@0.1.",
     "dimension": "metadata",
     "raw": {
@@ -303,7 +303,7 @@
       0.001735
     ]
   },
-  "e5.rpc_per_stat.plain@1": {
+  "e5.rpc_per_stat.plain.d1": {
     "definition": "Reported NFS RPC operations per positive stat on the EFS mount without TLS (plain) at delta=1 s; the array is the three eligible formal-v3 replications in chronological order. Source JSON pointers (output order): /predictions/5/per_replication/20261028T103017Z-342d6b4~1rep-1/rpc_ops_per_stat/efs_host_plain@1; /predictions/5/per_replication/20261028T125412Z-f6659e0~1rep-1/rpc_ops_per_stat/efs_host_plain@1; /predictions/5/per_replication/20261028T160106Z-dd5fce0~1rep-1/rpc_ops_per_stat/efs_host_plain@1.",
     "dimension": "metadata",
     "raw": {
@@ -326,7 +326,7 @@
       0.0173
     ]
   },
-  "e5.rpc_per_stat.plain@10": {
+  "e5.rpc_per_stat.plain.d10": {
     "definition": "Reported NFS RPC operations per positive stat on the EFS mount without TLS (plain) at delta=10 s; the array is the three eligible formal-v3 replications in chronological order. Source JSON pointers (output order): /predictions/5/per_replication/20261028T103017Z-342d6b4~1rep-1/rpc_ops_per_stat/efs_host_plain@10; /predictions/5/per_replication/20261028T125412Z-f6659e0~1rep-1/rpc_ops_per_stat/efs_host_plain@10; /predictions/5/per_replication/20261028T160106Z-dd5fce0~1rep-1/rpc_ops_per_stat/efs_host_plain@10.",
     "dimension": "metadata",
     "raw": {
@@ -349,7 +349,7 @@
       0.15735
     ]
   },
-  "e5.rpc_per_stat.tls@0.1": {
+  "e5.rpc_per_stat.tls.d0_1": {
     "definition": "Reported NFS RPC operations per positive stat on the EFS mount with TLS at delta=0.1 s; the array is the three eligible formal-v3 replications in chronological order. Source JSON pointers (output order): /predictions/5/per_replication/20261028T103017Z-342d6b4~1rep-1/rpc_ops_per_stat/efs_host_tls@0.1; /predictions/5/per_replication/20261028T125412Z-f6659e0~1rep-1/rpc_ops_per_stat/efs_host_tls@0.1; /predictions/5/per_replication/20261028T160106Z-dd5fce0~1rep-1/rpc_ops_per_stat/efs_host_tls@0.1.",
     "dimension": "metadata",
     "raw": {
@@ -372,7 +372,7 @@
       0.001735
     ]
   },
-  "e5.rpc_per_stat.tls@1": {
+  "e5.rpc_per_stat.tls.d1": {
     "definition": "Reported NFS RPC operations per positive stat on the EFS mount with TLS at delta=1 s; the array is the three eligible formal-v3 replications in chronological order. Source JSON pointers (output order): /predictions/5/per_replication/20261028T103017Z-342d6b4~1rep-1/rpc_ops_per_stat/efs_host_tls@1; /predictions/5/per_replication/20261028T125412Z-f6659e0~1rep-1/rpc_ops_per_stat/efs_host_tls@1; /predictions/5/per_replication/20261028T160106Z-dd5fce0~1rep-1/rpc_ops_per_stat/efs_host_tls@1.",
     "dimension": "metadata",
     "raw": {
@@ -395,7 +395,7 @@
       0.017348333333333334
     ]
   },
-  "e5.rpc_per_stat.tls@10": {
+  "e5.rpc_per_stat.tls.d10": {
     "definition": "Reported NFS RPC operations per positive stat on the EFS mount with TLS at delta=10 s; the array is the three eligible formal-v3 replications in chronological order. Source JSON pointers (output order): /predictions/5/per_replication/20261028T103017Z-342d6b4~1rep-1/rpc_ops_per_stat/efs_host_tls@10; /predictions/5/per_replication/20261028T125412Z-f6659e0~1rep-1/rpc_ops_per_stat/efs_host_tls@10; /predictions/5/per_replication/20261028T160106Z-dd5fce0~1rep-1/rpc_ops_per_stat/efs_host_tls@10.",
     "dimension": "metadata",
     "raw": {
