@@ -35,7 +35,6 @@ import hashlib
 import json
 import math
 from pathlib import Path
-import subprocess
 import sys
 import tempfile
 
@@ -157,17 +156,12 @@ def derive(root: Path = ROOT) -> dict:
             inputs[path] = sha256_file(root / path)
             replications[rep] = derive_rep(root / path)
         tiers[name] = {"arm_tier": arm_tier, "replications": replications}
-    try:
-        commit = subprocess.check_output(
-            ["git", "-C", str(root), "rev-parse", "--short", "HEAD"], text=True,
-            stderr=subprocess.PIPE,
-        ).strip()
-    except (OSError, subprocess.CalledProcessError) as exc:
-        raise DeriveError(f"cannot determine repository HEAD: {exc}") from exc
     return {
         "id": "e2-cache-window",
         "schema": "derived/0",
-        "produced_by": {"repo": "mikeng-io/aws-wordpress", "commit": commit,
+        # No commit or timestamp: the file is committed, so git is its own
+        # provenance, and embedding HEAD would make regeneration drift.
+        "produced_by": {"repo": "mikeng-io/aws-wordpress",
                         "command": "python3 analysis/e2_cache_window.py"},
         "run": RUN,
         "rule": {

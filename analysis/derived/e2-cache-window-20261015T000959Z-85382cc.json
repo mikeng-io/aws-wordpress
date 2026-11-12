@@ -16,7 +16,6 @@
   },
   "produced_by": {
     "command": "python3 analysis/e2_cache_window.py",
-    "commit": "c239059",
     "repo": "mikeng-io/aws-wordpress"
   },
   "rule": {
