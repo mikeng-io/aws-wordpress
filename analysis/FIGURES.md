@@ -128,16 +128,38 @@ dataset.
 `analysis/e2_cache_window.py` re-derives the E2 server-backed finding's
 cache-window numbers (create-pass duration, fast-stat share, boundary age) from
 the raw per-file CSVs — the finding states them as prose and no script for them
-was ever committed. "Fast" is the study's existing definition verbatim:
-`e3_clusters.kmeans2_log` with the E3 gates (centroid separation ≥ 0.5 log10 and
-each cluster ≥ 2%). Where the gates fail the stat population is unimodal and
-the study defines **no** fast cluster — `fast_stat_share`, `oldest_fast_index`,
-`boundary_age_s` and `slow_in_tail` are `null`, and the un-gated split share is
-kept only as `ungated_lower_cluster_share` diagnostic evidence. This is why
-ONTAP (prose: 100% fast) and Lustre (prose: 0%) export nulls: those prose
-figures rest on GETATTR/mechanism evidence, not on a committed clustering rule.
-See `docs/findings/E2-server-backed.md` and the discrepancy note in the change
-that added this file.
+was ever committed.
+
+The exported classification is **"answered in client memory": stat latency <
+20 µs** (`CACHE_HIT_NS` in the script). It is **descriptive and post-hoc** —
+declared after inspecting this run's 12,000 stat samples, not pre-registered —
+and the derived file records `post_hoc: true` with the reason. It is not a
+tuned value: only 4 samples lie between 10 and 60 µs (10,911 / 12,628 /
+12,852 / 33,133 ns — three ONTAP rows still under 15 µs, one OpenZFS outlier
+over 30 µs), so every absolute threshold in the **15–30 µs** sensitivity range
+produces identical shares. 20 µs is the round midpoint of that empty gap.
+Each rep record carries the recomputed shares at 15/20/25/30 µs and its count
+of samples in the 10–60 µs band (`sensitivity`); the whole-run count (4) is
+the document's `samples_between_10_and_60us`.
+
+The repo's **registered** rule — `e3_clusters.kmeans2_log` with the E3 gates
+(centroid separation ≥ 0.5 log10 and each cluster ≥ 2%) — is kept verbatim
+per rep under `registered_rule` as diagnostics, with its gate verdict
+(`bimodal`), the un-gated noise split (`ungated_lower_cluster_share`), and
+its own fast/boundary fields. **The two rules disagree and both are kept:**
+the registered rule's gates fail on ONTAP and Lustre (unimodal stat
+populations), leaving them undefined, while the absolute rule reports ONTAP
+100% and Lustre 0% — matching the finding's prose table. On EFS and OpenZFS
+the two classifications happen to agree exactly.
+
+`boundary_age_s` is the create time strictly after the oldest locally answered
+file's index — its age when the create pass ended. **Lustre answered nothing
+locally**, so its `oldest_local_index`, `boundary_age_s` and `slow_in_tail`
+are `null` with a recorded `undefined_reason` — the only truly undefined
+export. ONTAP's boundary is defined and is essentially the whole create pass
+(every stat answered locally from index 0). `answered_local_share` itself is
+always defined, including 0.0 for Lustre. See
+`docs/findings/E2-server-backed.md`.
 
 The exporter verifies the derived file's `inputs` manifest — a sha256 per raw
 CSV — before reading any value; a stale derived file or a changed artifact fails
@@ -151,7 +173,14 @@ the export.
   file order — the create timestamps themselves are not recorded. Per-rep
   `slow_in_tail` counts violations of the contiguous-tail structure (currently
   one: OpenZFS rep-1).
-- **Unimodal tiers carry nulls** for the cache-window fast metrics (above).
+- **The cache-window rule is post-hoc.** The 20 µs threshold was chosen after
+  looking at the data; it is safe only because the 10–60 µs band is empty in
+  this run. Re-running against a different run could put samples inside the
+  band and make the threshold matter — the per-rep `sensitivity` shares are
+  there to show exactly that.
+- **Lustre's boundary is null** — no stat was answered locally, so there is
+  no oldest-local file. `fast_stat_share` for Lustre is a defined 0%, not a
+  null.
 - **EFS cache-window is one arm** (`ec2/efs_host_plain`), chosen as the same
   client path as the FSx mounts; the prose range covers nine EFS
   tier-replications.
@@ -165,8 +194,11 @@ the export.
 - **Confidence intervals and hypothesis grades.** Gradings live in the run
   summaries; the dataset exports measurements, not verdicts.
 - **The un-gated cluster split.** A k-means split on a unimodal population is
-  noise; it appears only as diagnostic `ungated_lower_cluster_share` inside the
-  derived file, never as a selector value.
+  noise; it appears only as diagnostic `ungated_lower_cluster_share` inside
+  the derived file's `registered_rule` blocks, never as a selector value.
+  The registered rule's gated fast share is not exported either — where it is
+  defined (EFS, OpenZFS) it agrees with the absolute rule, and where it is
+  not (ONTAP, Lustre) the exported rule already covers it.
 - **Every tier.** Cache-window selectors cover `efs` (= `ec2/efs_host_plain`)
   and the three FSx tiers only — the four tiers the finding's table states.
 - **Prose-only numbers.** Values that cannot be traced to a committed artifact
