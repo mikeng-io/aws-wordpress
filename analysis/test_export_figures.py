@@ -318,8 +318,7 @@ class ExportFiguresTests(unittest.TestCase):
                 "create_pass_s": [float(f"{reps[r]['create_pass_s']:.4g}")
                                   for r in exporter.E2_FSX_REPS],
                 "fast_stat_share": [
-                    None if reps[r]["fast_stat_share"] is None
-                    else round(reps[r]["fast_stat_share"] * 100, 1)
+                    round(reps[r]["answered_local_share"] * 100, 1)
                     for r in exporter.E2_FSX_REPS],
                 "boundary_age_s": [
                     None if reps[r]["boundary_age_s"] is None
@@ -334,6 +333,14 @@ class ExportFiguresTests(unittest.TestCase):
                     self.assertTrue(selector["derived"])
                     self.assertEqual(
                         selector["raw"]["path"], exporter.CACHE_WINDOW_DOC)
+            for metric in ("fast_stat_share", "boundary_age_s"):
+                definition = selectors[
+                    f"e2.cache_window.{tier}.{metric}"]["definition"]
+                self.assertIn("post-hoc", definition)
+                self.assertIn("15-30 us", definition)
+                self.assertIn("registered", definition)
+                self.assertIn("ONTAP", definition)
+                self.assertIn("Lustre", definition)
         self.assertEqual(
             selectors["e2.cache_window.efs.create_pass_s"]["value"],
             [7.173, 6.502, 7.122])
@@ -343,12 +350,30 @@ class ExportFiguresTests(unittest.TestCase):
         self.assertEqual(
             selectors["e2.cache_window.efs.boundary_age_s"]["value"],
             [2.383, 2.484, 2.299])
-        for tier in ("fsx_ontap", "fsx_lustre"):
-            for metric in ("fast_stat_share", "boundary_age_s"):
-                selector = selectors[f"e2.cache_window.{tier}.{metric}"]
-                self.assertEqual(selector["value"], [None, None, None])
-                self.assertFalse(selector["defined"])
-                self.assertIn("unimodal", selector["undefined_reason"])
+        self.assertEqual(
+            selectors["e2.cache_window.fsx_ontap.fast_stat_share"]["value"],
+            [100.0, 100.0, 100.0])
+        self.assertEqual(
+            selectors["e2.cache_window.fsx_lustre.fast_stat_share"]["value"],
+            [0.0, 0.0, 0.0])
+        self.assertNotIn(
+            "defined",
+            selectors["e2.cache_window.fsx_lustre.fast_stat_share"])
+        self.assertEqual(
+            selectors["e2.cache_window.fsx_ontap.boundary_age_s"]["value"],
+            [0.9926, 0.9654, 0.9863])
+        # The one truly undefined metric: Lustre answered nothing locally.
+        selector = selectors["e2.cache_window.fsx_lustre.boundary_age_s"]
+        self.assertEqual(selector["value"], [None, None, None])
+        self.assertFalse(selector["defined"])
+        self.assertIn("no stat sample", selector["undefined_reason"])
+        # The raw leaf the fast_stat_share selector now reads.
+        self.assertEqual(
+            selectors["e2.cache_window.fsx_ontap.fast_stat_share"]
+            ["raw"]["value"],
+            {"/rep-1/answered_local_share": 1.0,
+             "/rep-2/answered_local_share": 1.0,
+             "/rep-3/answered_local_share": 1.0})
 
     def test_derived_document_verification_fails_closed(self):
         original = exporter.load_json

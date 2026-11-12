@@ -56,6 +56,17 @@ E2_FSX_REPS = ("rep-1", "rep-2", "rep-3")
 CACHE_WINDOW_DOC = (f"analysis/derived/"
                     f"e2-cache-window-{E2_FSX.rsplit('/', 1)[-1]}.json")
 CACHE_WINDOW_TIERS = ("efs", "fsx_openzfs", "fsx_ontap", "fsx_lustre")
+# Shared definition text for the cache-window fast/boundary selectors: the
+# exported rule is descriptive and post-hoc, and its disagreement with the
+# repo's registered clustering rule is stated, not hidden.
+CACHE_WINDOW_RULE = (
+    "the descriptive, post-hoc 20 us rule (stat latency < 20 us = answered "
+    "in client memory), declared after inspecting the run's samples and not "
+    "pre-registered; every absolute threshold in the 15-30 us sensitivity "
+    "range yields identical shares, so the value is not tuned. It disagrees "
+    "with the repo's registered E3-gated k-means clustering rule, which "
+    "leaves ONTAP and Lustre undefined and is kept as per-rep diagnostics "
+    "(registered_rule) in the derived file")
 STUDY_RUNS_PATH = "docs/study-runs.json"
 ELIGIBLE_ROLES = frozenset(("reference", "formal-v3"))
 SERIES_AXES = frozenset(("replication", "cadence", "percentile"))
@@ -265,30 +276,29 @@ def figures() -> tuple[Figure, ...]:
         transform="uniform", dimension="bytes",
     ))
     for tier in CACHE_WINDOW_TIERS:
-        for metric, unit, transform, description in (
-            ("create_pass_s", "s", "sig4",
-             "duration of the 1,000-file create pass"),
-            ("fast_stat_share", "ratio", "percent",
-             "share of the 1,000 stat calls in the fast NFS attribute-cache "
-             "cluster"),
-            ("boundary_age_s", "s", "sig4",
-             "age of the oldest fast file when the create pass ended"),
+        for metric, leaf, unit, transform, description, undefined in (
+            ("create_pass_s", "create_pass_s", "s", "sig4",
+             "duration of the 1,000-file create pass", None),
+            ("fast_stat_share", "answered_local_share", "ratio", "percent",
+             "share of the 1,000 stat calls answered in client memory under "
+             + CACHE_WINDOW_RULE, None),
+            ("boundary_age_s", "boundary_age_s", "s", "sig4",
+             "age of the oldest locally answered file when the create pass "
+             "ended, under " + CACHE_WINDOW_RULE,
+             "no stat sample was answered in client memory, so the boundary "
+             "is undefined"),
         ):
             specs.append(Figure(
                 f"e2.cache_window.{tier}.{metric}", E2_FSX,
                 f"e2-cache-window-{E2_FSX.rsplit('/', 1)[-1]}.json",
                 f"/tiers/{tier}/replications",
                 f"{description}, per replication; derived by "
-                "analysis/e2_cache_window.py from the pinned FSx run's raw CSVs "
-                "(E3 gated k-means fast cluster on per-file stat order); the "
-                "array is the three replications.", unit,
-                leaves=tuple(f"/{rep}/{metric}" for rep in E2_FSX_REPS),
+                "analysis/e2_cache_window.py from the pinned FSx run's raw "
+                "CSVs; the array is the three replications.", unit,
+                leaves=tuple(f"/{rep}/{leaf}" for rep in E2_FSX_REPS),
                 transform=transform, series_axis="replication",
                 document=CACHE_WINDOW_DOC, derived=True, nullable=True,
-                undefined_reason=(
-                    "stat is unimodal under the E3 gates; the study defines no "
-                    "fast cluster for a single population"
-                    if metric != "create_pass_s" else None),
+                undefined_reason=undefined,
             ))
     return tuple(sorted(specs, key=lambda spec: spec.name))
 
